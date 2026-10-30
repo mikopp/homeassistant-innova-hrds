@@ -27,49 +27,43 @@ decisions about the integration, not hardware questions.
       (1139) survive too? Power-cycle once with a dehumidify request on.
 - [ ] **An OFF always wins** over an ON from any source (display/DI/Modbus),
       per the manual [MB p.5].
-- [ ] **How late does the unit mirror a request?** OFF on 1105 read back as ON
-      for several polls (T8); a DEU request (1140) showed in `DehumRequest`
-      (1121) within 28 s (T11); the season write lagged too (T31). The hub
-      shows the command until confirmed and re-reads at 3/6/12/25 s
-      (`PENDING_RECHECK_SECONDS`). With debug logging for
-      `custom_components.innova_hrds`, the line "HRDS+ confirmed
-      <key>=<value> after N s" gives the real lag per register: size the
-      schedule from it (and check whether OFF and ON lag alike).
-- [ ] **PH01 / HA00 headless sync.** They survive a power cycle (T7). Confirm
-      the unit never resets them on its own (the sync then never writes after
-      setup), so re-writing on a differing read-back costs no memory wear.
+- [ ] **Exact read-back lag per register.** ON and OFF are bracketed for 1140
+      and the OFF of 1105 (T39): the 25 s re-read of `PENDING_RECHECK_SECONDS`
+      caught every ON, OFF once at 12 s. Debug logging for
+      `custom_components.innova_hrds` ("HRDS+ confirmed <key>=<value> after
+      N s") would give the rest: ON of 1105, and the season (T31; its write
+      time is not in the history).
 
 ## 2. Start and stop of a dehumidify (DEU) cycle
 
-Data: `tests/devices/runs/` and T11–T22. Log at 5 s with
+Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
 `diagnose_hrds.py --watch` for the items below.
 
-- [ ] **Which timer holds the compressor?** It came on 6.5–8 min after the
-      request and 5–7 min after the fan (T11, T18); `PE04` ships at 180 s.
-      `PE03` (420 s) fits numerically, but it is defined between two
-      compressor starts. Poll `CmpStatus` (1122, has a "Wait ON" state) and
-      `SupplyFan_Status` (1119) every 5 s through a start, and repeat a start
-      soon after a compressor stop to see whether `PE03` counts from the last
-      start.
-- [ ] **Stop sequence at 5 s.** Seen at 1-minute resolution (T19). Still to
-      log: compressor stop against `PE02`, the ramp-down (`PE25`), V3V + PM
-      closing against `Pb01`, fan run-on against `PF03`. Check the climate
-      `hvac_action` and `supply_fan_running` follow.
-- [ ] **Does the fan stand still while 1119 reads `2` (wait_on, "Starting")
-      and turn while it reads `4` (wait_off, "Stopping")?** Record 1119 and
-      639 from a request's start to the end of the `PF03` run-on, and look at
-      the fan. ADR-0028 counts On and Wait OFF as running (T19 saw 40 % in
-      Wait OFF); Wait ON as stopped is [INFERRED].
+- [ ] **Which parameter sets the start hold?** It counts from the request or
+      the fan, not from the last compressor event, and `CmpStatus` reads OFF
+      during it (T32); `PE01` is the off time after a stop (T33). Log 1122 and
+      1119 every 5 s through a start, against `PS01` + `PE04` and `PE03`.
+- [ ] **Does `PE32` count minutes?** The compressor stops by itself after
+      92–94 min (T34); `PE32` reads 90 and is listed in seconds. Log the
+      compressor output against `PE28` (52 rps) through a run over 90 min. If
+      it holds, correct the unit in `MODBUS_REGISTERS.md` §16.
+- [ ] **Stop sequence at 5 s.** Three stops at 1-minute resolution (T19, T36,
+      T38). Still to log: compressor stop against `PE02`, the ramp-down
+      (`PE25`), V3V + PM closing against `Pb01`, fan run-on against `PF03`.
+- [ ] **`supply_fan_running` and `hvac_action` on the next stop.** No run since
+      0.9.5 installed that sensor (`doc/tested-setups.md`). On 0.9.4
+      `hvac_action` read *Idle* while the fan ran on at 40 % (T19): check
+      against ADR-0028.
+- [ ] **Does the fan stand still while the delay runs?** 1119 read `off` and
+      639 read 0 between damper and fan at every poll, and `wait_on` was never
+      read (T35). Log 1119 and 639 every 5 s through a start for a short
+      `wait_on`, and look at the fan; also 639 in `wait_off`.
       `binary_sensor.supply_fan_running` and `recirculation_active` depend on
       it.
-- [ ] **First anti-stagnation pulse after a request: why 2 hours?** After the
-      2026-10-22 stop the valve stayed shut for 2 hours, then pulsed hourly
-      (T20); HB 6.4 says `Pb08` (60 min) after the valve closes. Look at the
-      next stop (or the 2026-10-23 stops in the history) for 1 or 2 hours.
-- [ ] **Second dump while running.** Diff a `diagnose_hrds.py` dump taken
-      during a DEU request (2026-10-23 11:59 / 20:21, T21, T29) against
-      `hrds_30+_headless_factory_state.json`: every register that changed
-      should be documented, or flagged.
+- [ ] **First anti-stagnation pulse after a stop: 1 or 2 hours?** 2 hours after
+      a clean stop (T20); about 1 hour after the sniffing pulse of an AL03 stop
+      (T37). Needs a second clean stop with the unit left on in standby for
+      over 2 hours.
 - [ ] **`PU13` at the handbook default (22 °C).** At the shipped 10 °C the
       compressor started without a room probe (T15). Only worth testing if
       `PU13` is ever raised.
@@ -133,7 +127,7 @@ No INT request has been run yet. One summer INT run answers most of these.
       `hub.is_cooling` can use it. This also settles the 1124 enum (1126 reads
       0 = off, 1 = on: T10, T11, T19).
 - [ ] **What is 1112 (`FanIntegration_Request`)?** 0 through every DEU run
-      (T16, T18); a 0–100 % fan request by the Modbus map. Read it during INT
+      (T16, T18, T41); a 0–100 % fan request by the Modbus map. Read it during INT
       ([`fan-speed-tests.md`](fan-speed-tests.md) test E).
 - [ ] **INT with PU05 off (water above PU08).** Set
       `switch.force_dehumidify_in_cooling` off, request Cool with no DEU:
@@ -146,6 +140,14 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 5. Water circuit and the passive path (early summer)
 
+- [ ] **Brine flow lost while the heat pump runs (known, likely a hardware
+      fix).** In the parallel branch (variant 6), the heat pump's pump
+      overpowers the unit's small `PM` pump. When the heat pump compressor
+      started during a DEU run the unit lost flow: water 17 → 46 °C in 3 min,
+      AL12, then AL03 ended the request (T38). Fix the hydraulics (for example
+      a stronger pump or a check valve; not chosen yet), then repeat a run with
+      the heat pump compressor on. Until then avoid long requests while it
+      runs.
 - [ ] **Passive path (water below PU08).** With water (501) below PU08 (1695,
       10 °C) and a DEU or INT request in summer: `compressor_status` (1122)
       stays off, `water_valve_pump` (1126) is On, supply air colder and drier.
@@ -177,7 +179,12 @@ No INT request has been run yet. One summer INT run answers most of these.
       map. The hub halves a block that is not answered and falls back to
       per-register reads on an error. Find the real limit (gateway or
       controller) and raise the cap if it is safe, and note which addresses
-      answer "illegal data address".
+      answer "illegal data address". The Home Assistant log holds no such
+      warning since its last restart; older ones are gone.
+- [ ] **1101 and 1102.** They change in every dump and have no row in
+      `MODBUS_REGISTERS.md` (T41). 1102 only rises and 1101 looks like its low
+      word, perhaps a seconds counter. Compare two dumps with known times, then
+      document them.
 - [ ] **Registers above 1900** (PT05–PT11, PH31–PH35, PA61/PA62): the dump's
       holding snapshot ends at 1900. Extend `diagnose_hrds.py`, and add them
       to the installer device if they are readable.

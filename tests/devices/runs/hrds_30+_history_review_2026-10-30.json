@@ -1,0 +1,118 @@
+{
+  "_about": "All DEU runs and the standby after them on the reference unit, re-read on 2026-10-30. Raw states of 2026-10-22 05:12 to 2026-10-28 04:07 come from the recorder database in an automatic Home Assistant backup (opened read-only; the live recorder keeps about 5 days), later ones from live Home Assistant history via ha-mcp. Nothing was written to the unit for this analysis. Poll interval ~60 s, plus re-reads after a write. A time alone is the poll that first showed the value; (t1, t2] is bracketed by two polls. Only changes are recorded, so t1 is the latest earlier recorded poll. Times Europe/Vienna (UTC+2 up to 2026-10-25, then UTC+1).",
+  "unit": "HRDS+ 30 R DC, headless, brine circuit (handbook variant 6: small own pump on PM, parallel to the heat pump), behind a ComfoAir Q350",
+  "software": "Integration 0.9.4 on 2026-10-23 from 09:27 (update installed then); the 2026-10-22 run is on an earlier version. 0.9.5 installed 2026-10-23 22:33",
+  "timeline": {
+    "run_A_2026_10_22": {
+      "request_written": "07:03:53 (service call 07:03:43)",
+      "request_1121_damper_1134_valve_1126_on": "07:04:21",
+      "fan_on_50pct": "(07:04:53, 07:05:53]",
+      "compressor_on": "(07:10:50, 07:11:52]",
+      "request_cleared": "07:36:57",
+      "stop": {
+        "compressor_wait_off_request_off": "07:37:26 (output 24.2 %)",
+        "compressor_off_valve_off_damper_off_fan_wait_off_40pct": "07:37:58",
+        "fan_off": "07:38:53"
+      }
+    },
+    "run_B_2026_10_23": {
+      "request_written": "10:42:18 (service call 10:41:50)",
+      "request_1121_damper_1134_valve_1126_on": "10:42:48",
+      "fan_on_50pct": "(10:43:17, 10:44:17]",
+      "compressor_on": "(10:49:12, 10:50:13]",
+      "request_cleared": "11:29:09",
+      "stop": {
+        "compressor_wait_off_request_off": "11:29:21 (output 26.51 %)",
+        "compressor_off_valve_off_damper_off": "11:29:56 (output 1.04 %, fan still on at 50 %)",
+        "fan_off": "11:30:57 (no poll fell into the fan's wait_off)"
+      }
+    },
+    "run_C_2026_10_23": {
+      "request_written": "11:40:44 (service call 11:40:42)",
+      "request_1121_damper_1134_valve_1126_on": "11:41:12",
+      "fan_on_50pct": "(11:42:13, 11:43:12]",
+      "compressor_on": "(11:48:14, 11:49:15]",
+      "compressor_cycles": [
+        {"wait_off": "13:21:17 (30.51 %)", "wait_on": "13:22:13", "on": "(13:26:14, 13:27:13]"},
+        {"wait_off": "15:01:14 (24.08 %)", "wait_on": "15:02:16", "on": "(15:06:12, 15:07:12]"},
+        {"wait_off": "16:40:11 (29.23 %)", "wait_on": "16:41:13", "on": "(16:45:15, 16:46:15]"},
+        {"wait_on_no_wait_off": "(17:03:13, 17:04:14] (flow loss)", "on": "(17:08:12, 17:09:12]"},
+        {"alarm_AL12": "(17:10:13, 17:11:12]", "wait_on": "17:12:16", "on": "(17:15:13, 17:16:12]"},
+        {"wait_on_no_wait_off": "(17:18:15, 17:19:13]", "on": "(17:23:12, 17:24:12]"}
+      ],
+      "stop_by_AL03": {
+        "AL03_request_1121_off_compressor_status_off_valve_off_damper_off_fan_wait_off_40pct": "(17:25:12, 17:26:12]",
+        "fan_off": "17:27:12",
+        "compressor_output_after_status_off": "45.21 at 17:26:12, 36.3, 23.68, 0 at 17:29:12",
+        "valve_sniff_on": "17:29:12 (180 s after it closed; Pb03 = 3 min)",
+        "request_1140_cleared_by_owner": "17:30:18",
+        "AL03_clear_valve_off": "17:30:47 (water 34.3 C)"
+      }
+    },
+    "flow_loss_2026_10_23": {
+      "heat_pump_compressor": "binary_sensor.heating_compressor_active on 17:01:35, off 17:27:29",
+      "water_501_C": "17.3 at 17:01:15; 31.0 at 17:02:12; 41.2; 45.9 at 17:04:14; 41.7; 33.8; 29.9; 28.2; 27.1 at 17:09:12; 28.5 at 17:10:13; 35.5 at 17:11:12; 40.8; 41.1; 39.8; 38.5; 37.5; 36.8; 37.8; 40.8; 41.8 at 17:20:15; 41.3; 40.5; 39.6; 38.7 at 17:24:12; 40.4 at 17:26:12; 42.2; 42.1; 41.4; 39.9 at 17:30:16; 34.3; 27.6; 23.7; 23.1 at 17:33:16",
+      "evaporator_511_C": "5.5 at 16:59:14; 6.0 at 17:02:12; 12.1 at 17:04:14; 28.2 at 17:06:13; 8.7 at 17:11:12; 34.5 at 17:13:13; 9.8 at 17:18:15; 37.3 at 17:21:14; 13.2 at 17:25:12; 40.8 at 17:28:12",
+      "cause": "Owner: the heat pump's brine pump is much stronger than the small PM pump in the parallel branch, so the branch loses flow while the heat pump compressor runs and the condenser heat stays in the water. Known on this installation, likely needs a hardware fix"
+    },
+    "anti_stagnation": {
+      "after_stop_A": "valve closed by 07:37:58; next on 09:39:57; then 10:40:53, 11:41:54 (hourly)",
+      "after_stop_B": "valve closed 11:29:56; next request at 11:41:12, so no pulse to compare",
+      "after_stop_C": "valve closed 17:26:12, sniff 17:29:12..17:30:47; next on 18:30:15, then 19:31:17, 20:32:15, 21:34:18, 22:35:15",
+      "standby_before_B": "09:05:56..09:06:55, 10:07:16..10:08:16",
+      "unit_off": "Modbus OFF 22:39:15 on 2026-10-23: no pulse from 22:36:13 up to at least 2026-10-30 22:29"
+    },
+    "unit_off_and_season": {
+      "unit_off": "switch off 2026-10-23 22:39:15, sensor.unit_status off_by_bms 22:39:41 (service call 22:39:00)",
+      "season": "select.season and operating mode read winter at 2026-10-30 20:48:59, the only season change recorded from 2026-10-22 05:12 to 2026-10-30 22:27"
+    }
+  },
+  "measured_delays_s": {
+    "request_write_to_compressor_on": {"A": "417..479", "B": "414..475", "C": "450..511"},
+    "damper_read_to_compressor_on": {"A": "389..451", "B": "384..445", "C": "422..483", "all_three": "422..445"},
+    "fan_on_to_compressor_on": {"A": "297..419", "B": "295..416", "C": "302..422"},
+    "damper_read_to_fan_on": {"A": "32..92", "B": "29..89", "C": "61..120"},
+    "run_C_since_previous_compressor": "start 18.3..19.3 min after the previous stop (11:29:56) and 58..59 min after the previous start (10:50:13)",
+    "compressor_run_before_self_stop_min": {"from_on_to_wait_off": "92, 94, 93"},
+    "compressor_wait_on_s": "about 300 after each stop; start-to-start 361..480 at the shortest (17:09 to 17:16)",
+    "read_back_after_write_s": {
+      "dehumidify_on": "28, 30, 28",
+      "dehumidify_off": "29, 12",
+      "unit_off": "26"
+    }
+  },
+  "findings": {
+    "hold_is_not_from_the_last_compressor_event": "Run C's start came 18 min after a stop and 58 min after a start, with PE01 (300 s) and PE03 (420 s) long past, and still took as long as after 12 hours off. During the hold 1122 reads off, not wait_on. So the hold counts from the request or the fan. PE04 (180 s) alone does not fill it. HB 8.2 gives at least 7 minutes from activation.",
+    "wait_on_is_the_min_off_time": "1122 shows wait_on after a stop while the request stays on, about 300 s (PE01), then on. Starts came well under 420 s after a stop, so PE03 is not counted from the stop. The shortest start-to-start was 361..480 s, which does not contradict PE03 between starts.",
+    "self_stop_every_93_min": "With the request on and no alarm the compressor stopped by itself 92, 94 and 93 min after starting, at 24..31 % output, below PE28 (52 rps); the evaporator rose to 15 C and it restarted. HB 6.3: below PE28 for longer than PE32 it switches off. PE32 reads 90, listed as seconds; 90 s would stop it far earlier, 90 min fits. Runs A and B ended sooner (26 and 39 min) and show no stop.",
+    "fan_status_during_ps01": "Polls between the damper opening and the fan starting read 1119 = off and 639 = 0 in all three runs (29, 32 and 61 s after the damper read). 1119 never read wait_on in any recorded poll. 639 went from 0 to 50 % in the poll in which 1119 read on.",
+    "fan_stop": "wait_off at 40 % seen at two stops; at stop B the fan read on at 50 % at 11:29:56 and off at 11:30:57, so the run-on fell between polls.",
+    "al03_timing": "Water stayed above PC07 (30 C) from (17:10:13, 17:11:12]; AL03 came (17:25:12, 17:26:12], 14..16 min later = PA16 (900 s). An earlier excursion from 17:02:12 ended under 30 C at 17:07:13 and raised nothing.",
+    "al03_effect": "AL03 ended the effective DEU request (1121 off, PU03 = 0) while the Modbus request was still on: compressor status off, valve, damper off, fan run-on. The valve sniffed after Pb03. AL03 cleared within 29 s of the Modbus request ending, with water at 34.3 C, above PC07 - PA17.",
+    "al12": "AL12 (high pressure) for one poll at 17:11:12, compressor status alarm, then wait_on; cleared by itself at 17:12:16.",
+    "anti_stagnation": "2 h once after a clean stop (A); about 1 h after the sniff that followed stop C. No second clean stop followed by standby exists.",
+    "headless_settings": "PH01 (1777) = 0 and HA00 (1803) = 0 in the dumps of 2026-10-20 23:53 and 2026-10-23 11:59 and 20:21. Their entities show one value in all recorded history (off and none_or_external, through the backup and live to 2026-10-30).",
+    "dumps_against_factory": {
+      "setup": "1777 PH01 1 -> 0, 1778 PH02 0 -> 1, 1799 PG03 1 -> 0, 1803 HA00 2 -> 0, all documented in MODBUS_REGISTERS.md",
+      "running_at_11_59": "384 37002 -> 38298 (compressor and damper bits), 639 = 5000, 641 = 3100, 1114 = 5000, 1119 = 3, 1121 = 1, 1122 = 4, 1126 = 1, 1134 = 1, 1140 = 1, 1614 = 5000; all back to factory values at 20:21",
+      "on_state": "1104 0 -> 5, 1105 0 -> 1 in both 2026-10-23 dumps",
+      "counters": "1604 0, 1, 7 and 1610 0, 1, 6 (T29)",
+      "live_probes": "501 and 511",
+      "undocumented": "1101 (62825, 25135, 44664, 9426) and 1102 (4334, 4336, 4339, 4340): no row in MODBUS_REGISTERS.md. 1102 only rises and 1101 looks like its low word, so a seconds counter is possible; not checked",
+      "unchanged_while_running": "1112 = 0, 1124 = 1, 1117 = 0, alarm words 768..770 = 0"
+    }
+  },
+  "not_available": {
+    "confirmed_after_log_lines": "The integration logs at WARNING, so 'HRDS+ confirmed' (DEBUG) and 'Set required setting' (INFO) are not in the log",
+    "block_read_warnings": "No HRDS warning in system_log since the Home Assistant restart of 2026-10-30 20:53, and none in the raw log pages read. The backup holds no log file, so older warnings are gone",
+    "power_cycle_date": "No HRDS entity read unavailable from 2026-10-22 05:12 to 2026-10-30 22:29. A power cycle in that window would have to fall between polls; otherwise it was before 2026-10-22 05:12. Date not found",
+    "supply_fan_running": "binary_sensor.supply_fan_running has no run in its history: there has been no request since 0.9.5",
+    "fan_integration_request_entity": "sensor.fan_integration_request is not in the backup; 1112 comes from the dumps"
+  },
+  "open": {
+    "pe32_unit": "A run longer than 90 min with 5 s reads and the compressor output against PE28",
+    "start_hold": "Read 1122 and 1119 every 5 s through a start",
+    "first_pulse": "A clean stop followed by more than 2 h of ON-standby",
+    "flow_loss": "Hardware fix for the parallel branch, then a run with the heat pump compressor on"
+  }
+}

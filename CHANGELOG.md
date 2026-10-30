@@ -19,7 +19,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ### 📚 Documentation
 
-- **Tested setups and the open hardware questions brought up to date.** A full dehumidify cycle, the season switch and a power cycle are now recorded as seen on the reference unit; `plans/todo.md` keeps only what is still open, sorted by topic.
+- **Tested setups and the open hardware questions brought up to date.** A full dehumidify cycle, the season switch, a power cycle, the compressor's timers and a lost brine flow are now recorded as seen on the reference unit; `plans/todo.md` keeps only what is still open, sorted by topic.
 
 ---
 

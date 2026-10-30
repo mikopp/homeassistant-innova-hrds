@@ -252,10 +252,11 @@ Each request is the **OR** of its sources; any one raises it [HB 6.1]:
   INFERRED that nothing else exposes it].
 * A Modbus request is mirrored back late: on the reference unit an OFF written
   to `Status_OnOff_byBMS` read back as ON for several polls, and the register
-  and `sm_UnitStatus` changed together at one later poll [T8]. The length of
-  the lag is open [`plans/todo.md`]. A dehumidify request written to
-  `Status_Dehum_byBMS` showed in `DehumRequest` within 28 s [T11], so the lag
-  differs between registers.
+  and `sm_UnitStatus` changed together at one later poll [T8]. A dehumidify
+  request written to `Status_Dehum_byBMS` showed in `DehumRequest` after more
+  than 12 s and within 30 s, three times out of three; clearing it took more
+  than 6 s and within 12 s once, within 29 s once; a Modbus OFF showed in
+  `sm_UnitStatus` within 26 s [T11, T39].
 * Winter automatic heating: `SEtH` is clamped to `PH09..PH10`, which ship
   pinned to the same low value (§15) [HB 5.3]. The handbook says this "prevents"
   automatic heating [HB 5.2.3, 6.1.2]. With `PF12` as it is, the unit still
@@ -297,8 +298,10 @@ running speed raises it, lowering the minimum does not lower it
 * On the reference unit `PH01 = 0` and `PH02 = 1` survived a power cycle: the
   first Modbus ON took effect immediately afterwards, which an OFF-by-display
   priority (`PH01` back at 1) or an ignored write (`PH02` back at 0) would
-  have prevented [T7; the reading of T7 is INFERRED]. `HA00` and the other
-  parameters were not observed directly [INFERRED].
+  have prevented [T7; the reading of T7 is INFERRED]. `PH01` and `HA00` read 0
+  in every dump and read-back over ten days of operation, so the unit does not
+  reset them on its own [T40]. The other parameters were not observed directly
+  [INFERRED].
 * `Status_OnOff_byBMS` survives a power cycle: the unit came back in the
   on/off state it had [T30]. Whether `Status_Integ_byBMS` and
   `Status_Dehum_byBMS` survive is untested (neither was on at the power cycle)
@@ -362,10 +365,12 @@ Sources: HB 2.7 (OFF, ON-standby, DEU, INT), HB 6.2–6.5 (sequences), HB 7.3
 5. Commissioning note: at least **7 minutes** from activation to the first
    compressor start [HB 8.2]. Seen: the compressor came on 6.5 to 8 minutes after the request and 5 to 7
    minutes after the fan, so `PE04` alone is not what held it [T11]; the second
-   run gave 6.4 to 7.4 and 5 to 6 minutes [T18]. Which
-   timer does is open: `PE03` fits the numbers but is defined between two
-   compressor starts, and the recorded history shows no start in the 12 hours
-   before [INFERRED; `plans/todo.md`].
+   run gave 6.4 to 7.4 and 5 to 6 minutes [T18]. Over three runs the compressor
+   came on 422 to 445 s after the damper was seen open, also when the previous
+   compressor stop was only 18 minutes back and the previous start 58 minutes,
+   with `PE01` and `PE03` long past: the hold counts from the request or the
+   fan, not from the last compressor event, and `CmpStatus` reads OFF during
+   it [T32]. Which parameter sets it is open [INFERRED; `plans/todo.md`].
 
 The compressor does not start (step 4) while: a blocking alarm is active, a
 time program blocks it, room T < `PU13`, or (summer) water < `PU08` [HB 6.3].
@@ -385,8 +390,11 @@ time program blocks it, room T < `PU13`, or (summer) water < `PU08` [HB 6.3].
 Seen at 1-minute resolution [T19]: compressor in "Wait OFF" within 29 s of the
 request ending; compressor off, V3V + PM closed and damper closed in the next
 poll (within 61 s); the fan then in "Wait OFF" at 40 % (`PF26` as shipped) with
-the damper already closed, and off one poll later. The first anti-stagnation
-pulse came about 2 hours after the valve closed, not one `Pb08` wait [T20].
+the damper already closed, and off one poll later. A second stop ran the same
+way, with the fan's run-on between two polls (50 % with the damper closed, off
+at the next poll) and the compressor output down to 1 % when the status read
+OFF [T36]. A stop by AL03 leaves the output falling for about 3 minutes after
+the status reads OFF [T38]. The first anti-stagnation pulse: §11.3.
 7. With `PU09` second step active, the request counts as finished only after
    `PU10` has passed since the compressor stopped; water keeps flowing
    meanwhile [HB 6.3].
@@ -617,8 +625,11 @@ Observations and consequences:
 * States Disabled / OFF / Wait ON / ON / Wait OFF (run-on) / Alarm
   (overheating or speed sensing) [HB 6.2].
 * The fan turns in ON and in Wait OFF, the run-on at `PF26` (40 % seen,
-  [T19]). Wait ON is the `PS01` delay before the start [HB 6.2]; that the
-  output reads 0 then is [INFERRED], not logged.
+  [T19]). The handbook has Wait ON as the wait before the start [HB 6.2]. On
+  the reference unit `SupplyFan_Status` read OFF and `outAO_SupplyFan` 0 at
+  every poll between the damper opening and the fan starting, up to 61 s after
+  the damper was seen open, and never read Wait ON [T35]. A shorter Wait ON
+  between polls is not excluded [`plans/todo.md`].
 * Nothing over Modbus switches the fan by itself: it starts and stops with
   the DEU / INT requests (§9.3), and `PM20` does not hold a speed [T23, T27,
   T28] [INFERRED from the register map: no other fan command exists].
@@ -685,6 +696,16 @@ refrigerant circuit works on MVHR flow alone follows from the design
   compressor via AL11 [HB 6.3].
 * Status values Disabled / Alarm / Manual / OFF / Wait ON / Wait OFF / ON
   [HB 6.3]. Read back `CmpStatus` and `outAO_Cmp` [MB p.8, p.9].
+* Wait ON is the minimum off time: with the request still on, the status reads
+  Wait ON for about 5 minutes (`PE01`) after a compressor stop, then ON. Starts
+  came less than `PE03` after a stop, so `PE03` is not counted from the stop;
+  the shortest start-to-start was 361 to 480 s [T33].
+* It stops by itself during a long request: 92, 94 and 93 minutes after each
+  start, with no alarm, at 24 to 31 % output, and restarts about 6 minutes
+  later; the evaporator rises to about 15 °C in between [T34]. That fits
+  `PE32` (below `PE28` for too long → off [HB 6.3]) if its value counts
+  minutes, not the seconds the parameter table gives [INFERRED;
+  `plans/todo.md`].
 * Seen on the reference unit [T12]: output 15.7 %, then 32.8 %, then 44.0 %
   (about the `PE28` step against `PE27`); the evaporator fell from 18 °C to
   −3.1 °C in two polls; the output then stepped down about 6 % per minute
@@ -733,9 +754,12 @@ refrigerant circuit works on MVHR flow alone follows from the design
   minute, stay shut for the `Pb08` wait counted from the valve closing, and
   repeat, while the unit is ON-standby; the switch-on pulse is a little longer
   [T13]. After a request the first pulse came about 2 hours after the valve
-  closed, then hourly again [T20]; why is open [`plans/todo.md`].
+  closed, then hourly again [T20]; after a stop by AL03 and one sniffing pulse
+  it came about 1 hour after that pulse [T37]. Why the first differs is open
+  [`plans/todo.md`].
 * While the unit is OFF there is no pulse: none in 8.5 hours of `off_by_bms`,
-  while the same unit pulsed hourly when ON [T14]. That agrees with HB 2.7
+  while the same unit pulsed hourly when ON [T14], and none in the seven days
+  of `off_by_bms` after that [T37]. That agrees with HB 2.7
   (lists it under ON) and HB 3.8.7 (recommends OFF to avoid cold bursts on
   brine), not with the wording "independent of operation" in HB 4.5.
 * Sniffing on AL03 (summer) / AL04 (winter): wait `Pb03`, open `Pb02`, repeat
@@ -760,6 +784,15 @@ probe also follows the air through the unit (it rose 16.6 → 18.1 °C with the
 evaporator probe when warmer MVHR air arrived), and it did not rise when the
 compressor started [T18]: it reads the water before the condenser, so it
 cannot show the condenser heat [INFERRED from T18].
+
+When the water flow fails with the compressor running, the probe does show the
+heat: on the reference unit, with its small pump in a branch parallel to the
+heat pump, the brine fell short while the stronger heat pump pump ran. The
+water read 17.3 → 45.9 °C within 3 minutes, the compressor stopped and restarted
+on its timers, AL12 raised for one poll, and AL03 ended the request `PA16` after
+the water stayed above `PC07` [T38]. AL03 cleared within 29 s of the Modbus
+request ending, with the water at 34.3 °C, above the `PC07 − PA17` of [HB 7.4]
+[T38].
 
 ## 12. Alarms and what they do to the flow
 
@@ -829,7 +862,17 @@ probes). "Dump" means
 | T25 | 2026-10-23 | Same run, `PF28` 45 → 55 at 12:57:03: 639 and `PM20` read 55 % in the same poll | [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T26 | 2026-10-23 | Same run, later, `PF28` 55 → 50: 639 and `PM20` stayed at 55 % | owner; [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T30 | 2026-10 | Power cycle: the unit came back in the on/off state written to `Status_OnOff_byBMS` (1105). No DEU or INT request was on at the time | owner |
-| T31 | 2026-10 | `HB04` (1825) written 4 → 3: the read-back still showed summer right after the write and showed winter at the next read cycle; written 3 → 4: back to summer with the same lag, as for the other registers (T8, T11). No contact on DI4 | owner |
+| T31 | 2026-10-30 | `HB04` (1825) written 4 → 3: the read-back still showed summer right after the write and showed winter at the next read cycle (20:48:59); written 3 → 4: back to summer with the same lag, as for the other registers (T8, T11). No contact on DI4 | owner; HA history for 4 → 3 |
+| T32 | 2026-10-22/23 | Compressor hold in three runs, polls (t1, t2]: request written → compressor on 417–479, 414–475, 450–511 s; damper read → on 389–451, 384–445, 422–483 s; fan on → on 297–419, 295–416, 302–422 s. The third start came 18.3–19.3 min after the previous compressor stop and 58–59 min after the previous start. `CmpStatus` read OFF until ON at each | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
+| T33 | 2026-10-23 | `CmpStatus` Wait ON six times within one request: seen 13:22:13, 15:02:16, 16:41:13, 17:04:14, 17:12:16, 17:19:13; ON at 13:27:13, 15:07:12, 16:46:15, 17:09:12, 17:16:12, 17:24:12, about 300 s after each stop. Shortest start-to-start 361–480 s (17:09:12 → 17:16:12) | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
+| T34 | 2026-10-23 | Compressor stops with the request on and no alarm: ON 11:49:15, Wait OFF 13:21:17 at 30.5 %; ON 13:27:13, Wait OFF 15:01:14 at 24.1 %; ON 15:07:12, Wait OFF 16:40:11 at 29.2 %. Evaporator 6 → 15 °C while off. `PE32` (1887) reads 90 | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json); dump |
+| T35 | 2026-10-22/23 | Three fan starts: `SupplyFan_Status` OFF and 639 = 0 at the polls 32 s (07:04:53), 29 s (10:43:17) and 61 s (11:42:13) after the damper read on; ON and 50 % together at the next poll. Wait ON was never read | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
+| T36 | 2026-10-23 | DEU stop, request cleared 11:29:09: `CmpStatus` Wait OFF at 11:29:21 (26.5 %); at 11:29:56 compressor off (1.0 %), V3V + PM off, damper off, fan on at 50 %; fan off and 0 % at 11:30:57 | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
+| T37 | 2026-10-23/30 | After the AL03 stop the valve opened 17:29:12–17:30:47 (180 s after closing, `Pb03`), then at 18:30:15, 19:31:17, 20:32:15, 21:34:18, 22:35:15. Modbus OFF read at 22:39:41 on 2026-10-23: no pulse up to at least 2026-10-30 22:29 | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json); HA history |
+| T38 | 2026-10-23 | Brine flow lost during a DEU run while the heat pump compressor ran (17:01:35–17:27:29): the heat pump's pump overpowers the unit's small `PM` pump (owner). Water 17.3 °C at 17:01:15, 31.0 at 17:02:12, 45.9 at 17:04:14, 27.1 at 17:09:12, then above 30 °C from (17:10:13, 17:11:12]. AL12 and `CmpStatus` Alarm at 17:11:12, clear at 17:12:16. AL03 at (17:25:12, 17:26:12]: `DehumRequest` off with the Modbus request on; compressor status off, V3V + PM off, damper off, fan Wait OFF at 40 %, fan off 17:27:12; output 45.2 % falling to 0 by 17:29:12. Modbus request cleared 17:30:18; AL03 clear at 17:30:47 with water 34.3 °C | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json); owner |
+| T39 | 2026-10-22/23 | Write to first read-back, with re-reads at 3, 6, 12 and 25 s: `Status_Dehum_byBMS` on → `DehumRequest` 28, 30, 28 s (not yet at the 12 s re-read); off → 29 s and 12 s (not yet at 6 s); `Status_OnOff_byBMS` off → `sm_UnitStatus` 26 s | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
+| T40 | 2026-10-20/30 | `PH01` (1777) and `HA00` (1803) read 0 in the dumps of 2026-10-20 23:53 and 2026-10-23 11:59 and 20:21 and in the read-back up to 2026-10-30, with no change recorded | dumps; [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
+| T41 | 2026-10-23 | Dumps against the factory dump. During DEU at 11:59: 384, 639, 641, 1114, 1119, 1121, 1122, 1126, 1134, 1140, 1614 at their running values, all back at 20:21; 1112 = 0, 1124 = 1, 1117 = 0, no alarm bit. Setup: 1777, 1778, 1799, 1803. On: 1104, 1105. Counters 1604, 1610. Not in the register doc: 1101 and 1102, which change in every dump | dumps; [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
 
 Not yet observed on hardware (everything else in this file): the stop sequence
 of a DEU cycle at better than 1-minute resolution, an INT cycle, the passive cold-water path, winter operation,
