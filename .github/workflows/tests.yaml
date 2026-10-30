@@ -60,7 +60,7 @@ jobs:
             echo "run=false" >> "$GITHUB_OUTPUT"
             echo "::notice::No code, test or dependency change: tests skipped (ADR-0035)"
           fi
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         if: steps.changes.outputs.run == 'true'
         with:
           python-version: "3.14"
