@@ -60,7 +60,7 @@ handbook's variants 1 to 6 and the separate ground loop).
 |------|--------|-------|
 | Dehumidify (DEU) request over Modbus, summer | **Works** | Valve and pump, damper, fan and compressor start and stop in order, no alarm, the climate entity shows *Drying* [T11 to T19]. The passive cold-water path (water below `PU08`, compressor off) is open |
 | Integration (INT) request over Modbus, summer (cooling) | Not tested | |
-| Season switch without a display (`select.season`, HB04) | **Works** | Winter and back to summer; the read-back follows after a lag [T31] |
+| Season switch without a display (`select.season`, HB04) | **Works** | Winter and back to summer; the read-back shows the new season at the next read cycle [T31] |
 | Fan speed | **Works** (read-only) | The unit sets the speed; a written speed has no effect, raising the band minimum raises it [T22 to T28] |
 | Winter integration (heating) | Not tested | Impossible on brine. Needs a warm heating circuit |
 | Free cooling | Not tested | |

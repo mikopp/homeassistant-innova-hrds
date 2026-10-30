@@ -216,7 +216,8 @@ terminals and Modbus [HB 2.2, 5.1]. How they combine:
   off) [MB p.6]. If a contact is wired to `E/I`, writing `3` inverts its
   meaning [INFERRED from MB p.6]. On the reference unit (no contact on DI4)
   writing `3` switched it to winter and `4` back to summer; the read-back
-  followed after a lag, like the requests (§3.3) [T31].
+  showed the new season at the next read cycle, the same lag as the
+  requests (§3.3) [T31].
 * Automatic season: `PC05` 0 manual / 1 manual + automatic / 2 automatic,
   `PC06` chooses the water or room probe; with the room probe the unit
   switches to summer above `PC09` and to winter below `PC10` [HB 5.3]. How the
@@ -828,7 +829,7 @@ probes). "Dump" means
 | T25 | 2026-10-23 | Same run, `PF28` 45 → 55 at 12:57:03: 639 and `PM20` read 55 % in the same poll | [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T26 | 2026-10-23 | Same run, later, `PF28` 55 → 50: 639 and `PM20` stayed at 55 % | owner; [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T30 | 2026-10 | Power cycle: the unit came back in the on/off state written to `Status_OnOff_byBMS` (1105). No DEU or INT request was on at the time | owner |
-| T31 | 2026-10 | `HB04` (1825) written 4 → 3: the season read-back switched to winter after a lag like that of the requests (T8); written 3 → 4: back to summer after the same lag. No contact on DI4 | owner |
+| T31 | 2026-10 | `HB04` (1825) written 4 → 3: the read-back still showed summer right after the write and showed winter at the next read cycle; written 3 → 4: back to summer with the same lag, as for the other registers (T8, T11). No contact on DI4 | owner |
 
 Not yet observed on hardware (everything else in this file): the stop sequence
 of a DEU cycle at better than 1-minute resolution, an INT cycle, the passive cold-water path, winter operation,
