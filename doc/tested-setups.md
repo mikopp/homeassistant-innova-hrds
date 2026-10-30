@@ -60,7 +60,7 @@ handbook's variants 1 to 6 and the separate ground loop).
 |------|--------|-------|
 | Dehumidify (DEU) request over Modbus, summer | **Works** | Valve and pump, damper, fan and compressor start and stop in order, no alarm, the climate entity shows *Drying* [T11 to T19]. Seen on 0.9.4 at a stop: *Drying* changed to *Fan* when the request ended and to *Idle* when the compressor was off, while the fan could still be running on [T19, T36]. `binary_sensor.supply_fan_running` has not been through a run yet. The passive cold-water path (water below `PU08`, compressor off) is open |
 | Integration (INT) request over Modbus, summer (cooling) | Not tested | |
-| Season switch without a display (`select.season`, HB04) | **Works** | Winter and back to summer; the read-back shows the new season at the next read cycle [T31] |
+| Season switch without a display (`select.season`, HB04) | **Partly** | Summer to winter works. The select shows the old season right after the write and the new one at the next read cycle [T31]. Back to summer is not tested |
 | Fan speed | **Works** (read-only) | The unit sets the speed; a written speed has no effect, raising the band minimum raises it [T22 to T28] |
 | Winter integration (heating) | Not tested | Impossible on brine. Needs a warm heating circuit |
 | Free cooling | Not tested | |

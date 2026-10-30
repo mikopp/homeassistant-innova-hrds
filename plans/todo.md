@@ -166,6 +166,9 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 6. Season and winter
 
+- [ ] **Back to summer.** Only `HB04` 4 → 3 has been written (T31), and the
+      unit stands in winter since 2026-10-30. Write 3 → 4 with `select.season`
+      and check the read-back follows at the next read cycle.
 - [ ] **PU02 "with water" / "without water".** What changes between 1 and 2
       (does V3V/PM open)? Does PU02 = 0 also block a Modbus or DI dehumidify
       request in winter, or only the automatic one?
@@ -237,6 +240,10 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 9. Integration decisions (no hardware needed)
 
+- [ ] **`select.season` jumps back after a write.** It shows the old season
+      until the next read cycle (T31), because `season` is not in
+      `PENDING_KEYS`. Add it, so it shows the command until confirmed like the
+      requests? Check against ADR-0006 first.
 - [ ] Should the operation gate refuse climate `hvac_mode` writes with a
       friendlier message (it surfaces the `ServiceValidationError` today)?
 - [ ] **`water_below_compressor_limit`** puts the water check on `attention`

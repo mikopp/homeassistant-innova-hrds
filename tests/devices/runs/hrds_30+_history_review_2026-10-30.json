@@ -64,7 +64,7 @@
     },
     "unit_off_and_season": {
       "unit_off": "switch off 2026-10-23 22:39:15, sensor.unit_status off_by_bms 22:39:41 (service call 22:39:00)",
-      "season": "select.season and operating mode read winter at 2026-10-30 20:48:59, the only season change recorded from 2026-10-22 05:12 to 2026-10-30 22:27"
+      "season": "select.season and operating mode read winter at 2026-10-30 20:48:59, the only season change recorded from 2026-10-22 05:12 to 2026-10-30 22:27. Owner: switched to winter once; the select showed summer again right after the write and winter after the next read. HB04 3 -> 4 was not written"
     }
   },
   "measured_delays_s": {

@@ -215,9 +215,9 @@ terminals and Modbus [HB 2.2, 5.1]. How they combine:
   winter). Any other value raises **AL25** (I/O configuration error, everything
   off) [MB p.6]. If a contact is wired to `E/I`, writing `3` inverts its
   meaning [INFERRED from MB p.6]. On the reference unit (no contact on DI4)
-  writing `3` switched it to winter and `4` back to summer; the read-back
-  showed the new season at the next read cycle, the same lag as the
-  requests (§3.3) [T31].
+  writing `3` switched it to winter; the read-back showed the new season at
+  the next read cycle, the same lag as the requests (§3.3) [T31]. Writing `4`
+  to return to summer is untested [`plans/todo.md`].
 * Automatic season: `PC05` 0 manual / 1 manual + automatic / 2 automatic,
   `PC06` chooses the water or room probe; with the room probe the unit
   switches to summer above `PC09` and to winter below `PC10` [HB 5.3]. How the
@@ -862,7 +862,7 @@ probes). "Dump" means
 | T25 | 2026-10-23 | Same run, `PF28` 45 → 55 at 12:57:03: 639 and `PM20` read 55 % in the same poll | [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T26 | 2026-10-23 | Same run, later, `PF28` 55 → 50: 639 and `PM20` stayed at 55 % | owner; [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T30 | 2026-10 | Power cycle: the unit came back in the on/off state written to `Status_OnOff_byBMS` (1105). No DEU or INT request was on at the time | owner |
-| T31 | 2026-10-30 | `HB04` (1825) written 4 → 3: the read-back still showed summer right after the write and showed winter at the next read cycle (20:48:59); written 3 → 4: back to summer with the same lag, as for the other registers (T8, T11). No contact on DI4 | owner; HA history for 4 → 3 |
+| T31 | 2026-10-30 | `HB04` (1825) written 4 → 3: the read-back still showed summer right after the write and showed winter at the next read cycle (20:48:59), a lag as for the other registers (T8, T11). No contact on DI4. 3 → 4 not written | owner; HA history |
 | T32 | 2026-10-22/23 | Compressor hold in three runs, polls (t1, t2]: request written → compressor on 417–479, 414–475, 450–511 s; damper read → on 389–451, 384–445, 422–483 s; fan on → on 297–419, 295–416, 302–422 s. The third start came 18.3–19.3 min after the previous compressor stop and 58–59 min after the previous start. `CmpStatus` read OFF until ON at each | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
 | T33 | 2026-10-23 | `CmpStatus` Wait ON six times within one request: seen 13:22:13, 15:02:16, 16:41:13, 17:04:14, 17:12:16, 17:19:13; ON at 13:27:13, 15:07:12, 16:46:15, 17:09:12, 17:16:12, 17:24:12, about 300 s after each stop. Shortest start-to-start 361–480 s (17:09:12 → 17:16:12) | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json) |
 | T34 | 2026-10-23 | Compressor stops with the request on and no alarm: ON 11:49:15, Wait OFF 13:21:17 at 30.5 %; ON 13:27:13, Wait OFF 15:01:14 at 24.1 %; ON 15:07:12, Wait OFF 16:40:11 at 29.2 %. Evaporator 6 → 15 °C while off. `PE32` (1887) reads 90 | [history review](../../tests/devices/runs/hrds_30+_history_review_2026-10-30.json); dump |
