@@ -410,10 +410,9 @@ What the unit does with them: [UNIT_BEHAVIOUR §5](UNIT_BEHAVIOUR.md#5-decision-
 | `0x0668` | 1640 | `PF03_MinTimePostFan` | R/W | 0-999 s | Fan run-on after the compressor stops (`0` disables it). |
 | `0x0707` | 1799 | `PG03_EnableFreeCoolingHeating` | R/W | `0=No`, `1=Yes` | Enables free cooling/heating; only then does `AI_Toutdoor` (500) drive anything. |
 
-> The `PF01`/`PF03` unit is inferred from the parameter's 0-999 range and the
-> technical manual's description ("Mindestlaufzeit" / "Nachlauf"); it is not
-> stated explicitly in the Modbus table. Confirm against the wired display
-> before relying on the absolute value.
+> The Modbus table does not state the `PF01`/`PF03` unit. Seconds: with
+> `PF03` = 30 the fan ran on for under a minute on the reference unit
+> ([UNIT_BEHAVIOUR T19](UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware)).
 
 ### 15.1 (moved)
 

@@ -11,6 +11,18 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ---
 
+## Unreleased
+
+### 🛠️ Fixes and other changes
+
+- **The integration now names its categories.** Home Assistant and HACS list it under *Climate: air purifiers and humidifiers* and *Climate: fans and ventilation*, and HACS no longer warns about missing categories.
+
+### 📚 Documentation
+
+- **Tested setups and the open hardware questions brought up to date.** A full dehumidify cycle, the season switch and a power cycle are now recorded as seen on the reference unit; `plans/todo.md` keeps only what is still open, sorted by topic.
+
+---
+
 ## 0.9.5 (2026-10-23): Read-only fan, recirculation from damper and fan
 
 ### ⚠️ Breaking changes

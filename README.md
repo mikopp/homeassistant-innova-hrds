@@ -304,9 +304,10 @@ show attributes, so this sensor is the one place to look.
    model), *T/H probe temperature / humidity input* and the *probe OK* flags (which probes the unit
    believes are connected), *Remote on/off input* and *contact closed*.
 3. Check **Minimum room temperature (PU13)** in the Configuration section. The
-   unit refuses to dehumidify below it, and what it does with no room
-   temperature probe is not yet verified on hardware - see
-   [`plans/todo.md`](plans/todo.md).
+   unit refuses to dehumidify below it. With no room temperature probe, a
+   Modbus dehumidify request started the compressor at the shipped 10 °C
+   ([T15](doc/references/UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware));
+   at a higher value it is untested, see [`plans/todo.md`](plans/todo.md).
 4. Check the **season** (`select.season`; read-back `sensor.operating_mode`) and
    the integration options *Water register connected to* and *Allow winter
    heating*.

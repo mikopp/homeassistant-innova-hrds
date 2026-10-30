@@ -199,8 +199,8 @@ terminals and Modbus [HB 2.2, 5.1]. How they combine:
 * Setting `PH01 = 0` alone does **not** leave "OFF by display": after
   `PH01 = 0`, `HA00 = 0`, `PH02 = 1` and a power cycle the unit still read
   `off_by_display`; the first Modbus ON switched it on at once [T7]. A later
-  Modbus OFF reads `off_by_bms` [T14]; whether that survives a power cycle is
-  open [`plans/todo.md`].
+  Modbus OFF reads `off_by_bms` [T14]. The Modbus on/off state is kept across
+  a power cycle [T30].
 * OFF: the unit reacts to no request; Modbus and monitoring stay active
   [HB 2.7].
 
@@ -214,8 +214,9 @@ terminals and Modbus [HB 2.2, 5.1]. How they combine:
   normally open (open contact = summer), `3` = normally closed (open contact =
   winter). Any other value raises **AL25** (I/O configuration error, everything
   off) [MB p.6]. If a contact is wired to `E/I`, writing `3` inverts its
-  meaning [INFERRED from MB p.6]. Writing `HB04` has not been tested
-  [`plans/todo.md`].
+  meaning [INFERRED from MB p.6]. On the reference unit (no contact on DI4)
+  writing `3` switched it to winter and `4` back to summer; the read-back
+  followed after a lag, like the requests (§3.3) [T31].
 * Automatic season: `PC05` 0 manual / 1 manual + automatic / 2 automatic,
   `PC06` chooses the water or room probe; with the room probe the unit
   switches to summer above `PC09` and to winter below `PC10` [HB 5.3]. How the
@@ -297,8 +298,9 @@ running speed raises it, lowering the minimum does not lower it
   priority (`PH01` back at 1) or an ignored write (`PH02` back at 0) would
   have prevented [T7; the reading of T7 is INFERRED]. `HA00` and the other
   parameters were not observed directly [INFERRED].
-* Whether the request registers (`Status_OnOff_byBMS`, `Status_Integ_byBMS`,
-  `Status_Dehum_byBMS`) survive a power cycle is untested
+* `Status_OnOff_byBMS` survives a power cycle: the unit came back in the
+  on/off state it had [T30]. Whether `Status_Integ_byBMS` and
+  `Status_Dehum_byBMS` survive is untested (neither was on at the power cycle)
   [`plans/todo.md`].
 * The clock does not survive a long power cut (AL26) [HB 5.2.4].
 * Parameters are held in non-volatile memory [IM p.28 wording "internal
@@ -825,10 +827,12 @@ probes). "Dump" means
 | T24 | 2026-10-23 | DEU run from 11:43:12 (compressor on 11:49:15), fan at 50 %. `PF28` 50 → 45 at 11:58:37: `outAO_SupplyFan` (639) and `PM20` stayed at 50 %. (`PF27` 50 → 45 → 50 at 11:58:22 / 11:58:53 does not apply to DEU) | [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T25 | 2026-10-23 | Same run, `PF28` 45 → 55 at 12:57:03: 639 and `PM20` read 55 % in the same poll | [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
 | T26 | 2026-10-23 | Same run, later, `PF28` 55 → 50: 639 and `PM20` stayed at 55 % | owner; [band run file](../../tests/devices/runs/hrds_30+_fan_band_2026-10-23.json) |
+| T30 | 2026-10 | Power cycle: the unit came back in the on/off state written to `Status_OnOff_byBMS` (1105). No DEU or INT request was on at the time | owner |
+| T31 | 2026-10 | `HB04` (1825) written 4 → 3: the season read-back switched to winter after a lag like that of the requests (T8); written 3 → 4: back to summer after the same lag. No contact on DI4 | owner |
 
 Not yet observed on hardware (everything else in this file): the stop sequence
 of a DEU cycle at better than 1-minute resolution, an INT cycle, the passive cold-water path, winter operation,
-`HB04` season writes, a lowered band maximum (`PF10`) during a run, any display or probe
+a lowered band maximum (`PF10`) during a run, any display or probe
 configuration, the HRDS+ 50 and non-`R` units. The test
 plans are in [`plans/todo.md`](../../plans/todo.md). When a test is done, add a
 `T` row here and replace the `[INFERRED]` tag where it applies.

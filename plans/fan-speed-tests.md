@@ -30,8 +30,8 @@ Tags (`[HB 6.2]`, `[MB p.7]`, `T23`) are explained in §0 of that file.
 * The integration's fan write path (`fan.set_percentage`,
   `climate.set_fan_mode`, `number.fan_manual_speed`) writes `PM20`, so today
   it does nothing.
-* These tests decide what replaces it: `plans/todo.md`, item *Fan write
-  target*.
+* These tests decide what replaces it: `plans/todo.md`, item *Speed control
+  through the band*.
 
 ## Assumptions under test
 
@@ -184,7 +184,7 @@ clamped up to the minimum (T22).
 4. Never set PF10 below PF28.
 
 This decides whether the integration can set any speed within the band with
-two band writes, or only raise it (`plans/todo.md`, *Fan write target*).
+two band writes, or only raise it (`plans/todo.md`, *Speed control through the band*).
 
 ## Recording the results
 
@@ -195,7 +195,7 @@ two band writes, or only raise it (`plans/todo.md`, *Fan write target*).
   files there: `_about`, `timeline`, `findings`, `open`.
 * `plans/todo.md`:
   * tick the items these tests answer;
-  * add the result to *Fan write target*;
+  * add the result to *Speed control through the band*;
   * the code change is decided there and recorded with `/adr supersede` on
     ADR-0008.
 * Do not change integration code in the same PR as the evidence.
