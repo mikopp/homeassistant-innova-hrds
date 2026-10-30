@@ -10,13 +10,21 @@ evidence log, replace the `[INFERRED]` tags it settles, and fix the code/docs.
 
 ## Scaling & data types
 
-- [ ] **Fan / percentage registers use ×0.01** (write `4000` for 40 %). Confirm
-      on the actual `outAO_SupplyFan` (639), the fan bands (1852/1853/1646/1647)
-      and manual fan (1614). If the gateway already returns 0–100, drop `FAKTOR`.
-- [ ] **Temperatures use ×0.1 °C** and are **INT16** (negative values possible).
-      Verify sign handling on outdoor/water temps below 0 °C.
+- [x] **Fan / percentage registers use ×0.01** (write `4000` for 40 %).
+      Confirmed: the bands read raw 5000/8500 = 50/85 % (dump, §15); 639 and
+      1614 read 50 and 55 % through the runs (T16, T22, T25); `PF28` writes
+      of 45/55 % acted as such (T24–T26), and a 1614 write of 40 % was refused
+      as below the 50 % minimum (T27).
+- [x] **Temperatures use ×0.1 °C** and are **INT16** (negative values possible).
+      Confirmed: water 18.7 °C = raw 187 (T3), and the evaporator read
+      −3.1 and −9.6 °C during the start transient (T12, T18), so the sign is
+      decoded. Outdoor/water below 0 °C not seen (no outdoor probe, brine above
+      0); same encoding.
 - [ ] **Humidity is integer %RH (no scale)** on both the room probe (505) and the
       setpoint (1586). Confirm no ×0.1.
+      Partly: the humidity clamps `PH29`/`PH30` (1892/1893) read raw 55/65
+      (dump), so they are whole %. The room probe is not fitted (505 reads
+      the sentinel, T3), and 1586 is not in the dump.
 - [x] **`recirculation_active` (reg 1112) is a 0/1 flag**, not a 0–100 %
       value. No: the Modbus manual's full map gives `FanIntegration_Request`
       the range 0.00–100.00 like the fan requests 1113–1116 next to it
@@ -28,15 +36,19 @@ evidence log, replace the `[INFERRED]` tags it settles, and fix the code/docs.
       The device class is now left unset: `AQI` accepts only a `None` unit in
       Home Assistant, so pairing it with "ppm" was invalid. If the probe turns
       out to be CO₂, `SensorDeviceClass.CO2` is the right pairing for ppm.
-- [ ] **`PF01_MinTimeOnFan` (1638) / `PF03_MinTimePostFan` (1640) are in
-      seconds.** The unit is inferred from the parameter's 0–999 range and the
-      technical manual's wording ("Mindestlaufzeit" / "Nachlauf"); the Modbus
-      table does not state it. Confirm against the wired display.
+      Not fitted on the reference unit (506 reads the sentinel, T3); needs a
+      unit with the probe.
+- [x] **`PF01_MinTimeOnFan` (1638) / `PF03_MinTimePostFan` (1640) are in
+      seconds.** Confirmed for `PF03` (30): the fan ran on in Wait OFF from
+      07:37:58 and was off by 07:38:53 (T19), not 30 minutes. `PF01` (60) is
+      the same unit by the same table.
 
 ## Addressing & transport
 
-- [ ] **Direct PDU addressing — no −1 offset.** Confirm `address=1105` really hits
-      `Status_OnOff_byBMS` and not an off-by-one neighbour.
+- [x] **Direct PDU addressing — no −1 offset.** Confirmed: a write to 1105
+      switched the unit on (T7) and off to `off_by_bms` (T14), a write to 1140
+      started dehumidification (T11), and every status register held a
+      documented value (T1).
 - [ ] **Block-read chunking** (`C_MAX_BLOCK=10`, `C_MAX_GAP=8` in `const.py`).
       120 failed on the real unit/gateway (no reply to `holding @ 1602+120`, so
       0.9.0 never loaded); 10 is what `diagnose_hrds.py` read the whole map
@@ -46,9 +58,10 @@ evidence log, replace the `[INFERRED]` tags it settles, and fix the code/docs.
       per-register reads, so a single "illegal data address" no longer blanks
       every entity — but it is still worth knowing which addresses do that.
 - [ ] **Modbus slave id / port** defaults (1 / 502) match the deployed gateway.
-- [ ] Temp/humidity readings require a **wired display or external probes**.
-      Confirm which probes the target install actually has, and which sensors
-      read as unavailable without them.
+- [x] Temp/humidity readings require a **wired display or external probes**.
+      The reference install has none: 499, 500, 502–506, 508–510, 512 read the
+      sentinel and show unknown; only water (501) and evaporator (511) read
+      (T3, T18).
 
 ## BMS enables
 
@@ -60,14 +73,15 @@ evidence log, replace the `[INFERRED]` tags it settles, and fix the code/docs.
       requests (1105/1139/1140).
 - [ ] Confirm an **OFF command always wins** over an ON from any source
       (display/DI/Modbus), per the manual.
-- [ ] **`PU13_MinTRoom_disableDEU` (1889) can veto a Modbus dehumidify request.**
+- [x] **`PU13_MinTRoom_disableDEU` (1889) can veto a Modbus dehumidify request.**
       The unit disables dehumidification below this room temperature. On a unit
       with no room probe, confirm whether a Modbus request still starts the
       compressor, and whether setting PU13 to 0 lifts the interlock. This is the
       most likely cause of "the write was accepted but nothing happened".
       Update 2026-10-22: at the shipped `PU13` (10 °C) a Modbus dehumidify request
       started the compressor with no room probe, so no veto there. Open: at the
-      handbook default (22 °C), and for a DI request.
+      handbook default (22 °C), and for a DI request: tracked under *First
+      dehumidify run* (`PU13` at the handbook default).
 
 ## Request read-back lag (added 2026-10-21)
 
@@ -170,8 +184,9 @@ in `doc/references/UNIT_BEHAVIOUR.md` §13. What they left open:
       moved it to `on` at once. The setup check now reports
       `unit_waiting_for_first_on` for this. A Modbus OFF then reads `off_by_bms`
       (seen 2026-10-21). Still open: does it stay so across a power cycle.
-- [ ] **HA00 = 0 on a unit that read 2** (the manual says the factory value is
-      6). Confirm it is accepted and whether AL28/AL34 appear afterwards.
+- [x] **HA00 = 0 on a unit that read 2** (the manual says the factory value is
+      6). Accepted (T7), and AL28/AL34 stayed clear with the unit ON and
+      dehumidifying (T15).
 - [ ] **PH01 / HA00 are config parameters**: confirm that re-writing them only
       when the read-back differs (never blindly each poll) does not wear the
       controller's memory, and that the unit does not reset them on its own.
@@ -320,8 +335,9 @@ option is recommended.
       3. **Start dehumidification:** 1105 ← 1 (on), 1140 ← 1 (dehumidify),
          1139 ← 0 (no active cooling). Turn on the PH02/PH28 enables first (the integration never sets them).
       4. **Pass 1:** write 1614 ← 0 with the factory band (PF28 = 50 %,
-         PF10 = 85 %). Expected to change nothing: `PM20` does not hold a
-         write (T23).
+         PF10 = 85 %). Expected to be refused: 40 and 45 % below the
+         minimum were refused with exception 04 (T27), and a value inside
+         the band is not kept (T23). Not needed any more.
       5. **Pass 2:** write 1853 (PF28) ← 0, then 1614 ← 0 again.
       6. **In each pass,** wait for the damper pre-start time (PS01, default
          20 s) plus the fan and compressor start delays. Then read:
@@ -417,11 +433,16 @@ option is recommended.
       request and the pump on `PM` runs [T10]; the Off after `Pb01` was not
       logged.
 - [ ] Verify the enum meaning of 1124 / 1126 (0/1/2 inferred from the
-      misaligned PDF table).
+      misaligned PDF table). 1126: 0 = off and 1 = on seen with the pump
+      (T10, T11, T19). 1124: only 1 seen (standby and DEU, T5, T11); the INT
+      reading is missing (see *K4 / 1124 meaning*).
 - [ ] Spot-check installer scaling for rows not covered by the snapshot
       (PM81 1617) and the PA20 address (1736 is not in the PDF table).
+      The dump now holds both: 1617 = 0 (no offset, so no scale to see) and
+      1736 = 1. PA20 is not an installer row yet.
 - [ ] Check whether registers above 1900 (PT05-PT11, PH31-PH35, PA61/PA62)
-      are readable; add them to the installer device if they are.
+      are readable; add them to the installer device if they are. The dump's
+      holding snapshot ends at 1900 (1900 = 0); extend `diagnose_hrds.py`.
 
 ## Operating modes and the passive cold-water path (added 2026-10-21)
 
@@ -464,6 +485,11 @@ none of them has been seen on the real unit yet.
       of the newest release tag for `categories`). Alternative if it should not
       wait: add it now and strip the key from the CI checkout in `hassfest.yaml`
       and the `hassfest` job of `release.yaml` until then.
+      Update 2026-10-30: unblocked. `script/hassfest/manifest.py` of
+      `2026.11.0b1` (beta, so in `hassfest:latest`) validates `categories`,
+      and both values are in its `integration_category` strings
+      (`climate.air_purifiers_humidifiers`, `climate.fans_ventilation`).
+      Not in 2026.10.4.
 
 ## Unit behaviour marked `[INFERRED]` in UNIT_BEHAVIOUR.md (added 2026-10-21)
 
