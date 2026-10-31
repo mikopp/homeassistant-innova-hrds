@@ -73,9 +73,20 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
 The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.md`
 §9.1). Remaining tests: [`fan-speed-tests.md`](fan-speed-tests.md).
 
-- [ ] **Fan-speed tests A (jump or ramp), B, E, F and G** in
-      [`fan-speed-tests.md`](fan-speed-tests.md). D needs a potentiometer
-      (section 8).
+- [ ] **Does an FC 16 write to [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) act?** Every write so far was FC 06 (T23, T27,
+      T28). One FC 16 write of 6000 during a run; expected no effect
+      ([`fan-speed-tests.md`](fan-speed-tests.md) test H).
+- [ ] **Jump or ramp of a raised band minimum**
+      ([`fan-speed-tests.md`](fan-speed-tests.md) test A), **a minimum written
+      while idle** (test F) and **minimum = maximum** (test B).
+- [ ] **Lowering through the maximum** ([`fan-speed-tests.md`](fan-speed-tests.md)
+      test G): does a lowered [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) pull a running fan down, and does the speed stay
+      after restoring it?
+- [ ] **Fan through the time-program route** ([`fan-speed-tests.md`](fan-speed-tests.md)
+      test I): with [PH03](../doc/references/MODBUS_REGISTERS.md#ph03) on, does [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) move [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115) and the output?
+- [ ] **Forced fan by a digital input** ([`fan-speed-tests.md`](fan-speed-tests.md)
+      test J): input function 19/20 on [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), speed [PF23](../doc/references/MODBUS_REGISTERS.md#pf23). Needs a
+      potential-free relay contact between M2 or M3 and its common.
 - [ ] **Speed control through the band.** Once test G is run, decide whether
       to propose a speed control (raise via the minimum, lower via the
       maximum). It costs EEPROM writes per change (ADR-0023) and needs an ADR.
@@ -233,7 +244,9 @@ No INT request has been run yet. One summer INT run answers most of these.
       a unit on a heating circuit that this is when the supply air warms, and
       that AL04 raises below [PC08](../doc/references/MODBUS_REGISTERS.md#pc08). Not possible on brine.
 - [ ] **0–10 V on FAN+** ([`fan-speed-tests.md`](fan-speed-tests.md) test D):
-      needs a potentiometer on the display terminals.
+      needs a voltage source into FAN+ (a potentiometer on the display
+      terminals, or a source that really outputs 0–10 V). Does the output
+      follow the signal, and does [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) read the raw or the scaled value?
 - [ ] **Fan tachometer.** No input is allocated to it (T21), so the RPM reads
       0. Installer question: can the fan's tachometer wire go to a free input
       (function 45/46)?
