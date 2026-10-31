@@ -155,7 +155,7 @@ raised minimum raises it, a lowered one leaves it ([UNIT_BEHAVIOUR T24–T26](UN
 No register takes a fan-speed
 request from the BMS; the band registers are the only fan-speed registers the
 Modbus manual's fan chapter lists as writable [MB p.7]. Other writable fan
-setpoints, each tied to a condition: `FSC`/`FSE`/`FSN` (1595–1597, time bands,
+setpoints, each tied to a condition: [FSC](#fsc)/[FSE](#fse)/[FSN](#fsn) ([1595](#reg-1595)–[1597](#reg-1597), time bands,
 need time programs [PH03](#ph03)) [MB p.18], [PF23](#pf23) ([1660](#reg-1660), forced by a digital input)
 [MB p.20], [PF26](#pf26) ([1637](#reg-1637), run-on). Behaviour:
 [UNIT_BEHAVIOUR §9.1](UNIT_BEHAVIOUR.md#91-bands-and-sources).

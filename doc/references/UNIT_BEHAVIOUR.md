@@ -559,7 +559,7 @@ Observations and consequences:
   ([1114](MODBUS_REGISTERS.md#reg-1114)), time bands ([1115](MODBUS_REGISTERS.md#reg-1115)), potentiometer ([1116](MODBUS_REGISTERS.md#reg-1116)), each 0–100 % [MB p.14–15].
   [INFERRED] that the output is the highest of them within the band, as
   HB 6.2 says for manual and potentiometer. The time-band request follows the
-  setpoints `FSC`/`FSE`/`FSN` (1595–1597) only with time programs on ([PH03](MODBUS_REGISTERS.md#ph03))
+  setpoints [FSC](MODBUS_REGISTERS.md#fsc)/[FSE](MODBUS_REGISTERS.md#fse)/[FSN](MODBUS_REGISTERS.md#fsn) ([1595](MODBUS_REGISTERS.md#reg-1595)–[1597](MODBUS_REGISTERS.md#reg-1597)) only with time programs on ([PH03](MODBUS_REGISTERS.md#ph03))
   [MB p.18; INFERRED from HB 5.2.4]; [PF23](MODBUS_REGISTERS.md#pf23) ([1660](MODBUS_REGISTERS.md#reg-1660)) is the speed forced by a
   digital input [MB p.20].
 * **No register takes a fan-speed request from the BMS.** The "by BMS"
