@@ -12,10 +12,8 @@
 
 Home Assistant custom integration (installable with **HACS**) for the **Innova
 DEH+** / **hej.luft HRDS+** ducted dehumidifiers (models *HRDS+ 30* and
-*HRDS+ 50*, also written HRDS 30 / HRDS 50, or *DEH+ 30* / *DEH+ 50*, also
-written DEH 30 / DEH 50). It controls and monitors the unit locally over
-**Modbus TCP**, without any cloud. The units it is meant for are listed under
-[Compatible devices](#compatible-devices).
+*HRDS+ 50*, or *DEH+ 30* / *DEH+ 50*). It controls and monitors the unit locally over
+**Modbus TCP**, without any cloud..
 
 **Deutsch:** Home-Assistant-Integration (per **HACS** installierbar) für die
 Entfeuchter **hej.luft HRDS+ 30 / 50** und **Innova DEH+ 30 / 50**
@@ -27,20 +25,16 @@ auf Englisch). Eine Kurzfassung mit Inhaltsverzeichnis: [README.de.md](README.de
 ## Compatible devices
 
 The unit is made by **[INNOVA S.r.l.](https://www.innova.it/)** (Storo, Italy).
-hej.luft sells it in Austria under its own name as an OEM product. The
-[CE declaration on the hej.luft site](https://www.hejluft.at/_files/ugd/714411_e735ab85400c485fa7c042fac92d3230.pdf)
-names Innova as the manufacturer of the HRDS and HRDS+ dehumidification units.
+hej.luft sells it in Austria under its own name as an OEM product.
 
-* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** (also written
-  HRDS 30 / 50), with the type-plate codes of the
+* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)**, with the type-plate codes of the
   [technical handbook](https://www.hejluft.at/_files/ugd/714411_f1ffc5d222f4476da2e37f29c64a7f93.pdf),
   for example *HRDS+ 30 H R K DC*.
 * **[Innova DEH+ 30 H / 50 H](https://www.innova.it/en/products/vmc/dehumidifiers/deh-ad-incasso-orizzontale/)**:
   Innova's own name for the same unit, with the same sizes and nominal airflow
   (300 / 500 m³/h). hej.luft does not build or change it: the maintainer's
   HRDS+ 30 was shipped directly from Italy and is physically the same device as
-  the DEH+ 30 H, and the integration was developed against it. The 50 sizes are
-  untested (see the beta notice). The DEH+ installation manual kept in
+  the DEH+ 30 H, and the integration was developed against it. The DEH+ installation manual kept in
   `doc/references/` describes the older microswitch controller, not the EVCO "K"
   board of the HRDS+; the registers and behaviour here come from the HRDS+
   handbooks.
@@ -48,9 +42,9 @@ names Innova as the manufacturer of the HRDS and HRDS+ dehumidification units.
 > *If your unit uses the Innova board and is sold under another name, open an
 > issue and link its product page.*
 
-## Release 0.9.5 — beta, not 1.0 yet
+## Release 0.9.5
 
-The integration is released and usable, but it is a **beta**.
+The integration is released and usable.
 
 * **Developed against and tested on:** one hej.luft **HRDS+ 30 with
   recirculation** (`R` variant), run **headless**: no CNU2 display, no external
@@ -128,8 +122,8 @@ The integration talks to the unit's control board via Modbus TCP and exposes:
   "enable control via Modbus" registers.
 * **Numbers** — humidity setpoint, summer/winter temperature setpoints, and the
   per-mode fan speed bands.
-* **Select** — season (summer/winter), T/H probe source (HA00), winter
-  dehumidification mode (PU02).
+* **Select** — season (summer/winter), T/H probe source ([HA00](doc/references/MODBUS_REGISTERS.md#ha00)), winter
+  dehumidification mode ([PU02](doc/references/MODBUS_REGISTERS.md#pu02)).
 * **Fan** — the supply/recirculation fan as readings: running, status,
   actual output % and the unit's manual request. The unit switches it with
   its requests; Home Assistant cannot.
@@ -209,15 +203,25 @@ and its status registers must make sense. Anything else is refused with
 If the form says *"Cannot reach the unit"*, check the host, the port and the
 Modbus slave ID.
 
-Without a display, the integration sets two registers the unit needs in order
-to run at all: **PH01 = 0** (no on/off from a display; with PH01 = 1 and no
-display the unit stays *Off (display)* and ignores Modbus) and **HA00 = 0** (no
-display sensors). It checks them every poll and writes one only when it reads
-wrong (the unit keeps its settings in EEPROM, which wears with every write, and
-across a power cycle); a manual change to one of them is undone. If you *do*
-have a display, tick the option and the integration leaves PH01/HA00 alone.
-Nothing else is written on connection: the Modbus enables **PH02/PH27/PH28**
-are yours (see [step 4](#4-choose-what-home-assistant-may-control)).
+Without a display, the integration keeps two registers at the values the unit
+needs in order to run under Modbus control. They are the only registers it
+writes on its own:
+
+* **[PH01](doc/references/MODBUS_REGISTERS.md#ph01) = 0**: no on/off from a display. With PH01 = 1 and no
+  display the unit stays *Off (display)* and ignores Modbus.
+* **[HA00](doc/references/MODBUS_REGISTERS.md#ha00) = 0**: no display sensors.
+
+It reads both with every poll and writes one only when it reads back a wrong
+value, for example after a factory reset or a manual change (which is undone).
+While both hold 0 nothing is written: not on connection, not on a restart, not
+after a power cycle, because the unit keeps its settings and its EEPROM wears
+with every write. If the unit does not keep a write, the integration stops
+trying after a few polls (see
+[ADR-0010](.claude/rules/adr/0010-headless-by-default.md)). If you *do* have a
+display, tick the option and the integration leaves
+[PH01](doc/references/MODBUS_REGISTERS.md#ph01)/[HA00](doc/references/MODBUS_REGISTERS.md#ha00) alone. Nothing else is written on connection:
+the Modbus enables **[PH02](doc/references/MODBUS_REGISTERS.md#ph02)/[PH27](doc/references/MODBUS_REGISTERS.md#ph27)/[PH28](doc/references/MODBUS_REGISTERS.md#ph28)** are
+yours (see [step 4](#4-choose-what-home-assistant-may-control)).
 
 ### 3. Check the setup
 
@@ -228,8 +232,8 @@ split by purpose:
 
 | Where | What is there | When you touch it |
 |-------|---------------|-------------------|
-| **`HRDS+ setup`** device (linked to the main device) | Everything that decides whether the unit can run at all: the **Setup check** sensor, the **Allow operational requests** switch, the Modbus/display enables (PH01, PH02, PH27, PH28), probe allocation (HA00, HA02, HA03) and probe-OK flags, remote on/off input (HB03) and its contact state, season input (HB04, PC11), time programs (PH03), temperature unit (PH05), machine type (PG01), free-cooling/integration enables, and the fan/damper output wiring (HC04, HD01, PS01). | Once, after installing, and again if the wiring changes |
-| **`HRDS+`** device, *Configuration* section | Post-setup tuning: setpoints (only with a probe), per-mode fan min/max, dehumidify differential, minimum room temperature (PU13/PU14), fan run times, humidity clamps | Occasionally |
+| **`HRDS+ setup`** device (linked to the main device) | Everything that decides whether the unit can run at all: the **Setup check** sensor, the **Allow operational requests** switch, the Modbus/display enables ([PH01](doc/references/MODBUS_REGISTERS.md#ph01), [PH02](doc/references/MODBUS_REGISTERS.md#ph02), [PH27](doc/references/MODBUS_REGISTERS.md#ph27), [PH28](doc/references/MODBUS_REGISTERS.md#ph28)), probe allocation ([HA00](doc/references/MODBUS_REGISTERS.md#ha00), [HA02](doc/references/MODBUS_REGISTERS.md#ha02), [HA03](doc/references/MODBUS_REGISTERS.md#ha03)) and probe-OK flags, remote on/off input ([HB03](doc/references/MODBUS_REGISTERS.md#hb03)) and its contact state, season input ([HB04](doc/references/MODBUS_REGISTERS.md#hb04), [PC11](doc/references/MODBUS_REGISTERS.md#pc11)), time programs ([PH03](doc/references/MODBUS_REGISTERS.md#ph03)), temperature unit ([PH05](doc/references/MODBUS_REGISTERS.md#ph05)), machine type ([PG01](doc/references/MODBUS_REGISTERS.md#pg01)), free-cooling/integration enables, and the fan/damper output wiring ([HC04](doc/references/MODBUS_REGISTERS.md#hc04), [HD01](doc/references/MODBUS_REGISTERS.md#hd01), [PS01](doc/references/MODBUS_REGISTERS.md#ps01)). | Once, after installing, and again if the wiring changes |
+| **`HRDS+`** device, *Configuration* section | Post-setup tuning: setpoints (only with a probe), per-mode fan min/max, dehumidify differential, minimum room temperature ([PU13](doc/references/MODBUS_REGISTERS.md#pu13)/[PU14](doc/references/MODBUS_REGISTERS.md#pu14)), fan run times, humidity clamps | Occasionally |
 | **`HRDS+`** device, main section | Climate, fan, season, the request switches (on/off, dehumidify, integration), live readings, status and alarms | Day to day |
 | **`HRDS+`** device, *Diagnostic* section | Water valve/pump, condenser valve, water circuit check, airflow calibration, fan request echo | When troubleshooting |
 | **`HRDS+ installer`** device (linked to the main device) | The rest of the installer menu (see [Installer device](doc/entity-reference.md#installer-device-hrds-installer)) | Rarely, by an installer |
@@ -251,19 +255,19 @@ show attributes, so this sensor is the one place to look.
    `attention`, the `issues` attribute says what; the table under
    [First-use checklist](#first-use-checklist) explains each one. A factory
    unit usually shows `free_cooling_without_outdoor_probe` until you switch off
-   **Enable free cooling (PG03)** (no outdoor probe is fitted). Each setup
+   **Enable free cooling ([PG03](doc/references/MODBUS_REGISTERS.md#pg03))** (no outdoor probe is fitted). Each setup
    switch carries a `hint` attribute (open the entity, *Attributes*) that says
    when to leave it on or turn it off:
 
    | Switch | Leave | Why |
    |--------|-------|-----|
-   | Enable free cooling/heating (PG03) | **Off** unless an outdoor probe is wired | It acts on the outdoor temperature (bypass relay). With no probe there is no valid reading, so the unit may behave unpredictably. Also off when a central ventilation system handles free cooling. |
-   | Enable on/off via display (PH01) | **Off** without a CNU2 display | Otherwise the unit stays off waiting for the display. |
-   | Enable on/off, dehumidify (DEU), integration (INT) via Modbus (PH02, PH28, PH27) | **Your choice** | Each one lets Home Assistant control one function; see [step 4](#4-choose-what-home-assistant-may-control). The integration never changes them. |
+   | Enable free cooling/heating ([PG03](doc/references/MODBUS_REGISTERS.md#pg03)) | **Off** unless an outdoor probe is wired | It acts on the outdoor temperature (bypass relay). With no probe there is no valid reading, so the unit may behave unpredictably. Also off when a central ventilation system handles free cooling. |
+   | Enable on/off via display ([PH01](doc/references/MODBUS_REGISTERS.md#ph01)) | **Off** without a CNU2 display | Otherwise the unit stays off waiting for the display. |
+   | Enable on/off, dehumidify (DEU), integration (INT) via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02), [PH28](doc/references/MODBUS_REGISTERS.md#ph28), [PH27](doc/references/MODBUS_REGISTERS.md#ph27)) | **Your choice** | Each one lets Home Assistant control one function; see [step 4](#4-choose-what-home-assistant-may-control). The integration never changes them. |
 2. **Probe settings** match what is wired. Without a display and without
-   probes, *T/H probe source (HA00)* is *None / external probes* and both *T/H
+   probes, *T/H probe source ([HA00](doc/references/MODBUS_REGISTERS.md#ha00))* is *None / external probes* and both *T/H
    probe temperature / humidity input* selects are *Unused*; the integration
-   sets HA00 for you. Select a probe type only where a probe is really wired,
+   sets [HA00](doc/references/MODBUS_REGISTERS.md#ha00) for you. Select a probe type only where a probe is really wired,
    otherwise the unit raises alarm AL28 / AL34.
 3. **Unit facts** are right: *Machine type*, *Recirculation damper relay
    allocation* (not `disabled` on an `R` model), *Remote on/off input* and
@@ -271,7 +275,7 @@ show attributes, so this sensor is the one place to look.
    Modbus-only control), *Temperature unit* (°C).
 4. **Season and water circuit** fit your installation: `select.season`, and the
    integration options *Water register connected to* and *Allow winter heating*.
-5. **Minimum room temperature (PU13)** in the Configuration section of the main
+5. **Minimum room temperature ([PU13](doc/references/MODBUS_REGISTERS.md#pu13))** in the Configuration section of the main
    device: the unit refuses to dehumidify below it.
 
 #### First-use checklist
@@ -281,29 +285,29 @@ show attributes, so this sensor is the one place to look.
 
    | Issue | Meaning and what to do |
    |-------|------------------------|
-   | `headless_settings_pending` | Without a display, PH01 and HA00 must be 0. The integration writes them on the next poll; if this persists, the unit does not keep the write, and after three tries the integration stops writing it (check the log). |
-   | `unit_off_by_digital_input` | The remote on/off contact (OFF/OFF terminals, HB03) is open, so the unit is forced off. Close it (the factory bridge) or set HB03 accordingly. |
-   | `unit_off_by_scheduler` / `unit_off_by_clock` | A time program or the internal clock holds the unit off. Check PH03 (**Time programs enabled**); switch it off for Modbus-only control. |
-   | `unit_waiting_for_first_on` | Without a display, *Unit status* still reads *off by display* although PH01 is 0: the unit keeps a stored OFF until the first Modbus ON. Turn on *Enable on/off via Modbus (PH02)* and *Allow operational requests*, then switch on *Unit on/off (Modbus)* once (main device). |
+   | `headless_settings_pending` | Without a display, [PH01](doc/references/MODBUS_REGISTERS.md#ph01) and [HA00](doc/references/MODBUS_REGISTERS.md#ha00) must be 0. The integration writes them on the next poll; if this persists, the unit does not keep the write and the integration gives up (check the log; [ADR-0010](.claude/rules/adr/0010-headless-by-default.md)). |
+   | `unit_off_by_digital_input` | The remote on/off contact (OFF/OFF terminals, [HB03](doc/references/MODBUS_REGISTERS.md#hb03)) is open, so the unit is forced off. Close it (the factory bridge) or set [HB03](doc/references/MODBUS_REGISTERS.md#hb03) accordingly. |
+   | `unit_off_by_scheduler` / `unit_off_by_clock` | A time program or the internal clock holds the unit off. Check [PH03](doc/references/MODBUS_REGISTERS.md#ph03) (**Time programs enabled**); switch it off for Modbus-only control. |
+   | `unit_waiting_for_first_on` | Without a display, *Unit status* still reads *off by display* although [PH01](doc/references/MODBUS_REGISTERS.md#ph01) is 0: the unit keeps a stored OFF until the first Modbus ON. Turn on *Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))* and *Allow operational requests*, then switch on *Unit on/off (Modbus)* once (main device). |
    | `unit_off_by_display` | Only reported when the display option is ticked: the display has switched the unit off. |
-   | `room_temperature_probe_missing` | *T/H probe temperature input* (HA02) says a probe is on AI2, but nothing is wired. The unit will wait for a room temperature. Set `select.ai2_allocation` to *Unused* or wire the probe. |
-   | `room_humidity_probe_missing` | Same for *T/H probe humidity input* (`select.ai3_allocation`, HA03) and the humidity probe. |
-   | `probe_input_unrecognised` | HA02 or HA03 holds a code that is not one of the documented probe codes, so the select shows unknown (the raw code is in the log). Pick an option, or check what the installer wired. |
-   | `time_programs_enabled` | PH03 is on; the unit may switch itself off on schedule. |
+   | `room_temperature_probe_missing` | *T/H probe temperature input* ([HA02](doc/references/MODBUS_REGISTERS.md#ha02)) says a probe is on AI2, but nothing is wired. The unit will wait for a room temperature. Set `select.ai2_allocation` to *Unused* or wire the probe. |
+   | `room_humidity_probe_missing` | Same for *T/H probe humidity input* (`select.ai3_allocation`, [HA03](doc/references/MODBUS_REGISTERS.md#ha03)) and the humidity probe. |
+   | `probe_input_unrecognised` | [HA02](doc/references/MODBUS_REGISTERS.md#ha02) or [HA03](doc/references/MODBUS_REGISTERS.md#ha03) holds a code that is not one of the documented probe codes, so the select shows unknown (the raw code is in the log). Pick an option, or check what the installer wired. |
+   | `time_programs_enabled` | [PH03](doc/references/MODBUS_REGISTERS.md#ph03) is on; the unit may switch itself off on schedule. |
    | `free_cooling_without_outdoor_probe` | **Free cooling** is on but no outdoor probe delivers a value. Turn off `switch.enable_free_cooling` unless an outdoor probe is fitted. |
-   | `temperature_unit_fahrenheit` | PH05 is set to °F; the integration assumes °C. |
-   | `water_pump_output_not_configured` | Relay K5 (external water valve and the PM pump output) is not configured, so the unit cannot start the circulation pump. Check HD05 on the installer device (12 = water valve) and the wiring. |
-   | `winter_dehumidify_on_brine` | Brine circuit selected, no brine temperature guard, but PU02 allows dehumidifying in winter - the coil can freeze. Set `select.winter_dehumidify` to *Disabled*, or configure a [brine temperature guard](#brine-temperature-guard). |
-   | `unit_heats_on_its_own` | The unit has a room temperature source and the integration function, so in winter it heats by itself below SEtH − PF12, and *Allow winter heating* is off. Accept it (turn the option on) or stop it, see [The unit heats on its own](#the-unit-heats-on-its-own). |
-   | `unit_heats_on_its_own_on_brine` | Same on a brine circuit, where the unit pumps cold brine through the register instead of heating. Lower the winter setpoint (and PH09) or switch the unit off in winter. |
-   | `winter_heating_without_integration` | *Allow winter heating* is on but the unit has no integration function (PG02 = 0), so nothing can heat. Turn the option off or enable PG02 on the unit. |
+   | `temperature_unit_fahrenheit` | [PH05](doc/references/MODBUS_REGISTERS.md#ph05) is set to °F; the integration assumes °C. |
+   | `water_pump_output_not_configured` | Relay K5 (external water valve and the PM pump output) is not configured, so the unit cannot start the circulation pump. Check [HD05](doc/references/MODBUS_REGISTERS.md#hd05) on the installer device (12 = water valve) and the wiring. |
+   | `winter_dehumidify_on_brine` | Brine circuit selected, no brine temperature guard, but [PU02](doc/references/MODBUS_REGISTERS.md#pu02) allows dehumidifying in winter - the coil can freeze. Set `select.winter_dehumidify` to *Disabled*, or configure a [brine temperature guard](#brine-temperature-guard). |
+   | `unit_heats_on_its_own` | The unit has a room temperature source and the integration function, so in winter it heats by itself below [SEtH](doc/references/MODBUS_REGISTERS.md#seth) − [PF12](doc/references/MODBUS_REGISTERS.md#pf12), and *Allow winter heating* is off. Accept it (turn the option on) or stop it, see [The unit heats on its own](#the-unit-heats-on-its-own). |
+   | `unit_heats_on_its_own_on_brine` | Same on a brine circuit, where the unit pumps cold brine through the register instead of heating. Lower the winter setpoint (and [PH09](doc/references/MODBUS_REGISTERS.md#ph09)) or switch the unit off in winter. |
+   | `winter_heating_without_integration` | *Allow winter heating* is on but the unit has no integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02) = 0), so nothing can heat. Turn the option off or enable [PG02](doc/references/MODBUS_REGISTERS.md#pg02) on the unit. |
 
 2. Read the remaining setup entities and confirm they match your installation:
    *Machine type* (supply only, or supply and exhaust fan), *Recirculation
    damper relay allocation* (a value other than `disabled`/unused on an `R`
    model), *T/H probe temperature / humidity input* and the *probe OK* flags (which probes the unit
    believes are connected), *Remote on/off input* and *contact closed*.
-3. Check **Minimum room temperature (PU13)** in the Configuration section. The
+3. Check **Minimum room temperature ([PU13](doc/references/MODBUS_REGISTERS.md#pu13))** in the Configuration section. The
    unit refuses to dehumidify below it. With no room temperature probe, a
    Modbus dehumidify request started the compressor at the shipped 10 °C
    ([T15](doc/references/UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware));
@@ -337,18 +341,18 @@ reading, status, alarm and setting works, and nothing can make the unit act.
 
 | To do this from Home Assistant | Turn on (setup device) | Register | While it is off |
 |---|---|---|---|
-| Switch the unit **on and off**: climate *Off*, climate *turn on/off*, switching from *Off* to any mode, `switch.unit_on_off` | **Enable on/off via Modbus (PH02)** | 1778 | The unit's own controls switch it. The climate offers only the modes on the side the unit is on: no *Off* while it runs, only *Off* while it is off. |
-| **Dehumidify**: climate *Dry*, `switch.dehumidify` | **Enable dehumidify (DEU) via Modbus (PH28)** | 1870 | No *Dry*. A dehumidify request from the unit's own humidity logic or the DEU input still shows as *Dry*. |
-| **Cool in summer, heat in winter**: climate *Cool* / *Heat*, `switch.integration_request` | **Enable integration (INT) via Modbus (PH27)**; the unit also needs the integration function (PG02, `DC` models) | 1869 | No *Cool* / *Heat*. The unit's own integration (its room temperature logic, the INT input) still shows. |
+| Switch the unit **on and off**: climate *Off*, climate *turn on/off*, switching from *Off* to any mode, `switch.unit_on_off` | **Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))** | 1778 | The unit's own controls switch it. The climate offers only the modes on the side the unit is on: no *Off* while it runs, only *Off* while it is off. |
+| **Dehumidify**: climate *Dry*, `switch.dehumidify` | **Enable dehumidify (DEU) via Modbus ([PH28](doc/references/MODBUS_REGISTERS.md#ph28))** | 1870 | No *Dry*. A dehumidify request from the unit's own humidity logic or the DEU input still shows as *Dry*. |
+| **Cool in summer, heat in winter**: climate *Cool* / *Heat*, `switch.integration_request` | **Enable integration (INT) via Modbus ([PH27](doc/references/MODBUS_REGISTERS.md#ph27))**; the unit also needs the integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02), `DC` models) | 1869 | No *Cool* / *Heat*. The unit's own integration (its room temperature logic, the INT input) still shows. |
 
 Good to know:
 
 * **Full control** from Home Assistant (a unit without a display): turn on all
   three, then *Allow operational requests*.
-* The real unit this integration was developed on shipped with PH02 **off**
-  and PH27/PH28 **on** ([as-delivered settings](doc/references/UNIT_BEHAVIOUR.md#15-as-delivered-settings-vs-handbook-defaults)):
+* The real unit this integration was developed on shipped with [PH02](doc/references/MODBUS_REGISTERS.md#ph02) **off**
+  and [PH27](doc/references/MODBUS_REGISTERS.md#ph27)/[PH28](doc/references/MODBUS_REGISTERS.md#ph28) **on** ([as-delivered settings](doc/references/UNIT_BEHAVIOUR.md#15-as-delivered-settings-vs-handbook-defaults)):
   Dry and Cool were allowed, but Home Assistant could not switch the unit on
-  until PH02 was turned on.
+  until [PH02](doc/references/MODBUS_REGISTERS.md#ph02) was turned on.
 * The unit acts on a request register only while its enable is on, and it
   presumably keeps a request written earlier
   ([UNIT_BEHAVIOUR §3.3](doc/references/UNIT_BEHAVIOUR.md#33-requests-deu-and-int)).
@@ -394,7 +398,7 @@ Good to know:
 * Your choice is remembered across restarts and reloads.
 * Turning it off again does not stop a running unit; it only refuses new
   requests. To stop the unit, set the climate to *Off*: that clears both
-  requests and switches the unit off (with PH02 on).
+  requests and switches the unit off (with [PH02](doc/references/MODBUS_REGISTERS.md#ph02) on).
 
 ### 5. First run
 
@@ -460,18 +464,18 @@ What they do depends on the season and on how cold the water is.
 | Mode | Requested by | What the unit does | Air leaves |
 |------|--------------|--------------------|-----------|
 | **Dehumidify** | DEU (climate **Dry**) | Compressor runs; its heat reheats the air | Dried, at about room temperature |
-| **Cool and dehumidify** | INT (climate **Cool**), with PU05 on (factory) | Compressor runs; all heat goes into the water | Dried and cold |
-| **Passive (cold water)** | Any request while the water is below **PU08** (factory 10 °C) | **Compressor stays off**; the cold water cools and dries the air. With PU09 on, the compressor joins after PU10 (120 min) if the request is still open | Dried and cooled, without compressor |
+| **Cool and dehumidify** | INT (climate **Cool**), with [PU05](doc/references/MODBUS_REGISTERS.md#pu05) on (factory) | Compressor runs; all heat goes into the water | Dried and cold |
+| **Passive (cold water)** | Any request while the water is below **[PU08](doc/references/MODBUS_REGISTERS.md#pu08)** (factory 10 °C) | **Compressor stays off**; the cold water cools and dries the air. With [PU09](doc/references/MODBUS_REGISTERS.md#pu09) on, the compressor joins after [PU10](doc/references/MODBUS_REGISTERS.md#pu10) (120 min) if the request is still open | Dried and cooled, without compressor |
 
 The passive path is automatic; nothing has to be set for it. Cold brine early
 in summer runs it, a heat pump in cooling mode (about 16–20 °C) runs the
-compressor, and water above PC07 (30 °C) blocks with AL03. PU08, PU09 and PU10
+compressor, and water above [PC07](doc/references/MODBUS_REGISTERS.md#pc07) (30 °C) blocks with AL03. [PU08](doc/references/MODBUS_REGISTERS.md#pu08), [PU09](doc/references/MODBUS_REGISTERS.md#pu09) and [PU10](doc/references/MODBUS_REGISTERS.md#pu10)
 are on the installer device.
 
-**PU05, *Force dehumidify when cooling*** (`switch.force_dehumidify_in_cooling`,
-factory on) is what makes an INT request start the compressor. With PU05 off,
+**[PU05](doc/references/MODBUS_REGISTERS.md#pu05), *Force dehumidify when cooling*** (`switch.force_dehumidify_in_cooling`,
+factory on) is what makes an INT request start the compressor. With [PU05](doc/references/MODBUS_REGISTERS.md#pu05) off,
 INT presumably cools with the water only; **not tested on a real unit**, leave
-PU05 on unless you want to try this.
+[PU05](doc/references/MODBUS_REGISTERS.md#pu05) on unless you want to try this.
 
 Sources and the remaining combinations:
 [UNIT_BEHAVIOUR §6](doc/references/UNIT_BEHAVIOUR.md#6-summer-operation).
@@ -488,16 +492,16 @@ the compressor off (handbook §2.6.2, §6.4). The air gets warmer only if the
 building's heating circuit delivers warm water (boiler, or a heat pump in
 heating mode). So the climate action shows **Heating** only when the unit can
 be doing it: there is a winter INT request (a latched one, from Home Assistant
-or a display, or the unit's own while the room is below SEtH + PF12), the unit
-has the integration function PG02, the valve/pump output is on, AL04 is not
-active, the compressor is off, and the water temperature is at least **PC08**
+or a display, or the unit's own while the room is below [SEtH](doc/references/MODBUS_REGISTERS.md#seth) + [PF12](doc/references/MODBUS_REGISTERS.md#pf12)), the unit
+has the integration function [PG02](doc/references/MODBUS_REGISTERS.md#pg02), the valve/pump output is on, AL04 is not
+active, the compressor is off, and the water temperature is at least **[PC08](doc/references/MODBUS_REGISTERS.md#pc08)**
 (the unit's own minimum for winter integration; handbook 20 °C, the reference
 unit shipped with 10 °C). Otherwise it
 shows *Idle*, or *Drying* while the unit dehumidifies. The option *Allow
 winter heating* does not enter: the unit knows nothing of it, so a winter INT
 set elsewhere shows as *Heat*. On brine a winter INT only circulates cold
 brine: it never shows as *Heat* or *Heating*. Not tested on a real unit.
-| DEU (climate **Dry**) | Only if PU02 (`select.winter_dehumidify`) allows it; factory: disabled. On brine only with a passing [brine temperature guard](#brine-temperature-guard) |
+| DEU (climate **Dry**) | Only if [PU02](doc/references/MODBUS_REGISTERS.md#pu02) (`select.winter_dehumidify`) allows it; factory: disabled. On brine only with a passing [brine temperature guard](#brine-temperature-guard) |
 
 On a brine circuit the handbook forbids heating and active winter
 dehumidifying (the register can freeze) and recommends switching the unit off
@@ -524,7 +528,7 @@ in winter; see [Water circuit and brine](#water-circuit-and-brine).
    [Setting target humidity and target temperature](#setting-target-humidity-and-target-temperature)).
 4. **Leave the passive path to the unit.** You can see it run: the request is
    on, `sensor.water_valve_pump` is *On*, `sensor.water_temperature` is below
-   PU08, and `sensor.compressor_status` is not *On*. The water check then lists
+   [PU08](doc/references/MODBUS_REGISTERS.md#pu08), and `sensor.compressor_status` is not *On*. The water check then lists
    `water_below_compressor_limit`, which here is information, not a fault.
 5. **The fan** starts at the active mode's minimum speed; raise the minimum
    to run it faster (see
@@ -534,7 +538,7 @@ in winter; see [Water circuit and brine](#water-circuit-and-brine).
 
 ### Season and winter heating
 
-Without a display the season is set with `select.season` (HB04 = 4 summer,
+Without a display the season is set with `select.season` ([HB04](doc/references/MODBUS_REGISTERS.md#hb04) = 4 summer,
 3 winter). Because winter changes the integration request from cooling to
 heating, the integration guards it:
 
@@ -544,10 +548,10 @@ heating, the integration guards it:
   which season is in force; an unknown season counts as not summer.
 * Switching the season to winter is refused while an integration request is on,
   and on brine without a passing brine guard while the unit is on and its room
-  probe could make it dehumidify in winter by itself (PU02 enabled).
+  probe could make it dehumidify in winter by itself ([PU02](doc/references/MODBUS_REGISTERS.md#pu02) enabled).
 * *Allow winter heating* governs only what Home Assistant requests. The unit
-  can heat by itself below SEtH − PF12 (about 13.5 °C with the factory PH10 cap and
-  PF12), see below and
+  can heat by itself below [SEtH](doc/references/MODBUS_REGISTERS.md#seth) − [PF12](doc/references/MODBUS_REGISTERS.md#pf12) (about 13.5 °C with the factory [PH10](doc/references/MODBUS_REGISTERS.md#ph10) cap and
+  [PF12](doc/references/MODBUS_REGISTERS.md#pf12)), see below and
   [UNIT_BEHAVIOUR §3.3](doc/references/UNIT_BEHAVIOUR.md#33-requests-deu-and-int).
 * Not something software controls: in OFF/standby the internal water valve is
   open. If warm water circulates through the unit, it warms the ventilation air
@@ -556,11 +560,11 @@ heating, the integration guards it:
 ### The unit heats on its own
 
 With a room temperature source (a display, or a probe on AI2) and the
-integration function (PG02), the unit raises its own winter integration request
-when the room falls below **SEtH − PF12** and drops it above SEtH + PF12
+integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02)), the unit raises its own winter integration request
+when the room falls below **[SEtH](doc/references/MODBUS_REGISTERS.md#seth) − [PF12](doc/references/MODBUS_REGISTERS.md#pf12)** and drops it above [SEtH](doc/references/MODBUS_REGISTERS.md#seth) + [PF12](doc/references/MODBUS_REGISTERS.md#pf12)
 (handbook §6.1.2). It does not ask Home Assistant, and *Allow winter heating*
-cannot stop it: the unit knows nothing of that option. The factory PH10 cap
-(14 °C, also PH09) only limits SEtH, so with the factory dead band (PF12 =
+cannot stop it: the unit knows nothing of that option. The factory [PH10](doc/references/MODBUS_REGISTERS.md#ph10) cap
+(14 °C, also [PH09](doc/references/MODBUS_REGISTERS.md#ph09)) only limits [SEtH](doc/references/MODBUS_REGISTERS.md#seth), so with the factory dead band ([PF12](doc/references/MODBUS_REGISTERS.md#pf12) =
 0.5 K) the unit heats whenever the room is below 13.5 °C. Headless without a
 probe it never heats by itself.
 
@@ -568,8 +572,8 @@ The integration tells you instead of pretending otherwise:
 
 * `binary_sensor.automatic_heating` (*Unit heats on its own*) is **on** while
   the unit, switched on in winter, can heat by itself. Its attributes say on
-  what: `starts_below` / `stops_above` (SEtH ∓ PF12), `winter_setpoint`,
-  `dead_band`, `winter_setpoint_min` / `_max` (PH09/PH10), the room
+  what: `starts_below` / `stops_above` ([SEtH](doc/references/MODBUS_REGISTERS.md#seth) ∓ [PF12](doc/references/MODBUS_REGISTERS.md#pf12)), `winter_setpoint`,
+  `dead_band`, `winter_setpoint_min` / `_max` ([PH09](doc/references/MODBUS_REGISTERS.md#ph09)/[PH10](doc/references/MODBUS_REGISTERS.md#ph10)), the room
   temperature and its source, and `heating` (the unit heats right now). It is
   not created without a room temperature source or the integration function.
 * The climate entity shows **Auto** with the action **Heating** while it does,
@@ -580,11 +584,11 @@ The integration tells you instead of pretending otherwise:
 
 To react, either accept it (turn *Allow winter heating* on) or stop it:
 
-* **Lower the threshold**: set *PH09 Winter setpoint min* (installer device,
+* **Lower the threshold**: set *[PH09](doc/references/MODBUS_REGISTERS.md#ph09) Winter setpoint min* (installer device,
   enable it in the options) to 5 °C or less, then the winter setpoint to 5 °C.
   The unit then only heats below 4.5 °C, and the setup check stops listing it.
 * **Switch the unit off in winter** (what the handbook recommends on brine).
-* Setting PG02 = 0 or unallocating the room probe also stops it, but takes
+* Setting [PG02](doc/references/MODBUS_REGISTERS.md#pg02) = 0 or unallocating the room probe also stops it, but takes
   summer cooling or the unit's own humidity control with it.
 
 ### Water circuit and brine
@@ -597,10 +601,10 @@ check** (`sensor.water_check`, attribute `issues`) flags:
 | Issue | Meaning |
 |-------|---------|
 | `pump_off_while_compressor_runs` | Compressor on but the valve/pump output off - no water through the condenser |
-| `water_too_warm` | While circulating, water is above PC07 (max water temperature for dehumidify / summer integration); AL03 follows after PA16 |
-| `water_below_compressor_limit` | While circulating, water is below PU08: the compressor will not start and the unit runs on the [passive cold-water path](#operating-modes-in-summer). Expected with cold brine in early summer, not a fault |
+| `water_too_warm` | While circulating, water is above [PC07](doc/references/MODBUS_REGISTERS.md#pc07) (max water temperature for dehumidify / summer integration); AL03 follows after [PA16](doc/references/MODBUS_REGISTERS.md#pa16) |
+| `water_below_compressor_limit` | While circulating, water is below [PU08](doc/references/MODBUS_REGISTERS.md#pu08): the compressor will not start and the unit runs on the [passive cold-water path](#operating-modes-in-summer). Expected with cold brine in early summer, not a fault |
 | `high_water_temperature_alarm` / `low_water_temperature_alarm` / `antifreeze_alarm` | AL03 / AL04 / AL16 active |
-| `brine_unit_on_in_winter` | Brine circuit, winter, unit on. The anti-stagnation cycle (Pb07/Pb08) pulses valve and pump and can blow short bursts of cold air; the handbook recommends switching the unit off in winter |
+| `brine_unit_on_in_winter` | Brine circuit, winter, unit on. The anti-stagnation cycle ([Pb07](doc/references/MODBUS_REGISTERS.md#pb07)/[Pb08](doc/references/MODBUS_REGISTERS.md#pb08)) pulses valve and pump and can blow short bursts of cold air; the handbook recommends switching the unit off in winter |
 | `brine_guard_blocking` | The [brine temperature guard](#brine-temperature-guard) currently refuses requests |
 
 With **Water register connected to = Brine circuit** (handbook §3.8.7), heating
@@ -608,7 +612,7 @@ is impossible and dehumidifying in winter is forbidden because the coil can
 freeze. The integration refuses winter integration requests regardless of the
 heating option. Winter dehumidify requests are refused too, unless a brine
 temperature guard is configured and passing. Without a guard, the setup check
-flags PU02 if it allows winter dehumidifying.
+flags [PU02](doc/references/MODBUS_REGISTERS.md#pu02) if it allows winter dehumidifying.
 In the handbook's brine variants (4 to 6, §3.8.7) the HRDS+'s PM output
 switches an additional brine pump through a relay; that wiring is what
 `sensor.water_valve_pump` reflects. The maintainer's unit is wired as variant 6
@@ -620,7 +624,7 @@ switches an additional brine pump through a relay; that wiring is what
 The unit cannot tell how cold the brine is before it starts: its water probe
 only sees the brine while valve and pump run (otherwise it reads the standing
 water at plant-room temperature), and its own protections react only after
-the fact (AL16 below PA43, factory 3 °C, stops the fan; AL04 and PU08 do not
+the fact (AL16 below [PA43](doc/references/MODBUS_REGISTERS.md#pa43), factory 3 °C, stops the fan; AL04 and [PU08](doc/references/MODBUS_REGISTERS.md#pu08) do not
 cover winter dehumidifying). The freezing risk is on the air side: below about
 0 °C brine, condensate freezes on the register fins.
 
@@ -634,15 +638,15 @@ options. Then:
   reported within the last 24 h**. This applies in every season and to any
   water circuit. A sensor that is unavailable, not numeric or not a
   temperature also blocks. Switching off is always allowed.
-* Why 8 °C: it stays well above the unit's own frost alarm (AL16 at PA43,
-  factory 3 °C, which stops the fan and clears at PA43 + PA44 = 5 °C), and below
-  PU08 (10 °C), so early-summer brine can still run the
+* Why 8 °C: it stays well above the unit's own frost alarm (AL16 at [PA43](doc/references/MODBUS_REGISTERS.md#pa43),
+  factory 3 °C, which stops the fan and clears at [PA43](doc/references/MODBUS_REGISTERS.md#pa43) + [PA44](doc/references/MODBUS_REGISTERS.md#pa44) = 5 °C), and below
+  [PU08](doc/references/MODBUS_REGISTERS.md#pu08) (10 °C), so early-summer brine can still run the
   [passive cold-water path](#operating-modes-in-summer). An install that
   already saved the earlier default of 10 °C keeps it until you change it in
   the options.
 * On a brine circuit a passing guard is what permits **dehumidifying in
   winter**. Without a guard, winter dehumidifying on brine is always refused.
-  The unit itself only dehumidifies in winter if PU02
+  The unit itself only dehumidifies in winter if [PU02](doc/references/MODBUS_REGISTERS.md#pu02)
   (`select.winter_dehumidify`) is *With water*; the factory value is
   *Disabled*.
 * Winter heating stays impossible on brine, guard or not.
@@ -664,18 +668,18 @@ Without a display or a configured room probe the unit **ignores** its setpoints
 ist oder externe Sensoren angeschlossen sind“*). In that case the integration
 does not create them, and the climate entity offers no targets: use Home
 Assistant (a generic hygrostat/thermostat on your own sensors) to switch
-**Dry** / **Cool** on and off. The decision is made at start-up from HA02/HA03;
+**Dry** / **Cool** on and off. The decision is made at start-up from [HA02](doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](doc/references/MODBUS_REGISTERS.md#ha03);
 reload the integration after wiring a probe.
 
 When a display or probe is present, both targets are exposed on the **climate
 entity** (and as standalone `number` entities):
 
-* **Target humidity** (`target_humidity`, register `PU01` 1586, %RH) is the
+* **Target humidity** (`target_humidity`, register [`PU01`](doc/references/MODBUS_REGISTERS.md#pu01) 1586, %RH) is the
   level the unit dehumidifies towards. It is only acted on while the unit is
   **on and dehumidifying** — i.e. the climate entity is in **Dry** or **Cool**
   mode (both request dehumidification). In **Off** the setpoint is stored but
   does nothing. The value is clamped by the unit's own min/max humidity
-  parameters (PH29/PH30).
+  parameters ([PH29](doc/references/MODBUS_REGISTERS.md#ph29)/[PH30](doc/references/MODBUS_REGISTERS.md#ph30)).
 * **Target temperature** (`target_temperature`, the **summer** setpoint
   register 1584, °C) is the room temperature the unit aims for. It is used in
   **summer season** when active cooling (the "integration" function) is engaged,
@@ -733,7 +737,7 @@ Q_max per model:
 | HRDS+ 30 | 300 m³/h |
 | HRDS+ 50 | 500 m³/h |
 
-Note: PF28 and PF27 (the per-mode fan minimums, exposed as `number` entities)
+Note: [PF28](doc/references/MODBUS_REGISTERS.md#pf28) and [PF27](doc/references/MODBUS_REGISTERS.md#pf27) (the per-mode fan minimums, exposed as `number` entities)
 are configurable from 0 to 100 %, so the 130/190 m³/h figures from the
 performance table are the tested operating range, not a firmware floor.
 
@@ -750,16 +754,16 @@ with the underlying spec data in
 **The fan is the unit's; Home Assistant shows it and can neither switch it nor
 set its speed.** The unit runs the fan with every dehumidify or integration
 request and stops it after a run-on; no register switches it by itself. It
-has no register for a fan-speed request from Modbus either. PM20 (1614), the
+has no register for a fan-speed request from Modbus either. [PM20](doc/references/MODBUS_REGISTERS.md#pm20) (1614), the
 "manual fan speed" of the register list, is the **display's** setpoint
 ("read only" in the handbook): the unit sets it itself, acknowledges a written
 value inside the band without keeping it, and refuses one outside the band.
 So the fan is shown by readings only, with no fan entity, the climate entity
-has no fan mode, and `sensor.hrds_manual_fan_speed` shows PM20.
+has no fan mode, and `sensor.hrds_manual_fan_speed` shows [PM20](doc/references/MODBUS_REGISTERS.md#pm20).
 
 The fan runs at the highest of the unit's own requests, kept within the active
-mode's band (PF28–PF10 for dehumidify, PF27–PF09 for cooling): the 0–10 V
-input, scaled into the band, and the manual (display) request, which PM20
+mode's band ([PF28](doc/references/MODBUS_REGISTERS.md#pf28)–[PF10](doc/references/MODBUS_REGISTERS.md#pf10) for dehumidify, [PF27](doc/references/MODBUS_REGISTERS.md#pf27)–[PF09](doc/references/MODBUS_REGISTERS.md#pf09) for cooling): the 0–10 V
+input, scaled into the band, and the manual (display) request, which [PM20](doc/references/MODBUS_REGISTERS.md#pm20)
 shows. Without a display or 0–10 V signal the manual request starts each run
 at the band **minimum**: 50 % as shipped. Details:
 [UNIT_BEHAVIOUR §9.1](doc/references/UNIT_BEHAVIOUR.md#91-bands-and-sources).
@@ -774,7 +778,7 @@ What the integration shows:
   (m³/h): the speed the fan runs at.
 * `sensor.hrds_supply_fan_rpm`: only when an input is allocated to the fan
   tachometer, else unknown.
-* `sensor.hrds_manual_fan_speed`: PM20, the unit's manual request. While the
+* `sensor.hrds_manual_fan_speed`: [PM20](doc/references/MODBUS_REGISTERS.md#pm20), the unit's manual request. While the
   fan runs it reads the same as the output.
 
 What works over Modbus is the band. The unit keeps its manual request within
@@ -815,11 +819,11 @@ probes must be **installed by the installer** — they do not come built-in.
 |--------------|----------|-------|
 | Room temperature | NTC 10 kΩ B3435 (wall or duct mount) **or** CNU2 display | Needed for auto cooling/heating and dehumidify gating |
 | Room humidity | 0–10 V or 4–20 mA humidity transmitter **or** CNU2 display | Needed for auto dehumidify |
-| Outdoor temperature | NTC 10 kΩ B3435, IP65-rated | Only needed for Free-Cooling/Heating (PG03); otherwise optional |
+| Outdoor temperature | NTC 10 kΩ B3435, IP65-rated | Only needed for Free-Cooling/Heating ([PG03](doc/references/MODBUS_REGISTERS.md#pg03)); otherwise optional |
 | Exhaust / supply air temperature | NTC 10 kΩ B3435 | Optional; display/monitoring only |
 
 **If you have no display and no external probes** (the default, with *A wired
-CNU2 display is connected* left off), the integration sets HA00 = 0 and PH01 = 0
+CNU2 display is connected* left off), the integration sets [HA00](doc/references/MODBUS_REGISTERS.md#ha00) = 0 and [PH01](doc/references/MODBUS_REGISTERS.md#ph01) = 0
 for you. The unit then responds only to explicit Modbus commands — dehumidify,
 cooling and fan control work normally; only the _automatic_ setpoint-based
 triggers are inactive. Probe inputs that are not wired report no value: room
@@ -833,7 +837,7 @@ AL28/AL34 to check.
 See [UNIT_BEHAVIOUR §8](doc/references/UNIT_BEHAVIOUR.md#8-display-and-probe-configurations)
 for what each display/probe configuration does, and
 [`doc/references/MODBUS_REGISTERS.md` §14](doc/references/MODBUS_REGISTERS.md#14-probes-inputs-and-probe-source)
-for the inputs, probe types and HA00 values.
+for the inputs, probe types and [HA00](doc/references/MODBUS_REGISTERS.md#ha00) values.
 
 ## Requirements
 
@@ -889,11 +893,7 @@ Assistant log. The issue form asks for all of this.
 
 ## Road to 1.0
 
-1.0 is for when the open points in [`plans/todo.md`](plans/todo.md) have been
-checked on real hardware (fan behaviour, the minimum room temperature
-interlock without a probe, mode combinations) and the integration has run on at
-least one other kind of unit (a display, external probes, a different
-size/variant). Until then the 0.x releases keep the beta label above.
+1.0 is when a full automation is running in home assistant, combining it with the automation of the MVHR and dehumidification is proofen in Summer 2027.  [`plans/todo.md`](plans/todo.md) contains some open items that need to be clarified till then. The owner would welcome the testing of this integration with another unit that has a display, external probes, or is a different size/variant. Until then the 0.x releases keep the beta label above.
 
 ## Design decisions
 
