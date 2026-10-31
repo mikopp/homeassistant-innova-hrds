@@ -97,7 +97,7 @@ Sie spricht über Modbus TCP mit der Steuerplatine des Geräts und stellt bereit
   und Lüfterbänder, Saison, dazu drei berechnete Luftmengen-Sensoren.
 * **Lüfter und Wasserkreis nur als Messwerte**: Das Gerät steuert Lüfter
   (Umluftlüfter der `R`-Variante), Ventil und Pumpe selbst; Home Assistant zeigt
-  sie nur an, samt einer Zusammenfassung *Water circuit check*.
+  sie nur an, samt einer Zusammenfassung [*Water circuit check*](doc/entity-reference.md#water-circuit-check).
 * **Setup-Gerät** mit einer Einrichtungsprüfung und den Freigaben, und auf
   Wunsch ein **Installateur-Gerät** mit dem gesamten Installateurmenü
   (rund 240 Parameter, standardmäßig aus).

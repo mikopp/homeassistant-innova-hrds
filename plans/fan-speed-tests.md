@@ -111,12 +111,12 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
 
   | Entity | Register | Parameter |
   |--------|----------|-----------|
-  | *Fan min speed (dehumidify)* | [1853](../doc/references/MODBUS_REGISTERS.md#reg-1853) | [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) |
-  | *Fan max speed (dehumidify)* | [1647](../doc/references/MODBUS_REGISTERS.md#reg-1647) | [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) |
-  | *Fan min speed (cooling)* | [1852](../doc/references/MODBUS_REGISTERS.md#reg-1852) | [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) |
-  | *Fan max speed (cooling)* | [1646](../doc/references/MODBUS_REGISTERS.md#reg-1646) | [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) |
-  | *Dehumidify (Modbus)* | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
-  | *Integration request (cool in summer, heat in winter)* | [1139](../doc/references/MODBUS_REGISTERS.md#reg-1139) | INT |
+  | [*Fan min speed (dehumidify)*](../doc/entity-reference.md#fan-min-speed-dehumidify) | [1853](../doc/references/MODBUS_REGISTERS.md#reg-1853) | [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) |
+  | [*Fan max speed (dehumidify)*](../doc/entity-reference.md#fan-max-speed-dehumidify) | [1647](../doc/references/MODBUS_REGISTERS.md#reg-1647) | [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) |
+  | [*Fan min speed (cooling)*](../doc/entity-reference.md#fan-min-speed-cooling) | [1852](../doc/references/MODBUS_REGISTERS.md#reg-1852) | [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) |
+  | [*Fan max speed (cooling)*](../doc/entity-reference.md#fan-max-speed-cooling) | [1646](../doc/references/MODBUS_REGISTERS.md#reg-1646) | [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) |
+  | [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
+  | [*Integration request (cool in summer, heat in winter)*](../doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) | [1139](../doc/references/MODBUS_REGISTERS.md#reg-1139) | INT |
 
 * **Writes without an entity** (tests H, I, J: [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) with FC 16, [PH03](../doc/references/MODBUS_REGISTERS.md#ph03),
   [FSC](../doc/references/MODBUS_REGISTERS.md#fsc), the time-program slot, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), [PF23](../doc/references/MODBUS_REGISTERS.md#pf23)): write directly with a
@@ -125,9 +125,9 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
   masters never talk at once. Record each value before the write and
   restore it afterwards.
 * **Reads:**
-  * Home Assistant polls about once a minute: *Supply fan output*
-    ([639](../doc/references/MODBUS_REGISTERS.md#reg-639)), *Manual fan request (display)* ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)), *Manual fan speed*
-    ([1614](../doc/references/MODBUS_REGISTERS.md#reg-1614)), *Supply fan status* ([1119](../doc/references/MODBUS_REGISTERS.md#reg-1119)), *Fan integration request*
+  * Home Assistant polls about once a minute: [*Supply fan output*](../doc/entity-reference.md#supply-fan-output)
+    ([639](../doc/references/MODBUS_REGISTERS.md#reg-639)), [*Manual fan request (display)*](../doc/entity-reference.md#manual-fan-request-display) ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)), [*Manual fan speed*](../doc/entity-reference.md#manual-fan-speed)
+    ([1614](../doc/references/MODBUS_REGISTERS.md#reg-1614)), [*Supply fan status*](../doc/entity-reference.md#supply-fan-status) ([1119](../doc/references/MODBUS_REGISTERS.md#reg-1119)), [*Fan integration request*](../doc/entity-reference.md#fan-integration-request)
     ([1112](../doc/references/MODBUS_REGISTERS.md#reg-1112)).
   * For 1–5 s resolution, and for registers without an entity ([1113](../doc/references/MODBUS_REGISTERS.md#reg-1113), [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115),
     [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116)), run `python3 tests/diagnose_hrds.py <host> --no-snapshot --watch
@@ -143,7 +143,7 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
 * **Preconditions, all set by the owner; the integration never sets them:**
   * the unit is ON;
   * [PH02](../doc/references/MODBUS_REGISTERS.md#ph02)/[PH28](../doc/references/MODBUS_REGISTERS.md#ph28) (and [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) for test E) are on;
-  * the gate *Allow operational requests* is on;
+  * the gate [*Allow operational requests*](../doc/entity-reference.md#allow-operational-requests) is on;
   * the MVHR runs at 150 m³/h or more;
   * the season is summer.
 * **EEPROM:** [PF28](../doc/references/MODBUS_REGISTERS.md#pf28)/[PF10](../doc/references/MODBUS_REGISTERS.md#pf10)/[PF27](../doc/references/MODBUS_REGISTERS.md#pf27)/[PF09](../doc/references/MODBUS_REGISTERS.md#pf09) are EEPROM parameters (ADR-0023), and so are
@@ -185,7 +185,7 @@ refused, once with FC 16. Keep the read loop at 0.5 s on [1614](../doc/reference
 **K1. Write first, then the request.**
 1. With no request and the fan off, write 6000 to [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614). Record the response
    (acknowledged or an exception) and read [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) and [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) for 1 minute.
-2. Start DEU (*Dehumidify (Modbus)* on). Watch [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) at
+2. Start DEU ([*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) on). Watch [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) at
    the fan start.
 
 Expected [INFERRED]: the write is refused or cleared, and the fan starts at the
@@ -219,7 +219,7 @@ the band minimum.
 ### E. INT request (Q2)
 
 1. With [PG02](../doc/references/MODBUS_REGISTERS.md#pg02) = 1, [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) on and summer, start INT
-   (*Integration request (cool in summer, heat in winter)* on). Leave DEU off.
+   ([*Integration request (cool in summer, heat in winter)*](../doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) on). Leave DEU off.
 2. Log [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112), [1113](../doc/references/MODBUS_REGISTERS.md#reg-1113), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115), [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for 10 minutes.
 3. Read [PF31](../doc/references/MODBUS_REGISTERS.md#pf31) ([1856](../doc/references/MODBUS_REGISTERS.md#reg-1856); the reference unit ships it at 1), [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) and [PF09](../doc/references/MODBUS_REGISTERS.md#pf09).
 
@@ -230,10 +230,10 @@ Expected [INFERRED]: [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) read
 Raising and lowering [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) are proven (T24–T26); what remains is the 5 s
 log of a raise.
 
-1. Start DEU (*Dehumidify (Modbus)* on). Wait until [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) = ON and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) is
+1. Start DEU ([*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) on). Wait until [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) = ON and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) is
    steady (about 2 min after the damper opens).
 2. Start the 5 s read loop: [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119).
-3. With the fan at 50, set *Fan min speed (dehumidify)* to 65. Log for
+3. With the fan at 50, set [*Fan min speed (dehumidify)*](../doc/entity-reference.md#fan-min-speed-dehumidify) to 65. Log for
    2 minutes.
 4. Set it back to 50. Log for 2 minutes.
 
@@ -248,7 +248,7 @@ until the request ends (T26).
 
 ### F. Band written while idle (Q4)
 
-1. With no request, set *Fan min speed (dehumidify)* to 60.
+1. With no request, set [*Fan min speed (dehumidify)*](../doc/entity-reference.md#fan-min-speed-dehumidify) to 60.
 2. Start DEU and read [639](../doc/references/MODBUS_REGISTERS.md#reg-639) at fan start.
 3. Restore 50.
 
@@ -259,7 +259,7 @@ clamped up to the minimum (T22).
 
 During a run:
 
-1. Set *Fan min speed (dehumidify)* to 85 (= [PF10](../doc/references/MODBUS_REGISTERS.md#pf10)). Log [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for
+1. Set [*Fan min speed (dehumidify)*](../doc/entity-reference.md#fan-min-speed-dehumidify) to 85 (= [PF10](../doc/references/MODBUS_REGISTERS.md#pf10)). Log [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for
    1 minute.
 2. Set it back to 50.
 
@@ -270,7 +270,7 @@ it down. Do not write a minimum above 85.
 
 1. During a run with the fan above 50 (for example at 55 after a test-A
    raise), start the 5 s read loop on [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614).
-2. Set *Fan max speed (dehumidify)* ([PF10](../doc/references/MODBUS_REGISTERS.md#pf10)) to 52. Log for 1 minute.
+2. Set [*Fan max speed (dehumidify)*](../doc/entity-reference.md#fan-max-speed-dehumidify) ([PF10](../doc/references/MODBUS_REGISTERS.md#pf10)) to 52. Log for 1 minute.
    Expected: [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) and [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) read 52.
 3. Set [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) back to 85. Log for 1 minute. Expected: they stay at 52.
 4. Never set [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) below [PF28](../doc/references/MODBUS_REGISTERS.md#pf28).

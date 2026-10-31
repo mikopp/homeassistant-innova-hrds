@@ -19,11 +19,11 @@ decisions about the integration, not hardware questions.
       ignores the matching request, that it keeps a request written while the
       enable was off, and starts it once the enable is turned on
       (`UNIT_BEHAVIOUR.md` §3.3, [INFERRED]). Entities (setup device):
-      *Enable on/off via Modbus ([PH02](../doc/references/MODBUS_REGISTERS.md#ph02))* gates *Unit on/off (Modbus)*;
-      *Enable dehumidify (DEU) via Modbus ([PH28](../doc/references/MODBUS_REGISTERS.md#ph28))* gates *Dehumidify (Modbus)*;
+      *Enable on/off via Modbus ([PH02](../doc/references/MODBUS_REGISTERS.md#ph02))* gates [*Unit on/off (Modbus)*](../doc/entity-reference.md#unit-on-off-modbus);
+      *Enable dehumidify (DEU) via Modbus ([PH28](../doc/references/MODBUS_REGISTERS.md#ph28))* gates [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus);
       *Enable integration (INT) via Modbus ([PH27](../doc/references/MODBUS_REGISTERS.md#ph27))* gates *Integration request*.
 - [ ] **Power cycle with a request on.** The on/off state survives a power
-      cycle (T30); do *Dehumidify (Modbus)* ([1140](../doc/references/MODBUS_REGISTERS.md#reg-1140)) and *Integration request*
+      cycle (T30); do [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) ([1140](../doc/references/MODBUS_REGISTERS.md#reg-1140)) and *Integration request*
       ([1139](../doc/references/MODBUS_REGISTERS.md#reg-1139)) survive too? Power-cycle once with a dehumidify request on.
 - [ ] **An OFF always wins** over an ON from any source (display/DI/Modbus),
       per the manual [MB p.5].
@@ -58,7 +58,7 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
       [639](../doc/references/MODBUS_REGISTERS.md#reg-639) read 0 between damper and fan at every poll, and `wait_on` was never
       read (T35). Log [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) every 5 s through a start for a short
       `wait_on`, and look at the fan; also [639](../doc/references/MODBUS_REGISTERS.md#reg-639) in `wait_off`.
-      *Supply fan running* and *Recirculation active* depend on
+      [*Supply fan running*](../doc/entity-reference.md#supply-fan-running) and [*Recirculation active*](../doc/entity-reference.md#recirculation-active) depend on
       it.
 - [ ] **First anti-stagnation pulse after a stop: 1 or 2 hours?** 2 hours after
       a clean stop (T20); about 1 hour after the sniffing pulse of an AL03 stop
@@ -120,7 +120,7 @@ The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.m
         controller drives a "fan" on the empty AO3 (F#79, F#93 on an
         HRDS+ 50). [HC04](../doc/references/MODBUS_REGISTERS.md#hc04) ← 0 alone stops the compressor from starting.
 
-      Side effects: after D, [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119), [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) and *Supply fan airflow*
+      Side effects: after D, [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119), [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) and [*Supply fan airflow*](../doc/entity-reference.md#supply-fan-airflow)
       report a fan that is not turning. Whether HC/HD writes wear memory is
       unknown: do not toggle them per run. Restore the values afterwards.
 
@@ -145,7 +145,7 @@ No INT request has been run yet. One summer INT run answers most of these.
       (T16, T18, T41); a 0–100 % fan request by the Modbus map. Read it during INT
       ([`fan-speed-tests.md`](fan-speed-tests.md) test E).
 - [ ] **INT with [PU05](../doc/references/MODBUS_REGISTERS.md#pu05) off (water above [PU08](../doc/references/MODBUS_REGISTERS.md#pu08)).** Set
-      *Force dehumidify when cooling* off, request Cool with no DEU:
+      [*Force dehumidify when cooling*](../doc/entity-reference.md#force-dehumidify-when-cooling) off, request Cool with no DEU:
       the compressor should stay off. Does the valve/pump run and does the
       supply air cool? Undocumented "passive cooling"; restore [PU05](../doc/references/MODBUS_REGISTERS.md#pu05) on
       afterwards.
@@ -182,7 +182,7 @@ No INT request has been run yet. One summer INT run answers most of these.
 ## 6. Season and winter
 
 - [ ] **Back to summer.** Only [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) 4 → 3 has been written (T31), and the
-      unit stands in winter since 2026-10-30. Write 3 → 4 with *Season*
+      unit stands in winter since 2026-10-30. Write 3 → 4 with [*Season*](../doc/entity-reference.md#season)
       and check the read-back follows at the next read cycle.
 - [ ] **[PU02](../doc/references/MODBUS_REGISTERS.md#pu02) "with water" / "without water".** What changes between 1 and 2
       (does V3V/PM open)? Does [PU02](../doc/references/MODBUS_REGISTERS.md#pu02) = 0 also block a Modbus or DI dehumidify
@@ -270,4 +270,4 @@ No INT request has been run yet. One summer INT run answers most of these.
       binary sensors. Expose the other alarm bits and the `BMS_ALxx` reset
       registers ([785](../doc/references/MODBUS_REGISTERS.md#reg-785)/[786](../doc/references/MODBUS_REGISTERS.md#reg-786)/[791](../doc/references/MODBUS_REGISTERS.md#reg-791))?
 - [ ] **Remote fan request** ([1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), R/O) is not exposed; the display's manual
-      request ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)) is (*Manual fan request (display)*). Expose it?
+      request ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)) is ([*Manual fan request (display)*](../doc/entity-reference.md#manual-fan-request-display)). Expose it?

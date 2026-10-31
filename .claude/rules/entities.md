@@ -24,10 +24,10 @@ Decision behind this: ADR-0002. Steps:
    choice decides the device and section in the entity reference.
 6. Document the register in `doc/references/MODBUS_REGISTERS.md`.
 7. List the entity in `doc/entity-reference.md` by its English name as
-   `- **Name**: description (register)` with Available for / Remarks
+   `- <a id="slug"></a>**Name**: description (register)` with Available for / Remarks
    ("Configuration entity" from step 5), under its device and platform
    heading; a diagnostic one under the device's `### Diagnostic` section
-   (ADR-0036); installer parameters are the exception. Say why a new device
+   (ADR-0036); other docs link the name to it; installer parameters are the exception. Say why a new device
    exists.
 8. Run `python3 tests/wiring_check.py`; if entities change, update the
    snapshots (`tests/CLAUDE.md`).

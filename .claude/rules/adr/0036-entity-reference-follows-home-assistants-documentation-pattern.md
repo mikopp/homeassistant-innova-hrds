@@ -19,13 +19,18 @@ paths:
 - `doc/entity-reference.md` MUST be the only place that lists entities. The
   README, `CLAUDE.md` and other docs MUST link to it and MUST NOT restate it
   (ADR-0027); they name an entity by its English name, an entity ID only in a
-  YAML example.
+  YAML example. Every entity name in italics in another Markdown file MUST be
+  a link to that entity's item in the reference (`[*Setup check*](…/entity-reference.md#setup-check)`),
+  so each item carries an anchor `<a id="setup-check"></a>` (the name in lower
+  case, runs of other characters as one hyphen). Not in `CLAUDE.md`, the ADRs
+  (ADR-0027: no links in agent-loaded files), the reference itself and released
+  CHANGELOG sections.
 - It MUST follow Home Assistant's "Supported functionality" pattern
   (`docs-supported-functions`): `## <device>` (HRDS+, HRDS+ setup, HRDS+
   installer, each saying why it exists and is separate, ADR-0016, ADR-0017),
   `### <platform>` (Binary sensors, Buttons, Climate, Numbers, Selects,
   Sensors, Switches), then one item per entity:
-  `- **<English name>**: <description>` with sub-items `**Available for**`
+  `- <a id="slug"></a>**<English name>**: <description>` with sub-items `**Available for**`
   (when not all units), `**Options**` (selects) and `**Remarks**`.
 - The entities `entity_category_for` makes diagnostic MUST be listed under a
   `### Diagnostic` section of their device (after the platform sections), not
@@ -46,8 +51,9 @@ paths:
 - `tests/wiring_check.py` (`check_entity_reference`) MUST fail when an entity's
   English name from `translations/en.json` is missing, unknown, duplicated, on
   the wrong device or platform heading, a diagnostic entity is outside
-  `### Diagnostic`, or a configuration entity lacks its remark, and when the
-  README holds entity items.
+  `### Diagnostic`, or a configuration entity lacks its remark, when an item lacks its anchor, when an entity
+  name in italics outside the reference is not a link, and when the README holds
+  entity items.
 
 ## Context
 

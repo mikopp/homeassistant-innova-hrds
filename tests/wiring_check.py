@@ -269,7 +269,7 @@ REFERENCE_PLATFORM_HEADINGS = {
     "Sensors": "sensor",
     "Switches": "switch",
 }
-ENTITY_ITEM = re.compile(r"^- \*\*(.+?)\*\*(?::|\s*$)")
+ENTITY_ITEM = re.compile(r'^- (?:<a id="[^"]+"></a>)?\*\*(.+?)\*\*(?::|\s*$)')
 CATEGORY_REMARK = {"Configuration entity": "config"}
 DIAGNOSTIC_HEADING = "Diagnostic"
 
@@ -343,6 +343,7 @@ def check_entity_reference(const) -> None:
         not misplaced,
         f"each entity sits on its device with its category remark ({misplaced})",
     )
+    check_entity_links([n for _, n in expected])
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     restated = re.findall(
         r"^- \*\*[^*]+\*\*:.*\n\s+- \*\*(?:Available for|Remarks)\*\*", readme, re.M
@@ -350,6 +351,39 @@ def check_entity_reference(const) -> None:
     check(
         not restated,
         f"the README links the entity reference, not copies it ({len(restated)} items)",
+    )
+
+
+def entity_slug(name: str) -> str:
+    """Anchor id of an entity item in the reference."""
+    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+def check_entity_links(names: list[str]) -> None:
+    """Each entity name in italics outside the reference links to its anchor."""
+    ref = ROOT / "doc/entity-reference.md"
+    text = ref.read_text(encoding="utf-8")
+    for name in names:
+        check(
+            f'<a id="{entity_slug(name)}"></a>**{name}**' in text,
+            f"entity '{name}' has an anchor in the reference",
+        )
+    alt = "|".join(re.escape(n) for n in sorted(names, key=len, reverse=True))
+    bare = re.compile(r"(?<![\[\w*])\*(" + alt + r")\*(?!\]|\()")
+    skip = ("node_modules", ".git", ".claude", "doc/adr")
+    unlinked: list[str] = []
+    for path in ROOT.rglob("*.md"):
+        rel = path.relative_to(ROOT).as_posix()
+        if path == ref or path.name == "CLAUDE.md" or rel.startswith(skip):
+            continue
+        text = path.read_text(encoding="utf-8")
+        if rel == "CHANGELOG.md":  # released sections keep the names of their day
+            text = text.split("\n## ", 2)[1] if "## Unreleased" in text else ""
+        text = re.sub(r"```.*?```", "", text, flags=re.S)
+        unlinked += [f"{rel}: {m}" for m in bare.findall(text)]
+    check(
+        not unlinked,
+        f"entity names outside the reference link to it ({sorted(set(unlinked))[:8]})",
     )
 
 
