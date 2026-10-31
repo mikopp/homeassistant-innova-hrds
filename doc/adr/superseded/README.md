@@ -10,3 +10,4 @@ superseding or reviving a decision (ADR-0029), and then through
 | [0007](0007-fan-entity-reports-the-commanded-speed.md) | The fan entity reports the commanded speed | superseded by ADR-0008 | fan, state |
 | [0008](0008-fan-state-is-the-actual-output.md) | Fan state is the actual output; device limits stay device registers | superseded by ADR-0034 | fan, state, config |
 | [0021](0021-release-a-tagged-zip-with-local-brand-images.md) | Release a tagged zip; brand images ship with the integration | superseded by ADR-0031 | ci |
+| [0030](0030-entity-reference-is-the-source-of-truth-and-mirrors-the-devices.md) | The entity reference is the one source of truth and mirrors the devices | superseded by ADR-0036 | entities, docs |

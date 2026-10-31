@@ -57,18 +57,18 @@ Tags (`[HB 6.2]`, `[MB p.7]`, `T23`) are explained in §0 of that file.
 
   | Entity | Register | Parameter |
   |--------|----------|-----------|
-  | `number.hrds_fan_min_speed_dehumidify` | [1853](../doc/references/MODBUS_REGISTERS.md#reg-1853) | [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) |
-  | `number.hrds_fan_max_speed_dehumidify` | [1647](../doc/references/MODBUS_REGISTERS.md#reg-1647) | [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) |
-  | `number.hrds_fan_min_speed_cooling` | [1852](../doc/references/MODBUS_REGISTERS.md#reg-1852) | [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) |
-  | `number.hrds_fan_max_speed_cooling` | [1646](../doc/references/MODBUS_REGISTERS.md#reg-1646) | [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) |
+  | *Fan min speed (dehumidify)* | [1853](../doc/references/MODBUS_REGISTERS.md#reg-1853) | [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) |
+  | *Fan max speed (dehumidify)* | [1647](../doc/references/MODBUS_REGISTERS.md#reg-1647) | [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) |
+  | *Fan min speed (cooling)* | [1852](../doc/references/MODBUS_REGISTERS.md#reg-1852) | [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) |
+  | *Fan max speed (cooling)* | [1646](../doc/references/MODBUS_REGISTERS.md#reg-1646) | [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) |
   | `number.fan_manual_speed` | [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) | [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) |
-  | `switch.hrds_dehumidify_modbus` | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
-  | `switch.hrds_integration_request_cool_in_summer_heat_in_winter` | [1139](../doc/references/MODBUS_REGISTERS.md#reg-1139) | INT |
+  | *Dehumidify (Modbus)* | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
+  | *Integration request (cool in summer, heat in winter)* | [1139](../doc/references/MODBUS_REGISTERS.md#reg-1139) | INT |
 
 * **Reads:**
-  * Home Assistant polls about once a minute: `sensor.hrds_supply_fan_output`
-    ([639](../doc/references/MODBUS_REGISTERS.md#reg-639)), `sensor.hrds_manual_fan_request_display` ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)), `number.fan_manual_speed`
-    ([1614](../doc/references/MODBUS_REGISTERS.md#reg-1614)), `sensor.hrds_supply_fan_status` ([1119](../doc/references/MODBUS_REGISTERS.md#reg-1119)).
+  * Home Assistant polls about once a minute: *Supply fan output*
+    ([639](../doc/references/MODBUS_REGISTERS.md#reg-639)), *Manual fan request (display)* ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)), `number.fan_manual_speed`
+    ([1614](../doc/references/MODBUS_REGISTERS.md#reg-1614)), *Supply fan status* ([1119](../doc/references/MODBUS_REGISTERS.md#reg-1119)).
   * For 1–5 s resolution, and for registers without an entity ([1113](../doc/references/MODBUS_REGISTERS.md#reg-1113), [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115),
     [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116)), run `python3 tests/diagnose_hrds.py <host> --no-snapshot --watch
     <seconds> --interval 1`: read-only, it prints every change of the status
@@ -80,7 +80,7 @@ Tags (`[HB 6.2]`, `[MB p.7]`, `T23`) are explained in §0 of that file.
 * **Preconditions, all set by the owner; the integration never sets them:**
   * the unit is ON;
   * [PH02](../doc/references/MODBUS_REGISTERS.md#ph02)/[PH28](../doc/references/MODBUS_REGISTERS.md#ph28) (and [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) for test E) are on;
-  * the gate `switch.hrds_setup_allow_operational_requests` is on;
+  * the gate *Allow operational requests* is on;
   * the MVHR runs at 150 m³/h or more;
   * the season is summer.
 * **EEPROM:** [PF28](../doc/references/MODBUS_REGISTERS.md#pf28)/[PF10](../doc/references/MODBUS_REGISTERS.md#pf10)/[PF27](../doc/references/MODBUS_REGISTERS.md#pf27) are EEPROM parameters (ADR-0023). The whole plan
@@ -101,10 +101,10 @@ the same poll), then 55 → 50 (stayed at 55). What remains is the 5 s log of a
 raise, to tell a jump from a ramp. The expected values below assume the fan
 is at 50 before step 3; after step 4 it stays at 65, as T26 shows.
 
-1. Start DEU (`switch.hrds_dehumidify_modbus` on). Wait until [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) = ON and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) is
+1. Start DEU (*Dehumidify (Modbus)* on). Wait until [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) = ON and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) is
    steady (≈ 2 min after the damper opens).
 2. Start the 5 s read loop: [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119).
-3. Set `number.hrds_fan_min_speed_dehumidify` to 65. Log for 2 minutes.
+3. Set *Fan min speed (dehumidify)* to 65. Log for 2 minutes.
 4. Set it back to 50. Log for 2 minutes.
 
 Expected: [639](../doc/references/MODBUS_REGISTERS.md#reg-639) reads 65 within one or two controller cycles, and [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)/[1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) read
@@ -122,7 +122,7 @@ What the results mean:
 
 During the same run:
 
-1. Set `number.hrds_fan_min_speed_dehumidify` to 85 (= [PF10](../doc/references/MODBUS_REGISTERS.md#pf10)). Log [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for
+1. Set *Fan min speed (dehumidify)* to 85 (= [PF10](../doc/references/MODBUS_REGISTERS.md#pf10)). Log [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for
    1 minute.
 2. Set it back to 50.
 
@@ -159,7 +159,7 @@ the band (≈ 67.5).
 ### E. INT request (A8)
 
 1. With [PG02](../doc/references/MODBUS_REGISTERS.md#pg02) = 1, [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) on and summer, start INT
-   (`switch.hrds_integration_request_cool_in_summer_heat_in_winter` on). Leave DEU off.
+   (*Integration request (cool in summer, heat in winter)* on). Leave DEU off.
 2. Log [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112), [1113](../doc/references/MODBUS_REGISTERS.md#reg-1113), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115), [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for 10 minutes.
 3. Read [PF31](../doc/references/MODBUS_REGISTERS.md#pf31) ([1856](../doc/references/MODBUS_REGISTERS.md#reg-1856); it ships at 1), [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) and [PF09](../doc/references/MODBUS_REGISTERS.md#pf09).
 
@@ -167,7 +167,7 @@ Expected: [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) reads a percent
 
 ### F. Band written while idle (A9)
 
-1. With no request, set `number.hrds_fan_min_speed_dehumidify` to 60.
+1. With no request, set *Fan min speed (dehumidify)* to 60.
 2. Start DEU and read [639](../doc/references/MODBUS_REGISTERS.md#reg-639) at fan start.
 3. Restore 50.
 
@@ -178,7 +178,7 @@ clamped up to the minimum (T22).
 
 1. During a run with the fan above 50 (for example at 55 after a test-A
    raise), start the 5 s read loop on [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614).
-2. Set `number.hrds_fan_max_speed_dehumidify` ([PF10](../doc/references/MODBUS_REGISTERS.md#pf10)) to 52. Log for 1 minute.
+2. Set *Fan max speed (dehumidify)* ([PF10](../doc/references/MODBUS_REGISTERS.md#pf10)) to 52. Log for 1 minute.
    Expected: [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) and [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) read 52.
 3. Set [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) back to 85. Log for 1 minute. Expected: they stay at 52.
 4. Never set [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) below [PF28](../doc/references/MODBUS_REGISTERS.md#pf28).

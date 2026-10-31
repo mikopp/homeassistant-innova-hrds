@@ -57,12 +57,12 @@ describes the format and how agents use it. In short:
 | [0027](../../.claude/rules/adr/0027-one-home-per-topic-and-evidence-for-unit-facts.md) | One home per topic; every unit fact carries its evidence | `doc/references/*.md`, `doc/entity-reference.md`, `plans/*.md`, `README.md`, `README.de.md` |
 | [0028](../../.claude/rules/adr/0028-the-fan-runs-when-its-status-says-so.md) | The fan runs when its status says so: On or the run-on Wait OFF | `{__init__,const,climate}.py` |
 | [0029](../../.claude/rules/adr/0029-retired-adrs-are-history-revival-needs-new-evidence.md) | Proposed and retired ADRs are history; reviving one needs new evidence | `doc/adr/proposed/**`, `doc/adr/superseded/**`, `.claude/skills/adr/**`, `.claude/settings.json` |
-| [0030](../../.claude/rules/adr/0030-entity-reference-is-the-source-of-truth-and-mirrors-the-devices.md) | The entity reference is the one source of truth and mirrors the devices | `const.py`, `entity_common.py`, `installer_params.py`, `translations/*.json`, `doc/entity-reference.md` |
 | [0031](../../.claude/rules/adr/0031-release-from-a-prepared-commit.md) | Release from a prepared commit: one script prepares, CI verifies, the owner publishes a draft | `scripts/release.py`, `.github/workflows/release.yaml`, `.github/workflows/release-draft.yaml`, `.claude/skills/release-prep/**`, `hacs.json`, `manifest.json`, `brand/**` |
 | [0032](../../.claude/rules/adr/0032-prs-record-changes-under-unreleased-and-never-set-a-version.md) | PRs record changes under Unreleased in release-notes shape and never set a version | `CHANGELOG.md`, `.claude/rules/changelog.md` |
 | [0033](../../.claude/rules/adr/0033-what-the-unit-cannot-report-is-derived-or-unknown.md) | What the unit cannot report is derived or unknown, never a stand-in register | `__init__.py`, `const.py` |
 | [0034](../../.claude/rules/adr/0034-the-fan-is-the-units-home-assistant-reads-it.md) | The fan is the unit's; Home Assistant shows it and sets only the band | `climate.py`, `config_flow.py`, `__init__.py`, `const.py`, `tests/sim/device.py` |
 | [0035](../../.claude/rules/adr/0035-pr-test-runs-skip-when-no-code-changed.md) | A pull request that changes no code skips the test runs, and the checks still pass | `.github/workflows/{tests,e2e}.yaml`, `.github/test-paths` |
+| [0036](../../.claude/rules/adr/0036-entity-reference-follows-home-assistants-documentation-pattern.md) | The entity reference follows Home Assistant's documentation pattern and is checked | `const.py`, `entity_common.py`, `installer_params.py`, `translations/*.json`, `doc/entity-reference.md` |
 
-Not in force and not loaded; read only when recording an ADR (ADR-0029): [superseded (4)](superseded/README.md).
+Not in force and not loaded; read only when recording an ADR (ADR-0029): [superseded (5)](superseded/README.md).
 <!-- adr-index:end -->

@@ -50,7 +50,7 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
 - [ ] **Stop sequence at 5 s.** Three stops at 1-minute resolution (T19, T36,
       T38). Still to log: compressor stop against [PE02](../doc/references/MODBUS_REGISTERS.md#pe02), the ramp-down
       ([PE25](../doc/references/MODBUS_REGISTERS.md#pe25)), V3V + PM closing against [Pb01](../doc/references/MODBUS_REGISTERS.md#pb01), fan run-on against [PF03](../doc/references/MODBUS_REGISTERS.md#pf03).
-- [ ] **`supply_fan_running` and `hvac_action` on the next stop.** No run since
+- [ ] **Supply fan running and the climate action on the next stop.** No run since
       0.9.5 installed that sensor (`doc/tested-setups.md`). On 0.9.4
       `hvac_action` read *Idle* while the fan ran on at 40 % (T19): check
       against ADR-0028.
@@ -58,7 +58,7 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
       [639](../doc/references/MODBUS_REGISTERS.md#reg-639) read 0 between damper and fan at every poll, and `wait_on` was never
       read (T35). Log [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) every 5 s through a start for a short
       `wait_on`, and look at the fan; also [639](../doc/references/MODBUS_REGISTERS.md#reg-639) in `wait_off`.
-      `binary_sensor.hrds_supply_fan_running` and `recirculation_active` depend on
+      *Supply fan running* and *Recirculation active* depend on
       it.
 - [ ] **First anti-stagnation pulse after a stop: 1 or 2 hours?** 2 hours after
       a clean stop (T20); about 1 hour after the sniffing pulse of an AL03 stop
@@ -105,7 +105,7 @@ The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.m
         controller drives a "fan" on the empty AO3 (F#79, F#93 on an
         HRDS+ 50). [HC04](../doc/references/MODBUS_REGISTERS.md#hc04) ← 0 alone stops the compressor from starting.
 
-      Side effects: after D, [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119), [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) and `sensor.hrds_supply_fan_airflow`
+      Side effects: after D, [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119), [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) and *Supply fan airflow*
       report a fan that is not turning. Whether HC/HD writes wear memory is
       unknown: do not toggle them per run. Restore the values afterwards.
 
@@ -130,7 +130,7 @@ No INT request has been run yet. One summer INT run answers most of these.
       (T16, T18, T41); a 0–100 % fan request by the Modbus map. Read it during INT
       ([`fan-speed-tests.md`](fan-speed-tests.md) test E).
 - [ ] **INT with [PU05](../doc/references/MODBUS_REGISTERS.md#pu05) off (water above [PU08](../doc/references/MODBUS_REGISTERS.md#pu08)).** Set
-      `switch.hrds_force_dehumidify_when_cooling` off, request Cool with no DEU:
+      *Force dehumidify when cooling* off, request Cool with no DEU:
       the compressor should stay off. Does the valve/pump run and does the
       supply air cool? Undocumented "passive cooling"; restore [PU05](../doc/references/MODBUS_REGISTERS.md#pu05) on
       afterwards.
@@ -167,7 +167,7 @@ No INT request has been run yet. One summer INT run answers most of these.
 ## 6. Season and winter
 
 - [ ] **Back to summer.** Only [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) 4 → 3 has been written (T31), and the
-      unit stands in winter since 2026-10-30. Write 3 → 4 with `select.hrds_season`
+      unit stands in winter since 2026-10-30. Write 3 → 4 with *Season*
       and check the read-back follows at the next read cycle.
 - [ ] **[PU02](../doc/references/MODBUS_REGISTERS.md#pu02) "with water" / "without water".** What changes between 1 and 2
       (does V3V/PM open)? Does [PU02](../doc/references/MODBUS_REGISTERS.md#pu02) = 0 also block a Modbus or DI dehumidify
@@ -240,7 +240,7 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 9. Integration decisions (no hardware needed)
 
-- [ ] **`select.hrds_season` jumps back after a write.** It shows the old season
+- [ ] ***Season* jumps back after a write.** It shows the old season
       until the next read cycle (T31), because `season` is not in
       `PENDING_KEYS`. Add it, so it shows the command until confirmed like the
       requests? Check against ADR-0006 first.
@@ -253,4 +253,4 @@ No INT request has been run yet. One summer INT run answers most of these.
       binary sensors. Expose the other alarm bits and the `BMS_ALxx` reset
       registers ([785](../doc/references/MODBUS_REGISTERS.md#reg-785)/[786](../doc/references/MODBUS_REGISTERS.md#reg-786)/[791](../doc/references/MODBUS_REGISTERS.md#reg-791))?
 - [ ] **Remote fan request** ([1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), R/O) is not exposed; the display's manual
-      request ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)) is (`sensor.hrds_manual_fan_request_display`). Expose it?
+      request ([1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)) is (*Manual fan request (display)*). Expose it?

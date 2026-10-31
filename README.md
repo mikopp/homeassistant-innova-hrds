@@ -220,15 +220,11 @@ split by purpose:
 | **`HRDS+`** device, *Configuration* section | Post-setup tuning: setpoints (only with a probe), per-mode fan min/max, dehumidify differential, minimum room temperature ([PU13](doc/references/MODBUS_REGISTERS.md#pu13)/[PU14](doc/references/MODBUS_REGISTERS.md#pu14)), fan run times, humidity clamps | Occasionally |
 | **`HRDS+`** device, main section | Climate, fan, season, the request switches (on/off, dehumidify, integration), live readings, status and alarms | Day to day |
 | **`HRDS+`** device, *Diagnostic* section | Water valve/pump, condenser valve, water circuit check, airflow calibration, fan request echo | When troubleshooting |
-| **`HRDS+ installer`** device (linked to the main device) | The rest of the installer menu (see [Installer device](doc/entity-reference.md#installer-device-hrds-installer)) | Rarely, by an installer |
+| **`HRDS+ installer`** device (linked to the main device) | The rest of the installer menu (see [Installer device](doc/entity-reference.md#hrds-installer)) | Rarely, by an installer |
 
-Entity ids are the device name plus the entity's name, for example
-`switch.hrds_dehumidify_modbus` for *Dehumidify (Modbus)* on the **HRDS+**
-device and `sensor.hrds_setup_setup_check` for *Setup check* on **HRDS+
-setup**. This README shows the ids of a device called *HRDS+* with Home
-Assistant in English; Home Assistant fixes an id when the entity is first
-created, so another language or device name gives other ids. How an id is
-built, and every entity's name: the [entity reference](doc/entity-reference.md).
+Entity names start with the name you gave the unit when adding the integration
+(*HRDS+* by default); the setup and installer devices add *setup* and
+*installer*. Every entity, by device: the [entity reference](doc/entity-reference.md).
 
 **What is left to fix:** while *Setup check* reads *Needs attention (see
 attributes)*, open it (click the row, then *Attributes*). `to_fix` lists each
@@ -261,7 +257,7 @@ show attributes, so this sensor is the one place to look.
    allocation* (not `disabled` on an `R` model), *Remote on/off input* and
    *Remote on/off contact closed*, *Time programs enabled* (switch it off for
    Modbus-only control), *Temperature unit* (°C).
-4. **Season and water circuit** fit your installation: `select.hrds_season`, and the
+4. **Season and water circuit** fit your installation: *Season*, and the
    integration options *Water register connected to* and *Allow winter heating*.
 5. **Minimum room temperature ([PU13](doc/references/MODBUS_REGISTERS.md#pu13))** in the Configuration section of the main
    device: the unit refuses to dehumidify below it.
@@ -278,14 +274,14 @@ show attributes, so this sensor is the one place to look.
    | `unit_off_by_scheduler` / `unit_off_by_clock` | A time program or the internal clock holds the unit off. Check [PH03](doc/references/MODBUS_REGISTERS.md#ph03) (**Time programs enabled**); switch it off for Modbus-only control. |
    | `unit_waiting_for_first_on` | Without a display, *Unit status* still reads *off by display* although [PH01](doc/references/MODBUS_REGISTERS.md#ph01) is 0: the unit keeps a stored OFF until the first Modbus ON. Turn on *Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))* and *Allow operational requests*, then switch on *Unit on/off (Modbus)* once (main device). |
    | `unit_off_by_display` | Only reported when the display option is ticked: the display has switched the unit off. |
-   | `room_temperature_probe_missing` | *T/H probe temperature input* ([HA02](doc/references/MODBUS_REGISTERS.md#ha02)) says a probe is on AI2, but nothing is wired. The unit will wait for a room temperature. Set `select.hrds_setup_t_h_probe_temperature_input_ai2_ha02` to *Unused* or wire the probe. |
-   | `room_humidity_probe_missing` | Same for *T/H probe humidity input* (`select.hrds_setup_t_h_probe_humidity_input_ai3_ha03`, [HA03](doc/references/MODBUS_REGISTERS.md#ha03)) and the humidity probe. |
+   | `room_temperature_probe_missing` | *T/H probe temperature input* ([HA02](doc/references/MODBUS_REGISTERS.md#ha02)) says a probe is on AI2, but nothing is wired. The unit will wait for a room temperature. Set *T/H probe temperature input (AI2, HA02)* to *Unused* or wire the probe. |
+   | `room_humidity_probe_missing` | Same for *T/H probe humidity input (AI3, HA03)* ([HA03](doc/references/MODBUS_REGISTERS.md#ha03)) and the humidity probe. |
    | `probe_input_unrecognised` | [HA02](doc/references/MODBUS_REGISTERS.md#ha02) or [HA03](doc/references/MODBUS_REGISTERS.md#ha03) holds a code that is not one of the documented probe codes, so the select shows unknown (the raw code is in the log). Pick an option, or check what the installer wired. |
    | `time_programs_enabled` | [PH03](doc/references/MODBUS_REGISTERS.md#ph03) is on; the unit may switch itself off on schedule. |
-   | `free_cooling_without_outdoor_probe` | **Free cooling** is on but no outdoor probe delivers a value. Turn off `switch.hrds_setup_enable_free_cooling_heating` unless an outdoor probe is fitted. |
+   | `free_cooling_without_outdoor_probe` | **Free cooling** is on but no outdoor probe delivers a value. Turn off *Enable free cooling/heating* unless an outdoor probe is fitted. |
    | `temperature_unit_fahrenheit` | [PH05](doc/references/MODBUS_REGISTERS.md#ph05) is set to °F; the integration assumes °C. |
    | `water_pump_output_not_configured` | Relay K5 (external water valve and the PM pump output) is not configured, so the unit cannot start the circulation pump. Check [HD05](doc/references/MODBUS_REGISTERS.md#hd05) on the installer device (12 = water valve) and the wiring. |
-   | `winter_dehumidify_on_brine` | Brine circuit selected, no brine temperature guard, but [PU02](doc/references/MODBUS_REGISTERS.md#pu02) allows dehumidifying in winter - the coil can freeze. Set `select.hrds_winter_dehumidification` to *Disabled*, or configure a [brine temperature guard](#brine-temperature-guard). |
+   | `winter_dehumidify_on_brine` | Brine circuit selected, no brine temperature guard, but [PU02](doc/references/MODBUS_REGISTERS.md#pu02) allows dehumidifying in winter - the coil can freeze. Set *Winter dehumidification* to *Disabled*, or configure a [brine temperature guard](#brine-temperature-guard). |
    | `unit_heats_on_its_own` | The unit has a room temperature source and the integration function, so in winter it heats by itself below [SEtH](doc/references/MODBUS_REGISTERS.md#seth) − [PF12](doc/references/MODBUS_REGISTERS.md#pf12), and *Allow winter heating* is off. Accept it (turn the option on) or stop it, see [The unit heats on its own](#the-unit-heats-on-its-own). |
    | `unit_heats_on_its_own_on_brine` | Same on a brine circuit, where the unit pumps cold brine through the register instead of heating. Lower the winter setpoint (and [PH09](doc/references/MODBUS_REGISTERS.md#ph09)) or switch the unit off in winter. |
    | `winter_heating_without_integration` | *Allow winter heating* is on but the unit has no integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02) = 0), so nothing can heat. Turn the option off or enable [PG02](doc/references/MODBUS_REGISTERS.md#pg02) on the unit. |
@@ -300,11 +296,11 @@ show attributes, so this sensor is the one place to look.
    Modbus dehumidify request started the compressor at the shipped 10 °C
    ([T15](doc/references/UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware));
    at a higher value it is untested, see [`plans/todo.md`](plans/todo.md).
-4. Check the **season** (`select.hrds_season`; read-back `sensor.hrds_operating_mode_season`) and
+4. Check the **season** (*Season*; read-back *Operating mode (season)*) and
    the integration options *Water register connected to* and *Allow winter
    heating*.
 5. On a water circuit fed by a pump the HRDS+ switches (brine in particular):
-   watch `sensor.hrds_water_valve_pump_output` turn *On* with the first request and the
+   watch *Water valve / pump output* turn *On* with the first request and the
    **Water circuit check** stay `ok` (see [Water circuit](#water-circuit-and-brine)).
 6. When the setup check is `ok`, continue with
    [step 4](#4-choose-what-home-assistant-may-control) and choose what Home
@@ -329,9 +325,9 @@ reading, status, alarm and setting works, and nothing can make the unit act.
 
 | To do this from Home Assistant | Turn on (setup device) | Register | While it is off |
 |---|---|---|---|
-| Switch the unit **on and off**: climate *Off*, climate *turn on/off*, switching from *Off* to any mode, `switch.hrds_unit_on_off_modbus` | **Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))** | [1778](doc/references/MODBUS_REGISTERS.md#reg-1778) | The unit's own controls switch it. The climate offers only the modes on the side the unit is on: no *Off* while it runs, only *Off* while it is off. |
-| **Dehumidify**: climate *Dry*, `switch.hrds_dehumidify_modbus` | **Enable dehumidify (DEU) via Modbus ([PH28](doc/references/MODBUS_REGISTERS.md#ph28))** | [1870](doc/references/MODBUS_REGISTERS.md#reg-1870) | No *Dry*. A dehumidify request from the unit's own humidity logic or the DEU input still shows as *Dry*. |
-| **Cool in summer, heat in winter**: climate *Cool* / *Heat*, `switch.hrds_integration_request_cool_in_summer_heat_in_winter` | **Enable integration (INT) via Modbus ([PH27](doc/references/MODBUS_REGISTERS.md#ph27))**; the unit also needs the integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02), `DC` models) | [1869](doc/references/MODBUS_REGISTERS.md#reg-1869) | No *Cool* / *Heat*. The unit's own integration (its room temperature logic, the INT input) still shows. |
+| Switch the unit **on and off**: climate *Off*, climate *turn on/off*, switching from *Off* to any mode, *Unit on/off (Modbus)* | **Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))** | [1778](doc/references/MODBUS_REGISTERS.md#reg-1778) | The unit's own controls switch it. The climate offers only the modes on the side the unit is on: no *Off* while it runs, only *Off* while it is off. |
+| **Dehumidify**: climate *Dry*, *Dehumidify (Modbus)* | **Enable dehumidify (DEU) via Modbus ([PH28](doc/references/MODBUS_REGISTERS.md#ph28))** | [1870](doc/references/MODBUS_REGISTERS.md#reg-1870) | No *Dry*. A dehumidify request from the unit's own humidity logic or the DEU input still shows as *Dry*. |
+| **Cool in summer, heat in winter**: climate *Cool* / *Heat*, *Integration request (cool in summer, heat in winter)* | **Enable integration (INT) via Modbus ([PH27](doc/references/MODBUS_REGISTERS.md#ph27))**; the unit also needs the integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02), `DC` models) | [1869](doc/references/MODBUS_REGISTERS.md#reg-1869) | No *Cool* / *Heat*. The unit's own integration (its room temperature logic, the INT input) still shows. |
 
 Good to know:
 
@@ -356,21 +352,21 @@ Good to know:
 #### Allow operational requests
 
 > **This is the switch that makes the unit operational.** After a fresh install
-> **`switch.hrds_setup_allow_operational_requests`** (on the **HRDS+ setup**
+> **Allow operational requests** (on the **HRDS+ setup**
 > device) is **off**. While it is off, Home Assistant cannot make the unit act.
 
 What it blocks, and what it does not:
 
 | Blocked while the switch is off | Always works |
 |---|---|
-| Turning the unit **on** (also climate *Auto*), **dehumidify** (climate *Dry*, `switch.hrds_dehumidify_modbus`), **integration** (climate *Cool* / *Heat*, `switch.hrds_integration_request_cool_in_summer_heat_in_winter`), and any **non-zero fan speed** | Turning things **off** (climate *Off*, switches off, fan 0), reading every sensor, and every configuration write (setpoints, selects, setup entities) |
+| Turning the unit **on** (also climate *Auto*), **dehumidify** (climate *Dry*, *Dehumidify (Modbus)*), **integration** (climate *Cool* / *Heat*, *Integration request (cool in summer, heat in winter)*), and any **non-zero fan speed** | Turning things **off** (climate *Off*, switches off, fan 0), reading every sensor, and every configuration write (setpoints, selects, setup entities) |
 
 A blocked request fails with *"Operational requests are not allowed yet. Review
 the setup entities, then turn on 'Allow operational requests'."* That message
 means this switch is still off.
 
 To turn it on, open the **HRDS+ setup** device and toggle **Allow operational
-requests**, or call the service:
+requests**, or call the service (the entity ID of a unit named *HRDS+*):
 
 ```yaml
 action: switch.turn_on
@@ -390,8 +386,8 @@ Good to know:
 
 ### 5. First run
 
-1. Set the climate entity to **Dry** (or turn on `switch.hrds_dehumidify_modbus`). Only
-   turning on `switch.hrds_unit_on_off_modbus` is not enough on a unit without a display
+1. Set the climate entity to **Dry** (or turn on *Dehumidify (Modbus)*). Only
+   turning on *Unit on/off (Modbus)* is not enough on a unit without a display
    or room probe: it then has nothing to act on, so the climate entity shows
    *Standby* with the action *Idle*.
 2. Watch **Unit status**: a unit waiting for its first request reads *Off
@@ -413,7 +409,7 @@ computed airflow sensors:
 | Model | `30` | Change here too if you need to switch model |
 | Supply fan max airflow (m³/h) | `300` / [500](doc/references/MODBUS_REGISTERS.md#reg-500) | Fan airflow at 100 % output — adjust if your duct or filter raises back-pressure |
 
-These values feed the live `sensor.hrds_supply_fan_airflow` calculation (proportional:
+These values feed the live *Supply fan airflow* calculation (proportional:
 `output% / 100 × Q_max`). The two static sensors (`supply_fan_max_airflow`,
 `max_total_airflow`) are updated immediately when you save Options.
 
@@ -429,8 +425,8 @@ The unit sits in the supply duct of the central ventilation (MVHR). The air
 passes the **evaporator** of a small compressor circuit (held at about 6 °C, so
 moisture condenses) and then a **water register**. The compressor's heat goes
 into the building's water circuit; an internal valve
-(`sensor.hrds_water_condenser_valve`) decides whether that warm water also reheats
-the dried air. The external valve and pump (`sensor.hrds_water_valve_pump_output`) connect
+(*Water condenser valve*) decides whether that warm water also reheats
+the dried air. The external valve and pump (*Water valve / pump output*) connect
 the unit to your water circuit: a heat pump's surface heating/cooling circuit,
 the brine of a ground-source heat pump, or a separate ground loop. `R` units
 add a recirculation fan and damper, which run with **every** request (see
@@ -441,8 +437,8 @@ add a recirculation fan and damper, which run with **every** request (see
 
 The unit knows exactly two requests:
 
-* **DEU** — dehumidify (`switch.hrds_dehumidify_modbus`, climate **Dry**)
-* **INT** — integration (`switch.hrds_integration_request_cool_in_summer_heat_in_winter`, climate **Cool** in summer,
+* **DEU** — dehumidify (*Dehumidify (Modbus)*, climate **Dry**)
+* **INT** — integration (*Integration request (cool in summer, heat in winter)*, climate **Cool** in summer,
   **Heat** in winter)
 
 What they do depends on the season and on how cold the water is.
@@ -460,7 +456,7 @@ in summer runs it, a heat pump in cooling mode (about 16–20 °C) runs the
 compressor, and water above [PC07](doc/references/MODBUS_REGISTERS.md#pc07) (30 °C) blocks with AL03. [PU08](doc/references/MODBUS_REGISTERS.md#pu08), [PU09](doc/references/MODBUS_REGISTERS.md#pu09) and [PU10](doc/references/MODBUS_REGISTERS.md#pu10)
 are on the installer device.
 
-**[PU05](doc/references/MODBUS_REGISTERS.md#pu05), *Force dehumidify when cooling*** (`switch.hrds_force_dehumidify_when_cooling`,
+***Force dehumidify when cooling*** ([PU05](doc/references/MODBUS_REGISTERS.md#pu05),
 factory on) is what makes an INT request start the compressor. With [PU05](doc/references/MODBUS_REGISTERS.md#pu05) off,
 INT presumably cools with the water only; **not tested on a real unit**, leave
 [PU05](doc/references/MODBUS_REGISTERS.md#pu05) on unless you want to try this.
@@ -473,7 +469,7 @@ Sources and the remaining combinations:
 | Request | What the unit does |
 |---------|--------------------|
 | INT (climate **Heat**) | **Heating support**: compressor off, warm water from the heating circuit through the water register. Home Assistant requests it only with the option *Allow winter heating*, never on brine; the unit also raises it by itself (see [The unit heats on its own](#the-unit-heats-on-its-own)) |
-| DEU (climate **Dry**) | Only if [PU02](doc/references/MODBUS_REGISTERS.md#pu02) (`select.hrds_winter_dehumidification`) allows it; factory: disabled. On brine only with a passing [brine temperature guard](#brine-temperature-guard) |
+| DEU (climate **Dry**) | Only if [PU02](doc/references/MODBUS_REGISTERS.md#pu02) (*Winter dehumidification*) allows it; factory: disabled. On brine only with a passing [brine temperature guard](#brine-temperature-guard) |
 
 The unit has **no heat source of its own** and no heating register. A winter
 INT request only opens the external valve, runs the pump and the fan, and keeps
@@ -497,7 +493,7 @@ in winter; see [Water circuit and brine](#water-circuit-and-brine).
 
 ### How to use it
 
-1. **Set the season** with `select.hrds_season` (without a display; see
+1. **Set the season** with *Season* (without a display; see
    [Season and winter heating](#season-and-winter-heating)).
 2. **Pick the mode on the climate entity:** **Dry** to dry the air at room
    temperature, **Cool** to dry and cool (summer), **Auto** to let the unit
@@ -506,7 +502,7 @@ in winter; see [Water circuit and brine](#water-circuit-and-brine).
    probe), **Off** to stop: it clears both requests and turns the unit off.
    Climate *turn on* goes to Standby (Auto where the unit regulates by
    itself), *turn off* to Off. The
-   switches `switch.hrds_dehumidify_modbus` and `switch.hrds_integration_request_cool_in_summer_heat_in_winter` do the same per
+   switches *Dehumidify (Modbus)* and *Integration request (cool in summer, heat in winter)* do the same per
    request. Every start needs the matching Modbus enable and [Allow operational requests](#4-choose-what-home-assistant-may-control).
 3. **Decide who regulates.** Without a display or room probe the unit runs
    while a request is on and ignores its setpoints, so let Home Assistant
@@ -515,8 +511,8 @@ in winter; see [Water circuit and brine](#water-circuit-and-brine).
    to its own targets (see
    [Setting target humidity and target temperature](#setting-target-humidity-and-target-temperature)).
 4. **Leave the passive path to the unit.** You can see it run: the request is
-   on, `sensor.hrds_water_valve_pump_output` is *On*, `sensor.hrds_water_temperature` is below
-   [PU08](doc/references/MODBUS_REGISTERS.md#pu08), and `sensor.hrds_compressor_status` is not *On*. The water check then lists
+   on, *Water valve / pump output* is *On*, *Water temperature* is below
+   [PU08](doc/references/MODBUS_REGISTERS.md#pu08), and *Compressor status* is not *On*. The water check then lists
    `water_below_compressor_limit`, which here is information, not a fault.
 5. **The fan** starts at the active mode's minimum speed; raise the minimum
    to run it faster (see
@@ -526,7 +522,7 @@ in winter; see [Water circuit and brine](#water-circuit-and-brine).
 
 ### Season and winter heating
 
-Without a display the season is set with `select.hrds_season` ([HB04](doc/references/MODBUS_REGISTERS.md#hb04) = 4 summer,
+Without a display the season is set with *Season* ([HB04](doc/references/MODBUS_REGISTERS.md#hb04) = 4 summer,
 3 winter). Because winter changes the integration request from cooling to
 heating, the integration guards it:
 
@@ -558,7 +554,7 @@ probe it never heats by itself.
 
 The integration tells you instead of pretending otherwise:
 
-* `binary_sensor.hrds_unit_heats_on_its_own` (*Unit heats on its own*) is **on** while
+* *Unit heats on its own* is **on** while
   the unit, switched on in winter, can heat by itself. Its attributes say on
   what: `starts_below` / `stops_above` ([SEtH](doc/references/MODBUS_REGISTERS.md#seth) ∓ [PF12](doc/references/MODBUS_REGISTERS.md#pf12)), `winter_setpoint`,
   `dead_band`, `winter_setpoint_min` / `_max` ([PH09](doc/references/MODBUS_REGISTERS.md#ph09)/[PH10](doc/references/MODBUS_REGISTERS.md#ph10)), the room
@@ -583,8 +579,8 @@ To react, either accept it (turn *Allow winter heating* on) or stop it:
 
 The unit switches its water circuit itself: relay K5 drives the external valve
 (V3V) and, together with it, the pump output (PM). The integration only shows
-it (`sensor.hrds_water_valve_pump_output`) and never overrides it. The **Water circuit
-check** (`sensor.hrds_water_circuit_check`, attribute `issues`) flags:
+it (*Water valve / pump output*) and never overrides it. The **Water circuit
+check** sensor (attribute `issues`) flags:
 
 | Issue | Meaning |
 |-------|---------|
@@ -603,7 +599,7 @@ temperature guard is configured and passing. Without a guard, the setup check
 flags [PU02](doc/references/MODBUS_REGISTERS.md#pu02) if it allows winter dehumidifying.
 In the handbook's brine variants (4 to 6, §3.8.7) the HRDS+'s PM output
 switches an additional brine pump through a relay; that wiring is what
-`sensor.hrds_water_valve_pump_output` reflects. The maintainer's unit is wired as variant 6
+*Water valve / pump output* reflects. The maintainer's unit is wired as variant 6
 (a branch parallel to the heat pump) and the pump starts on a request; see
 [Tested units and installations](doc/tested-setups.md).
 
@@ -633,10 +629,10 @@ options. Then:
 * On a brine circuit a passing guard is what permits **dehumidifying in
   winter**. Without a guard, winter dehumidifying on brine is always refused.
   The unit itself only dehumidifies in winter if [PU02](doc/references/MODBUS_REGISTERS.md#pu02)
-  (`select.hrds_winter_dehumidification`) is *With water*; the factory value is
+  (*Winter dehumidification*) is *With water*; the factory value is
   *Disabled*.
 * Winter heating stays impossible on brine, guard or not.
-* `binary_sensor.hrds_brine_temperature_guard` (device class *problem*) is the
+* *Brine temperature guard* (device class *problem*) is the
   alarm indicator: **on** while the guard blocks. Its attributes give the
   source entity, temperature, minimum, last report and reason (`too_cold`,
   `stale`, `unavailable`, `not_a_number`, `not_a_temperature`). It is only
@@ -708,7 +704,7 @@ The integration provides three computed sensors that estimate the unit's
 recirculation airflow **automatically** from the live fan output reading and your
 calibration settings (see [Airflow calibration](#airflow-calibration-options)
 above): the live estimate in m³/h, which updates every poll cycle
-(`sensor.hrds_supply_fan_airflow`), the configured maximum from the options, and a
+(*Supply fan airflow*), the configured maximum from the options, and a
 copy of it kept for convenience. They are listed in the
 [entity reference](doc/entity-reference.md).
 
@@ -745,7 +741,7 @@ has no register for a fan-speed request from Modbus either. [PM20](doc/reference
 ("read only" in the handbook): the unit sets it itself, acknowledges a written
 value inside the band without keeping it, and refuses one outside the band.
 So the fan is shown by readings only, with no fan entity, the climate entity
-has no fan mode, and `sensor.hrds_manual_fan_speed` shows [PM20](doc/references/MODBUS_REGISTERS.md#pm20).
+has no fan mode, and *Manual fan speed* shows [PM20](doc/references/MODBUS_REGISTERS.md#pm20).
 
 The fan runs at the highest of the unit's own requests, kept within the active
 mode's band ([PF28](doc/references/MODBUS_REGISTERS.md#pf28)–[PF10](doc/references/MODBUS_REGISTERS.md#pf10) for dehumidify, [PF27](doc/references/MODBUS_REGISTERS.md#pf27)–[PF09](doc/references/MODBUS_REGISTERS.md#pf09) for cooling): the 0–10 V
@@ -756,21 +752,21 @@ at the band **minimum**: 50 % as shipped. Details:
 
 What the integration shows:
 
-* `binary_sensor.hrds_supply_fan_running`: whether the fan turns, from its
+* *Supply fan running*: whether the fan turns, from its
   status: on while *On* and during the run-on (*Stopping*), off while
   *Starting*, off and in alarm.
-* `sensor.hrds_supply_fan_status`: the unit's fan status itself.
-* `sensor.hrds_supply_fan_output` (%) and `sensor.hrds_supply_fan_airflow`
+* *Supply fan status*: the unit's fan status itself.
+* *Supply fan output* (%) and *Supply fan airflow*
   (m³/h): the speed the fan runs at.
-* `sensor.hrds_supply_fan_speed`: only when an input is allocated to the fan
+* *Supply fan speed*: only when an input is allocated to the fan
   tachometer, else unknown.
-* `sensor.hrds_manual_fan_speed`: [PM20](doc/references/MODBUS_REGISTERS.md#pm20), the unit's manual request. While the
+* *Manual fan speed*: [PM20](doc/references/MODBUS_REGISTERS.md#pm20), the unit's manual request. While the
   fan runs it reads the same as the output.
 
 What works over Modbus is the band. The unit keeps its manual request within
 it, so on the reference unit, during a dehumidify run:
 
-* raising `number.hrds_fan_min_speed_dehumidify` above the current speed
+* raising *Fan min speed (dehumidify)* above the current speed
   raised the fan to the new minimum within a minute (50 → 55 %);
 * lowering the minimum again did **not** slow the fan; it stays at its speed
   until the request ends, and the next run starts at the minimum;
@@ -788,12 +784,12 @@ Every entity, with its register and what it shows, is in the
 **[entity reference](doc/entity-reference.md)** (English). It is organised like
 the devices the integration creates:
 
-* **[HRDS+](doc/entity-reference.md#main-device-hrds)**: the operating surface
+* **[HRDS+](doc/entity-reference.md#hrds)**: the operating surface
   (climate, fan, request switches, readings and alarms), with its
   *Configuration* and *Diagnostic* sections.
-* **[HRDS+ setup](doc/entity-reference.md#setup-device-hrds-setup)**: the
+* **[HRDS+ setup](doc/entity-reference.md#hrds-setup)**: the
   one-time checklist (setup check, Modbus enables, probe and wiring facts).
-* **[HRDS+ installer](doc/entity-reference.md#installer-device-hrds-installer)**:
+* **[HRDS+ installer](doc/entity-reference.md#hrds-installer)**:
   the opt-in installer menu, about 240 parameters.
 
 ## Probe requirements
@@ -873,7 +869,7 @@ posting.
 
 Please also say which unit it is (HRDS+ 30 or 50, `R` or non-`R`, display or
 headless, which probes are wired), the Home Assistant and integration versions,
-the `issues` of `sensor.hrds_setup_setup_check`, and the relevant part of the Home
+the `issues` of *Setup check*, and the relevant part of the Home
 Assistant log. The issue form asks for all of this.
 [Open an issue](https://github.com/mikopp/homeassistant-innova-hrds/issues/new/choose).
 
