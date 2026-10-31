@@ -153,6 +153,25 @@ def test_lint_refuses_a_stale_banner_or_anchor(repo):
         release.check(repo)
 
 
+def test_banner_anchor_without_a_suffix_is_kept_current(repo):
+    # The banner is plain "## Release X.Y.Z", so its anchor is #release-NNN.
+    (repo / "README.md").write_text("## Release 0.9.3\n")
+    (repo / "README.de.md").write_text(
+        "## Release 0.9.3\n[en](README.md#release-093)\n"
+    )
+    assert release.check(repo) == "0.9.3"
+    (repo / "README.de.md").write_text(
+        "## Release 0.9.3\n[en](README.md#release-092)\n"
+    )
+    with pytest.raises(release.ReleaseError, match="stale"):
+        release.check(repo)
+    (repo / "README.de.md").write_text(
+        "## Release 0.9.3\n[en](README.md#release-093)\n"
+    )
+    release.prepare(repo, "0.9.4", "next", "2026-10-31")
+    assert "README.md#release-094" in (repo / "README.de.md").read_text()
+
+
 @pytest.mark.parametrize(
     ("old", "new", "match"),
     [

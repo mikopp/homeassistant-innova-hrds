@@ -21,11 +21,11 @@ it.
 
 | File | What it is | Cited as |
 |------|------------|----------|
-| [HRDS+_Technisches_Handbuch_DE.pdf](HRDS+_Technisches_Handbuch_DE.pdf) | Technical handbook (German, 87 pp): operating modes (§2.7), terminals (§4.4–4.5), parameter list with defaults (§5.3), control logic (§6), alarms (§7), technical data (§10). Search the `.txt`, check tables here. | `HB §n` |
-| [HRDS+_Technisches_Handbuch_DE.txt](HRDS+_Technisches_Handbuch_DE.txt) | Full text of the handbook, for searching. Tables are flattened; check the PDF for column alignment. | `HB §n` |
-| [HRDS+_Modbus_RTU_RS485_DE.pdf](HRDS+_Modbus_RTU_RS485_DE.pdf) | Modbus RTU/RS-485 connection and register manual (German). Source of every register address. | `MB p.n` |
-| [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp); a subset of the technical handbook. | `HB` |
-| [Innova_DEH+_H_Installation_Manual_EN.txt](Innova_DEH+_H_Installation_Manual_EN.txt) | Innova DEH+ H installation manual (English), the OEM original. Describes an **older controller** (microswitches, three fixed fan speeds), not the EVCO "K" board of the HRDS+. | `IM` |
+| [HRDS+_Technisches_Handbuch_DE.pdf](HRDS+_Technisches_Handbuch_DE.pdf) | Technical handbook (German, 87 pp): operating modes (§2.7), terminals (§4.4–4.5), parameter list with defaults (§5.3), control logic (§6), alarms (§7), technical data (§10). Search the `.txt`, check tables here. | `[HB n]` |
+| [HRDS+_Technisches_Handbuch_DE.txt](HRDS+_Technisches_Handbuch_DE.txt) | Full text of the handbook, for searching. Tables are flattened; check the PDF for column alignment. | `[HB n]` |
+| [HRDS+_Modbus_RTU_RS485_DE.pdf](HRDS+_Modbus_RTU_RS485_DE.pdf) | Modbus RTU/RS-485 connection and register manual (German). Source of every register address. | `[MB p.n]` |
+| [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp); a subset of the technical handbook. | `[HB n]` |
+| [Innova_DEH+_H_Installation_Manual_EN.txt](Innova_DEH+_H_Installation_Manual_EN.txt) | Innova DEH+ H installation manual (English), the OEM original. Describes an **older controller** (microswitches, three fixed fan speeds), not the EVCO "K" board of the HRDS+. | `[IM]` |
 
 The vendor's and other users' statements from the energiesparhaus.at HRDS+
 forum thread are quoted with their post numbers in
@@ -58,10 +58,10 @@ shows about 31 Pa at 300 m³/h and 38 Pa at 500 m³/h, so the unit is Pa.
 
 The 130–300 / 190–500 m³/h recirculation band is the **tested operating
 range** from the performance spec, not a firmware floor: the fan minimum during
-dehumidification and integration is `PF28` / `PF27`, factory 50 %, settable
-down to 0 % (HB §5.3, §6.2). The total flow (supply + recirc) should not exceed
+dehumidification and integration is [PF28](MODBUS_REGISTERS.md#pf28) / [PF27](MODBUS_REGISTERS.md#pf27), factory 50 %, settable
+down to 0 % (HB 5.3, §6.2). The total flow (supply + recirc) should not exceed
 the nominal 300 / 500 m³/h; above it efficiency drops, noise rises and the
-supply ducts must be sized for it (HB §3.7.1, p.24).
+supply ducts must be sized for it (HB 3.7.1, p.24).
 
 ### Dehumidification capacity vs. airflow
 
@@ -77,11 +77,11 @@ conditions):
 | 400 m³/h | — | 81.1 L/d |
 | 500 m³/h | — | 83.2 L/d |
 
-## Translating fan speed (% / RPM) to airflow (m³/h)
+## Translating fan speed to airflow
 
 The unit has **no airflow register**; it cannot measure its own m³/h. It
-reports the fan's analog output `outAO_SupplyFan` (639, %) and its speed
-`actRPMsupplyFan` (1117, rpm) (MB p.8, p.15).
+reports the fan's analog output `outAO_SupplyFan` ([639](MODBUS_REGISTERS.md#reg-639), %) and its speed
+`actRPMsupplyFan` ([1117](MODBUS_REGISTERS.md#reg-1117), rpm) [MB p.8, p.15].
 
 The handbook's performance curves (§10.3, p.80–81) are pressure-vs-flow system
 curves, not an RPM-vs-flow table, so there is no published conversion. An

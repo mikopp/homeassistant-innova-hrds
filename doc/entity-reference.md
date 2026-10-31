@@ -53,28 +53,22 @@ registers or values computed from them.
 
 ⁴ Only offered when a display or a room probe lets the unit raise requests by
 itself (handbook §6.1), and while that reading is healthy. Not tested on a real
-device (see the [beta banner](../README.md#release-095--beta-not-10-yet)).
+device (see the [release notice](../README.md#release-095)).
 
 #### Fan
 
 The fan is shown by readings only, with no fan entity: Modbus can neither
-switch the unit's fan nor set its speed (ADR-0034). The unit runs the
-fan with every dehumidify or integration request and stops it after a run-on
-([UNIT_BEHAVIOUR §9.2–9.3](references/UNIT_BEHAVIOUR.md#92-timing)). [PM20](references/MODBUS_REGISTERS.md#pm20)
-([1614](references/MODBUS_REGISTERS.md#reg-1614)) is its own manual request: a written value does not hold and one
-outside the band is refused (T23, T27, T28;
-[§9.1](references/UNIT_BEHAVIOUR.md#91-bands-and-sources)). The fan starts at
-the band minimum ([PF28](references/MODBUS_REGISTERS.md#pf28)); raising `number.fan_min_speed_dehumidify` above the
-current speed raises it, lowering it does not slow the fan (T24–T26;
-`_cooling` during INT and lowering via the maximum untested,
-[plan](../plans/fan-speed-tests.md)). What the fan does is shown by
-`binary_sensor.supply_fan_running`, `sensor.supply_fan_status`,
-`sensor.supply_fan_output`, `sensor.fan_manual_speed`,
-`sensor.supply_fan_rpm` and `sensor.supply_fan_airflow`. `R` units only: a
+switch the unit's fan nor set its speed (ADR-0034). The unit runs the fan with
+every dehumidify or integration request and stops it after a run-on. What the
+fan does is shown by `binary_sensor.supply_fan_running`,
+`sensor.supply_fan_status`, `sensor.supply_fan_output`,
+`sensor.fan_manual_speed`, `sensor.supply_fan_rpm` and
+`sensor.supply_fan_airflow`; the speed bands are the `number.fan_*` entities
+under *Configuration*. How the fan is driven and what the bands do:
+[Fan speed](../README.md#fan-speed) and
+[UNIT_BEHAVIOUR §9](references/UNIT_BEHAVIOUR.md#9-fan). `R` units only: a
 non-R unit has no fan of its own, its damper output reads *disabled*, and the
-fan sensors and fan speed numbers are not created. The unit's own fan
-recirculates room air *in addition* to whatever the central MVHR pushes
-through the duct, so it adds airflow on top of the MVHR.
+fan sensors and fan speed numbers are not created.
 
 #### Request switches
 
@@ -94,15 +88,15 @@ through the duct, so it adds airflow on top of the MVHR.
 
 | Entity | Name | Unit | Probe needed | Notes |
 |---|---|---|---|---|
-| `sensor.room_temperature` | Room temperature | °C | ¹ Display or external NTC | Read from reg [499](references/MODBUS_REGISTERS.md#reg-499); used for automatic cooling trigger |
-| `sensor.room_humidity` | Room humidity | %RH | ² Display or external humidity sensor | Read from reg [505](references/MODBUS_REGISTERS.md#reg-505); used for automatic dehumidify trigger |
+| `sensor.room_temperature` | Room temperature | °C | ¹ Display or external NTC | Reg [499](references/MODBUS_REGISTERS.md#reg-499); used for automatic cooling trigger |
+| `sensor.room_humidity` | Room humidity | %RH | ² Display or external humidity sensor | Reg [505](references/MODBUS_REGISTERS.md#reg-505); used for automatic dehumidify trigger |
 | `sensor.outdoor_temperature` | Outdoor temperature | °C | External NTC (IP65) | Reg [500](references/MODBUS_REGISTERS.md#reg-500); only drives Free-Cooling/Heating ([PG03](references/MODBUS_REGISTERS.md#pg03)). Display-only otherwise. |
 | `sensor.water_temperature` | Water temperature | °C | ³ Built-in | Reg [501](references/MODBUS_REGISTERS.md#reg-501); over-temperature protection |
 | `sensor.supply_temperature` | Supply air temperature | °C | External NTC | Reg [503](references/MODBUS_REGISTERS.md#reg-503); monitoring only |
 | `sensor.air_quality` | Air quality | ppm | External IAQ sensor | Reg [506](references/MODBUS_REGISTERS.md#reg-506); monitoring only |
 | `sensor.actual_setpoint` | Active setpoint | °C | — | Reg [1111](references/MODBUS_REGISTERS.md#reg-1111); active room setpoint in use |
 | `sensor.supply_fan_output` | Supply fan output | % | ³ Built-in | Reg [639](references/MODBUS_REGISTERS.md#reg-639) (×0.01 %); actual fan analog output |
-| `sensor.fan_manual_speed` | Manual fan speed | % | ³ Built-in | Reg [1614](references/MODBUS_REGISTERS.md#reg-1614), [PM20](references/MODBUS_REGISTERS.md#pm20): the unit's own manual fan request, read-only. The unit sets it to the band minimum ([PF28](references/MODBUS_REGISTERS.md#pf28)) when the fan starts, up to a raised minimum during a run (T25) and to 0 when a request ends (T22); the fan is driven at it. Reads the same as `sensor.fan_manual_request` (1114) |
+| `sensor.fan_manual_speed` | Manual fan speed | % | ³ Built-in | Reg [1614](references/MODBUS_REGISTERS.md#reg-1614), [PM20](references/MODBUS_REGISTERS.md#pm20): the unit's own manual fan request, read-only. The unit sets it to the band minimum ([PF28](references/MODBUS_REGISTERS.md#pf28)) when the fan starts, up to a raised minimum during a run (T25) and to 0 when a request ends (T22); the fan is driven at it. Reads the same as `sensor.fan_manual_request` ([1114](references/MODBUS_REGISTERS.md#reg-1114)) |
 | `sensor.compressor_output` | Compressor output | % | ³ Built-in | Reg [641](references/MODBUS_REGISTERS.md#reg-641) (×0.01 %); compressor modulation level |
 | `sensor.supply_fan_rpm` | Supply fan speed | rpm | ³ Built-in | Reg [1117](references/MODBUS_REGISTERS.md#reg-1117). **Unknown** when no input is allocated to the fan tachometer (input function 45/46 on [HA01](references/MODBUS_REGISTERS.md#ha01), [HA04](references/MODBUS_REGISTERS.md#ha04)–[HA18](references/MODBUS_REGISTERS.md#ha18), [HB01](references/MODBUS_REGISTERS.md#hb01), [HB02](references/MODBUS_REGISTERS.md#hb02), [HB05](references/MODBUS_REGISTERS.md#hb05)–[HB07](references/MODBUS_REGISTERS.md#hb07), read at setup): the unit then has no speed to report and the register reads 0 with the fan running |
 | `sensor.exhaust_temperature` | Exhaust air temperature | °C | External NTC | Reg [502](references/MODBUS_REGISTERS.md#reg-502); monitoring only |
@@ -116,8 +110,8 @@ through the duct, so it adds airflow on top of the MVHR.
 
 #### Binary sensors
 
-Alarm sensors map to a single bit of a packed alarm register (§9.1 in
-`MODBUS_REGISTERS.md`). **ON = alarm is active.**
+Alarm sensors map to a single bit of a packed alarm register
+([MODBUS_REGISTERS.md §9.1](references/MODBUS_REGISTERS.md#91-active-alarm-bitmaps-ro-fc-04)). **ON = alarm is active.**
 
 | Entity | Name | Probe needed | What ON means |
 |---|---|---|---|
@@ -268,7 +262,7 @@ even without the installer device.)
 
 The parameters are **not listed one by one** here: they are generated from
 `installer_params.py`, and the full list with addresses and scaling is
-[`references/MODBUS_REGISTERS.md` §16](references/MODBUS_REGISTERS.md). The two
+[`references/MODBUS_REGISTERS.md` §16](references/MODBUS_REGISTERS.md#16-installer-menu-parameters-installer-device). The two
 entities that are not parameters:
 
 | Entity | Name | Register | Shows |
