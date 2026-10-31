@@ -19,12 +19,10 @@ paths:
 - `doc/entity-reference.md` MUST be the only place that lists entities. The
   README, `CLAUDE.md` and other docs MUST link to it and MUST NOT restate it
   (ADR-0027); they name an entity by its English name, an entity ID only in a
-  YAML example. Every entity name in italics in another Markdown file MUST be
-  a link to that entity's item in the reference (`[*Setup check*](…/entity-reference.md#setup-check)`),
-  so each item carries an anchor `<a id="setup-check"></a>` (the name in lower
-  case, runs of other characters as one hyphen). Not in `CLAUDE.md`, the ADRs
-  (ADR-0027: no links in agent-loaded files), the reference itself and released
-  CHANGELOG sections.
+  YAML example. An entity name in italics in another Markdown file MUST link
+  to its item, which carries an anchor `<a id="setup-check"></a>` (name in
+  lower case, other runs of characters as one hyphen). Exempt: `CLAUDE.md`,
+  the ADRs, the reference itself and released CHANGELOG sections.
 - It MUST follow Home Assistant's "Supported functionality" pattern
   (`docs-supported-functions`): `## <device>` (HRDS+, HRDS+ setup, HRDS+
   installer, each saying why it exists and is separate, ADR-0016, ADR-0017),
@@ -75,7 +73,6 @@ description, availability and remarks; entity IDs only in examples.
 
 - Good: the page reads like an official integration page; names come straight
   from the translations, so the check needs no Home Assistant.
-- Bad: longer than a table; the register is a remark, not a column.
 
 ## Confirmation
 
