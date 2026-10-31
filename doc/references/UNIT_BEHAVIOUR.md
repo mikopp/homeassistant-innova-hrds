@@ -178,6 +178,18 @@ Fixed internal inputs: evaporator probe (AI4), water probe (AI5),
 high-pressure switch (DI1), low-pressure switch (DI2) with the frost
 thermostat on the same input [HB 6.3; as-delivered allocation T2].
 
+Allocation of the main-board terminals on the reference unit [T21]: AI1
+(`FAN+`) [HA01](MODBUS_REGISTERS.md#ha01) = 58 (fan potentiometer 0–10 V); AI2 and AI3 (M2, M3)
+[HA02](MODBUS_REGISTERS.md#ha02) = [HA03](MODBUS_REGISTERS.md#ha03) = 0, unused; AI6 and AI7 (M6, M7) [HA06](MODBUS_REGISTERS.md#ha06) = 6 and
+[HA07](MODBUS_REGISTERS.md#ha07) = 8, the DEU and INT contacts; DI3 (M8) [HB03](MODBUS_REGISTERS.md#hb03) = 2, remote
+on/off; DI4 (M9) [HB04](MODBUS_REGISTERS.md#hb04) = 4, season, with no contact wired: the season is
+changed by writing [HB04](MODBUS_REGISTERS.md#hb04) 3/4 over Modbus [T31]. The expansion inputs
+([HB05](MODBUS_REGISTERS.md#hb05)–[HB07](MODBUS_REGISTERS.md#hb07) and the expansion allocations) are 0; they belong to an
+optional expansion board ([PG05](MODBUS_REGISTERS.md#pg05) "Enable expansion", factory off)
+[HB 5.3]. The allocation range is 0–60 for AI1 to AI3, 0–52 for AI4 to AI7 and
+0–46 for the digital inputs; the digital functions are 1–44, the probe and
+potentiometer functions 45–62 [HB 5.3, input functions].
+
 ---
 
 ## 3. Control sources and precedence
@@ -563,7 +575,10 @@ Observations and consequences:
   [MB p.18; INFERRED from HB 5.2.4]; [PF23](MODBUS_REGISTERS.md#pf23) ([1660](MODBUS_REGISTERS.md#reg-1660)) is the speed forced by a
   digital input [MB p.20].
 * **No register takes a fan-speed request from the BMS.** The "by BMS"
-  registers are on/off, DEU, INT and holiday only [MB p.5, p.14–15]. [PM20](MODBUS_REGISTERS.md#pm20)
+  registers are on/off, DEU, INT and holiday only [MB p.5, p.14–15]. The
+  Modbus function enables are [PH01](MODBUS_REGISTERS.md#ph01), [PH02](MODBUS_REGISTERS.md#ph02), [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28)
+  (and [HA00](MODBUS_REGISTERS.md#ha00) for the probe source); none concerns the fan, and without an
+  enable the unit ignores the written register [MB p.5]. [PM20](MODBUS_REGISTERS.md#pm20)
   ([1614](MODBUS_REGISTERS.md#reg-1614)) is listed R/W in the raw parameter table [MB p.18], but the
   handbook defines it as "Einstellung der Zuluftventilator-Geschwindigkeit
   via Display (read only)" [HB 5.3], and the Modbus fan chapter lists only
@@ -573,6 +588,14 @@ Observations and consequences:
   the band minimum is refused with exception 04 [T27]. [INFERRED] the unit
   checks a write against the active band's limits and then keeps its own
   request. Whether a display unit takes a Modbus write is not known.
+* **Forced fan by a digital input.** [PF23](MODBUS_REGISTERS.md#pf23) ([1660](MODBUS_REGISTERS.md#reg-1660), handbook default
+  70 %) is the supply fan speed while a digital input is active that has the
+  input function 19 (normally closed) or 20 (normally open) "Fans forced by DI"
+  [HB 5.3 [PF23](MODBUS_REGISTERS.md#pf23) and input functions]. The state shows in `Packed_logicDI2`
+  ([258](MODBUS_REGISTERS.md#reg-258)) bits 2–3 "Forced fan" [MB p.13]. [HA02](MODBUS_REGISTERS.md#ha02) and [HA03](MODBUS_REGISTERS.md#ha03) accept 0–60
+  [HB 5.3], so 19 and 20 are allowed by range; that the function works on the
+  analog terminals M2 and M3, and whether a forced fan needs a request or
+  opens the damper, are untested [INFERRED].
 * What Modbus can change is the band: "Dieser Arbeitsbereich des Lüfters kann
   in den Geräte-Einstellungen oder per Modbus individuell … konfiguriert
   werden" [HB 4.5]. Seen on the reference unit during a DEU run:

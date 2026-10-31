@@ -56,8 +56,10 @@ Factory serial defaults:
   **not** apply a `-1` offset.
 * All registers are **16-bit, big-endian**.
 * **Function codes** (this is how Read/Write is split):
-  * **`R/O` → FC 04** "Read Input Registers".
-  * **`R/W` → FC 03** "Read Holding Registers" (read) and FC 06 / FC 16 (write).
+  * **`R/O` → FC 04** "Read Input Registers" [MB p.5].
+  * **`R/W` → FC 03** "Read Holding Registers" [MB p.5]. The manual names no
+    write function; the writes are the standard Modbus FC 06 (one register)
+    and FC 16 (several).
 * **Everything is analog.** The manufacturer explicitly states that even 0/1
   status flags are analog registers — **there are no Modbus coils or discrete
   inputs** on this device.
@@ -156,7 +158,7 @@ No register takes a fan-speed
 request from the BMS; the band registers are the only fan-speed registers the
 Modbus manual's fan chapter lists as writable [MB p.7]. Other writable fan
 setpoints, each tied to a condition: [FSC](#fsc)/[FSE](#fse)/[FSN](#fsn) ([1595](#reg-1595)–[1597](#reg-1597), time bands,
-need time programs [PH03](#ph03)) [MB p.18], [PF23](#pf23) ([1660](#reg-1660), forced by a digital input)
+need time programs [PH03](#ph03)) [MB p.18], [PF23](#pf23) ([1660](#reg-1660), forced by a digital input with input function 19 or 20)
 [MB p.20], [PF26](#pf26) ([1637](#reg-1637), run-on). Behaviour:
 [UNIT_BEHAVIOUR §9.1](UNIT_BEHAVIOUR.md#91-bands-and-sources).
 

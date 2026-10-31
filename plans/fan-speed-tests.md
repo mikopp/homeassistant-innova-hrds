@@ -46,9 +46,11 @@ Evidenced:
 * [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) ([1660](../doc/references/MODBUS_REGISTERS.md#reg-1660), handbook default 70 %) is the supply fan speed forced by a
   digital input with input function 19 (normally closed) or 20 (normally
   open) "Fans forced by DI" [HB 5.3, input functions]. The state shows in
-  `Packed_logicDI2` ([258](../doc/references/MODBUS_REGISTERS.md#reg-258)) bits 2–3 "Forced fan" [MB p.8].
-* All [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) writes so far were FC 06 (T23, T27, T28). The Modbus manual lists
-  writes as FC 06 / FC 16 and does not say which one [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) needs.
+  `Packed_logicDI2` ([258](../doc/references/MODBUS_REGISTERS.md#reg-258)) bits 2–3 "Forced fan" [MB p.13].
+* All [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) writes so far were FC 06 (T23, T27, T28). The Modbus manual defines
+  `R/W` as holding registers read with FC 03 and names no write function
+  [MB p.5]; FC 06 and FC 16 are the standard Modbus writes, and nothing says
+  which one [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) needs.
 
 [INFERRED], not tested:
 
