@@ -29,9 +29,12 @@ paths:
   (when not all units), `**Options**` (selects) and `**Remarks**`.
 - The entities `entity_category_for` makes diagnostic MUST be listed under a
   `### Diagnostic` section of their device (after the platform sections), not
-  under their platform. `**Remarks**` MUST give the Modbus register (linked to
-  `MODBUS_REGISTERS.md`) and, for a configuration entity, "Configuration
-  entity".
+  under their platform. The Modbus register MUST end the description in
+  parentheses, linked to `MODBUS_REGISTERS.md` (`([1121](…))`, `([768](…), bit
+  10)`, `(derived from [1134](…) and [1119](…))`), merged with the parameter
+  code when the text names it (`([PU01](…), [1586](…))`). `**Remarks**` only
+  say what else matters and MUST say "Configuration entity" for a configuration
+  entity.
 - It MUST use Home Assistant's terms (device, entity, name, platform) and MUST
   NOT name repository internals (keys, entity IDs, unique ids, ADRs, scripts,
   source files, evidence-log tags).
