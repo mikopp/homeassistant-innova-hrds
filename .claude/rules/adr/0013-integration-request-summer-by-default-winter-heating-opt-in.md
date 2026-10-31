@@ -12,22 +12,22 @@ paths:
 
 ## Decision
 
-- Turning INT on (`integration_request`, [1139](../../../doc/references/MODBUS_REGISTERS.md#reg-1139)) MUST be refused unless
+- Turning INT on (`integration_request`, 1139) MUST be refused unless
   `hub.active_season` is summer, or `allow_winter_heating` (default off) is
   on and the circuit is not brine (ADR-0014). Unknown season counts as not
   summer. Turning it off is never refused by these guards.
-- Turning INT on MUST be refused while [PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02) (`integration_available`) reads
+- Turning INT on MUST be refused while PG02 (`integration_available`) reads
   off; the climate entity then offers no Cool/Heat.
 - A season change to winter MUST be refused while an INT request is active
   and winter heating is not allowed.
-- The season MUST be written only as [HB04](../../../doc/references/MODBUS_REGISTERS.md#hb04) ([1825](../../../doc/references/MODBUS_REGISTERS.md#reg-1825)) = 4 summer / 3 winter
+- The season MUST be written only as HB04 (1825) = 4 summer / 3 winter
   (`select.season`); other values raise AL25.
 - The season for every guard and for the climate entity is
-  `hub.active_season`: the prefix of `mode_status` ([1110](../../../doc/references/MODBUS_REGISTERS.md#reg-1110)), else
-  `operating_mode` ([1583](../../../doc/references/MODBUS_REGISTERS.md#reg-1583)).
+  `hub.active_season`: the prefix of `mode_status` (1110), else
+  `operating_mode` (1583).
 - `allow_winter_heating` governs only Home Assistant's own requests. The
-  unit's own winter heating (room temperature source + [PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02), below
-  [SEtH](../../../doc/references/MODBUS_REGISTERS.md#seth) − [PF12](../../../doc/references/MODBUS_REGISTERS.md#pf12)) MUST be reported, not hidden: `binary_sensor.automatic_heating`
+  unit's own winter heating (room temperature source + PG02, below
+  SEtH − PF12) MUST be reported, not hidden: `binary_sensor.automatic_heating`
   and the setup issues `unit_heats_on_its_own`,
   `unit_heats_on_its_own_on_brine`, `winter_heating_without_integration`
   (silenced below `AUTO_HEATING_NEGLIGIBLE_BELOW`). A winter INT set
@@ -39,14 +39,14 @@ INT is dehumidify + cool in summer but heating in winter (valve and pump
 open, compressor off); a user asking for "cool" must not get heat after a
 season change. The unit knows nothing of the option, and with a room
 temperature source it raises its own winter INT (handbook 6.1.2; factory
-[PH09](../../../doc/references/MODBUS_REGISTERS.md#ph09)/[PH10](../../../doc/references/MODBUS_REGISTERS.md#ph10) = 14 °C make it heat below 13.5 °C), so the option cannot stop it.
+PH09/PH10 = 14 °C make it heat below 13.5 °C), so the option cannot stop it.
 
 ## Consequences
 
 - Good: Home Assistant never heats by surprise and never hides that the
   unit does.
 - Bad: the only way Home Assistant stops the unit's own heating is climate
-  Off (unit off), or changing [SEtH](../../../doc/references/MODBUS_REGISTERS.md#seth) / [PH10](../../../doc/references/MODBUS_REGISTERS.md#ph10) on the unit.
+  Off (unit off), or changing SEtH / PH10 on the unit.
 
 ## Confirmation
 
@@ -60,5 +60,5 @@ temperature source it raises its own winter INT (handbook 6.1.2; factory
 
 ## More information
 
-PR #15 (season, opt-in), PR #34 ([PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02), active season), PR #37 (own heating).
+PR #15 (season, opt-in), PR #34 (PG02, active season), PR #37 (own heating).
 Unit behaviour: `UNIT_BEHAVIOUR.md` §6–7.

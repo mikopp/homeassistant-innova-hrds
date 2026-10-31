@@ -50,9 +50,9 @@ Renaming a key: ADR-0026. Installer parameters are rows in
 `SWITCH: {"off": 0, "on": 1}`. Without `BITMASK_INVERT` a set bit is `on`
 (alarms); with it a set bit is `off` ("probe OK" sensors).
 
-* `PackedAlarm_1` ([768](../../doc/references/MODBUS_REGISTERS.md#reg-768)): bit N = AL(N+1), e.g. AL11 = bit 10, AL16 = bit 15.
-* `PackedAlarm_2` ([769](../../doc/references/MODBUS_REGISTERS.md#reg-769)): bit N = AL(N+17), e.g. AL22 = bit 5, AL28 = bit 11.
-* `PackedAlarm_3` ([770](../../doc/references/MODBUS_REGISTERS.md#reg-770)): bit 0 = AL33, bit 1 = AL34, bit 2 = AL35, bit 6 = AL39.
+* `PackedAlarm_1` (768): bit N = AL(N+1), e.g. AL11 = bit 10, AL16 = bit 15.
+* `PackedAlarm_2` (769): bit N = AL(N+17), e.g. AL22 = bit 5, AL28 = bit 11.
+* `PackedAlarm_3` (770): bit 0 = AL33, bit 1 = AL34, bit 2 = AL35, bit 6 = AL39.
 
 ## Computed values
 

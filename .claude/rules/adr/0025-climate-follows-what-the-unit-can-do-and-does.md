@@ -14,24 +14,24 @@ paths:
 
 - `hvac_mode` MUST be derived in this order (`_derive_mode`): unit not
   running → OFF; `hub.int_effect` cool/heat → COOL/HEAT; DEU active → DRY;
-  `hub.auto_capable` → AUTO; `dehumidify_request` ([1121](../../../doc/references/MODBUS_REGISTERS.md#reg-1121)) on from another
+  `hub.auto_capable` → AUTO; `dehumidify_request` (1121) on from another
   source → DRY; else FAN_ONLY, labelled "Standby". OFF MUST only ever mean
   the unit is off, so the mode never contradicts `switch.unit_on_off`. A
-  request that cannot act ([PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02) off, enable off, winter INT on brine) MUST
+  request that cannot act (PG02 off, enable off, winter INT on brine) MUST
   NOT decide the mode.
 - Offered modes (`_modes_for`): AUTO only while `auto_capable`, else
-  FAN_ONLY; no DRY without [PH28](../../../doc/references/MODBUS_REGISTERS.md#ph28); COOL in summer and HEAT in winter only with
-  [PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02) and [PH27](../../../doc/references/MODBUS_REGISTERS.md#ph27) (HEAT with `allow_winter_heating` or while a winter INT
-  heats); without [PH02](../../../doc/references/MODBUS_REGISTERS.md#ph02) only the modes on the side of on/off the unit is on.
+  FAN_ONLY; no DRY without PH28; COOL in summer and HEAT in winter only with
+  PG02 and PH27 (HEAT with `allow_winter_heating` or while a winter INT
+  heats); without PH02 only the modes on the side of on/off the unit is on.
   The current mode is always listed.
 - `hvac_action` MUST come from evidence, not from the request: HEATING only
   if `hub.is_heating` (heating INT, valve/pump on, no AL04, compressor off,
-  water ≥ [PC08](../../../doc/references/MODBUS_REGISTERS.md#pc08)); COOLING only if `hub.is_cooling` (cooling INT, compressor
-  on, no AL03); else DRYING (compressor or [1121](../../../doc/references/MODBUS_REGISTERS.md#reg-1121) on); else FAN (R unit, fan
-  running, ADR-0028); else IDLE. The condenser valve ([1124](../../../doc/references/MODBUS_REGISTERS.md#reg-1124)) MUST NOT be evidence (ADR-0015).
+  water ≥ PC08); COOLING only if `hub.is_cooling` (cooling INT, compressor
+  on, no AL03); else DRYING (compressor or 1121 on); else FAN (R unit, fan
+  running, ADR-0028); else IDLE. The condenser valve (1124) MUST NOT be evidence (ADR-0015).
 - Setting a mode MUST check every write (`check_write_allowed`) before the
   first, then write the requests before `unit_on_off`. OFF clears both
-  requests and switches the unit off (offered only where [PH02](../../../doc/references/MODBUS_REGISTERS.md#ph02) allows it);
+  requests and switches the unit off (offered only where PH02 allows it);
   if clearing fails it still switches off and re-raises the first error. AUTO and FAN_ONLY clear both
   requests and switch on; COOL sets INT and DEU, HEAT sets INT and clears
   DEU, DRY sets DEU and clears INT. `turn_on` = AUTO if `auto_capable` else FAN_ONLY; `turn_off` = OFF.
@@ -41,8 +41,8 @@ paths:
   fan-speed request over Modbus, so a fan mode could never be set
   (ADR-0034). FAN_ONLY is only Standby renamed and MUST NOT write any fan
   register. The FAN action stays: it reports what the unit does.
-- Targets: humidity ← `humidity_setpoint` within [PH29](../../../doc/references/MODBUS_REGISTERS.md#ph29)/[PH30](../../../doc/references/MODBUS_REGISTERS.md#ph30); temperature ←
-  [SEtC](../../../doc/references/MODBUS_REGISTERS.md#setc) (15–35 °C) in summer, [SEtH](../../../doc/references/MODBUS_REGISTERS.md#seth) clamped to [PH09](../../../doc/references/MODBUS_REGISTERS.md#ph09)..PH10 in winter.
+- Targets: humidity ← `humidity_setpoint` within PH29/PH30; temperature ←
+  SEtC (15–35 °C) in summer, SEtH clamped to PH09..PH10 in winter.
 
 ## Context
 

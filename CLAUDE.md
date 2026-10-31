@@ -25,8 +25,8 @@ Do not restate ADR content in this file.
 
 * All Modbus writes go through `hub.write_entity_value`; never add a periodic
   or unconditional write (ADR-0006, ADR-0023).
-* The integration writes nothing on its own except the headless [PH01](doc/references/MODBUS_REGISTERS.md#ph01)/[HA00](doc/references/MODBUS_REGISTERS.md#ha00)
-  sync (ADR-0010); never the [PH02](doc/references/MODBUS_REGISTERS.md#ph02)/[PH27](doc/references/MODBUS_REGISTERS.md#ph27)/[PH28](doc/references/MODBUS_REGISTERS.md#ph28) Modbus enables (ADR-0022).
+* The integration writes nothing on its own except the headless PH01/HA00
+  sync (ADR-0010); never the PH02/PH27/PH28 Modbus enables (ADR-0022).
 * Every request passes `check_write_allowed`: enables, season, brine guard,
   operation gate (ADR-0012, ADR-0013, ADR-0014).
 * Verify the device before anything can write (ADR-0009).
@@ -58,13 +58,13 @@ subscribe with `hub.async_add_my_modbus_sensor(callback)`.
 
 ## The unit in brief
 
-* Two requests: **DEU** (`dehumidify`, [1140](doc/references/MODBUS_REGISTERS.md#reg-1140)) and **INT**
-  (`integration_request`, [1139](doc/references/MODBUS_REGISTERS.md#reg-1139)). INT dehumidifies and cools in summer and
+* Two requests: **DEU** (`dehumidify`, 1140) and **INT**
+  (`integration_request`, 1139). INT dehumidifies and cools in summer and
   heats in winter (valve and pump only, no compressor).
 * Variants (type plate `HRDS+ 30 H R K DC`): size 30/50 has no register (the
   `model` option); **R** (recirculation fan + damper) shows as damper output
-  [1134](doc/references/MODBUS_REGISTERS.md#reg-1134) not `disabled` ([PG01](doc/references/MODBUS_REGISTERS.md#pg01) is the fan arrangement, not this); **DC** (INT
-  available) is [PG02](doc/references/MODBUS_REGISTERS.md#pg02) = 1.
+  1134 not `disabled` (PG01 is the fan arrangement, not this); **DC** (INT
+  available) is PG02 = 1.
 * Only analog registers (FC 03/04), direct PDU addresses, temperatures ×0.1,
   fan/percent ×0.01, humidity ×1.
 
@@ -89,6 +89,23 @@ Each topic has one home; link to it instead of repeating it (ADR-0027).
 | Repository settings that are not files | [`.github/REPO_SETTINGS.md`](.github/REPO_SETTINGS.md) |
 | Preparing a release | `python3 scripts/release.py X.Y.Z` (owner) or the `/release-prep` skill (agent); ADR-0031 |
 | Writing a CHANGELOG entry (`## Unreleased`, never a version) | `.claude/rules/changelog.md` (ADR-0032) |
+
+### Looking up a register
+
+Docs and ADRs name registers by parameter code (`PH02`), short name
+(`Status_OnOff_byBMS`) or decimal address (`1105`). Do not read
+`MODBUS_REGISTERS.md` whole; every register row carries an anchor, so grep:
+
+```
+grep -n 'id="ph02"' doc/references/MODBUS_REGISTERS.md      # by code, lower case
+grep -n 'id="reg-1105"' doc/references/MODBUS_REGISTERS.md  # by decimal address
+grep -n 'Status_OnOff_byBMS' doc/references/MODBUS_REGISTERS.md  # by short name
+```
+
+The row gives address, encoding and values. What the unit does with the
+register is in `UNIT_BEHAVIOUR.md` (grep the code there). Time programs,
+band setpoints, passwords and the like are in §17, installer parameters in
+§16.
 
 ## Commands
 

@@ -12,9 +12,9 @@ paths:
 ## Decision
 
 - Whether the fan turns MUST come only from the unit's `SupplyFan_Status`
-  ([1119](../../../doc/references/MODBUS_REGISTERS.md#reg-1119)), through the single set `FAN_RUNNING_STATUSES = {"on",
+  (1119), through the single set `FAN_RUNNING_STATUSES = {"on",
   "wait_off"}` in `const.py`. No other code MUST judge it, and none MUST
-  infer it from the output ([639](../../../doc/references/MODBUS_REGISTERS.md#reg-639)) or a threshold of ours.
+  infer it from the output (639) or a threshold of ours.
 - `binary_sensor.supply_fan_running` (`_compute_derived`), the airflow
   (`sensor.supply_fan_airflow`, ADR-0034) and the climate `hvac_action`
   *fan* MUST use it. Unknown status means unknown running and airflow
@@ -26,9 +26,9 @@ paths:
 
 Two places judged the fan and disagreed: the fan entity took `wait_off` as
 stopped and `wait_on` as running, the airflow the other way round. The
-handbook's sequence (HB 6.2) has Wait ON as the [PS01](../../../doc/references/MODBUS_REGISTERS.md#ps01) delay before the fan
-starts and Wait OFF as the run-on at [PF26](../../../doc/references/MODBUS_REGISTERS.md#pf26); on the reference unit the
-output read 40 % (= [PF26](../../../doc/references/MODBUS_REGISTERS.md#pf26)) in Wait OFF (`UNIT_BEHAVIOUR.md` §9.2, T19).
+handbook's sequence (HB 6.2) has Wait ON as the `PS01` delay before the fan
+starts and Wait OFF as the run-on at `PF26`; on the reference unit the
+output read 40 % (= `PF26`) in Wait OFF (`UNIT_BEHAVIOUR.md` §9.2, T19).
 That the output is 0 in Wait ON is inferred, not logged. The owner's call:
 the status is the unit's own word and the only truth about on or off.
 
@@ -41,7 +41,7 @@ the status is the unit's own word and the only truth about on or off.
 ## Consequences
 
 - Good: running sensor, airflow and climate action agree in every state.
-- Bad: if Wait ON ever drives the fan, the sensor shows off for the [PS01](../../../doc/references/MODBUS_REGISTERS.md#ps01)
+- Bad: if Wait ON ever drives the fan, the sensor shows off for the PS01
   delay; check it in the history of the next run.
 
 ## Confirmation

@@ -18,12 +18,12 @@ paths:
 
 - MUST NOT create a `fan` entity: Modbus can neither switch the fan nor set
   its speed. The fan is shown by `binary_sensor.supply_fan_running`
-  (ADR-0028) and the status, output ([639](../../../doc/references/MODBUS_REGISTERS.md#reg-639)), [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20), rpm and airflow sensors.
+  (ADR-0028) and the status, output (639), PM20, rpm and airflow sensors.
   The climate entity MUST NOT offer `FAN_MODE`.
-- MUST NOT write `PM20_SupplyFan_Manual` ([1614](../../../doc/references/MODBUS_REGISTERS.md#reg-1614)) from any path.
+- MUST NOT write `PM20_SupplyFan_Manual` (1614) from any path.
   `fan_manual_speed` MUST be a read-only sensor (`RW: 0`), not in
-  `OPERATIONAL_KEYS`. Setup removes the old fan entity and [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20) number.
-- The band registers ([PF28](../../../doc/references/MODBUS_REGISTERS.md#pf28)/[PF10](../../../doc/references/MODBUS_REGISTERS.md#pf10) dehumidify, [PF27](../../../doc/references/MODBUS_REGISTERS.md#pf27)/[PF09](../../../doc/references/MODBUS_REGISTERS.md#pf09) cooling, [PF07](../../../doc/references/MODBUS_REGISTERS.md#pf07)) MUST
+  `OPERATIONAL_KEYS`. Setup removes the old fan entity and PM20 number.
+- The band registers (PF28/PF10 dehumidify, PF27/PF09 cooling, PF07) MUST
   stay ordinary `number` entities, written only when the user sets them;
   MUST NOT be written per cycle or by a control loop (ADR-0023).
 - MUST NOT add a config option that shadows a device register. Options hold
@@ -34,14 +34,14 @@ paths:
   while the fan runs (ADR-0028), else 0; unknown when either is unknown.
 - On a unit without the R option (`hub.has_fan` false) the `FAN_KEYS`
   entities MUST NOT be created.
-- The simulator MUST model the observed fan: the unit owns [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20), clamps it
-  into the active band and drives the output at it; a [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20) write is
+- The simulator MUST model the observed fan: the unit owns PM20, clamps it
+  into the active band and drives the output at it; a PM20 write is
   acknowledged and not kept, one outside the band answers exception 04.
 
 ## Context
 
-The unit takes no fan-speed request over Modbus. [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20) is the display's
-setpoint ("via Display (read only)", handbook [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20)); the unit sets it itself
+The unit takes no fan-speed request over Modbus. PM20 is the display's
+setpoint ("via Display (read only)", handbook PM20); the unit sets it itself
 (`UNIT_BEHAVIOUR.md` §9.1, T22). Without a display a write inside the band was
 acknowledged and never seen at a 0.5 s read (T23, T28), one below the band was
 refused with exception 04 (T27). Raising the band minimum raises a running
@@ -55,7 +55,7 @@ INT requests and no register switches it by itself (§9.2–9.3), so a read-only
   EEPROM writes per change, lost at the end of each request, and lowering
   through the maximum is untested (`plans/fan-speed-tests.md` test G). May be
   proposed once G is run.
-- Keep writing [PM20](../../../doc/references/MODBUS_REGISTERS.md#pm20) in case a display unit takes it: on the tested unit every
+- Keep writing PM20 in case a display unit takes it: on the tested unit every
   write did nothing or failed, which the entity cannot tell the user.
 - A read-only `fan` entity (`FanEntityFeature(0)`): Home Assistant still
   treats it as switchable, and hides `percentage` without `SET_SPEED`.

@@ -16,16 +16,16 @@ paths:
   `(platform, old, new)` to `RENAMED_KEYS`; `_migrate_renamed_keys` moves
   the registry entry at setup so history is kept, and an entity id still
   carrying the old key follows the new one unless that id is taken.
-- An entity that changes platform under the same unique id (e.g. [HA02](../../../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../../../doc/references/MODBUS_REGISTERS.md#ha03)
+- An entity that changes platform under the same unique id (e.g. HA02/HA03
   numbers → selects) MUST have its orphaned registry entry removed at setup.
 - A rename that changes entity ids MUST be noted as breaking in
   `CHANGELOG.md`.
 
 ## Context
 
-Keys follow the register they read: [1139](../../../doc/references/MODBUS_REGISTERS.md#reg-1139) is the integration (INT) request,
+Keys follow the register they read: 1139 is the integration (INT) request,
 which heats in winter, so `active_cooling` became `integration_request`
-(PR #37), and [PH27](../../../doc/references/MODBUS_REGISTERS.md#ph27)'s switch became `enable_integration_bms` (PR #31). Without
+(PR #37), and PH27's switch became `enable_integration_bms` (PR #31). Without
 a migration users lose history and get a duplicate entity.
 
 ## Consequences
