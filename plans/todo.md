@@ -76,6 +76,10 @@ The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.m
 - [ ] **Does an FC 16 write to [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) act?** Every write so far was FC 06 (T23, T27,
       T28). One FC 16 write of 6000 during a run; expected no effect
       ([`fan-speed-tests.md`](fan-speed-tests.md) test H).
+- [ ] **Does the order of the [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) write and the request matter?** All writes so far came
+      in the middle of a run (T23, T27, T28). Write it with no request, in the
+      start-up delay before the fan runs, and again with a repeated request
+      ([`fan-speed-tests.md`](fan-speed-tests.md) test K).
 - [ ] **Jump or ramp of a raised band minimum**
       ([`fan-speed-tests.md`](fan-speed-tests.md) test A), **a minimum written
       while idle** (test F) and **minimum = maximum** (test B).

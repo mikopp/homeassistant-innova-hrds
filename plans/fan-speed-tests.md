@@ -54,12 +54,18 @@ Evidenced:
 
 * [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) holds the display screen's state, and the controller overwrites it
   each cycle with its own request.
+* The order matters: [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) is set by the unit itself at fan start and cleared at
+  the end (T22), and every write so far came in the middle of a run. The display
+  may set the fan speed and send the request in a fixed order (speed, then
+  request, or request, then speed); a write during a run might also be taken
+  over only when the request is sent again. Nothing in the evidence shows
+  whether any of these orders is accepted, because none was tried (tests K1 to K3).
 * A write path that works must act on one of the two request sources, on
   the time-band request, or on the forced-fan input, because no register
   carries a BMS fan request.
 
 What else could act, each with a test below: a different function code on
-[PM20](../doc/references/MODBUS_REGISTERS.md#pm20) (test H), the time-band route (test I), a voltage on FAN+ (test D), the
+[PM20](../doc/references/MODBUS_REGISTERS.md#pm20) (test H), another order of the write and the request (test K), the time-band route (test I), a voltage on FAN+ (test D), the
 forced-fan input (test J). The band is the lever that works today (tests A, B,
 F, G refine it).
 
@@ -70,14 +76,15 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
 | Order | Test | What | Effort / risk |
 |-------|------|------|---------------|
 | 1 | H | One FC 16 write to [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) | One write, no wiring |
-| 2 | E | INT run, read [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) | Reads only, needs summer and [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) |
-| 3 | A | Jump or ramp of a raised minimum | 2 EEPROM writes |
-| 4 | F | Band written while idle | 2 EEPROM writes |
-| 5 | B | Top of the band | 2 EEPROM writes |
-| 6 | G | Lower through the maximum | 2 EEPROM writes, pulls the fan down |
-| 7 | I | Time-program route | Writes [PH03](../doc/references/MODBUS_REGISTERS.md#ph03), [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) and a slot; can switch the unit off |
-| 8 | D | 0–10 V on FAN+ | Wiring, no EEPROM write |
-| 9 | J | Forced fan by DI | Wiring, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) and [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) EEPROM writes |
+| 2 | K | [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) written before, during the start of, or again with the request | Writes only; K3 repeats the request once |
+| 3 | E | INT run, read [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) | Reads only, needs summer and [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) |
+| 4 | A | Jump or ramp of a raised minimum | 2 EEPROM writes |
+| 5 | F | Band written while idle | 2 EEPROM writes |
+| 6 | B | Top of the band | 2 EEPROM writes |
+| 7 | G | Lower through the maximum | 2 EEPROM writes, pulls the fan down |
+| 8 | I | Time-program route | Writes [PH03](../doc/references/MODBUS_REGISTERS.md#ph03), [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) and a slot; can switch the unit off |
+| 9 | D | 0–10 V on FAN+ | Wiring, no EEPROM write |
+| 10 | J | Forced fan by DI | Wiring, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) and [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) EEPROM writes |
 
 ## Open questions
 
@@ -92,6 +99,7 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
 | Q7 | Does a time-band fan setpoint ([FSC](../doc/references/MODBUS_REGISTERS.md#fsc)) move [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) with [PH03](../doc/references/MODBUS_REGISTERS.md#ph03) on? | [HB 6.2; MB p.18; INFERRED for the interplay] | I |
 | Q8 | Does 0–10 V on FAN+ raise [639](../doc/references/MODBUS_REGISTERS.md#reg-639) and [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) but not [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)/[1614](../doc/references/MODBUS_REGISTERS.md#reg-1614)? | [HB 4.5, 6.2] | D |
 | Q9 | Does a digital-input function 19/20 on [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03) force the fan to [PF23](../doc/references/MODBUS_REGISTERS.md#pf23)? | [HB 5.3; INFERRED for analog terminals] | J |
+| Q10 | Is a [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) write taken over when it comes before the request, while the fan is still waiting to start, or together with a repeated request? | [INFERRED from T22, T35] | K |
 
 ## Tools and rules
 
@@ -161,6 +169,50 @@ Expected [INFERRED]: no effect, as with FC 06 (T23, T28). Record the response
 (acknowledged or an exception), and how long [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) held 60 if it did. If
 [639](../doc/references/MODBUS_REGISTERS.md#reg-639) moves to 60, stop and report: the integration would then need a write
 path for [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) with FC 16.
+
+### K. Order of the PM20 write and the request (Q10)
+
+The unit sets [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) itself at fan start (0 to the band minimum) and clears it
+at the end (T22). All writes so far came in the middle of a run (T23, T27,
+T28). The display may work in a fixed order, so try each order. Not through
+Home Assistant; with the band at 50–85 % and one write of 6000 (60 %, two
+implied decimals [MB p.7]) per step. Run each step with FC 06 and, if it was
+refused, once with FC 16. Keep the read loop at 0.5 s on [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [639](../doc/references/MODBUS_REGISTERS.md#reg-639),
+[1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) and [1134](../doc/references/MODBUS_REGISTERS.md#reg-1134) for the whole test.
+
+**K1. Write first, then the request.**
+1. With no request and the fan off, write 6000 to [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614). Record the response
+   (acknowledged or an exception) and read [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) and [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) for 1 minute.
+2. Start DEU (*Dehumidify (Modbus)* on). Watch [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) at
+   the fan start.
+
+Expected [INFERRED]: the write is refused or cleared, and the fan starts at the
+band minimum (T22). If [639](../doc/references/MODBUS_REGISTERS.md#reg-639) starts at 60, the order is the lever: stop and report.
+
+**K2. Request first, then the write before the fan runs.**
+1. Start DEU. The fan starts 29 to 120 s after the damper opens (T35, PS01 as
+   shipped 90 s), and until then [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) reads OFF and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) 0.
+2. As soon as [1134](../doc/references/MODBUS_REGISTERS.md#reg-1134) reads on and [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) is still OFF, write 6000 to [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614).
+3. Watch [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114) and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) through the fan start.
+
+Expected [INFERRED]: as K1. If the fan starts at 60, record how late the write
+could be and still count.
+
+**K3. A write in the middle of a run, followed by the request again.**
+1. During a DEU run with the fan at 50, write 6000 to [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614). Expected: no effect
+   (T23). Note the response.
+2. Within 2 s, write 1 to [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) again (the request is already on, so there is no
+   edge). Read [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for 1 minute.
+3. If still nothing: write 6000 to [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614) once more, then write 0 and 1 to
+   [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) about 1 s apart. The unit mirrors requests late (T39, 12 to 30 s), so
+   the pulse may not register at all; the unit's compressor protection times
+   apply [HB 6.3]. Do this once, not in a loop.
+
+Expected [INFERRED]: no effect. The repeated 1 is a write of the value it already
+holds, and the unit may even ignore it.
+
+Record what each step returned, and which step, if any, made [639](../doc/references/MODBUS_REGISTERS.md#reg-639) leave
+the band minimum.
 
 ### E. INT request (Q2)
 
