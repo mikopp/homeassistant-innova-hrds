@@ -21,6 +21,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 - **Tested setups and the open hardware questions brought up to date.** A full dehumidify cycle, the season switch, a power cycle, the compressor's timers and a lost brine flow are now recorded as seen on the reference unit; `plans/todo.md` keeps only what is still open, sorted by topic.
 - **The register reference is complete, and every document links to it.** All registers of the manufacturer's list are now in `MODBUS_REGISTERS.md` (time programs, band setpoints, clock, further status and test-mode registers, `PE29`), with an anchor per row. A parameter code (PH02) and a register address (1105) link to their row wherever they are mentioned in the READMEs, the references, the ADRs, the plans and the test notes, and the reference says how to write them. The README, the entity reference and the unit behaviour were checked against each other: the airflow and alarm sensor counts, entity names, the broken release-notice and winter-table layout and duplicated register rows are fixed.
+- **The docs show the entity ids Home Assistant shows.** The README named entities by their internal key (`switch.dehumidify`), which Home Assistant does not use; it shows `switch.hrds_dehumidify_modbus`. The README, the tested setups and the test plans now give those ids, and the entity reference says how an id is built from the device and entity name and labels its first column *Key*.
 
 ---
 

@@ -9,10 +9,18 @@ It is in English only. Back to the [README](../README.md).
 
 **How to read the tables.**
 
-* `platform.key` is the entity's key: the suffix of its unique id and its
-  translation key. Home Assistant builds the visible entity id from the device
-  name and the display name (column *Name*), so the setup check, for example,
-  is `sensor.hrds_setup_setup_check`. The tables omit the device prefix.
+* The first column is the entity's **key** (`platform.key`): the suffix of its
+  unique id and its translation key. It is not the entity id you see in Home
+  Assistant. The entity id is the platform, the device name and the entity's
+  name (column *Name*), each reduced to lower case with `_` for everything
+  else: *Dehumidify (Modbus)* (key `switch.dehumidify`) on the device *HRDS+*
+  is `switch.hrds_dehumidify_modbus`, and *Setup check* on *HRDS+ setup* is
+  `sensor.hrds_setup_setup_check`. The device prefix is `hrds_` on the main
+  device, `hrds_setup_` on the setup device and `hrds_installer_` on the
+  installer device (for a device called *HRDS+*). Home Assistant fixes the id
+  when it creates the entity, from the name in its language at that time, so
+  another language or a renamed device gives other ids. The tables use the
+  English names.
 * *Register* is the decimal Modbus address (see
   [`references/MODBUS_REGISTERS.md`](references/MODBUS_REGISTERS.md)); a dash means the
   value is computed or kept by the integration.
@@ -47,7 +55,7 @@ registers or values computed from them.
 
 #### Climate
 
-| Entity | Name | What it shows / does |
+| Key | Name | What it shows / does |
 |---|---|---|
 | `climate.hrds_climate` | Climate | HVAC mode (Off, Standby or Auto⁴, Dry, Cool in summer, Heat in winter if enabled) and action; no fan mode, since the unit takes no fan-speed request over Modbus (see the fan below). The mode says what can make the unit act. **Off** is the unit off: it clears the dehumidify and integration requests and switches the unit off. **Standby** (HA's *fan only*) is a unit that is on with nothing requested and no display or room probe, so nothing can start it by itself; action *Idle*, or *Fan* if the unit runs its fan with nothing requested. **Auto** turns the unit on with no request, so it regulates on its own setpoints; with a display or room probe that is what "on, nothing requested" means, so Standby is not offered then. *Turn on* clears both requests and switches the unit on (Standby, or Auto where offered); *turn off* is Off. **Cool**/**Heat** are offered only on a unit with the integration function ([PG02](references/MODBUS_REGISTERS.md#pg02)), and an INT request that cannot act (brine in winter, no integration function) does not show as Cool/Heat; a winter INT from elsewhere shows as Heat whatever *Allow winter heating* says. The action reports what the unit does: *Cooling* needs a summer INT the unit acts on with the compressor running and no AL03; *Heating* needs the evidence described in [Operating modes in winter](../README.md#operating-modes-in-winter). Target T¹ / RH² only when a display or room probe is configured. `current_temperature`¹ and `current_humidity`² are suppressed when the corresponding probe is absent. Target-humidity bounds follow the unit's own [PH29](references/MODBUS_REGISTERS.md#ph29)/[PH30](references/MODBUS_REGISTERS.md#ph30) clamps; the target temperature is [SEtC](references/MODBUS_REGISTERS.md#setc) in summer (15–35 °C) and [SEtH](references/MODBUS_REGISTERS.md#seth) in winter, limited to the unit's [PH09](references/MODBUS_REGISTERS.md#ph09)–[PH10](references/MODBUS_REGISTERS.md#ph10) clamp (factory 14 °C both). |
 
@@ -72,7 +80,7 @@ fan sensors and fan speed numbers are not created.
 
 #### Request switches
 
-| Entity | Name | Register | Notes |
+| Key | Name | Register | Notes |
 |---|---|---|---|
 | `switch.unit_on_off` | Unit on/off (Modbus) | [1105](references/MODBUS_REGISTERS.md#reg-1105) | BMS on/off request (requires [PH02](references/MODBUS_REGISTERS.md#ph02) = 1) |
 | `switch.dehumidify` | Dehumidify (Modbus) | [1140](references/MODBUS_REGISTERS.md#reg-1140) | BMS dehumidify request (requires [PH28](references/MODBUS_REGISTERS.md#ph28) = 1). In winter on a brine circuit only with a passing brine temperature guard |
@@ -80,13 +88,13 @@ fan sensors and fan speed numbers are not created.
 
 #### Season
 
-| Entity | Name | Register | Options | Notes |
+| Key | Name | Register | Options | Notes |
 |---|---|---|---|---|
 | `select.season` | Season | [1825](references/MODBUS_REGISTERS.md#reg-1825) | Summer, Winter | [HB04](references/MODBUS_REGISTERS.md#hb04) — the season switch without a display (the Modbus manual's method: it flips how the open DI4 contact is read). Read-back is `sensor.operating_mode`. Switching to winter is refused while an integration request is on (it would turn into heating) and, on brine, while dehumidify is on. **If a contact is wired to DI4, closing it inverts the meaning.** |
 
 #### Sensors
 
-| Entity | Name | Unit | Probe needed | Notes |
+| Key | Name | Unit | Probe needed | Notes |
 |---|---|---|---|---|
 | `sensor.room_temperature` | Room temperature | °C | ¹ Display or external NTC | Reg [499](references/MODBUS_REGISTERS.md#reg-499); used for automatic cooling trigger |
 | `sensor.room_humidity` | Room humidity | %RH | ² Display or external humidity sensor | Reg [505](references/MODBUS_REGISTERS.md#reg-505); used for automatic dehumidify trigger |
@@ -113,7 +121,7 @@ fan sensors and fan speed numbers are not created.
 Alarm sensors map to a single bit of a packed alarm register
 ([MODBUS_REGISTERS.md §9.1](references/MODBUS_REGISTERS.md#91-active-alarm-bitmaps-ro-fc-04)). **ON = alarm is active.**
 
-| Entity | Name | Probe needed | What ON means |
+| Key | Name | Probe needed | What ON means |
 |---|---|---|---|
 | `binary_sensor.dehumidify_request` | Dehumidify requested | ³ | Reg [1121](references/MODBUS_REGISTERS.md#reg-1121); Dehumidification currently requested |
 | `binary_sensor.recirculation_active` | Recirculation active | ³ | (not a register) Damper ([1134](references/MODBUS_REGISTERS.md#reg-1134)) open **and** supply fan status *On* ([1119](references/MODBUS_REGISTERS.md#reg-1119)): room air is drawn across the coil. Off while the fan is still starting or runs on after the damper closed. R variant only |
@@ -137,7 +145,7 @@ probe lets the unit act on them (ADR-0011).
 
 #### Numbers
 
-| Entity | Name | Register | Range | Notes |
+| Key | Name | Register | Range | Notes |
 |---|---|---|---|---|
 | `number.humidity_setpoint` | Humidity setpoint | [1586](references/MODBUS_REGISTERS.md#reg-1586) | 0–100 %RH | [PU01](references/MODBUS_REGISTERS.md#pu01); target humidity for automatic dehumidify. **Not created without a display or humidity probe** |
 | `number.summer_setpoint` | Summer setpoint | [1584](references/MODBUS_REGISTERS.md#reg-1584) | 15–35 °C | [SEtC](references/MODBUS_REGISTERS.md#setc); target room temp for automatic summer integration, clamped by [PH07](references/MODBUS_REGISTERS.md#ph07)/[PH08](references/MODBUS_REGISTERS.md#ph08). **Not created without a display or room temperature probe** |
@@ -157,13 +165,13 @@ probe lets the unit act on them (ADR-0011).
 
 #### Select
 
-| Entity | Name | Register | Options | Notes |
+| Key | Name | Register | Options | Notes |
 |---|---|---|---|---|
 | `select.winter_dehumidify` | Winter dehumidification | [1689](references/MODBUS_REGISTERS.md#reg-1689) | Disabled, With water, Without water | [PU02](references/MODBUS_REGISTERS.md#pu02); dehumidification during the heating season |
 
 #### Switches
 
-| Entity | Name | Register | Notes |
+| Key | Name | Register | Notes |
 |---|---|---|---|
 | `switch.force_dehumidify_in_cooling` | Force dehumidify when cooling | [1692](references/MODBUS_REGISTERS.md#reg-1692) | [PU05](references/MODBUS_REGISTERS.md#pu05) (factory on); an INT request also starts the compressor. Off: INT cools only with the water, see [Operating modes in summer](../README.md#operating-modes-in-summer) |
 
@@ -176,7 +184,7 @@ shows it.
 
 #### Sensors
 
-| Entity | Name | Unit | Probe needed | Notes |
+| Key | Name | Unit | Probe needed | Notes |
 |---|---|---|---|---|
 | `sensor.fan_manual_request` | Manual fan request (display) | % | ³ Built-in | Reg [1114](references/MODBUS_REGISTERS.md#reg-1114); the **display's** manual request, not ours — diagnostic. Without a display it reads the band minimum while the fan runs |
 | `sensor.fan_integration_request` | Fan integration request | % | ³ Built-in | Reg [1112](references/MODBUS_REGISTERS.md#reg-1112) (`FanIntegration_Request`, ×0.01 %); the fan request of the integration (INT) fan control, one of the requests the unit's fan speed is the highest of ([UNIT_BEHAVIOUR §9.1](references/UNIT_BEHAVIOUR.md#91-bands-and-sources)). 0 during dehumidify; a non-zero value during INT is not yet seen on hardware. R variant only |
@@ -201,7 +209,7 @@ Entity ids carry the device name, for example `sensor.hrds_setup_setup_check`.
 
 #### Sensors
 
-| Entity | Name | Register | Shows |
+| Key | Name | Register | Shows |
 |---|---|---|---|
 | `sensor.unit_status` | Unit status | [1104](references/MODBUS_REGISTERS.md#reg-1104) | OFF by display/DI/BMS/scheduler/clock, or ON |
 | `sensor.machine_type` | Machine type ([PG01](references/MODBUS_REGISTERS.md#pg01)) | [1797](references/MODBUS_REGISTERS.md#reg-1797) | [PG01](references/MODBUS_REGISTERS.md#pg01) fan arrangement: *supply fan only* or *supply and exhaust fan*. **Not** a recirculation flag: an `R` unit reads *supply fan only*. |
@@ -215,7 +223,7 @@ Entity ids carry the device name, for example `sensor.hrds_setup_setup_check`.
 
 #### Binary sensors
 
-| Entity | Name | Register | Shows |
+| Key | Name | Register | Shows |
 |---|---|---|---|
 | `binary_sensor.temp_probe_ok` | Room temperature probe OK | [769](references/MODBUS_REGISTERS.md#reg-769) bit 11 | Room temperature probe healthy (AL28 not active). **Unknown** without a display or a room temperature probe on AI2 ([HA02](references/MODBUS_REGISTERS.md#ha02)): there is nothing to check |
 | `binary_sensor.humidity_probe_ok` | Room humidity probe OK | [770](references/MODBUS_REGISTERS.md#reg-770) bit 1 | Room humidity probe healthy (AL34 not active). **Unknown** without a display or a humidity probe on AI3 ([HA03](references/MODBUS_REGISTERS.md#ha03)) |
@@ -224,7 +232,7 @@ Entity ids carry the device name, for example `sensor.hrds_setup_setup_check`.
 
 #### Switches
 
-| Entity | Name | Register | Shows |
+| Key | Name | Register | Shows |
 |---|---|---|---|
 | `switch.operation_allowed` | Allow operational requests | — | Not a register: the integration's own gate. Off by default; while off, on/dehumidify/cooling/non-zero fan requests are refused. Restored across restarts |
 | `switch.enable_time_programs` | Time programs enabled ([PH03](references/MODBUS_REGISTERS.md#ph03)) | [1779](references/MODBUS_REGISTERS.md#reg-1779) | [PH03](references/MODBUS_REGISTERS.md#ph03) — time programs can switch the unit off |
@@ -237,7 +245,7 @@ Entity ids carry the device name, for example `sensor.hrds_setup_setup_check`.
 
 #### Select
 
-| Entity | Name | Register | Shows |
+| Key | Name | Register | Shows |
 |---|---|---|---|
 | `select.probe_source` | T/H probe source ([HA00](references/MODBUS_REGISTERS.md#ha00)) | [1803](references/MODBUS_REGISTERS.md#reg-1803) | [HA00](references/MODBUS_REGISTERS.md#ha00) — which sensor feeds room T/H readings. **Set to "None / external probes" when running without a display.** Options: None/external, CNU2 T, CNU2 T+H, CNU T, CNU T+H, EPJ T, EPJ T+H. |
 | `select.ai2_allocation` | T/H probe temperature input (AI2, [HA02](references/MODBUS_REGISTERS.md#ha02)) | [1805](references/MODBUS_REGISTERS.md#reg-1805) | [HA02](references/MODBUS_REGISTERS.md#ha02), *T/H probe temperature input*: what is wired to analog input AI2 (terminal M2). Without a display, this is the only room temperature the unit can regulate on. **Leave on "Unused" unless a probe is wired**, or the unit raises AL28. Options: Unused, Room temperature probe (NTC 10 kΩ). |
@@ -265,7 +273,7 @@ The parameters are **not listed one by one** here: they are generated from
 [`references/MODBUS_REGISTERS.md` §16](references/MODBUS_REGISTERS.md#16-installer-menu-parameters-installer-device). The two
 entities that are not parameters:
 
-| Entity | Name | Register | Shows |
+| Key | Name | Register | Shows |
 |---|---|---|---|
 | `button.refresh_installer` | Refresh installer parameters | — | Reads every installer register once |
 | `sensor.installer_last_read` | Installer parameters last read | — | Timestamp of the last read |
