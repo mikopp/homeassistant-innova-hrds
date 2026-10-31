@@ -280,5 +280,5 @@ entities that are not parameters:
 * Parameters the HRDS+ does not use (return fan, air quality, heat-recovery
   defrost, external damper, rotary exchanger, expansion I/O) exist but are
   **disabled by default**; enable them in the entity settings if needed.
-* Never exposed: passwords, PH15 *restore factory defaults*, PH18 *clear alarm
+* Never exposed: passwords, [PH15](references/MODBUS_REGISTERS.md#ph15) *restore factory defaults*, [PH18](references/MODBUS_REGISTERS.md#ph18) *clear alarm
   history*.

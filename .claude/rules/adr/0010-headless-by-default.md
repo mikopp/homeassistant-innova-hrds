@@ -14,7 +14,7 @@ paths:
 
 - The `has_display` option (default off) says whether a CNU2 display is
   fitted; no register reports that.
-- Without a display the hub MUST keep PH01 (1777) = 0 and HA00 (1803) = 0
+- Without a display the hub MUST keep [PH01](../../../doc/references/MODBUS_REGISTERS.md#ph01) ([1777](../../../doc/references/MODBUS_REGISTERS.md#reg-1777)) = 0 and [HA00](../../../doc/references/MODBUS_REGISTERS.md#ha00) ([1803](../../../doc/references/MODBUS_REGISTERS.md#reg-1803)) = 0
   (`HEADLESS_SETTINGS`). These are the only registers the integration
   writes on its own. With `has_display` on it MUST leave them alone.
 - `_sync_required_settings_locked` MUST judge them on the same poll's
@@ -28,17 +28,17 @@ paths:
 
 ## Context
 
-Without a display, PH01 = 1 keeps the unit OFF by display forever (an OFF
-from any source beats a Modbus ON), and HA00 ≠ 0 makes it wait for room T/H
+Without a display, [PH01](../../../doc/references/MODBUS_REGISTERS.md#ph01) = 1 keeps the unit OFF by display forever (an OFF
+from any source beats a Modbus ON), and [HA00](../../../doc/references/MODBUS_REGISTERS.md#ha00) ≠ 0 makes it wait for room T/H
 from a display that is not there (handbook 5.1). The unit keeps both across
 a power cycle (`UNIT_BEHAVIOUR.md` §3.6, T7), so in steady state the sync
-writes nothing; it only repairs a setting changed elsewhere. After PH01 = 0
+writes nothing; it only repairs a setting changed elsewhere. After [PH01](../../../doc/references/MODBUS_REGISTERS.md#ph01) = 0
 the real unit still read `off_by_display` until the first Modbus ON (T7).
 
 ## Consequences
 
-- Good: a headless unit works without the user knowing PH01/HA00.
-- Bad: a user who sets PH01 = 1 on a headless unit has it reset; the
+- Good: a headless unit works without the user knowing [PH01](../../../doc/references/MODBUS_REGISTERS.md#ph01)/[HA00](../../../doc/references/MODBUS_REGISTERS.md#ha00).
+- Bad: a user who sets [PH01](../../../doc/references/MODBUS_REGISTERS.md#ph01) = 1 on a headless unit has it reset; the
   matching setup switch says so.
 
 ## Confirmation

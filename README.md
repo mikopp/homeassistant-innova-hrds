@@ -129,7 +129,7 @@ are in [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTERS.md
 
 * An Innova DEH+ / hej.luft HRDS+ with the Modbus RTU/RS-485 control board and a
   Modbus-RTU-to-TCP gateway reachable on your network. You need the gateway's
-  IP address or hostname, its port (usually 502) and the unit's Modbus slave ID
+  IP address or hostname, its port (usually [502](doc/references/MODBUS_REGISTERS.md#reg-502)) and the unit's Modbus slave ID
   (factory: 1).
 * Home Assistant 2026.10 or newer (see [Requirements](#requirements)).
 * Room temperature/humidity readings require the wired CNU2 display or external
@@ -170,7 +170,7 @@ Innova HRDS+**, then provide:
 |-------|---------|-------|
 | Name  | `HRDS+` | Display name / device name |
 | Host  | —       | IP / hostname of the Modbus-TCP gateway |
-| Port  | `502`   | Modbus TCP port |
+| Port  | [502](doc/references/MODBUS_REGISTERS.md#reg-502)   | Modbus TCP port |
 | Modbus slave ID | `1` | Factory default unit address |
 | Scan interval | `30 s` | Polling period (min 5 s) |
 | Model | `30`    | Device size: `30` = HRDS+30 (max 300 m³/h), `50` = HRDS+50 (max 500 m³/h). Sets airflow defaults. |
@@ -408,7 +408,7 @@ computed airflow sensors:
 | Field | Default (30/50) | Notes |
 |-------|-----------------|-------|
 | Model | `30` | Change here too if you need to switch model |
-| Supply fan max airflow (m³/h) | `300` / `500` | Fan airflow at 100 % output — adjust if your duct or filter raises back-pressure |
+| Supply fan max airflow (m³/h) | `300` / [500](doc/references/MODBUS_REGISTERS.md#reg-500) | Fan airflow at 100 % output — adjust if your duct or filter raises back-pressure |
 
 These values feed the live `sensor.supply_fan_airflow` calculation (proportional:
 `output% / 100 × Q_max`). The two static sensors (`supply_fan_max_airflow`,
@@ -863,7 +863,7 @@ pip install 'pymodbus>=3.13.1'
 python3 tests/diagnose_hrds.py <gateway-ip> --json diag.json
 ```
 
-Add `--port N` / `--unit N` if your gateway does not use port 502 / slave id 1,
+Add `--port N` / `--unit N` if your gateway does not use port [502](doc/references/MODBUS_REGISTERS.md#reg-502) / slave id 1,
 and `--display` if a CNU2 display is fitted. **Attach `diag.json` to the issue.**
 The file contains the gateway address in its `host` field: replace it before
 posting.

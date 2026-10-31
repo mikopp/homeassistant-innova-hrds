@@ -93,7 +93,7 @@ handbook]:
 m³/h  ≈  (RPM / RPM_max) × Q_max  ≈  (output% / 100) × Q_max
 ```
 
-* `Q_max` = the variant's recirculation maximum, 300 (HRDS+ 30) / 500 (HRDS+ 50).
+* `Q_max` = the variant's recirculation maximum, 300 (HRDS+ 30) / [500](MODBUS_REGISTERS.md#reg-500) (HRDS+ 50).
 * `RPM_max` = the speed at 100 % output; not published, calibrate once.
 * When the fan is off (`SupplyFan_Status` reads OFF), its share is 0 m³/h;
   only the MVHR's passive flow passes, which the unit cannot see.

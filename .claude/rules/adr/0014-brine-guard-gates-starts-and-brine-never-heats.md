@@ -17,7 +17,7 @@ paths:
   together (`winter_heating_on_brine`).
 - On brine without a passing guard, these MUST be refused: winter DEU,
   switching the unit on in winter when it would dehumidify by itself (room
-  probe logic, PU02) or on a digital-input request (1121 on, neither of
+  probe logic, [PU02](../../../doc/references/MODBUS_REGISTERS.md#pu02)) or on a digital-input request ([1121](../../../doc/references/MODBUS_REGISTERS.md#reg-1121) on, neither of
   ours), and a season change to winter in that state.
 - The brine guard (options `brine_temperature_entity`,
   `brine_min_temperature`, default 8 °C), when configured, MUST pass for
@@ -38,7 +38,7 @@ paths:
 
 A brine circuit cannot heat, and cold brine freezes the register
 (handbook 3.8.7). 8 °C sits above the unit's own AL16 frost alarm
-(PA43 = 3 °C) and below PU08 (10 °C), so early-summer brine can still run
+([PA43](../../../doc/references/MODBUS_REGISTERS.md#pa43) = 3 °C) and below [PU08](../../../doc/references/MODBUS_REGISTERS.md#pu08) (10 °C), so early-summer brine can still run
 the passive cold-water path (PR #33, was 10 °C).
 
 ## Consequences

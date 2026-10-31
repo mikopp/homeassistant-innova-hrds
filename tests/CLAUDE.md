@@ -93,17 +93,17 @@ from the image's modbus manifest and installs that. A bare `pytest` skips
   and the climate *Auto* tests run on it; nothing about a real display unit is
   verified.
 * The unit keeps every register across `power_cycle()` (a real unit kept
-  PH01/HA00/PH02, `doc/references/UNIT_BEHAVIOUR.md` §3.6). Modbus requests
-  count only with their PH02/PH28/PH27 enable (§3.3).
+  [PH01](../doc/references/MODBUS_REGISTERS.md#ph01)/[HA00](../doc/references/MODBUS_REGISTERS.md#ha00)/[PH02](../doc/references/MODBUS_REGISTERS.md#ph02), `doc/references/UNIT_BEHAVIOUR.md` §3.6). Modbus requests
+  count only with their [PH02](../doc/references/MODBUS_REGISTERS.md#ph02)/[PH28](../doc/references/MODBUS_REGISTERS.md#ph28)/[PH27](../doc/references/MODBUS_REGISTERS.md#ph27) enable (§3.3).
 * The model ORs the unit's automatic requests with the Modbus ones: DEU from
-  the room humidity (PU01/PU07, a display with H or an AI3 probe) and INT from
-  the room temperature (summer above SEtC + PF12, winter below SEtH − PF12 with
-  SEtH clamped to PH09..PH10; a display or an AI2 probe, PG02).
-* The fan runs at the unit's own manual request (PM20), clamped into the
+  the room humidity ([PU01](../doc/references/MODBUS_REGISTERS.md#pu01)/[PU07](../doc/references/MODBUS_REGISTERS.md#pu07), a display with H or an AI3 probe) and INT from
+  the room temperature (summer above [SEtC](../doc/references/MODBUS_REGISTERS.md#setc) + [PF12](../doc/references/MODBUS_REGISTERS.md#pf12), winter below [SEtH](../doc/references/MODBUS_REGISTERS.md#seth) − [PF12](../doc/references/MODBUS_REGISTERS.md#pf12) with
+  [SEtH](../doc/references/MODBUS_REGISTERS.md#seth) clamped to [PH09](../doc/references/MODBUS_REGISTERS.md#ph09)..PH10; a display or an AI2 probe, [PG02](../doc/references/MODBUS_REGISTERS.md#pg02)).
+* The fan runs at the unit's own manual request ([PM20](../doc/references/MODBUS_REGISTERS.md#pm20)), clamped into the
   active band as seen on hardware (T22–T28): a raised minimum raises it, a
-  lowered one leaves it, 0 when the request ends. A PM20 write is acknowledged
+  lowered one leaves it, 0 when the request ends. A [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) write is acknowledged
   and not kept; one outside the band answers exception 04. `run_on` (s, 0 by
-  default) keeps a fan that was running in Wait OFF at PF26 after the request
+  default) keeps a fan that was running in Wait OFF at [PF26](../doc/references/MODBUS_REGISTERS.md#pf26) after the request
   (T19); `set_fan_fault()` puts it in Alarm.
 * `python -m tests.sim --port 5020 --control-port 8020` runs it as a process;
   the HTTP control API (`sim/control.py`) injects alarms, probe faults, a power

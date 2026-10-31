@@ -21,11 +21,11 @@ paths:
   poll (`_poll_keys`), and no poll block may span one. They are read at
   setup, on `button.refresh_installer`, and one register after its write;
   `sensor.installer_last_read` shows when. With the option off only
-  `INSTALLER_LOGIC_KEYS` (PC07, PC08, PU08, PF12, PH09, PH10, and the input
+  `INSTALLER_LOGIC_KEYS` ([PC07](../../../doc/references/MODBUS_REGISTERS.md#pc07), [PC08](../../../doc/references/MODBUS_REGISTERS.md#pc08), [PU08](../../../doc/references/MODBUS_REGISTERS.md#pu08), [PF12](../../../doc/references/MODBUS_REGISTERS.md#pf12), [PH09](../../../doc/references/MODBUS_REGISTERS.md#ph09), [PH10](../../../doc/references/MODBUS_REGISTERS.md#ph10), and the input
   allocations `TACHOMETER_ALLOCATION_KEYS` of ADR-0033) are read, once at
   setup.
-- MUST NOT expose passwords (PSd*), PH15 (restore factory defaults) or PH18
-  (clear alarm history). Link settings, I/O allocation, PE05 and test mode
+- MUST NOT expose passwords (PSd*), [PH15](../../../doc/references/MODBUS_REGISTERS.md#ph15) (restore factory defaults) or [PH18](../../../doc/references/MODBUS_REGISTERS.md#ph18)
+  (clear alarm history). Link settings, I/O allocation, [PE05](../../../doc/references/MODBUS_REGISTERS.md#pe05) and test mode
   MUST be read-only. MUST NOT add registers above 1900.
 - Rows live in `installer_params.py` (code, register, kind n/s/r, scale,
   range, unit, en/de name, enabled by default); translations are generated
@@ -58,5 +58,5 @@ python3 -c "import re,sys; t=open('custom_components/innova_hrds/installer_param
 
 ## More information
 
-PR #15 (installer device), PR #28 (opt-in, never polled), PR #37 (PF12,
-PH09, PH10 as logic keys).
+PR #15 (installer device), PR #28 (opt-in, never polled), PR #37 ([PF12](../../../doc/references/MODBUS_REGISTERS.md#pf12),
+[PH09](../../../doc/references/MODBUS_REGISTERS.md#ph09), [PH10](../../../doc/references/MODBUS_REGISTERS.md#ph10) as logic keys).

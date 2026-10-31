@@ -18,12 +18,12 @@ paths:
 - The climate `current_temperature` / `current_humidity` MUST be `None`
   while the reading is `None` or its probe alarm (AL28 / AL34) is active;
   MUST NOT keep the previous value.
-- Without a display or an allocated room probe (HA02 = 45 for temperature,
-  HA03 = 53/54 for humidity) the setpoint entities
+- Without a display or an allocated room probe ([HA02](../../../doc/references/MODBUS_REGISTERS.md#ha02) = 45 for temperature,
+  [HA03](../../../doc/references/MODBUS_REGISTERS.md#ha03) = 53/54 for humidity) the setpoint entities
   (`TEMPERATURE_TARGET_KEYS`, `HUMIDITY_TARGET_KEYS`) MUST NOT be created
   and the climate entity MUST drop the matching target feature
   (`hub.update_hidden_keys`, decided from the primed read-back; a change of
-  HA02/HA03 needs a reload).
+  [HA02](../../../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../../../doc/references/MODBUS_REGISTERS.md#ha03) needs a reload).
 
 ## Context
 

@@ -34,7 +34,7 @@ points to a register defined in another row.
 ## 1. Transport & framing
 
 The HRDS+ control board speaks **Modicon Modbus RTU over RS-485**. A
-Modbus-TCP gateway (if fitted) exposes the same register model over TCP/502.
+Modbus-TCP gateway (if fitted) exposes the same register model over TCP/[502](#reg-502).
 
 Factory serial defaults:
 
@@ -140,6 +140,11 @@ for 40 %). Min/Max apply to the modulation band used in each mode.
 | `0x045C` | 1116 | <a id="reg-1116"></a>`SupplyFan_RemoteRequest`  | R/O | — | 0–100 | Current potentiometer (0–10 V) fan request |
 | `0x027F` | 639  | <a id="reg-639"></a>`outAO_SupplyFan`          | R/O | — | 0–100 | Actual supply-fan analog output %: the speed the fan is driven at |
 | `0x045D` | 1117 | <a id="reg-1117"></a>`actRPMsupplyFan`          | R/O | — | 0–65535 | Supply-fan actual RPM. Needs an input allocated to the tachometer (input function 45 or 46, §16 `HA..`/`HB..`); 0 without one ([UNIT_BEHAVIOUR §9.1](UNIT_BEHAVIOUR.md#91-bands-and-sources)) |
+| `0x045E` | 1118 | <a id="reg-1118"></a>`actRPMreturnFan` | R/O | — | 0–65535 | Return-fan actual RPM (no return fan on an HRDS+) |
+| `0x046F` | 1135 | <a id="reg-1135"></a>`Return_AirQualityRequest` | R/O | — | 0–100 | Return-fan air-quality request [MB p.15] |
+| `0x0470` | 1136 | <a id="reg-1136"></a>`Return_ManualRequest` | R/O | — | 0–100 | Return-fan manual request |
+| `0x0471` | 1137 | <a id="reg-1137"></a>`Return_TimeBandsRequest` | R/O | — | 0–100 | Return-fan time-band request |
+| `0x0472` | 1138 | <a id="reg-1138"></a>`Return_RemoteRequest` | R/O | — | 0–100 | Return-fan potentiometer request |
 
 ### 6.1 How the bands apply
 
@@ -164,36 +169,59 @@ need time programs [PH03](#ph03)) [MB p.18], [PF23](#pf23) ([1660](#reg-1660), f
 | `0x01F5` | 501 | <a id="reg-501"></a>`AI_Twater`          | INT16 | ×0.1 °C | Water-circuit temperature |
 | `0x01F6` | 502 | <a id="reg-502"></a>`AI_Texhaust`        | INT16 | ×0.1 °C | Exhaust air temperature |
 | `0x01F7` | 503 | <a id="reg-503"></a>`AI_Tdischarge`      | INT16 | ×0.1 °C | Discharge (supply) air temperature |
+| `0x01F8` | 504 | <a id="reg-504"></a>`AI_TcmpDefrost` | INT16 | ×0.1 °C | Compressor defrost temperature probe |
 | `0x01F9` | 505 | <a id="reg-505"></a>`AI_HretRoom`        | INT16 | %RH | Return/room relative humidity (needs display or external probe) |
 | `0x01FA` | 506 | <a id="reg-506"></a>`AI_AirQuality`      | INT16 | ppm/raw | Air-quality probe |
+| `0x01FB` | 507 | <a id="reg-507"></a>`AI_RemoteSupply` | INT16 | ×0.01 | Remote supply-fan potentiometer |
+| `0x01FC` | 508 | <a id="reg-508"></a>`AI_HighPressure` | INT16 | ×0.1 | High-pressure condenser probe |
+| `0x01FD` | 509 | <a id="reg-509"></a>`AI_RemoteReturn` | INT16 | ×0.01 | Remote return-fan potentiometer |
+| `0x01FE` | 510 | <a id="reg-510"></a>`AI_TfreeCooling` | INT16 | ×0.1 °C | Free-cooling temperature probe |
 | `0x01FF` | 511 | <a id="reg-511"></a>`AI_Tevaporation`    | INT16 | ×0.1 °C | Evaporator temperature (inverter-compressor version only) |
+| `0x0200` | 512 | <a id="reg-512"></a>`AI_EvaporationPressure` | INT16 | ×0.1 | Evaporation pressure probe |
 | `0x0457` | 1111| <a id="reg-1111"></a>`Actual_Setpoint`    | INT16 | ×0.1 °C | Active room setpoint in use |
 
 ## 8. Unit & component status (read-only, FC 04)
 
 | Addr HEX | Addr DEC | Name              | Values |
 |----------|----------|-------------------|--------|
+| `0x0280` | 640 | <a id="reg-640"></a>`outAO_ReturnFan` | Return-fan output % (×0.01) |
+| `0x0281` | 641  | <a id="reg-641"></a>`outAO_Cmp`          | Compressor output % (×0.01) |
+| `0x0282` | 642 | <a id="reg-642"></a>`outAO_ExternalDamper` | External damper output % (×0.01) |
+| `0x044F` | 1103 | <a id="reg-1103"></a>`OR_Alarms`          | `0/1` cumulative "any alarm active" flag |
 | `0x0450` | 1104 | <a id="reg-1104"></a>`sm_UnitStatus`      | `0=OFF by display`, `1=OFF by DI`, `2=OFF by BMS`, `3=OFF by scheduler`, `4=OFF by RTC`, `5=ON` |
+| `0x0452` | 1106 | <a id="reg-1106"></a>`ActualBand_TB` | Active time band: `0=Disable`, `1=OFF`, `2=Comfort`, `3=Economy`, `4=Night`, `5=Holiday`, `6=Economy DI` |
 | `0x0456` | 1110 | <a id="reg-1110"></a>`ModeStatus`         | `0=Summer manual`, `1=Winter manual`, `2=Summer auto`, `3=Winter auto`, `4=Summer DI`, `5=Winter DI` |
 | `0x045F` | 1119 | <a id="reg-1119"></a>`SupplyFan_Status`   | `0=Disable`, `1=OFF`, `2=Wait ON`, `3=ON`, `4=Wait OFF`, `5=Alarm` |
+| `0x0460` | 1120 | <a id="reg-1120"></a>`ReturnFan_Status` | `0=Disable`, `1=OFF`, `2=Wait ON`, `3=ON`, `4=Wait OFF`, `5=Alarm` |
 | `0x0461` | 1121 | <a id="reg-1121"></a>`DehumRequest`       | `0=No`, `1=Yes` — dehumidification currently requested |
 | `0x0462` | 1122 | <a id="reg-1122"></a>`CmpStatus`          | `0=Disable`, `1=Alarm`, `2=Manual`, `3=Wait ON`, `4=ON`, `5=Wait OFF`, `6=OFF` — compressor (active cooling/dehum) |
+| `0x0463` | 1123 | <a id="reg-1123"></a>`DefrostStatus` | Compressor defrost: `0=OFF`, `1=ON`, `2=Dripping` |
 | `0x0464` | 1124 | <a id="reg-1124"></a>`outDO_WaterCond` | Internal water condenser valve (relay K4): `0=OFF`, `1=ON`, `2=Disable`. A real unit reads `1` in standby, against the handbook's description; see [UNIT_BEHAVIOUR §11.1](UNIT_BEHAVIOUR.md#111-internal-valve-relay-k4). |
+| `0x0465` | 1125 | <a id="reg-1125"></a>`outDO_AirCond` | Air condenser valve: `0=OFF`, `1=ON`, `2=Disable` |
 | `0x0466` | 1126 | <a id="reg-1126"></a>`outDO_WaterFlow` | External water valve V3V (relay K5) — the PM pump output is switched together with it: `0=OFF`, `1=ON`, `2=Disable` (output not configured). |
+| `0x0467` | 1127 | <a id="reg-1127"></a>`ExtDamperModulating` | Modulating external damper position, % (×0.01) |
+| `0x0468` | 1128 | <a id="reg-1128"></a>`ExtDamper_Status` | External damper: `0=Disable`, `1=OFF`, `2=Wait OFF`, `3=ON` |
+| `0x0469` | 1129 | <a id="reg-1129"></a>`Status_HeatExchanger` | Heat exchanger: `0=Disable`, `1=OFF`, `2=OFF defrost`, `3=OFF free-cooling/free-heating`, `4=ON` |
+| `0x046A` | 1130 | <a id="reg-1130"></a>`tempRecover` | Heat exchanger temperature (INT16 ×0.1 °C) |
+| `0x046B` | 1131 | <a id="reg-1131"></a>`Efficiency_HeatExchanger` | Heat exchanger efficiency (INT16 ×0.01) |
+| `0x046C` | 1132 | <a id="reg-1132"></a>`Request_FreeCoolingHeating` | `0/1` free-cooling / free-heating request |
+| `0x046D` | 1133 | <a id="reg-1133"></a>`Preheating` | `0/1` pre-heating function active |
 | `0x046E` | 1134 | <a id="reg-1134"></a>`outDO_RecircDamper` | `0=OFF` (damper closed), `1=ON` (damper open), `2=Disable` (no damper output allocated; expected on a non-`R` unit) |
-| `0x0281` | 641  | <a id="reg-641"></a>`outAO_Cmp`          | Compressor output % (×0.01) |
-| `0x044F` | 1103 | <a id="reg-1103"></a>`OR_Alarms`          | `0/1` cumulative "any alarm active" flag |
 
 ### Packed digital I/O status (bit-fields, R/O)
 
 The device packs digital inputs/outputs into 16-bit registers using **2 bits
-per signal** (`bitN..bitN+1`); a non-zero pair means active.
+per signal** (`bitN..bitN+1`); a non-zero pair means active. The exception is
+`Packed_DI`, one bit per input.
 
-| Addr HEX | Addr DEC | Name | Notable bits |
-|----------|----------|------|--------------|
-| `0x0180` | 384 | <a id="reg-384"></a>`Packed_DO1` | bit4-5=Compressor (K6), bit8-9=Recirculation damper (K1), bit10-11=External water valve or pump (K5), bit12-13=Water condensation valve (K4) (`0=Integration,1=Dehumidify`) |
-| `0x0181` | 385 | <a id="reg-385"></a>`Packed_DO2` | bit4-5=On/Off, bit6-7=Summer/Winter, bit8-9=Serious alarm, bit10-11=Light alarm, bit12-13=High humidity |
-| `0x0101` | 257 | <a id="reg-257"></a>`Packed_logicDI1` | bit0-1=Remote on/off, bit2-3=Summer/Winter, bit4-5=Dehum request, bit6-7=Integration/thermo request |
+| Addr HEX | Addr DEC | Name | Bits |
+|----------|----------|------|------|
+| `0x0100` | 256 | <a id="reg-256"></a>`Packed_DI` | bit0=DI01, bit1=DI02, bit2=DI03, bit3=DI04, bit4=DI01 Exp, bit5=DI02 Exp, bit6=DI03 Exp (1 bit per input) |
+| `0x0101` | 257 | <a id="reg-257"></a>`Packed_logicDI1` | bit0-1=Remote on/off, bit2-3=Summer/Winter, bit4-5=Dehum request, bit6-7=Integration/thermo request, bit8-9=Water flow switch, bit10-11=Supply fan flow switch, bit12-13=Return fan flow switch, bit14-15=Supply air filter |
+| `0x0102` | 258 | <a id="reg-258"></a>`Packed_logicDI2` | bit0-1=Return air filter, bit2-3=Forced fan, bit4-5=Thermal supply fan, bit6-7=Thermal return fan, bit8-9=Tacho supply fan, bit10-11=Tacho return fan, bit12-13=Low pressure, bit14-15=High pressure |
+| `0x0103` | 259 | <a id="reg-259"></a>`Packed_logicDI3` | bit0-1=Thermal compressor, bit2-3=Fire/smoke alarm, bit4-5=Phase sequence, bit6-7=Antifreeze, bit8-9=Generic alarm, bit10-11=Generic warning, bit12-13=Economy, bit14-15=Only ventilation |
+| `0x0180` | 384 | <a id="reg-384"></a>`Packed_DO1` | bit0-1=Supply fan, bit2-3=Return fan, bit4-5=Compressor (K6), bit6-7=External damper, bit8-9=Recirculation damper (K1), bit10-11=External water valve or pump (K5), bit12-13=Water condensation valve (K4) (`0=Integration,1=Dehumidify`), bit14-15=Air condensation valve |
+| `0x0181` | 385 | <a id="reg-385"></a>`Packed_DO2` | bit0-1=Heat exchanger, bit2-3=Free-cooling bypass, bit4-5=On/Off, bit6-7=Summer/Winter, bit8-9=Serious alarm, bit10-11=Light alarm, bit12-13=High humidity |
 
 ## 9. Alarms
 
@@ -234,9 +262,28 @@ What triggers each alarm, what it stops and how it resets:
 
 ### 9.3 Alarm reset registers (R/W)
 
-Write `1` to reset the corresponding alarm: `0x030B`=AL01, `0x030C`=AL02,
-`0x0311` (785)=AL11, `0x0312` (786)=AL12, `0x0317` (791)=AL18, `0x0319`=AL21,
-`0x031A`=AL26, … (full list `0x030B`–`0x031A`).
+Only these alarms have a reset register; the others reset themselves or at
+the unit.
+
+| Addr HEX | Addr DEC | Name | Meaning |
+|----------|----------|------|---------|
+| `0x030B` | 779 | <a id="reg-779"></a>`BMS_AL01` | Write `1` to reset AL01 |
+| `0x030C` | 780 | <a id="reg-780"></a>`BMS_AL02` | Write `1` to reset AL02 |
+| `0x030D` | 781 | <a id="reg-781"></a>`BMS_AL07` | Write `1` to reset AL07 |
+| `0x030E` | 782 | <a id="reg-782"></a>`BMS_AL08` | Write `1` to reset AL08 |
+| `0x030F` | 783 | <a id="reg-783"></a>`BMS_AL09` | Write `1` to reset AL09 |
+| `0x0310` | 784 | <a id="reg-784"></a>`BMS_AL10` | Write `1` to reset AL10 |
+| `0x0311` | 785 | <a id="reg-785"></a>`BMS_AL11` | Write `1` to reset AL11 |
+| `0x0312` | 786 | <a id="reg-786"></a>`BMS_AL12` | Write `1` to reset AL12 |
+| `0x0313` | 787 | <a id="reg-787"></a>`BMS_AL13` | Write `1` to reset AL13 |
+| `0x0314` | 788 | <a id="reg-788"></a>`BMS_AL14` | Write `1` to reset AL14 |
+| `0x0315` | 789 | <a id="reg-789"></a>`BMS_AL15` | Write `1` to reset AL15 |
+| `0x0316` | 790 | <a id="reg-790"></a>`BMS_AL17` | Write `1` to reset AL17 |
+| `0x0317` | 791 | <a id="reg-791"></a>`BMS_AL18` | Write `1` to reset AL18 |
+| `0x0318` | 792 | <a id="reg-792"></a>`BMS_AL19` | Write `1` to reset AL19 |
+| `0x0319` | 793 | <a id="reg-793"></a>`BMS_AL21` | Write `1` to reset AL21 |
+| `0x031A` | 794 | <a id="reg-794"></a>`BMS_AL26` | Write `1` to reset AL26 |
+
 **Filter alarm AL22 is reset by writing `0` to `0x0644` ([1604](#reg-1604)).**
 
 ## 10. Key configuration parameters (R/W) worth knowing
@@ -389,7 +436,7 @@ CNU2 [PH01](#ph01) = 0, [HA00](#ha00) = 0. A real unit without a display shipped
 Observed on an HRDS+ 30 with no display and no external probes ([HA00](#ha00) = 2,
 [PH01](#ph01) = 1): `AI_TreturnRoom` ([499](#reg-499)), `AI_Toutdoor` ([500](#reg-500)), `AI_Texhaust` ([502](#reg-502)),
 `AI_Tdischarge` ([503](#reg-503)), `AI_HretRoom` ([505](#reg-505)) and `AI_AirQuality` ([506](#reg-506)) all read raw
-`32772` (`0x8004`); register 507 read `32762` (`0x7FFA`). Decoded as INT16 ×0.1
+`32772` (`0x8004`); register [507](#reg-507) read `32762` (`0x7FFA`). Decoded as INT16 ×0.1
 that is **-3276.4 °C** (and -32764 %RH), which is never a real reading. The
 factory-wired `AI_Twater` ([501](#reg-501)) and `AI_Tevaporation` ([511](#reg-511)) read normally.
 
@@ -427,16 +474,17 @@ dehumidify request, [PU07](#pu07) as the unit's own hysteresis):
 
 Every handbook parameter (§5.3) that has a Modbus address in the RTU
 manual's parameter table and is not already listed above ([PA19](#pa19) is in §5,
-[PM00](#pm00) and [PM01](#pm01) in §10). Scaling was checked
-against a real unit's raw read-back. Not listed: passwords (`PSd*`), `PH15`
-(restore defaults), `PH18` (clear alarm history) and addresses above 1900
-(not verified).
+[PM00](#pm00) and [PM01](#pm01) in §10). Scaling was checked against a real unit's raw
+read-back, except for the rows marked *not exposed*, which take the scale of
+their neighbours. Passwords (`PSd*`) and the other registers of the manual's
+list are in §17. The manual's list ends at [1914](#reg-1914).
 
 The *Access* column mixes two things: `R/W` / `R/O` is the register as the
-Modbus manual defines it; "shown R/O" and "disabled by default" record how the
-Home Assistant integration exposes it (it deliberately never writes link
-settings, I/O allocation, refrigerant, safety bypass and test mode; source of
-truth for that: `custom_components/innova_hrds/installer_params.py`).
+Modbus manual defines it; "shown R/O", "disabled by default" and "not exposed"
+record how the Home Assistant integration treats it ("not exposed": no
+entity at all). It deliberately never writes link settings, I/O allocation,
+refrigerant, safety bypass and test mode; source of truth for what is
+exposed: `custom_components/innova_hrds/installer_params.py`.
 
 | Addr HEX | Addr DEC | Code | Meaning | Scale | Range | Access |
 |----------|----------|------|---------|-------|-------|--------|
@@ -479,6 +527,7 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x0678` | 1656 | <a id="reg-1656"></a><a id="pf19"></a>PF19 | Air quality fan step interval | x1 | 1…100 s | R/W, disabled by default |
 | `0x0679` | 1657 | <a id="reg-1657"></a><a id="pf20"></a>PF20 | Defrost fan speed step | x0.01 | 0…100 % | R/W, disabled by default |
 | `0x067A` | 1658 | <a id="reg-1658"></a><a id="pf21"></a>PF21 | Defrost fan step interval | x1 | 1…100 s | R/W, disabled by default |
+| `0x067B` | 1659 | <a id="reg-1659"></a><a id="pf22"></a>PF22 | Return fan delta in heat-exchanger defrost | x0.01 | 0…100 % | R/W, not exposed |
 | `0x067C` | 1660 | <a id="pf23"></a><a id="reg-1660"></a>PF23 | Supply fan speed forced by DI | x0.01 | 0…100 % | R/W |
 | `0x067F` | 1663 | <a id="pe01"></a><a id="reg-1663"></a>PE01 | Compressor minimum off time | x1 | 0…999 s | R/W |
 | `0x0680` | 1664 | <a id="pe02"></a><a id="reg-1664"></a>PE02 | Compressor minimum on time | x1 | 0…999 s | R/W |
@@ -512,6 +561,7 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x06A0` | 1696 | <a id="pu09"></a><a id="reg-1696"></a>PU09 | Compressor as second step | x1 | 0…1  | R/W 0/1 |
 | `0x06A1` | 1697 | <a id="pu10"></a><a id="reg-1697"></a>PU10 | Delay before compressor second step | x1 | 0…240 min | R/W |
 | `0x06A3` | 1699 | <a id="reg-1699"></a><a id="ps02"></a>PS02 | Outdoor damper pre-start time | x1 | 0…9999 s | R/W, disabled by default |
+| `0x06A4` | 1700 | <a id="reg-1700"></a><a id="ps03"></a>PS03 | External damper OFF delay | x1 | 0…9999 s | R/W, not exposed |
 | `0x06A5` | 1701 | <a id="reg-1701"></a><a id="ps04"></a>PS04 | External damper min opening | x0.01 | 0…100 % | R/W, disabled by default |
 | `0x06A6` | 1702 | <a id="reg-1702"></a><a id="ps05"></a>PS05 | External damper max opening | x0.01 | 0…100 % | R/W, disabled by default |
 | `0x06A7` | 1703 | <a id="reg-1703"></a><a id="ps06"></a>PS06 | Free-cooling/heating activation setpoint | x0.1 | 0…20 °C | R/W, disabled by default |
@@ -546,6 +596,7 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x06C4` | 1732 | <a id="pa16"></a><a id="reg-1732"></a>PA16 | High/low water temperature alarm delay | x1 | 1…999 s | R/W |
 | `0x06C5` | 1733 | <a id="pa17"></a><a id="reg-1733"></a>PA17 | High/low water temperature alarm differential | x0.1 | 0.1…10 °C | R/W |
 | `0x06C6` | 1734 | <a id="reg-1734"></a><a id="pa18"></a>PA18 | High/low water temperature alarm relay | x1 | 0…2  | R/W |
+| `0x06C8` | 1736 | <a id="reg-1736"></a><a id="pa20"></a>PA20 | High humidity warning differential | x1 | 0…100 % | R/W, not exposed |
 | `0x06C9` | 1737 | <a id="pa21"></a><a id="reg-1737"></a>PA21 | High humidity time before alarm | x1 | 0…60 min | R/W |
 | `0x06CA` | 1738 | <a id="reg-1738"></a><a id="pa22"></a>PA22 | High humidity events | x1 | 0…99  | R/W |
 | `0x06CB` | 1739 | <a id="pa23"></a><a id="reg-1739"></a>PA23 | Fan speed sensor alarm delay after reset | x1 | 0…999 s | R/W |
@@ -579,6 +630,7 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x06E7` | 1767 | <a id="reg-1767"></a><a id="pa51"></a>PA51 | Generic alarm reset type | x1 | 0…2  | R/W |
 | `0x06E8` | 1768 | <a id="reg-1768"></a><a id="pa52"></a>PA52 | Clock (RTC) alarm | x1 | 0…1  | R/W 0/1 |
 | `0x06E9` | 1769 | <a id="reg-1769"></a><a id="pa53"></a>PA53 | Clock alarm reset type | x1 | 0…2  | R/W |
+| `0x06EA` | 1770 | <a id="reg-1770"></a><a id="pa54"></a>PA54 | RTC alarm signal type (0 none, 1 light, 2 serious) | x1 | 0…2  | R/W, not exposed |
 | `0x06EB` | 1771 | <a id="reg-1771"></a><a id="pa55"></a>PA55 | Phase sequence alarm relay | x1 | 0…2  | R/W, disabled by default |
 | `0x06EC` | 1772 | <a id="reg-1772"></a><a id="pa56"></a>PA56 | Expansion alarm relay | x1 | 0…2  | R/W, disabled by default |
 | `0x06ED` | 1773 | <a id="ph11"></a><a id="reg-1773"></a>PH11 | Modbus address | x1 | 1…247  | shown R/O |
@@ -591,8 +643,10 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x06F8` | 1784 | <a id="ph08"></a><a id="reg-1784"></a>PH08 | Summer setpoint max | x0.1 | -15…70 °C | R/W |
 | `0x06F9` | 1785 | <a id="ph09"></a><a id="reg-1785"></a>PH09 | Winter setpoint min | x0.1 | -15…70 °C | R/W |
 | `0x06FA` | 1786 | <a id="ph10"></a><a id="reg-1786"></a>PH10 | Winter setpoint max (caps [SEtH](#seth)) | x0.1 | -15…70 °C | R/W |
+| `0x06FB` | 1787 | <a id="reg-1787"></a><a id="ph15"></a>PH15 | Restore default | x1 | 0…1  | R/W 0/1, not exposed (restores the factory settings) |
 | `0x06FC` | 1788 | <a id="reg-1788"></a><a id="ph16"></a>PH16 | CAN baud rate code | x1 | 1…4  | shown R/O, disabled by default |
 | `0x06FD` | 1789 | <a id="ph17"></a><a id="reg-1789"></a>PH17 | CAN node | x1 | 1…127  | shown R/O, disabled by default |
+| `0x06FE` | 1790 | <a id="reg-1790"></a><a id="ph18"></a>PH18 | History reset | x1 | 0…1  | R/W 0/1, not exposed (clears the alarm history) |
 | `0x06FF` | 1791 | <a id="reg-1791"></a><a id="ph19"></a>PH19 | Air quality probe min | x1 | 0…9999  | shown R/O, disabled by default |
 | `0x0700` | 1792 | <a id="reg-1792"></a><a id="ph20"></a>PH20 | Air quality probe max | x1 | 0…9999  | shown R/O, disabled by default |
 | `0x0701` | 1793 | <a id="reg-1793"></a><a id="ph21"></a>PH21 | Pressure probe min | x0.1 | 0…87 bar | shown R/O, disabled by default |
@@ -655,6 +709,7 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x074B` | 1867 | <a id="reg-1867"></a><a id="ph25"></a>PH25 | Evaporation pressure probe max | x0.1 | 0…87 bar | shown R/O, disabled by default |
 | `0x074C` | 1868 | <a id="reg-1868"></a><a id="ph26"></a>PH26 | Refrigerant code | x1 | 0…19  | shown R/O |
 | `0x074F` | 1871 | <a id="pe22"></a><a id="reg-1871"></a>PE22 | Compressor max output (integration) | x0.01 | 0…100 % | R/W |
+| `0x0750` | 1872 | <a id="reg-1872"></a><a id="pe23"></a>PE23 | Modulating compressor integration differential | x0.1 | 0.1…36.0 | R/W, not exposed |
 | `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>PU11 | Evaporator temperature setpoint | x0.1 | 0…68 °C | R/W |
 | `0x0752` | 1874 | <a id="pu12"></a><a id="reg-1874"></a>PU12 | Evaporator dead band | x0.1 | 0.1…18 °C | R/W |
 | `0x0754` | 1876 | <a id="pa57"></a><a id="reg-1876"></a>PA57 | High humidity alarm type (0 display, 1 blocking) | x1 | 0…1  | R/W |
@@ -664,6 +719,7 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x0759` | 1881 | <a id="pe26"></a><a id="reg-1881"></a>PE26 | Ramp to and from minimum step | x0.1 | 0…20 rps | R/W |
 | `0x075A` | 1882 | <a id="pe27"></a><a id="reg-1882"></a>PE27 | Compressor max speed | x1 | 0…200 rps | R/W |
 | `0x075B` | 1883 | <a id="pe28"></a><a id="reg-1883"></a>PE28 | Compressor step 1 speed | x1 | 0…200 rps | R/W |
+| `0x075C` | 1884 | <a id="reg-1884"></a><a id="pe29"></a>PE29 | Compressor step 2 speed | x1 | 0…200 rps | R/W, not exposed |
 | `0x075D` | 1885 | <a id="pe30"></a><a id="reg-1885"></a>PE30 | Minimum time at step 1 | x1 | 0…255 s | R/W |
 | `0x075E` | 1886 | <a id="pe31"></a><a id="reg-1886"></a>PE31 | Minimum time at step 2 | x1 | 0…255 s | R/W |
 | `0x075F` | 1887 | <a id="pe32"></a><a id="reg-1887"></a>PE32 | Maximum time below step 1 | x1 | 0…255 s | R/W |
@@ -674,3 +730,186 @@ truth for that: `custom_components/innova_hrds/installer_params.py`).
 | `0x076A` | 1898 | <a id="reg-1898"></a><a id="pt02"></a>PT02 | Supply fan speed in test mode | x0.01 | 0…100 % | shown R/O, disabled by default |
 | `0x076B` | 1899 | <a id="reg-1899"></a><a id="pt03"></a>PT03 | Return fan speed in test mode | x0.01 | 0…100 % | shown R/O, disabled by default |
 | `0x076C` | 1900 | <a id="reg-1900"></a><a id="pt04"></a>PT04 | External damper in test mode | x0.01 | 0…100 % | shown R/O, disabled by default |
+| `0x076D` | 1901 | <a id="reg-1901"></a><a id="pt05"></a>PT05 | Recirculation damper relay in test mode | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x076E` | 1902 | <a id="reg-1902"></a><a id="pt06"></a>PT06 | Serious alarm relay in test mode | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x076F` | 1903 | <a id="reg-1903"></a><a id="pt07"></a>PT07 | Free-cooling/heating bypass relay in test mode | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x0770` | 1904 | <a id="reg-1904"></a><a id="pt08"></a>PT08 | Water condensation valve relay in test mode | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x0771` | 1905 | <a id="reg-1905"></a><a id="pt09"></a>PT09 | Water valve relay in test mode | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x0772` | 1906 | <a id="reg-1906"></a><a id="ph31"></a>PH31 | Epj Graph backlight mode (1 on, 2 timed) | x1 | 1…2  | R/W, not exposed |
+| `0x0773` | 1907 | <a id="reg-1907"></a><a id="ph32"></a>PH32 | Epj Graph backlight timeout | x1 | 0…240  | R/W, not exposed |
+| `0x0774` | 1908 | <a id="reg-1908"></a><a id="ph33"></a>PH33 | Epj Graph on/off LED | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x0775` | 1909 | <a id="reg-1909"></a><a id="ph34"></a>PH34 | Epj Graph alarm LED | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x0776` | 1910 | <a id="reg-1910"></a><a id="pa61"></a>PA61 | External damper limitation differential | x1 | 0…20  | R/W, not exposed |
+| `0x0777` | 1911 | <a id="reg-1911"></a><a id="pa62"></a>PA62 | Maximum dehumidify time from DI/BMS for the external damper limitation | x1 | 0…999  | R/W, not exposed |
+| `0x0778` | 1912 | <a id="reg-1912"></a><a id="pt10"></a>PT10 | Compressor relay in test mode | x1 | 0…1  | R/W 0/1, not exposed |
+| `0x0779` | 1913 | <a id="reg-1913"></a><a id="pt11"></a>PT11 | Compressor percentage in test mode | x0.01 | 0…100 % | R/W, not exposed |
+| `0x077A` | 1914 | <a id="reg-1914"></a><a id="ph35"></a>PH35 | Summer/winter icon (0 sun = summer, 1 sun = winter) | x1 | 0…1  | R/W 0/1, not exposed |
+
+---
+
+## 17. Other registers of the manual
+
+The rest of the manual's register list. None of them has a Home Assistant
+entity; they are here so that the reference is complete and every address in
+the manual resolves. A date or time is a 32-bit value in two words (low word
+at the lower address); the manual gives the range but not the encoding.
+
+### 17.1 Clock, holiday and hour-counter words
+
+| Addr HEX | Addr DEC | Name | R/W | Range | Meaning |
+|----------|----------|------|-----|-------|---------|
+| `0x044D` | 1101 | <a id="reg-1101"></a>`CLOCK_RTC (Low)` | R/W | 01.01.2000 … 19.01.2068 03:14:07 | Real-time clock, low word of a 32-bit value |
+| `0x044E` | 1102 | <a id="reg-1102"></a>`CLOCK_RTC (High)` | R/W |  | Real-time clock, high word |
+| `0x0453` | 1107 | <a id="reg-1107"></a>`StartHoliday_BMS` | R/W | 0–1 | Start the holiday period |
+| `0x0454` | 1108 | <a id="reg-1108"></a>`Holiday_end (Low)` | R/O | 01.01.2000 … 19.01.2068 03:14:07 | Holiday end date, low word of a 32-bit value |
+| `0x0455` | 1109 | <a id="reg-1109"></a>`Holiday_end (High)` | R/O |  | Holiday end date, high word |
+| `0x05D9` | 1497 | <a id="reg-1497"></a>`Holiday_Days` | R/W | 0–255 | Holiday period, days |
+| `0x05DA` | 1498 | <a id="reg-1498"></a>`Holiday_Hours` | R/W | 0–23 | Holiday period, hours |
+| `0x0643` | 1603 | <a id="reg-1603"></a>`PM00_Limit_FansHours (High)` | R/W |  | High word of [PM00](#pm00) (hours, whole hours in one word on the reference unit) |
+| `0x0645` | 1605 | <a id="reg-1605"></a>`PM01_SupplyFan_Hours (High)` | R/W |  | High word of [PM01](#pm01) |
+| `0x0647` | 1607 | <a id="reg-1607"></a>`PM02_ReturnFan_Hours (High)` | R/W |  | High word of [PM02](#pm02) |
+| `0x0649` | 1609 | <a id="reg-1609"></a>`PM03_Limit_CmpHours (High)` | R/W |  | High word of [PM03](#pm03) |
+| `0x064B` | 1611 | <a id="reg-1611"></a>`PM04_Cmp_Hours (High)` | R/W |  | High word of [PM04](#pm04) |
+| `0x064C` | 1612 | <a id="reg-1612"></a><a id="pm90"></a>`PM90_LastMaintainDate (Low)` | R/W | 01.01.2008 00:00:01 … 19.01.2068 03:14:07 | Last maintenance date, low word of a 32-bit value |
+| `0x064D` | 1613 | <a id="reg-1613"></a>`PM90_LastMaintainDate (High)` | R/W |  | Last maintenance date, high word |
+
+The manual lists every hour counter ([PM00](#pm00)–[PM04](#pm04)) as a 32-bit
+value in two words with the unit "hours ×10"; on the reference unit the low
+word holds whole hours and the odd neighbours read 0
+([UNIT_BEHAVIOUR T29](UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware)).
+
+### 17.2 Time programs
+
+Four daily time bands (F1 to F4) for each weekday. A mode register holds
+`0=Disable`, `1=OFF`, `2=Comfort`, `3=Economy` or `4=Night`; a start time of
+day takes two words (low word first). The time programs are enabled with
+[PH03](#ph03). The active band is [1106](#reg-1106).
+
+| Addr HEX | Addr DEC | Name | R/W | Range | Meaning |
+|----------|----------|------|-----|-------|---------|
+| `0x05DB` | 1499 | <a id="reg-1499"></a>`F1_Monday_p1` | R/W | 0–4 | Monday F1 mode |
+| `0x05DC` | 1500 | <a id="reg-1500"></a>`F1_Monday_h1` (Low) | R/W | 0:00:00–23:59:59 | Monday F1 start time, low word |
+| `0x05DD` | 1501 | <a id="reg-1501"></a>`F1_Monday_h1` (High) | R/W | | Monday F1 start time, high word |
+| `0x05DE` | 1502 | <a id="reg-1502"></a>`F2_Monday_p2` | R/W | 0–4 | Monday F2 mode |
+| `0x05DF` | 1503 | <a id="reg-1503"></a>`F2_Monday_h2` (Low) | R/W | 0:00:00–23:59:59 | Monday F2 start time, low word |
+| `0x05E0` | 1504 | <a id="reg-1504"></a>`F2_Monday_h2` (High) | R/W | | Monday F2 start time, high word |
+| `0x05E1` | 1505 | <a id="reg-1505"></a>`F3_Monday_p3` | R/W | 0–4 | Monday F3 mode |
+| `0x05E2` | 1506 | <a id="reg-1506"></a>`F3_Monday_h3` (Low) | R/W | 0:00:00–23:59:59 | Monday F3 start time, low word |
+| `0x05E3` | 1507 | <a id="reg-1507"></a>`F3_Monday_h3` (High) | R/W | | Monday F3 start time, high word |
+| `0x05E4` | 1508 | <a id="reg-1508"></a>`F4_Monday_p4` | R/W | 0–4 | Monday F4 mode |
+| `0x05E5` | 1509 | <a id="reg-1509"></a>`F4_Monday_h4` (Low) | R/W | 0:00:00–23:59:59 | Monday F4 start time, low word |
+| `0x05E6` | 1510 | <a id="reg-1510"></a>`F4_Monday_h4` (High) | R/W | | Monday F4 start time, high word |
+| `0x05E7` | 1511 | <a id="reg-1511"></a>`F1_Tuesday_p1` | R/W | 0–4 | Tuesday F1 mode |
+| `0x05E8` | 1512 | <a id="reg-1512"></a>`F1_Tuesday_h1` (Low) | R/W | 0:00:00–23:59:59 | Tuesday F1 start time, low word |
+| `0x05E9` | 1513 | <a id="reg-1513"></a>`F1_Tuesday_h1` (High) | R/W | | Tuesday F1 start time, high word |
+| `0x05EA` | 1514 | <a id="reg-1514"></a>`F2_Tuesday_p2` | R/W | 0–4 | Tuesday F2 mode |
+| `0x05EB` | 1515 | <a id="reg-1515"></a>`F2_Tuesday_h2` (Low) | R/W | 0:00:00–23:59:59 | Tuesday F2 start time, low word |
+| `0x05EC` | 1516 | <a id="reg-1516"></a>`F2_Tuesday_h2` (High) | R/W | | Tuesday F2 start time, high word |
+| `0x05ED` | 1517 | <a id="reg-1517"></a>`F3_Tuesday_p3` | R/W | 0–4 | Tuesday F3 mode |
+| `0x05EE` | 1518 | <a id="reg-1518"></a>`F3_Tuesday_h3` (Low) | R/W | 0:00:00–23:59:59 | Tuesday F3 start time, low word |
+| `0x05EF` | 1519 | <a id="reg-1519"></a>`F3_Tuesday_h3` (High) | R/W | | Tuesday F3 start time, high word |
+| `0x05F0` | 1520 | <a id="reg-1520"></a>`F4_Tuesday_p4` | R/W | 0–4 | Tuesday F4 mode |
+| `0x05F1` | 1521 | <a id="reg-1521"></a>`F4_Tuesday_h4` (Low) | R/W | 0:00:00–23:59:59 | Tuesday F4 start time, low word |
+| `0x05F2` | 1522 | <a id="reg-1522"></a>`F4_Tuesday_h4` (High) | R/W | | Tuesday F4 start time, high word |
+| `0x05F3` | 1523 | <a id="reg-1523"></a>`F1_Wednesday_p1` | R/W | 0–4 | Wednesday F1 mode |
+| `0x05F4` | 1524 | <a id="reg-1524"></a>`F1_Wednesday_h1` (Low) | R/W | 0:00:00–23:59:59 | Wednesday F1 start time, low word |
+| `0x05F5` | 1525 | <a id="reg-1525"></a>`F1_Wednesday_h1` (High) | R/W | | Wednesday F1 start time, high word |
+| `0x05F6` | 1526 | <a id="reg-1526"></a>`F2_Wednesday_p2` | R/W | 0–4 | Wednesday F2 mode |
+| `0x05F7` | 1527 | <a id="reg-1527"></a>`F2_Wednesday_h2` (Low) | R/W | 0:00:00–23:59:59 | Wednesday F2 start time, low word |
+| `0x05F8` | 1528 | <a id="reg-1528"></a>`F2_Wednesday_h2` (High) | R/W | | Wednesday F2 start time, high word |
+| `0x05F9` | 1529 | <a id="reg-1529"></a>`F3_Wednesday_p3` | R/W | 0–4 | Wednesday F3 mode |
+| `0x05FA` | 1530 | <a id="reg-1530"></a>`F3_Wednesday_h3` (Low) | R/W | 0:00:00–23:59:59 | Wednesday F3 start time, low word |
+| `0x05FB` | 1531 | <a id="reg-1531"></a>`F3_Wednesday_h3` (High) | R/W | | Wednesday F3 start time, high word |
+| `0x05FC` | 1532 | <a id="reg-1532"></a>`F4_Wednesday_p4` | R/W | 0–4 | Wednesday F4 mode |
+| `0x05FD` | 1533 | <a id="reg-1533"></a>`F4_Wednesday_h4` (Low) | R/W | 0:00:00–23:59:59 | Wednesday F4 start time, low word |
+| `0x05FE` | 1534 | <a id="reg-1534"></a>`F4_Wednesday_h4` (High) | R/W | | Wednesday F4 start time, high word |
+| `0x05FF` | 1535 | <a id="reg-1535"></a>`F1_Thursday_p1` | R/W | 0–4 | Thursday F1 mode |
+| `0x0600` | 1536 | <a id="reg-1536"></a>`F1_Thursday_h1` (Low) | R/W | 0:00:00–23:59:59 | Thursday F1 start time, low word |
+| `0x0601` | 1537 | <a id="reg-1537"></a>`F1_Thursday_h1` (High) | R/W | | Thursday F1 start time, high word |
+| `0x0602` | 1538 | <a id="reg-1538"></a>`F2_Thursday_p2` | R/W | 0–4 | Thursday F2 mode |
+| `0x0603` | 1539 | <a id="reg-1539"></a>`F2_Thursday_h2` (Low) | R/W | 0:00:00–23:59:59 | Thursday F2 start time, low word |
+| `0x0604` | 1540 | <a id="reg-1540"></a>`F2_Thursday_h2` (High) | R/W | | Thursday F2 start time, high word |
+| `0x0605` | 1541 | <a id="reg-1541"></a>`F3_Thursday_p3` | R/W | 0–4 | Thursday F3 mode |
+| `0x0606` | 1542 | <a id="reg-1542"></a>`F3_Thursday_h3` (Low) | R/W | 0:00:00–23:59:59 | Thursday F3 start time, low word |
+| `0x0607` | 1543 | <a id="reg-1543"></a>`F3_Thursday_h3` (High) | R/W | | Thursday F3 start time, high word |
+| `0x0608` | 1544 | <a id="reg-1544"></a>`F4_Thursday_p4` | R/W | 0–4 | Thursday F4 mode |
+| `0x0609` | 1545 | <a id="reg-1545"></a>`F4_Thursday_h4` (Low) | R/W | 0:00:00–23:59:59 | Thursday F4 start time, low word |
+| `0x060A` | 1546 | <a id="reg-1546"></a>`F4_Thursday_h4` (High) | R/W | | Thursday F4 start time, high word |
+| `0x060B` | 1547 | <a id="reg-1547"></a>`F1_Friday_p1` | R/W | 0–4 | Friday F1 mode |
+| `0x060C` | 1548 | <a id="reg-1548"></a>`F1_Friday_h1` (Low) | R/W | 0:00:00–23:59:59 | Friday F1 start time, low word |
+| `0x060D` | 1549 | <a id="reg-1549"></a>`F1_Friday_h1` (High) | R/W | | Friday F1 start time, high word |
+| `0x060E` | 1550 | <a id="reg-1550"></a>`F2_Friday_p2` | R/W | 0–4 | Friday F2 mode |
+| `0x060F` | 1551 | <a id="reg-1551"></a>`F2_Friday_h2` (Low) | R/W | 0:00:00–23:59:59 | Friday F2 start time, low word |
+| `0x0610` | 1552 | <a id="reg-1552"></a>`F2_Friday_h2` (High) | R/W | | Friday F2 start time, high word |
+| `0x0611` | 1553 | <a id="reg-1553"></a>`F3_Friday_p3` | R/W | 0–4 | Friday F3 mode |
+| `0x0612` | 1554 | <a id="reg-1554"></a>`F3_Friday_h3` (Low) | R/W | 0:00:00–23:59:59 | Friday F3 start time, low word |
+| `0x0613` | 1555 | <a id="reg-1555"></a>`F3_Friday_h3` (High) | R/W | | Friday F3 start time, high word |
+| `0x0614` | 1556 | <a id="reg-1556"></a>`F4_Friday_p4` | R/W | 0–4 | Friday F4 mode |
+| `0x0615` | 1557 | <a id="reg-1557"></a>`F4_Friday_h4` (Low) | R/W | 0:00:00–23:59:59 | Friday F4 start time, low word |
+| `0x0616` | 1558 | <a id="reg-1558"></a>`F4_Friday_h4` (High) | R/W | | Friday F4 start time, high word |
+| `0x0617` | 1559 | <a id="reg-1559"></a>`F1_Saturday_p1` | R/W | 0–4 | Saturday F1 mode |
+| `0x0618` | 1560 | <a id="reg-1560"></a>`F1_Saturday_h1` (Low) | R/W | 0:00:00–23:59:59 | Saturday F1 start time, low word |
+| `0x0619` | 1561 | <a id="reg-1561"></a>`F1_Saturday_h1` (High) | R/W | | Saturday F1 start time, high word |
+| `0x061A` | 1562 | <a id="reg-1562"></a>`F2_Saturday_p2` | R/W | 0–4 | Saturday F2 mode |
+| `0x061B` | 1563 | <a id="reg-1563"></a>`F2_Saturday_h2` (Low) | R/W | 0:00:00–23:59:59 | Saturday F2 start time, low word |
+| `0x061C` | 1564 | <a id="reg-1564"></a>`F2_Saturday_h2` (High) | R/W | | Saturday F2 start time, high word |
+| `0x061D` | 1565 | <a id="reg-1565"></a>`F3_Saturday_p3` | R/W | 0–4 | Saturday F3 mode |
+| `0x061E` | 1566 | <a id="reg-1566"></a>`F3_Saturday_h3` (Low) | R/W | 0:00:00–23:59:59 | Saturday F3 start time, low word |
+| `0x061F` | 1567 | <a id="reg-1567"></a>`F3_Saturday_h3` (High) | R/W | | Saturday F3 start time, high word |
+| `0x0620` | 1568 | <a id="reg-1568"></a>`F4_Saturday_p4` | R/W | 0–4 | Saturday F4 mode |
+| `0x0621` | 1569 | <a id="reg-1569"></a>`F4_Saturday_h4` (Low) | R/W | 0:00:00–23:59:59 | Saturday F4 start time, low word |
+| `0x0622` | 1570 | <a id="reg-1570"></a>`F4_Saturday_h4` (High) | R/W | | Saturday F4 start time, high word |
+| `0x0623` | 1571 | <a id="reg-1571"></a>`F1_Sunday_p1` | R/W | 0–4 | Sunday F1 mode |
+| `0x0624` | 1572 | <a id="reg-1572"></a>`F1_Sunday_h1` (Low) | R/W | 0:00:00–23:59:59 | Sunday F1 start time, low word |
+| `0x0625` | 1573 | <a id="reg-1573"></a>`F1_Sunday_h1` (High) | R/W | | Sunday F1 start time, high word |
+| `0x0626` | 1574 | <a id="reg-1574"></a>`F2_Sunday_p2` | R/W | 0–4 | Sunday F2 mode |
+| `0x0627` | 1575 | <a id="reg-1575"></a>`F2_Sunday_h2` (Low) | R/W | 0:00:00–23:59:59 | Sunday F2 start time, low word |
+| `0x0628` | 1576 | <a id="reg-1576"></a>`F2_Sunday_h2` (High) | R/W | | Sunday F2 start time, high word |
+| `0x0629` | 1577 | <a id="reg-1577"></a>`F3_Sunday_p3` | R/W | 0–4 | Sunday F3 mode |
+| `0x062A` | 1578 | <a id="reg-1578"></a>`F3_Sunday_h3` (Low) | R/W | 0:00:00–23:59:59 | Sunday F3 start time, low word |
+| `0x062B` | 1579 | <a id="reg-1579"></a>`F3_Sunday_h3` (High) | R/W | | Sunday F3 start time, high word |
+| `0x062C` | 1580 | <a id="reg-1580"></a>`F4_Sunday_p4` | R/W | 0–4 | Sunday F4 mode |
+| `0x062D` | 1581 | <a id="reg-1581"></a>`F4_Sunday_h4` (Low) | R/W | 0:00:00–23:59:59 | Sunday F4 start time, low word |
+| `0x062E` | 1582 | <a id="reg-1582"></a>`F4_Sunday_h4` (High) | R/W | | Sunday F4 start time, high word |
+
+### 17.3 Band setpoints
+
+The comfort, economy and night bands of the time programs, and the supply-fan
+and return-fan setpoints of each band. The summer and winter setpoints are
+[SEtC](#setc) and [SEtH](#seth).
+
+| Addr HEX | Addr DEC | Name | R/W | Range | Meaning |
+|----------|----------|------|-----|-------|---------|
+| `0x0633` | 1587 | <a id="reg-1587"></a><a id="scc"></a>`SCC_Comfort_SetpointCold` | R/W | −15.0…158.0 °C (×0.1) | Comfort band cooling setpoint |
+| `0x0634` | 1588 | <a id="reg-1588"></a><a id="sch"></a>`SCH_Comfort_SetpointHot` | R/W | −15.0…158.0 °C (×0.1) | Comfort band heating setpoint |
+| `0x0635` | 1589 | <a id="reg-1589"></a><a id="oec"></a>`OEC_Economy_OffsetCold` | R/W | −36.0…36.0 K (×0.1) | Economy band cooling offset |
+| `0x0636` | 1590 | <a id="reg-1590"></a><a id="oeh"></a>`OEH_Economy_OffsetHot` | R/W | −36.0…36.0 K (×0.1) | Economy band heating offset |
+| `0x0637` | 1591 | <a id="reg-1591"></a><a id="onc"></a>`ONC_Night_OffsetCold` | R/W | −36.0…36.0 K (×0.1) | Night band cooling offset |
+| `0x0638` | 1592 | <a id="reg-1592"></a><a id="onh"></a>`ONH_Night_OffsetHot` | R/W | −36.0…36.0 K (×0.1) | Night band heating offset |
+| `0x0639` | 1593 | <a id="reg-1593"></a><a id="sdc"></a>`SDC_SetpointCold_DI` | R/W | −15.0…158.0 °C (×0.1) | Cooling setpoint forced by a digital input |
+| `0x063A` | 1594 | <a id="reg-1594"></a><a id="sdh"></a>`SDH_SetpointHot_DI` | R/W | −15.0…158.0 °C (×0.1) | Heating setpoint forced by a digital input |
+| `0x063B` | 1595 | <a id="reg-1595"></a><a id="fsc"></a>`FSC_SupplyFan_Comfort` | R/W | 0–100 % (×0.01) | Comfort band supply-fan setpoint |
+| `0x063C` | 1596 | <a id="reg-1596"></a><a id="fse"></a>`FSE_SupplyFan_Economy` | R/W | 0–100 % (×0.01) | Economy band supply-fan setpoint |
+| `0x063D` | 1597 | <a id="reg-1597"></a><a id="fsn"></a>`FSN_SupplyFan_Night` | R/W | 0–100 % (×0.01) | Night band supply-fan setpoint |
+| `0x0743` | 1859 | <a id="reg-1859"></a><a id="frc"></a>`FRC_ReturnFan_Comfort` | R/W | 0–100 % (×0.01) | Comfort band return-fan setpoint |
+| `0x0744` | 1860 | <a id="reg-1860"></a><a id="fre"></a>`FRE_ReturnFan_Economy` | R/W | 0–100 % (×0.01) | Economy band return-fan setpoint |
+| `0x0745` | 1861 | <a id="reg-1861"></a><a id="frn"></a>`FRN_ReturnFan_Night` | R/W | 0–100 % (×0.01) | Night band return-fan setpoint |
+
+### 17.4 Display settings
+
+| Addr HEX | Addr DEC | Name | R/W | Range | Meaning |
+|----------|----------|------|-----|-------|---------|
+| `0x063E` | 1598 | <a id="reg-1598"></a><a id="bkm"></a>`BKM_EvjBacklightMode` | R/W | 0–3 | Evj/Epj LCD backlight mode |
+| `0x063F` | 1599 | <a id="reg-1599"></a><a id="bku"></a>`BKU_EvjBacklightPerc` | R/W | 0–100 % | Evj/Epj LCD backlight percentage |
+| `0x0640` | 1600 | <a id="reg-1600"></a><a id="bkt"></a>`BKT_EvjBacklightTimeout` | R/W | 0–241 | Evj/Epj LCD backlight timeout |
+| `0x0767` | 1895 | <a id="reg-1895"></a><a id="lng"></a>`LNG_Language` | R/W | 0–2 | Display language: `0=English`, `1=Italiano`, `2=Spanish` |
+
+### 17.5 Passwords
+
+| Addr HEX | Addr DEC | Name | R/W | Range | Meaning |
+|----------|----------|------|-----|-------|---------|
+| `0x0641` | 1601 | <a id="reg-1601"></a><a id="psd1"></a>`PSd1_UserPassword` | R/W | −999…9999 | User password |
+| `0x065A` | 1626 | <a id="reg-1626"></a><a id="psd2"></a>`PSd2_MaintainPassword` | R/W | −999…9999 | Maintenance password |
+| `0x0704` | 1796 | <a id="reg-1796"></a><a id="psd3"></a>`PSd3_InstallerPassword` | R/W | −999…9999 | Installer password |
+| `0x070A` | 1802 | <a id="reg-1802"></a><a id="psd4"></a>`PSd4_CostructorPassword` | R/W | −999…9999 | Manufacturer password |
+| `0x0753` | 1875 | <a id="reg-1875"></a><a id="psdm"></a>`PSdM_ImportExportPassword` | R/W | −999…9999 | Import/export parameters password |

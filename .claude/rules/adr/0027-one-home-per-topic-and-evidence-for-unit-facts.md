@@ -39,7 +39,7 @@ paths:
 ## Context
 
 Unit behaviour was described in four places that had started to disagree
-(PC08's default, the PH10 cap, passive airflow). Code, simulator and tests
+([PC08](../../../doc/references/MODBUS_REGISTERS.md#pc08)'s default, the [PH10](../../../doc/references/MODBUS_REGISTERS.md#ph10) cap, passive airflow). Code, simulator and tests
 take their rules from these files (the simulator reads the register table),
 so a wrong statement becomes a wrong model.
 

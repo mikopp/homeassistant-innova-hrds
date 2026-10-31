@@ -13,8 +13,8 @@ paths:
 
 ## Decision
 
-- The integration MUST NOT write PH02 (1778, on/off), PH28 (1870, DEU) or
-  PH27 (1869, INT; key `enable_integration_bms`) on its own: not at setup,
+- The integration MUST NOT write [PH02](../../../doc/references/MODBUS_REGISTERS.md#ph02) ([1778](../../../doc/references/MODBUS_REGISTERS.md#reg-1778), on/off), [PH28](../../../doc/references/MODBUS_REGISTERS.md#ph28) ([1870](../../../doc/references/MODBUS_REGISTERS.md#reg-1870), DEU) or
+  [PH27](../../../doc/references/MODBUS_REGISTERS.md#ph27) ([1869](../../../doc/references/MODBUS_REGISTERS.md#reg-1869), INT; key `enable_integration_bms`) on its own: not at setup,
   not on a poll. They are ordinary switches on the setup device.
 - A request register counts only while its enable is on. Derived state
   (climate mode, `int_effect`, guards) MUST use `hub.modbus_enabled`,
@@ -25,7 +25,7 @@ paths:
   checks as starting that request (gate, brine guard, season).
 - The enables are `PENDING_KEYS` (ADR-0024), so modes and checks follow a
   toggle at once.
-- PG02 (1798) says whether the unit has INT at all; it MUST be shown
+- [PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02) ([1798](../../../doc/references/MODBUS_REGISTERS.md#reg-1798)) says whether the unit has INT at all; it MUST be shown
   read-only (`integration_available`), never written.
 - Nothing is re-asserted after a power cycle: the unit keeps its settings.
 
@@ -55,4 +55,4 @@ monitor.
 
 ## More information
 
-PR #31 (PH27 is INT's enable, PG02 read-only), PR #41.
+PR #31 ([PH27](../../../doc/references/MODBUS_REGISTERS.md#ph27) is INT's enable, [PG02](../../../doc/references/MODBUS_REGISTERS.md#pg02) read-only), PR #41.
