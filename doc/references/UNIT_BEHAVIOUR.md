@@ -732,6 +732,10 @@ refrigerant circuit works on MVHR flow alone follows from the design
   dehumidify/open position, which is also the standby position [INFERRED].
   It read 1 as well while dehumidifying with the compressor on [T11], as
   expected for the open position. Not yet read while cooling [`plans/todo.md`].
+* With the unit OFF or in standby the valve is in the open position, so warm
+  water circulating through the unit warms the ventilation air that passes
+  it, unless an external valve on V3V closes the circuit [INFERRED from
+  HB 2.7].
 
 ### 11.2 External valve V3V and pump PM (relay K5)
 
@@ -773,6 +777,12 @@ refrigerant circuit works on MVHR flow alone follows from the design
 | [PU08](MODBUS_REGISTERS.md#pu08), summer | Below: no compressor (passive path) | [HB 6.3] |
 | [PC08](MODBUS_REGISTERS.md#pc08), winter | Below for [PA16](MODBUS_REGISTERS.md#pa16): AL04, heating blocked | [HB 7.4] |
 | [PC07](MODBUS_REGISTERS.md#pc07), summer | Above for [PA16](MODBUS_REGISTERS.md#pa16): AL03, INT (and DEU unless [PU03](MODBUS_REGISTERS.md#pu03)) blocked | [HB 7.4] |
+
+On a brine circuit the risk is on the air side: with brine near 0 °C the
+condensate can freeze on the register fins [INFERRED from HB 3.8.7]. The unit
+cannot know the brine temperature before a request starts (see the next
+paragraph), and its protections react after the fact: AL16 ([PA43](MODBUS_REGISTERS.md#pa43)) stops
+the fan, while AL04 and [PU08](MODBUS_REGISTERS.md#pu08) do not cover winter dehumidifying [INFERRED].
 
 The water probe reads the water at the unit. With V3V + PM closed that is the
 brine standing in the pipe, which warms up while nothing flows; once V3V + PM
