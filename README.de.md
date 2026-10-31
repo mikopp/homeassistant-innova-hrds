@@ -14,21 +14,17 @@ Schnellstart und Funktionsumfang. Alles Weitere steht im
 Abschnitt dort, damit Sie alles finden.
 
 Home-Assistant-Integration (per **HACS** installierbar) für die
-Entfeuchter **hej.luft HRDS+ 30 / 50** (auch HRDS 30 / HRDS 50 geschrieben)
-und **Innova DEH+ 30 / 50** (auch DEH 30 / DEH 50): Taupunktentfeuchtung mit
-Lüftung und Flächenkühlung. Die Integration steuert und überwacht das Gerät
+Entfeuchter **hej.luft HRDS+ 30 / 50** und **Innova DEH+ 30 / 50**:
+Taupunktentfeuchtung mit Lüftung und Flächenkühlung. Die Integration steuert und überwacht das Gerät
 **lokal über Modbus TCP, ganz ohne Cloud**.
 
 ## Kompatible Geräte
 
 Das Gerät wird von **[INNOVA S.r.l.](https://www.innova.it/)** (Storo, Italien)
 hergestellt. hej.luft verkauft es in Österreich unter eigenem Namen als
-OEM-Produkt. Die
-[CE-Konformitätserklärung auf der hej.luft-Seite](https://www.hejluft.at/_files/ugd/714411_e735ab85400c485fa7c042fac92d3230.pdf)
-nennt Innova als Hersteller der Entfeuchtungsgeräte HRDS und HRDS+.
+OEM-Produkt.
 
-* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** (auch HRDS 30 / 50
-  geschrieben), mit den Typenschild-Codes aus dem
+* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)**, mit den Typenschild-Codes aus dem
   [Technischen Handbuch](https://www.hejluft.at/_files/ugd/714411_f1ffc5d222f4476da2e37f29c64a7f93.pdf),
   zum Beispiel *HRDS+ 30 H R K DC*.
 * **[Innova DEH+ 30 H / 50 H](https://www.innova.it/en/products/vmc/dehumidifiers/deh-ad-incasso-orizzontale/)**:
@@ -36,17 +32,16 @@ nennt Innova als Hersteller der Entfeuchtungsgeräte HRDS und HRDS+.
   Nenn-Luftdurchsatz (300 / 500 m³/h). hej.luft baut oder verändert es nicht:
   das HRDS+ 30 des Maintainers wurde direkt aus Italien geliefert und ist
   physisch dasselbe Gerät wie das DEH+ 30 H; die Integration wurde damit
-  entwickelt. Die 50er-Größen sind nicht getestet (siehe Beta-Hinweis). Die in
-  `doc/references/` abgelegte DEH+-Installationsanleitung beschreibt die ältere
-  Steuerung mit Mikroschaltern, nicht die EVCO-„K“-Platine des HRDS+; Register
-  und Verhalten stammen aus den HRDS+-Handbüchern.
+  entwickelt. Die in `doc/references/` abgelegte DEH+-Installationsanleitung
+  beschreibt die ältere Steuerung mit Mikroschaltern, nicht die EVCO-„K“-Platine
+  des HRDS+; Register und Verhalten stammen aus den HRDS+-Handbüchern.
 
 > *Wird Ihr Gerät mit der Innova-Platine unter einem anderen Namen verkauft,
 > eröffnen Sie ein Issue und verlinken Sie die Produktseite.*
 
-## Release 0.9.5: Beta, noch nicht 1.0
+## Release 0.9.5
 
-Die Integration ist veröffentlicht und nutzbar, aber eine **Beta**.
+Die Integration ist veröffentlicht und nutzbar.
 
 * **Entwickelt und getestet** wurde sie nur mit **einem HRDS+ 30 mit Umluft
   (`R`-Variante)**, ohne Display und ohne externe Fühler, hinter einem
@@ -68,7 +63,7 @@ Die Integration ist veröffentlicht und nutzbar, aber eine **Beta**.
 Berichte von anderen Geräten sind sehr willkommen, siehe
 [Reporting issues](README.md#reporting-issues) (EN). Der Weg zu 1.0:
 [Road to 1.0](README.md#road-to-10) (EN). Details: der
-[englische Abschnitt](README.md#release-095--beta-not-10-yet).
+[englische Abschnitt](README.md#release-095).
 
 ## Schnellstart
 

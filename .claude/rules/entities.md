@@ -23,9 +23,12 @@ Decision behind this: ADR-0002. Steps:
    `DIAGNOSTIC_KEYS` (ADR-0016); a fan-only key also in `FAN_KEYS`. The
    choice decides the device and section in the entity reference.
 6. Document the register in `doc/references/MODBUS_REGISTERS.md`.
-7. List the entity in `doc/entity-reference.md`, in the device section and group
-   from step 5 (ADR-0030); installer parameters are the exception. Say why a
-   new device or group exists.
+7. List the entity in `doc/entity-reference.md` by its English name as
+   `- **Name**: description` with Available for / Remarks (register,
+   "Configuration entity" from step 5), under its device and platform
+   heading; a diagnostic one under the device's `### Diagnostic` section
+   (ADR-0036); installer parameters are the exception. Say why a new device
+   exists.
 8. Run `python3 tests/wiring_check.py`; if entities change, update the
    snapshots (`tests/CLAUDE.md`).
 

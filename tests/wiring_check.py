@@ -249,85 +249,107 @@ REFERENCE_PLATFORMS = {
     "CLIMATE_TYPES": "climate",
     "OPERATION_TYPES": "switch",
 }
-# `| `platform.key` | ...` : the first cell of a row in an entity table.
-ENTITY_ROW = re.compile(r"\|\s*`([a-z_]+\.[a-z0-9_]+)`\s*\|")
+# The reference follows Home Assistant's "Supported functionality" pattern
+# (ADR-0036): `## <device>`, `### <platform>` or `### Diagnostic`, then
+# `- **<English name>**: <description>` with indented `**Available for**` /
+# `**Options**` / `**Remarks**` items. A configuration entity says
+# "Configuration entity" in its remarks; the diagnostic ones are the sensors
+# under `### Diagnostic`.
+REFERENCE_DEVICES = {
+    "HRDS+": "main",
+    "HRDS+ setup": "setup",
+    "HRDS+ installer": "installer",
+}
+REFERENCE_PLATFORM_HEADINGS = {
+    "Binary sensors": "binary_sensor",
+    "Buttons": "button",
+    "Climate": "climate",
+    "Numbers": "number",
+    "Selects": "select",
+    "Sensors": "sensor",
+    "Switches": "switch",
+}
+ENTITY_ITEM = re.compile(r"^- \*\*(.+?)\*\*(?::|\s*$)")
+CATEGORY_REMARK = {"Configuration entity": "config"}
+DIAGNOSTIC_HEADING = "Diagnostic"
 
 
-def reference_sections(text: str) -> dict[str, list[str]]:
-    """Map each entity in the reference to the device group(s) it is listed under."""
-    found: dict[str, list[str]] = {}
-    device = group = None
+def reference_entities(text: str) -> list[tuple[str, str, str, str | None]]:
+    """(device, platform, name, category) for each entity item in the reference."""
+    found: list[list] = []
+    device = platform = None
+    diagnostic = False
     for line in text.splitlines():
         heading = re.match(r"(#{2,3}) (.+)", line)
         if heading:
-            title = heading.group(2)
+            title = heading.group(2).strip()
             if len(heading.group(1)) == 2:
-                device = next(
-                    (
-                        d
-                        for prefix, d in (
-                            ("Main device", "main"),
-                            ("Setup device", "setup"),
-                            ("Installer device", "installer"),
-                        )
-                        if title.startswith(prefix)
-                    ),
-                    None,
+                device, platform, diagnostic = REFERENCE_DEVICES.get(title), None, False
+            else:
+                diagnostic = title == DIAGNOSTIC_HEADING
+                platform = (
+                    "sensor" if diagnostic else REFERENCE_PLATFORM_HEADINGS.get(title)
                 )
-                group = device
-            elif device == "main":
-                group = {
-                    "Operational": "main",
-                    "Configuration": "config",
-                    "Diagnostic": "diag",
-                }.get(title)
             continue
-        row = ENTITY_ROW.match(line)
-        if row:
-            found.setdefault(row.group(1), []).append(group or "outside a device")
-    return found
+        item = ENTITY_ITEM.match(line)
+        if item and device and platform:
+            found.append(
+                [device, platform, item.group(1), "diagnostic" if diagnostic else None]
+            )
+        elif found and line.lstrip().startswith("- **Remarks**"):
+            for phrase, category in CATEGORY_REMARK.items():
+                if phrase in line:
+                    found[-1][3] = category
+    return [tuple(f) for f in found]
 
 
 def check_entity_reference(const) -> None:
-    """doc/entity-reference.md lists every entity once, on its own device."""
-    expected: dict[str, str] = {}
+    """doc/entity-reference.md lists every entity once, by name, device and platform."""
+    names = json.loads((COMP / "translations/en.json").read_text("utf-8"))["entity"]
+    expected: dict[tuple[str, str], tuple[str, str | None]] = {}
     for dict_name, platform in REFERENCE_PLATFORMS.items():
         for key in getattr(const, dict_name):
             if key in const.INSTALLER_KEYS:
                 continue  # parameters are generated; MODBUS_REGISTERS.md section 16
             if key in const.INSTALLER_DEVICE_EXTRA_KEYS:
-                group = "installer"
+                device = "installer"
             elif key in const.SETUP_KEYS:
-                group = "setup"
-            elif key in const.CONFIG_KEYS:
-                group = "config"
-            elif key in const.DIAGNOSTIC_KEYS:
-                group = "diag"
+                device = "setup"
             else:
-                group = "main"
-            expected[f"{platform}.{key}"] = group
+                device = "main"
+            name = names.get(platform, {}).get(key, {}).get("name")
+            check(bool(name), f"{platform}.{key} has an English name")
+            expected[(platform, name or key)] = (device, const.entity_category_for(key))
     path = ROOT / "doc/entity-reference.md"
     check(path.exists(), "doc/entity-reference.md exists")
     if not path.exists():
         return
-    found = reference_sections(path.read_text(encoding="utf-8"))
-    missing = sorted(set(expected) - set(found))
+    listed = reference_entities(path.read_text(encoding="utf-8"))
+    seen: dict[tuple[str, str], list[tuple[str, str | None]]] = {}
+    for device, platform, name, category in listed:
+        seen.setdefault((platform, name), []).append((device, category))
+    missing = sorted(f"{p}: {n}" for p, n in set(expected) - set(seen))
     check(not missing, f"every entity is in the entity reference (missing: {missing})")
-    unknown = sorted(set(found) - set(expected))
+    unknown = sorted(f"{p}: {n}" for p, n in set(seen) - set(expected))
     check(not unknown, f"the entity reference lists no unknown entity ({unknown})")
-    twice = sorted(e for e, where in found.items() if len(where) > 1)
+    twice = sorted(f"{p}: {n}" for (p, n), where in seen.items() if len(where) > 1)
     check(not twice, f"each entity is listed once (listed twice: {twice})")
     misplaced = sorted(
-        f"{e} is under '{found[e][0]}', not '{want}'"
-        for e, want in expected.items()
-        if e in found and found[e][0] != want
+        f"{p}: {n} is listed as {seen[(p, n)][0]}, expected {want}"
+        for (p, n), want in expected.items()
+        if (p, n) in seen and seen[(p, n)][0] != want
     )
-    check(not misplaced, f"each entity sits on its own device and group ({misplaced})")
+    check(
+        not misplaced,
+        f"each entity sits on its device with its category remark ({misplaced})",
+    )
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    restated = sorted({m for m in ENTITY_ROW.findall(readme)})
+    restated = re.findall(
+        r"^- \*\*[^*]+\*\*:.*\n\s+- \*\*(?:Available for|Remarks)\*\*", readme, re.M
+    )
     check(
         not restated,
-        f"the README links the entity reference, not copies it ({restated})",
+        f"the README links the entity reference, not copies it ({len(restated)} items)",
     )
 
 
