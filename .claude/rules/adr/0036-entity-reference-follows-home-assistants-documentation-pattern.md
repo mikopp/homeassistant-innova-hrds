@@ -24,12 +24,14 @@ paths:
   (`docs-supported-functions`): `## <device>` (HRDS+, HRDS+ setup, HRDS+
   installer, each saying why it exists and is separate, ADR-0016, ADR-0017),
   `### <platform>` (Binary sensors, Buttons, Climate, Numbers, Selects,
-  Sensors, Switches), then one `- **<English name>**` item per entity with
-  `**Description**`, `**Available for**` (when not all units), `**Options**`
-  (selects) and `**Remarks**`.
-- `**Remarks**` MUST give the Modbus register (linked to
-  `MODBUS_REGISTERS.md`) and "Configuration entity" / "Diagnostic entity" as
-  `entity_category_for` assigns them.
+  Sensors, Switches), then one item per entity:
+  `- **<English name>**: <description>` with sub-items `**Available for**`
+  (when not all units), `**Options**` (selects) and `**Remarks**`.
+- The entities `entity_category_for` makes diagnostic MUST be listed under a
+  `### Diagnostic` section of their device (after the platform sections), not
+  under their platform. `**Remarks**` MUST give the Modbus register (linked to
+  `MODBUS_REGISTERS.md`) and, for a configuration entity, "Configuration
+  entity".
 - It MUST use Home Assistant's terms (device, entity, name, platform) and MUST
   NOT name repository internals (keys, entity IDs, unique ids, ADRs, scripts,
   source files, evidence-log tags).
@@ -40,8 +42,9 @@ paths:
   same commit.
 - `tests/wiring_check.py` (`check_entity_reference`) MUST fail when an entity's
   English name from `translations/en.json` is missing, unknown, duplicated, on
-  the wrong device or platform heading, or has the wrong category remark, and
-  when the README holds entity items.
+  the wrong device or platform heading, a diagnostic entity is outside
+  `### Diagnostic`, or a configuration entity lacks its remark, and when the
+  README holds entity items.
 
 ## Context
 

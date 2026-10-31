@@ -250,9 +250,11 @@ REFERENCE_PLATFORMS = {
     "OPERATION_TYPES": "switch",
 }
 # The reference follows Home Assistant's "Supported functionality" pattern
-# (ADR-0036): `## <device>`, `### <platform>`, then `- **<English name>**` with
-# indented `**Description**` / `**Available for**` / `**Remarks**` items. The
-# remarks say "Configuration entity" / "Diagnostic entity" for a categorised one.
+# (ADR-0036): `## <device>`, `### <platform>` or `### Diagnostic`, then
+# `- **<English name>**: <description>` with indented `**Available for**` /
+# `**Options**` / `**Remarks**` items. A configuration entity says
+# "Configuration entity" in its remarks; the diagnostic ones are the sensors
+# under `### Diagnostic`.
 REFERENCE_DEVICES = {
     "HRDS+": "main",
     "HRDS+ setup": "setup",
@@ -267,26 +269,33 @@ REFERENCE_PLATFORM_HEADINGS = {
     "Sensors": "sensor",
     "Switches": "switch",
 }
-ENTITY_ITEM = re.compile(r"^- \*\*(.+?)\*\*\s*$")
-CATEGORY_REMARK = {"Configuration entity": "config", "Diagnostic entity": "diagnostic"}
+ENTITY_ITEM = re.compile(r"^- \*\*(.+?)\*\*(?::|\s*$)")
+CATEGORY_REMARK = {"Configuration entity": "config"}
+DIAGNOSTIC_HEADING = "Diagnostic"
 
 
 def reference_entities(text: str) -> list[tuple[str, str, str, str | None]]:
     """(device, platform, name, category) for each entity item in the reference."""
     found: list[list] = []
     device = platform = None
+    diagnostic = False
     for line in text.splitlines():
         heading = re.match(r"(#{2,3}) (.+)", line)
         if heading:
             title = heading.group(2).strip()
             if len(heading.group(1)) == 2:
-                device, platform = REFERENCE_DEVICES.get(title), None
+                device, platform, diagnostic = REFERENCE_DEVICES.get(title), None, False
             else:
-                platform = REFERENCE_PLATFORM_HEADINGS.get(title)
+                diagnostic = title == DIAGNOSTIC_HEADING
+                platform = (
+                    "sensor" if diagnostic else REFERENCE_PLATFORM_HEADINGS.get(title)
+                )
             continue
         item = ENTITY_ITEM.match(line)
         if item and device and platform:
-            found.append([device, platform, item.group(1), None])
+            found.append(
+                [device, platform, item.group(1), "diagnostic" if diagnostic else None]
+            )
         elif found and line.lstrip().startswith("- **Remarks**"):
             for phrase, category in CATEGORY_REMARK.items():
                 if phrase in line:
@@ -335,7 +344,9 @@ def check_entity_reference(const) -> None:
         f"each entity sits on its device with its category remark ({misplaced})",
     )
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    restated = re.findall(r"^\s+- \*\*Description\*\*", readme, re.M)
+    restated = re.findall(
+        r"^- \*\*[^*]+\*\*:.*\n\s+- \*\*(?:Available for|Remarks)\*\*", readme, re.M
+    )
     check(
         not restated,
         f"the README links the entity reference, not copies it ({len(restated)} items)",

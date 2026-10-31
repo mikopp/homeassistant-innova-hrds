@@ -785,8 +785,8 @@ Every entity, with its register and what it shows, is in the
 the devices the integration creates:
 
 * **[HRDS+](doc/entity-reference.md#hrds)**: the operating surface
-  (climate, fan, request switches, readings and alarms), with its
-  *Configuration* and *Diagnostic* sections.
+  (climate, fan, request switches, readings and alarms), with a *Diagnostic*
+  section for troubleshooting values.
 * **[HRDS+ setup](doc/entity-reference.md#hrds-setup)**: the
   one-time checklist (setup check, Modbus enables, probe and wiring facts).
 * **[HRDS+ installer](doc/entity-reference.md#hrds-installer)**:
