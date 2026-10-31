@@ -257,7 +257,7 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 9. Integration decisions (no hardware needed)
 
-- [ ] ***Season* jumps back after a write.** It shows the old season
+- [ ] **[*Season*](../doc/entity-reference.md#season) jumps back after a write.** It shows the old season
       until the next read cycle (T31), because `season` is not in
       `PENDING_KEYS`. Add it, so it shows the command until confirmed like the
       requests? Check against ADR-0006 first.

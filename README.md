@@ -60,10 +60,10 @@ Reports from other units are very welcome, see
 2. [Add it](#2-add-the-integration) under *Settings → Devices & Services*,
    with the address of your Modbus-TCP gateway.
 3. [Check the setup](#3-check-the-setup): open the **HRDS+ setup** device and
-   make sure **Setup check** reads `ok`.
+   make sure [*Setup check*](doc/entity-reference.md#setup-check) reads `ok`.
 4. **[Choose what Home Assistant may control](#4-choose-what-home-assistant-may-control).**
    Turn on the **Modbus enables** for the functions you want (on/off,
-   dehumidify, integration), then **Allow operational requests**. All of them
+   dehumidify, integration), then [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests). All of them
    are **off after a fresh install** and the integration never turns them on
    by itself. Until then it only monitors: readings and settings work.
 5. Try it ([First run](#5-first-run)) and read [How the unit works](#how-the-unit-works)
@@ -185,7 +185,7 @@ split over three devices by purpose:
 
 | Device | What is there | When you touch it |
 |--------|---------------|-------------------|
-| **HRDS+ setup** (linked to the main device) | What decides whether the unit can run at all: the **Setup check**, **Allow operational requests**, the Modbus and display enables, probe allocation, remote on/off and season inputs, time programs, wiring facts | Once, after installing, and again if the wiring changes |
+| **HRDS+ setup** (linked to the main device) | What decides whether the unit can run at all: the [*Setup check*](doc/entity-reference.md#setup-check), [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests), the Modbus and display enables, probe allocation, remote on/off and season inputs, time programs, wiring facts | Once, after installing, and again if the wiring changes |
 | **HRDS+**, main section | Climate, season, the request switches, live readings, status and alarms | Day to day |
 | **HRDS+**, *Configuration* section | Tuning: setpoints (only with a probe), fan bands, minimum room temperature, fan run times | Occasionally |
 | **HRDS+**, *Diagnostic* section | Water valve and pump, water circuit check, airflow calibration | When troubleshooting |
@@ -195,7 +195,7 @@ Entity names start with the name you gave the unit when adding the integration
 (*HRDS+* by default); the setup and installer devices add *setup* and
 *installer*. Every entity, by device: the [entity reference](doc/entity-reference.md).
 
-**Setup check** (setup device) reads `ok` or *Needs attention*. The device page
+[*Setup check*](doc/entity-reference.md#setup-check) (setup device) reads `ok` or *Needs attention*. The device page
 cannot show attributes, so open the sensor itself (click the row, then
 *Attributes*): `to_fix` lists each open item in plain words, in the Home
 Assistant language, with what to do about it, and `issues` has the same items
@@ -203,7 +203,7 @@ as short codes, explained below.
 
 #### First-use checklist
 
-1. **Setup check** reads `ok`. If not, the `issues` attribute lists what to look
+1. [*Setup check*](doc/entity-reference.md#setup-check) reads `ok`. If not, the `issues` attribute lists what to look
    at:
 
    | Issue | Meaning and what to do |
@@ -235,7 +235,7 @@ as short codes, explained below.
 4. **Season and water circuit fit your installation:** [*Season*](doc/entity-reference.md#season), and the options
    *Water register connected to* and *Allow winter heating*. On a circuit fed by
    a pump the HRDS+ switches (brine in particular), watch *Water valve / pump
-   output* turn *On* with the first request and **Water circuit check** stay
+   output* turn *On* with the first request and [*Water circuit check*](doc/entity-reference.md#water-circuit-check) stay
    `ok` ([Water circuit and brine](#water-circuit-and-brine)).
 5. **Minimum room temperature ([PU13](doc/references/MODBUS_REGISTERS.md#pu13))** in the Configuration section: the unit
    refuses to dehumidify below it. With no room temperature probe, a Modbus
@@ -261,7 +261,7 @@ integration never turns either on by itself.
    off to keep it on the unit's own controls (display, remote contact, digital
    inputs): Home Assistant then only shows what the unit does, and refuses that
    operation with a message naming the switch to turn on.
-2. **Allow operational requests**, the integration's own safety gate (below).
+2. [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests), the integration's own safety gate (below).
 
 With every enable off (or the gate off), the integration is a monitor: every
 reading, status, alarm and setting works, and nothing can make the unit act.
@@ -290,7 +290,7 @@ Good to know:
 #### Allow operational requests
 
 > **This is the switch that makes the unit operational.** After a fresh install
-> **Allow operational requests** (on the **HRDS+ setup** device) is **off**.
+> [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests) (on the **HRDS+ setup** device) is **off**.
 > While it is off, Home Assistant cannot make the unit act.
 
 | Blocked while the switch is off | Always works |
@@ -324,10 +324,10 @@ target:
    turning on [*Unit on/off (Modbus)*](doc/entity-reference.md#unit-on-off-modbus) is not enough on a unit without a display
    or room probe: it then has nothing to act on, so the climate entity shows
    *Standby* with the action *Idle*.
-2. Watch **Unit status**: a unit waiting for its first request reads *Off
+2. Watch [*Unit status*](doc/entity-reference.md#unit-status): a unit waiting for its first request reads *Off
    (Modbus)* and changes to *On*. The recirculation fan (`R` units) starts
    with the request.
-3. If it does not start, look at the **Setup check** `issues`, at the error
+3. If it does not start, look at the [*Setup check*](doc/entity-reference.md#setup-check) `issues`, at the error
    Home Assistant showed for the request (a refused request names the reason),
    and at the Home Assistant log. See [Reporting issues](#reporting-issues) if
    you need help.
@@ -473,7 +473,7 @@ To react, either accept it (turn *Allow winter heating* on) or stop it:
 
 The unit switches its water circuit itself: relay K5 drives the external valve
 and, together with it, the pump output. The integration only shows it (*Water
-valve / pump output*) and never overrides it. The **Water circuit check** sensor
+valve / pump output*) and never overrides it. The [*Water circuit check*](doc/entity-reference.md#water-circuit-check) sensor
 (attribute `issues`) flags:
 
 | Issue | Meaning |

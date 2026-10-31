@@ -269,7 +269,7 @@ REFERENCE_PLATFORM_HEADINGS = {
     "Sensors": "sensor",
     "Switches": "switch",
 }
-ENTITY_ITEM = re.compile(r'^- (?:<a id="[^"]+"></a>)?\*\*(.+?)\*\*(?::|\s*$)')
+ENTITY_ITEM = re.compile(r"^- \*\*(.+?)\*\*(?::|\s*$)")
 CATEGORY_REMARK = {"Configuration entity": "config"}
 DIAGNOSTIC_HEADING = "Diagnostic"
 
@@ -362,14 +362,17 @@ def entity_slug(name: str) -> str:
 def check_entity_links(names: list[str]) -> None:
     """Each entity name in italics outside the reference links to its anchor."""
     ref = ROOT / "doc/entity-reference.md"
-    text = ref.read_text(encoding="utf-8")
+    items = {
+        m.group(1): m.group(0)
+        for m in re.finditer(r"^- \*\*(.+?)\*\*.*$", ref.read_text("utf-8"), re.M)
+    }
     for name in names:
         check(
-            f'<a id="{entity_slug(name)}"></a>**{name}**' in text,
-            f"entity '{name}' has an anchor in the reference",
+            f'<a id="{entity_slug(name)}"></a>' in items.get(name, ""),
+            f"entity '{name}' ends its item with an anchor in the reference",
         )
     alt = "|".join(re.escape(n) for n in sorted(names, key=len, reverse=True))
-    bare = re.compile(r"(?<![\[\w*])\*(" + alt + r")\*(?!\]|\()")
+    bare = re.compile(r"(?<![\[\w*])\*{1,2}(" + alt + r")\*{1,2}(?![\]\w(])")
     skip = ("node_modules", ".git", ".claude", "doc/adr")
     unlinked: list[str] = []
     for path in ROOT.rglob("*.md"):

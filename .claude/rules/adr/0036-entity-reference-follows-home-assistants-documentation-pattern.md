@@ -19,16 +19,18 @@ paths:
 - `doc/entity-reference.md` MUST be the only place that lists entities. The
   README, `CLAUDE.md` and other docs MUST link to it and MUST NOT restate it
   (ADR-0027); they name an entity by its English name, an entity ID only in a
-  YAML example. An entity name in italics in another Markdown file MUST link
-  to its item, which carries an anchor `<a id="setup-check"></a>` (name in
-  lower case, other runs of characters as one hyphen). Exempt: `CLAUDE.md`,
-  the ADRs, the reference itself and released CHANGELOG sections.
+  YAML example. An entity name in another Markdown file MUST be written exactly
+  as in the reference, in italics, and link to its item (never bold or quoted).
+  The item ends with an anchor `<a id="setup-check"></a>` (name in lower case,
+  other runs of characters as one hyphen), placed last: a leading one breaks
+  the bullets on GitHub. Exempt: `CLAUDE.md`, the ADRs, the reference itself
+  and released CHANGELOG sections.
 - It MUST follow Home Assistant's "Supported functionality" pattern
   (`docs-supported-functions`): `## <device>` (HRDS+, HRDS+ setup, HRDS+
   installer, each saying why it exists and is separate, ADR-0016, ADR-0017),
   `### <platform>` (Binary sensors, Buttons, Climate, Numbers, Selects,
   Sensors, Switches), then one item per entity:
-  `- <a id="slug"></a>**<English name>**: <description>` with sub-items `**Available for**`
+  `- **<English name>**: <description>` with sub-items `**Available for**`
   (when not all units), `**Options**` (selects) and `**Remarks**`.
 - The entities `entity_category_for` makes diagnostic MUST be listed under a
   `### Diagnostic` section of their device (after the platform sections), not
@@ -55,8 +57,7 @@ paths:
 
 ## Context
 
-ADR-0030 keyed the reference on `platform.key`, which users never see; they
-read `switch.dehumidify` as an entity ID. A survey of home-assistant.io pages
+ADR-0030 keyed the reference on `platform.key`, which users never see. A survey of home-assistant.io pages
 (Husqvarna Automower, Tessie, AirGradient, BSB-LAN, Shelly, Enphase) and the
 contributor guidance shows the established pattern: entities by display name,
 grouped by platform (or by device for very different devices), with
@@ -66,8 +67,7 @@ description, availability and remarks; entity IDs only in examples.
 
 - Entity IDs as the identifier: what users type in YAML, but they depend on
   the device name and language, and official pages do not list them.
-- Platform-only grouping (the template's default): mixes the setup checklist
-  with the operating entities.
+- Platform-only grouping (the template's default): mixes setup and operation.
 
 ## Consequences
 

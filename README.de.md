@@ -70,11 +70,11 @@ Die Einzelheiten stehen im englischen README; die Links führen dorthin.
 2. **[Hinzufügen](README.md#2-add-the-integration)** (EN) unter
    *Einstellungen → Geräte & Dienste*, mit der Adresse Ihres Modbus-TCP-Gateways.
 3. **[Einrichtung prüfen](README.md#3-check-the-setup)** (EN): das Gerät
-   **HRDS+ setup** öffnen und sicherstellen, dass **Setup check** den Wert `ok`
+   **HRDS+ setup** öffnen und sicherstellen, dass [*Setup check*](doc/entity-reference.md#setup-check) den Wert `ok`
    zeigt.
 4. **[Festlegen, was Home Assistant steuern darf](README.md#4-choose-what-home-assistant-may-control)** (EN):
    die **Modbus-Freigaben** für die gewünschten Funktionen einschalten (Ein/Aus,
-   Entfeuchten, Integration) und danach **Allow operational requests**. Beides
+   Entfeuchten, Integration) und danach [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests). Beides
    ist nach einer Neuinstallation **aus**, und die Integration schaltet sie nie
    von selbst ein. Ohne sie beobachtet die Integration nur: Messwerte und
    Einstellungen funktionieren.
