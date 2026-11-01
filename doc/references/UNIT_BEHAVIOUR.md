@@ -295,9 +295,9 @@ See [§9](#9-fan). In short: the display (manual) request and 0–10 V feed the
 fan; the **highest** wins [HB 4.5, 6.2]. 0–10 V is scaled linearly into the
 active mode's min–max band [HB 4.5, 6.2]. The manual request behaves as an
 absolute percentage that the band clamps [T22, T24–T26], against the
-handbook's "linear skaliert" [HB 6.2]. Modbus has no fan-speed request:
+handbook's "linear skaliert" [HB 6.2]. No register takes a fan speed from the BMS:
 [PM20](MODBUS_REGISTERS.md#pm20) mirrors the manual request, and a value written to it has no effect
-[HB 5.3; T23]. Over Modbus only the band acts: raising the minimum above the
+[HB 5.3; T23]. The only Modbus route proven is the band: raising the minimum above the
 running speed raises it, lowering the minimum does not lower it
 [T24–T26].
 
@@ -585,8 +585,9 @@ Observations and consequences:
 * The Modbus map has one read-only register per request: integration
   `FanIntegration_Request` ([1112](MODBUS_REGISTERS.md#reg-1112)), air quality ([1113](MODBUS_REGISTERS.md#reg-1113)), manual / display
   ([1114](MODBUS_REGISTERS.md#reg-1114)), time bands ([1115](MODBUS_REGISTERS.md#reg-1115)), potentiometer ([1116](MODBUS_REGISTERS.md#reg-1116)), each 0–100 % [MB p.14–15].
-  [INFERRED] that the output is the highest of them within the band, as
-  HB 6.2 says for manual and potentiometer. The time-band request follows the
+  The output is the highest of the manual and potentiometer requests, and
+  during INT of the temperature request ([PF31](MODBUS_REGISTERS.md#pf31)), within the band [HB 5.3, 6.2];
+  the handbook does not say how [1113](MODBUS_REGISTERS.md#reg-1113) and [1115](MODBUS_REGISTERS.md#reg-1115) combine with them [HB 6.2]. The time-band request follows the
   setpoints [FSC](MODBUS_REGISTERS.md#fsc)/[FSE](MODBUS_REGISTERS.md#fse)/[FSN](MODBUS_REGISTERS.md#fsn) ([1595](MODBUS_REGISTERS.md#reg-1595)–[1597](MODBUS_REGISTERS.md#reg-1597)) only with time programs on ([PH03](MODBUS_REGISTERS.md#ph03))
   [MB p.18; INFERRED from HB 5.2.4]; [PF23](MODBUS_REGISTERS.md#pf23) ([1660](MODBUS_REGISTERS.md#reg-1660)) is the speed forced by a
   digital input [MB p.20].

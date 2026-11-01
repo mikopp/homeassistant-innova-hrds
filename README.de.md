@@ -52,9 +52,9 @@ Die Integration ist veröffentlicht und nutzbar.
   Geräte mit Display oder Fühlern (einschließlich des Klima-Modus *Auto*, den
   die CI nur gegen ein simuliertes Gerät prüft), Winterbetrieb und
   Freikühlung. Offene Punkte: [`plans/todo.md`](plans/todo.md).
-* **Die Lüfterdrehzahl bestimmt das Gerät:** Home Assistant zeigt sie an, kann
-  sie aber nicht einstellen, denn das Gerät nimmt über Modbus keine
-  Drehzahlvorgabe an ([Fan speed](README.md#fan-speed), EN).
+* **Die Lüfterdrehzahl bestimmt das Gerät:** Home Assistant kann keine Drehzahl
+  direkt vorgeben; es kann den Lüfter über sein Drehzahlband anheben, und ein
+  0–10-V-Signal am Gerät stellt sie frei ein ([Fan speed](README.md#fan-speed), EN).
 
 Berichte von anderen Geräten sind sehr willkommen, siehe
 [Reporting issues](README.md#reporting-issues) (EN). Der Weg zu 1.0:

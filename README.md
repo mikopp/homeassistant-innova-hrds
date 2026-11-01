@@ -47,8 +47,9 @@ The integration is released and usable.
   (non-`R`), units with a display or external probes (including climate *Auto*,
   which CI tests only against a simulated unit), winter heating and free
   cooling. The open items are in [`plans/todo.md`](plans/todo.md).
-* **The fan speed is the unit's.** Home Assistant shows it but cannot set it,
-  because the unit takes no fan-speed request over Modbus ([Fan speed](#fan-speed)).
+* **The fan speed is the unit's.** Home Assistant cannot set a speed directly;
+  it can raise the fan through its speed band, and a 0–10 V signal on the unit
+  sets it freely ([Fan speed](#fan-speed)).
 
 Reports from other units are very welcome, see
 [Reporting issues](#reporting-issues). The aim for 1.0 is in
@@ -580,11 +581,11 @@ calibration recipe are in
 
 ### Fan speed
 
-**The fan is the unit's; Home Assistant shows it and can neither switch it nor
-set its speed.** The unit runs the fan with every dehumidify or integration
+**The fan is the unit's; Home Assistant shows it but cannot switch it or set a
+speed directly.** The unit runs the fan with every dehumidify or integration
 request and stops it after a run-on. It has no register for a fan-speed request
-from Modbus: [PM20](doc/references/MODBUS_REGISTERS.md#pm20) ("manual fan speed") is the **display's** setpoint, the unit
-sets it itself, and a value written to it has no effect. So there is no fan
+from Modbus: [PM20](doc/references/MODBUS_REGISTERS.md#pm20) ("manual fan speed") holds the **display's** manual request,
+the unit sets it itself, and a value written to it has no effect. So there is no fan
 entity and the climate has no fan mode; the fan is shown by readings only
 ([*Supply fan running*](doc/entity-reference.md#supply-fan-running), [*Supply fan status*](doc/entity-reference.md#supply-fan-status), [*Supply fan output*](doc/entity-reference.md#supply-fan-output), *Manual fan
 speed*).
@@ -598,6 +599,9 @@ Lowering the maximum and the cooling band are not tested. Each change is a write
 to the unit's memory, so do not drive the band from a control loop. Details:
 [UNIT_BEHAVIOUR §9.1](doc/references/UNIT_BEHAVIOUR.md#91-bands-and-sources); the
 open tests: [`plans/fan-speed-tests.md`](plans/fan-speed-tests.md).
+
+For free control of the speed, the unit takes a 0–10 V signal on its `FAN+`
+terminals, placed across the band ([UNIT_BEHAVIOUR §2.3](doc/references/UNIT_BEHAVIOUR.md#23-terminals-inputs-and-outputs)).
 
 ## Entity reference
 

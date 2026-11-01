@@ -53,7 +53,7 @@ configuration and diagnostic entities that belong to operating the unit.
 
 ### Climate
 
-- **Climate**: Current temperature and humidity, an HVAC mode to pick the operating mode, and the action the unit performs. There is no fan mode: the unit takes no fan-speed request over Modbus. <a id="climate"></a>
+- **Climate**: Current temperature and humidity, an HVAC mode to pick the operating mode, and the action the unit performs. There is no fan mode: the unit has no register for a fan speed ([fan](references/UNIT_BEHAVIOUR.md#91-bands-and-sources)). <a id="climate"></a>
   - **Off** switches the unit off and clears the dehumidify and integration requests.
   - **Standby** (Home Assistant's *fan only*): the unit is on with nothing requested, and nothing on the unit can start a request by itself. The action is *Idle*, or *Fan* while the fan runs with nothing requested. Offered without a display or room probe.
   - **Auto**: the unit is on with nothing requested and regulates on its own setpoints. Offered instead of Standby with a display or room probe, while that reading is healthy. Not tested on a real unit.
@@ -75,7 +75,7 @@ configuration and diagnostic entities that belong to operating the unit.
 - **Winter setpoint**: Target room temperature for the unit's own heating, 5–35 °C ([SEtH](references/MODBUS_REGISTERS.md#seth), [1585](references/MODBUS_REGISTERS.md#reg-1585)): the unit heats by itself below [SEtH](references/MODBUS_REGISTERS.md#seth) − [PF12](references/MODBUS_REGISTERS.md#pf12) (see [The unit heats on its own](../README.md#the-unit-heats-on-its-own)). Limited by the unit to [PH09](references/MODBUS_REGISTERS.md#ph09)–[PH10](references/MODBUS_REGISTERS.md#ph10) (factory 14 °C both). <a id="winter-setpoint"></a>
   - **Available for**: units with a display or a room temperature probe.
   - **Remarks**: Configuration entity.
-- **Fan min speed (dehumidify)**: Lower fan limit while dehumidifying, and the fan's start speed, 0–100 % ([PF28](references/MODBUS_REGISTERS.md#pf28), [1853](references/MODBUS_REGISTERS.md#reg-1853)). The only way to change the speed over Modbus: raising it above the running speed raises the fan; lowering it does not slow a running fan. <a id="fan-min-speed-dehumidify"></a>
+- **Fan min speed (dehumidify)**: Lower fan limit while dehumidifying, and the fan's start speed, 0–100 % ([PF28](references/MODBUS_REGISTERS.md#pf28), [1853](references/MODBUS_REGISTERS.md#reg-1853)). The proven way to raise the fan: raising it above the running speed raises the fan; lowering it does not slow a running fan. <a id="fan-min-speed-dehumidify"></a>
   - **Available for**: `R` units.
   - **Remarks**: The unit stores each change in a memory that wears with every write, so change it when needed, not from a control loop. Configuration entity.
 - **Fan max speed (dehumidify)**: Upper fan limit while dehumidifying, 0–100 % ([PF10](references/MODBUS_REGISTERS.md#pf10), [1647](references/MODBUS_REGISTERS.md#reg-1647)). <a id="fan-max-speed-dehumidify"></a>
@@ -163,9 +163,9 @@ configuration and diagnostic entities that belong to operating the unit.
 
 Read-only values for troubleshooting. Home Assistant shows them in the Diagnostic section of the device page.
 
-- **Manual fan request (display)**: The display's manual fan request in %. Without a display it reads the band minimum while the fan runs ([1114](references/MODBUS_REGISTERS.md#reg-1114)). <a id="manual-fan-request-display"></a>
+- **Manual fan request (display)**: The display's manual fan request in %. Without a display the unit sets it to the band minimum when the fan starts and raises it with a raised minimum ([1114](references/MODBUS_REGISTERS.md#reg-1114)). <a id="manual-fan-request-display"></a>
   - **Available for**: `R` units.
-- **Fan integration request**: The fan request of the integration (INT) fan control in % ([1112](references/MODBUS_REGISTERS.md#reg-1112)), one of the requests the fan speed is the highest of ([UNIT_BEHAVIOUR §9.1](references/UNIT_BEHAVIOUR.md#91-bands-and-sources)). 0 while dehumidifying; a non-zero value during an integration request has not been seen on a real unit yet. <a id="fan-integration-request"></a>
+- **Fan integration request**: The fan request of the room-temperature fan control during an integration request in %; it needs a room temperature probe ([1112](references/MODBUS_REGISTERS.md#reg-1112)). 0 while dehumidifying; a non-zero value during an integration request has not been seen on a real unit yet. <a id="fan-integration-request"></a>
   - **Available for**: `R` units.
 - **Water valve / pump output**: Relay K5, the external water valve (V3V) and the pump output (PM) switched with it: Off, On or Not configured ([1126](references/MODBUS_REGISTERS.md#reg-1126)). <a id="water-valve-pump-output"></a>
 - **Water condenser valve**: Relay K4, the internal valve. A real unit reads On in standby, against the handbook's description, so its meaning is unverified ([UNIT_BEHAVIOUR §11.1](references/UNIT_BEHAVIOUR.md#111-internal-valve-relay-k4)); the climate action does not use it ([1124](references/MODBUS_REGISTERS.md#reg-1124)). <a id="water-condenser-valve"></a>
