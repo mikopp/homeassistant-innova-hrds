@@ -38,7 +38,6 @@ in [`references/UNIT_BEHAVIOUR.md` §13](references/UNIT_BEHAVIOUR.md#13-evidenc
 |----------|--------|-------|
 | Headless ([PH01](references/MODBUS_REGISTERS.md#ph01) = 0, [HA00](references/MODBUS_REGISTERS.md#ha00) = 0), no display, no probes | **Works** | Home Assistant is the controller: requests over Modbus. First Modbus ON takes the unit out of *off by display* [T7]. Every setup-check issue cleared once the settings were made |
 | Modbus RTU (RS-485) to TCP gateway | **Works** | Reads must be small: a 120-register read got no reply, 10-register reads cover the map [T9]. Modbus unit id 1, the default |
-| Native Modbus TCP, no gateway | Not tested | |
 | Installed behind a Zehnder ComfoAir Q350 (MVHR) | Context | Where the reference unit is installed. Nothing about coupling to the MVHR is recorded |
 
 ### Water circuit
