@@ -72,21 +72,16 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
 
 The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.md`
 §9.1). Remaining tests: [`fan-speed-tests.md`](fan-speed-tests.md).
+Writing [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) (any function code or order) and [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) are dropped; the reasons
+are in that file under *Dropped tests*.
 
-- [ ] **Does an FC 16 write to [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) act?** Every write so far was FC 06 (T23, T27,
-      T28). One FC 16 write of 6000 during a run; expected no effect
-      ([`fan-speed-tests.md`](fan-speed-tests.md) test H).
-- [ ] **Does the order of the [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) write and the request matter?** All writes so far came
-      in the middle of a run (T23, T27, T28). Write it with no request, in the
-      start-up delay before the fan runs, and again with a repeated request
-      ([`fan-speed-tests.md`](fan-speed-tests.md) test K).
 - [ ] **Jump or ramp of a raised band minimum**
       ([`fan-speed-tests.md`](fan-speed-tests.md) test A), **a minimum written
       while idle** (test F) and **minimum = maximum** (test B).
 - [ ] **Lowering through the maximum** ([`fan-speed-tests.md`](fan-speed-tests.md)
       test G): does a lowered [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) pull a running fan down, and does the speed stay
       after restoring it?
-- [ ] **Fan through the time-program route** ([`fan-speed-tests.md`](fan-speed-tests.md)
+- [ ] **Fan through the time-program route** (unlikely) ([`fan-speed-tests.md`](fan-speed-tests.md)
       test I): with [PH03](../doc/references/MODBUS_REGISTERS.md#ph03) on, does [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) move [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115) and the output?
 - [ ] **Forced fan by a digital input** ([`fan-speed-tests.md`](fan-speed-tests.md)
       test J): input function 19/20 on [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), speed [PF23](../doc/references/MODBUS_REGISTERS.md#pf23). Needs a
@@ -94,8 +89,6 @@ The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.m
 - [ ] **Forced fan without wiring** ([`fan-speed-tests.md`](fan-speed-tests.md)
       test J0): [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 19 (NC) on the unwired M2 reads as active, as [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) does for
       the season (T31); then [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) would be a Modbus fan speed.
-- [ ] **Potentiometer calibration** ([`fan-speed-tests.md`](fan-speed-tests.md)
-      test L): does [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) act with no signal on FAN+?
 - [ ] **Speed control through the band.** Once test G is run, decide whether
       to propose a speed control by pinning the band ([PF28](../doc/references/MODBUS_REGISTERS.md#pf28) = [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) = target;
       raise the minimum first, lower the maximum first; tests G and B). It costs EEPROM writes per change (ADR-0023) and needs an ADR.

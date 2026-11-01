@@ -552,18 +552,18 @@ Observations and consequences:
 ### 9.1 Bands and sources
 
 * Active band: DEU [PF28](MODBUS_REGISTERS.md#pf28)..[PF10](MODBUS_REGISTERS.md#pf10), INT [PF27](MODBUS_REGISTERS.md#pf27)..[PF09](MODBUS_REGISTERS.md#pf09); defaults and shipped values in §15 [HB 6.2; MB p.7].
-* Sources, each a request in percent that the controller places in the active
-  band; the highest request wins [HB 4.5, 6.2]:
-  * the display's manual request, fan screen, steps [PF11](MODBUS_REGISTERS.md#pf11) ([1114](MODBUS_REGISTERS.md#reg-1114)) [HB 6.2];
-  * the 0–10 V potentiometer on `FAN+` ([1116](MODBUS_REGISTERS.md#reg-1116), raw [507](MODBUS_REGISTERS.md#reg-507)), calibrated
-    by [PM88](MODBUS_REGISTERS.md#pm88) (−10…10 %, default 0) [HB 4.5, 5.3, 6.2];
-  * during INT only, with [PF31](MODBUS_REGISTERS.md#pf31) = 0 or 2: the room temperature, the speed
-    stepped by [PF11](MODBUS_REGISTERS.md#pf11) every [PF13](MODBUS_REGISTERS.md#pf13) s outside the dead band [PF12](MODBUS_REGISTERS.md#pf12) ([1112](MODBUS_REGISTERS.md#reg-1112)); it
-    needs a room temperature probe [HB 5.3 PF11–PF13, PF31];
-  * with time programs on ([PH03](MODBUS_REGISTERS.md#ph03)): the time-band setpoints [FSC](MODBUS_REGISTERS.md#fsc)/[FSE](MODBUS_REGISTERS.md#fse)/[FSN](MODBUS_REGISTERS.md#fsn),
-    whose range the handbook gives as [PF07](MODBUS_REGISTERS.md#pf07)..[PF08](MODBUS_REGISTERS.md#pf08) ([1115](MODBUS_REGISTERS.md#reg-1115)) [HB 5.3, 6.2];
-  * the air-quality control, with an air-quality probe ([1113](MODBUS_REGISTERS.md#reg-1113)) [HB 5.3 PF15–PF19];
-  * a digital input with function 19/20, at [PF23](MODBUS_REGISTERS.md#pf23) (below) [HB 5.3].
+* Sources during DEU and INT: the display's manual request (fan screen, steps
+  [PF11](MODBUS_REGISTERS.md#pf11), [1114](MODBUS_REGISTERS.md#reg-1114)) and the 0–10 V potentiometer on `FAN+` ([1116](MODBUS_REGISTERS.md#reg-1116), raw [507](MODBUS_REGISTERS.md#reg-507),
+  calibrated by [PM88](MODBUS_REGISTERS.md#pm88), −10…10 %, default 0), each placed in the active band;
+  the higher wins [HB 4.5, 5.3, 6.2]. During INT, [PF31](MODBUS_REGISTERS.md#pf31) = 0 or 2 adds the
+  room temperature: the speed steps by [PF11](MODBUS_REGISTERS.md#pf11) every [PF13](MODBUS_REGISTERS.md#pf13) s outside the dead
+  band [PF12](MODBUS_REGISTERS.md#pf12) ([1112](MODBUS_REGISTERS.md#reg-1112)); it needs a room temperature probe [HB 5.3 PF11–PF13,
+  PF31].
+  * Further fan requests in the register map, which HB 6.2 does not describe
+    as sources during DEU or INT: the time bands [FSC](MODBUS_REGISTERS.md#fsc)/[FSE](MODBUS_REGISTERS.md#fse)/[FSN](MODBUS_REGISTERS.md#fsn) ([1115](MODBUS_REGISTERS.md#reg-1115)),
+    whose range the handbook gives as the ventilation band [PF07](MODBUS_REGISTERS.md#pf07)..[PF08](MODBUS_REGISTERS.md#pf08);
+    air quality ([1113](MODBUS_REGISTERS.md#reg-1113), [PF15](MODBUS_REGISTERS.md#pf15)–[PF19](MODBUS_REGISTERS.md#pf19)); a digital input with function 19/20 at
+    [PF23](MODBUS_REGISTERS.md#pf23) (below) [HB 5.3; MB p.14–15].
   * Manual and potentiometer act during DEU, and during INT with [PF31](MODBUS_REGISTERS.md#pf31) ≠ 0
     [HB 6.2]. On the reference unit, in standby: no display, [1116](MODBUS_REGISTERS.md#reg-1116) = 0, [507](MODBUS_REGISTERS.md#reg-507)
     reads `0x7FFA` like the unwired inputs (MODBUS_REGISTERS §14.4), [PH03](MODBUS_REGISTERS.md#ph03) = 0
