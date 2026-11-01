@@ -91,9 +91,14 @@ The fan is read-only (ADR-0034); the band is the Modbus lever (`UNIT_BEHAVIOUR.m
 - [ ] **Forced fan by a digital input** ([`fan-speed-tests.md`](fan-speed-tests.md)
       test J): input function 19/20 on [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), speed [PF23](../doc/references/MODBUS_REGISTERS.md#pf23). Needs a
       potential-free relay contact between M2 or M3 and its common.
+- [ ] **Forced fan without wiring** ([`fan-speed-tests.md`](fan-speed-tests.md)
+      test J0): [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 19 (NC) on the unwired M2 reads as active, as [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) does for
+      the season (T31); then [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) would be a Modbus fan speed.
+- [ ] **Potentiometer calibration** ([`fan-speed-tests.md`](fan-speed-tests.md)
+      test L): does [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) act with no signal on FAN+?
 - [ ] **Speed control through the band.** Once test G is run, decide whether
-      to propose a speed control (raise via the minimum, lower via the
-      maximum). It costs EEPROM writes per change (ADR-0023) and needs an ADR.
+      to propose a speed control by pinning the band ([PF28](../doc/references/MODBUS_REGISTERS.md#pf28) = [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) = target;
+      raise the minimum first, lower the maximum first; tests G and B). It costs EEPROM writes per change (ADR-0023) and needs an ADR.
 - [ ] **Fan = 0 during dehumidification, and keeping the damper closed.**
       Background: `UNIT_BEHAVIOUR.md` §9.3, forum F#77–#79, F#93. Untested and
       expected not to work; listed so it is run once and recorded, not

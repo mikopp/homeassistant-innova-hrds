@@ -502,7 +502,7 @@ exposed: `custom_components/innova_hrds/installer_params.py`.
 | `0x0655` | 1621 | <a id="reg-1621"></a><a id="pm85"></a>PM85 | Defrost probe offset | x0.1 | -10…10 °C | R/W, disabled by default |
 | `0x0656` | 1622 | <a id="reg-1622"></a><a id="pm86"></a>PM86 | Room humidity probe offset | x1 | -10…10 % | R/W |
 | `0x0657` | 1623 | <a id="reg-1623"></a><a id="pm87"></a>PM87 | Air quality probe offset | x1 | -100…100 ppm | R/W, disabled by default |
-| `0x0658` | 1624 | <a id="reg-1624"></a><a id="pm88"></a>PM88 | Fan potentiometer offset | x1 | -10…10 % | R/W, disabled by default |
+| `0x0658` | 1624 | <a id="reg-1624"></a><a id="pm88"></a>PM88 | Fan potentiometer calibration (offset) | x1 | -10…10 % | R/W, disabled by default |
 | `0x0659` | 1625 | <a id="reg-1625"></a><a id="pm89"></a>PM89 | Pressure probe offset | x0.1 | -20…20 bar | shown R/O, disabled by default |
 | `0x065B` | 1627 | <a id="reg-1627"></a><a id="pc01"></a>PC01 | Room temperature sniffing cycles | x1 | 0…1  | R/W 0/1, disabled by default |
 | `0x065C` | 1628 | <a id="reg-1628"></a><a id="pc02"></a>PC02 | Sniffing wait time | x1 | 0…999 min | R/W, disabled by default |
@@ -890,9 +890,9 @@ and return-fan setpoints of each band. The summer and winter setpoints are
 | `0x0638` | 1592 | <a id="reg-1592"></a><a id="onh"></a>`ONH_Night_OffsetHot` | R/W | −36.0…36.0 K (×0.1) | Night band heating offset |
 | `0x0639` | 1593 | <a id="reg-1593"></a><a id="sdc"></a>`SDC_SetpointCold_DI` | R/W | −15.0…158.0 °C (×0.1) | Cooling setpoint forced by a digital input |
 | `0x063A` | 1594 | <a id="reg-1594"></a><a id="sdh"></a>`SDH_SetpointHot_DI` | R/W | −15.0…158.0 °C (×0.1) | Heating setpoint forced by a digital input |
-| `0x063B` | 1595 | <a id="reg-1595"></a><a id="fsc"></a>`FSC_SupplyFan_Comfort` | R/W | 0–100 % (×0.01) | Comfort band supply-fan setpoint |
-| `0x063C` | 1596 | <a id="reg-1596"></a><a id="fse"></a>`FSE_SupplyFan_Economy` | R/W | 0–100 % (×0.01) | Economy band supply-fan setpoint |
-| `0x063D` | 1597 | <a id="reg-1597"></a><a id="fsn"></a>`FSN_SupplyFan_Night` | R/W | 0–100 % (×0.01) | Night band supply-fan setpoint |
+| `0x063B` | 1595 | <a id="reg-1595"></a><a id="fsc"></a>`FSC_SupplyFan_Comfort` | R/W | 0–100 % (×0.01); handbook [PF07](#pf07)..[PF08](#pf08) | Comfort band supply-fan setpoint |
+| `0x063C` | 1596 | <a id="reg-1596"></a><a id="fse"></a>`FSE_SupplyFan_Economy` | R/W | 0–100 % (×0.01); handbook [PF07](#pf07)..[PF08](#pf08) | Economy band supply-fan setpoint |
+| `0x063D` | 1597 | <a id="reg-1597"></a><a id="fsn"></a>`FSN_SupplyFan_Night` | R/W | 0–100 % (×0.01); handbook [PF07](#pf07)..[PF08](#pf08) | Night band supply-fan setpoint |
 | `0x0743` | 1859 | <a id="reg-1859"></a><a id="frc"></a>`FRC_ReturnFan_Comfort` | R/W | 0–100 % (×0.01) | Comfort band return-fan setpoint |
 | `0x0744` | 1860 | <a id="reg-1860"></a><a id="fre"></a>`FRE_ReturnFan_Economy` | R/W | 0–100 % (×0.01) | Economy band return-fan setpoint |
 | `0x0745` | 1861 | <a id="reg-1861"></a><a id="frn"></a>`FRN_ReturnFan_Night` | R/W | 0–100 % (×0.01) | Night band return-fan setpoint |

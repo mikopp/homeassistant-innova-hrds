@@ -552,8 +552,24 @@ Observations and consequences:
 ### 9.1 Bands and sources
 
 * Active band: DEU [PF28](MODBUS_REGISTERS.md#pf28)..[PF10](MODBUS_REGISTERS.md#pf10), INT [PF27](MODBUS_REGISTERS.md#pf27)..[PF09](MODBUS_REGISTERS.md#pf09); defaults and shipped values in §15 [HB 6.2; MB p.7].
-* Sources: display manual request (fan screen, step [PF11](MODBUS_REGISTERS.md#pf11)) and 0–10 V
-  potentiometer. The highest request wins [HB 4.5, 6.2].
+* Sources, each a request in percent that the controller places in the active
+  band; the highest request wins [HB 4.5, 6.2]:
+  * the display's manual request, fan screen, steps [PF11](MODBUS_REGISTERS.md#pf11) ([1114](MODBUS_REGISTERS.md#reg-1114)) [HB 6.2];
+  * the 0–10 V potentiometer on `FAN+` ([1116](MODBUS_REGISTERS.md#reg-1116), raw [507](MODBUS_REGISTERS.md#reg-507)), calibrated
+    by [PM88](MODBUS_REGISTERS.md#pm88) (−10…10 %, default 0) [HB 4.5, 5.3, 6.2];
+  * during INT only, with [PF31](MODBUS_REGISTERS.md#pf31) = 0 or 2: the room temperature, the speed
+    stepped by [PF11](MODBUS_REGISTERS.md#pf11) every [PF13](MODBUS_REGISTERS.md#pf13) s outside the dead band [PF12](MODBUS_REGISTERS.md#pf12) ([1112](MODBUS_REGISTERS.md#reg-1112)); it
+    needs a room temperature probe [HB 5.3 PF11–PF13, PF31];
+  * with time programs on ([PH03](MODBUS_REGISTERS.md#ph03)): the time-band setpoints [FSC](MODBUS_REGISTERS.md#fsc)/[FSE](MODBUS_REGISTERS.md#fse)/[FSN](MODBUS_REGISTERS.md#fsn),
+    whose range the handbook gives as [PF07](MODBUS_REGISTERS.md#pf07)..[PF08](MODBUS_REGISTERS.md#pf08) ([1115](MODBUS_REGISTERS.md#reg-1115)) [HB 5.3, 6.2];
+  * the air-quality control, with an air-quality probe ([1113](MODBUS_REGISTERS.md#reg-1113)) [HB 5.3 PF15–PF19];
+  * a digital input with function 19/20, at [PF23](MODBUS_REGISTERS.md#pf23) (below) [HB 5.3].
+  * Manual and potentiometer act during DEU, and during INT with [PF31](MODBUS_REGISTERS.md#pf31) ≠ 0
+    [HB 6.2]. On the reference unit, in standby: no display, [1116](MODBUS_REGISTERS.md#reg-1116) = 0, [507](MODBUS_REGISTERS.md#reg-507)
+    reads `0x7FFA` like the unwired inputs (MODBUS_REGISTERS §14.4), [PH03](MODBUS_REGISTERS.md#ph03) = 0
+    [T2, T3]; [1112](MODBUS_REGISTERS.md#reg-1112) = 0 through the DEU runs [T16, T18]. [INFERRED] from
+    HB 6.2: during DEU no source asks for more than the minimum, which is why
+    the fan runs at [PF28](MODBUS_REGISTERS.md#pf28) [T16, T18].
   * **0–10 V:** a position scaled linearly into the band, 0 V = minimum,
     10 V = maximum [HB 4.5, 6.2]. Not tested.
   * **Manual (display) request:** the handbook says it is scaled linearly
@@ -617,9 +633,9 @@ Observations and consequences:
   and a DEU request, or an INT request with [PF31](MODBUS_REGISTERS.md#pf31) ≠ 0, is active [HB 6.2]. [PF31](MODBUS_REGISTERS.md#pf31) = 0: INT fan follows the
   room temperature ([PF12](MODBUS_REGISTERS.md#pf12), [PF13](MODBUS_REGISTERS.md#pf13)) [HB 5.3 PF31].
 * One user could not get the fan below 30 % [F#77].
-* [PF07](MODBUS_REGISTERS.md#pf07)..[PF08](MODBUS_REGISTERS.md#pf08) ("VMC" band) bounds the post-run speed [PF26](MODBUS_REGISTERS.md#pf26) [HB 5.3 PF26]. The
-  HRDS+ has no ventilation-only mode with its fan [HB 2.7]; [INFERRED] that
-  [PF07](MODBUS_REGISTERS.md#pf07)/[PF08](MODBUS_REGISTERS.md#pf08) matter only for run-on.
+* [PF07](MODBUS_REGISTERS.md#pf07)..[PF08](MODBUS_REGISTERS.md#pf08) ("VMC" band) bounds the post-run speed [PF26](MODBUS_REGISTERS.md#pf26) [HB 5.3 PF26] and is
+  the range of the time-band setpoints [FSC](MODBUS_REGISTERS.md#fsc)/[FSE](MODBUS_REGISTERS.md#fse)/[FSN](MODBUS_REGISTERS.md#fsn) [HB 5.3]. The HRDS+ has
+  no ventilation-only mode with its fan [HB 2.7].
 * Read-backs: `outAO_SupplyFan` (actual output), `actRPMsupplyFan`,
   `SupplyFan_ManualRequest` (display's request), `SupplyFan_RemoteRequest`
   (potentiometer) [MB p.7, p.8, p.15]. On the reference unit `outAO_SupplyFan`
@@ -867,7 +883,7 @@ probes). "Dump" means
 |---|------|------|--------|
 | T1 | 2026-10 | FC 43/14 identity (basic, regular, extended): `EVCO` / `EPB9ORSINDEU` / `V01.00.09.02`; all four status registers hold documented enum values | dump |
 | T2 | 2026-10 | As-delivered settings: see [§15](#15-parameters-source-default-and-shipped-value). Unit status `off_by_display` (with [PH01](MODBUS_REGISTERS.md#ph01) = 1, no display) | dump |
-| T3 | 2026-10 | Unwired analog inputs [499](MODBUS_REGISTERS.md#reg-499), [500](MODBUS_REGISTERS.md#reg-500), [502](MODBUS_REGISTERS.md#reg-502)–[506](MODBUS_REGISTERS.md#reg-506), 508–510, [512](MODBUS_REGISTERS.md#reg-512) read `0x8004`; [507](MODBUS_REGISTERS.md#reg-507) reads `0x7FFA`; water ([501](MODBUS_REGISTERS.md#reg-501)) 18.7 °C and evaporator ([511](MODBUS_REGISTERS.md#reg-511)) 16.8 °C read real values; inputs 513–519 read 0 (unidentified) | dump |
+| T3 | 2026-10 | Unwired analog inputs [499](MODBUS_REGISTERS.md#reg-499), [500](MODBUS_REGISTERS.md#reg-500), [502](MODBUS_REGISTERS.md#reg-502)–[506](MODBUS_REGISTERS.md#reg-506), 508–510, [512](MODBUS_REGISTERS.md#reg-512) read `0x8004`; [507](MODBUS_REGISTERS.md#reg-507) reads `0x7FFA`; water ([501](MODBUS_REGISTERS.md#reg-501)) 18.7 °C and evaporator ([511](MODBUS_REGISTERS.md#reg-511)) 16.8 °C read real values; inputs 513–519 read 0 (unidentified); the potentiometer request [1116](MODBUS_REGISTERS.md#reg-1116) reads 0 | dump |
 | T4 | 2026-10 | No alarm bits set ([768](MODBUS_REGISTERS.md#reg-768)/[769](MODBUS_REGISTERS.md#reg-769)/[770](MODBUS_REGISTERS.md#reg-770) = 0, `OR_Alarms` = 0) while OFF by display with no probes | dump |
 | T5 | 2026-10 | `R` unit: [PG01](MODBUS_REGISTERS.md#pg01) = 0; damper output [1134](MODBUS_REGISTERS.md#reg-1134) = 0 (off); fan status OFF; compressor status OFF; [1112](MODBUS_REGISTERS.md#reg-1112) = 0; K5 ([1126](MODBUS_REGISTERS.md#reg-1126)) = 0; **K4 ([1124](MODBUS_REGISTERS.md#reg-1124)) = 1** and `Packed_DO1` bits 12–13 = 1 in standby | dump |
 | T6 | 2026-10 | Season: [HB04](MODBUS_REGISTERS.md#hb04) = 4, `ModeStatus` = Summer DI, `Mode_OperatingMode` = summer, [PC05](MODBUS_REGISTERS.md#pc05) = 0 | dump |

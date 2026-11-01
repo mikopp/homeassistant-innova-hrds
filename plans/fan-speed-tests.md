@@ -24,6 +24,31 @@ All on the reference unit, headless, during DEU runs.
 | Allocations on the reference unit: [HA01](../doc/references/MODBUS_REGISTERS.md#ha01) = 58 (fan potentiometer 0–10 V), [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = [HA03](../doc/references/MODBUS_REGISTERS.md#ha03) = 0, [HA06](../doc/references/MODBUS_REGISTERS.md#ha06) = 6, [HA07](../doc/references/MODBUS_REGISTERS.md#ha07) = 8, [HB01](../doc/references/MODBUS_REGISTERS.md#hb01) = 27, [HB02](../doc/references/MODBUS_REGISTERS.md#hb02) = 26, [HB03](../doc/references/MODBUS_REGISTERS.md#hb03) = 2, [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) = 4, [HB05](../doc/references/MODBUS_REGISTERS.md#hb05)..[HB07](../doc/references/MODBUS_REGISTERS.md#hb07) = 0 | T21 |
 | [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) can be written over Modbus to switch the season; no contact is wired to M9 | T31 |
 
+## How to scale the fan
+
+Hypotheses, each with the test that decides it. Nothing here is proven yet
+beyond what the Proven table says.
+
+1. **Pin the band (no hardware).** Write [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) = [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) = the target
+   speed (during INT [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) = [PF09](../doc/references/MODBUS_REGISTERS.md#pf09)). With one value in the band the clamp
+   gives that speed whatever the unit's own manual request holds. Going up,
+   write the minimum first; going down, the maximum first, so the minimum
+   never exceeds the maximum. Up is proven (T25); down needs test G, the
+   pinned band test B. It works with the existing entities
+   [*Fan min speed (dehumidify)*](../doc/entity-reference.md#fan-min-speed-dehumidify) and [*Fan max speed (dehumidify)*](../doc/entity-reference.md#fan-max-speed-dehumidify), but every change is
+   two EEPROM writes: once per run, not as a continuous control (ADR-0023).
+2. **0–10 V on FAN+ (wiring).** The handbook's own proportional control:
+   linear across the band, no EEPROM write [HB 4.5]. A 0–10 V output (for
+   example a Shelly) driven from Home Assistant. Test D.
+3. **Forced fan from an unwired input (no hardware).** Allocate the unused
+   AI2 ([HA02](../doc/references/MODBUS_REGISTERS.md#ha02)) to function 19 "Fans forced by DI NC". An NC function reads an
+   open contact as active, the same way [HB04](../doc/references/MODBUS_REGISTERS.md#hb04) 3/4 switches the season with
+   nothing wired to M9 (T31); analog inputs already work as digital inputs on
+   this unit ([HA06](../doc/references/MODBUS_REGISTERS.md#ha06) = 6, [HA07](../doc/references/MODBUS_REGISTERS.md#ha07) = 8, T21). [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) is then the fan speed. Test J0.
+4. **Time bands and the potentiometer calibration.** [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) with time
+   programs on (test I) and [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) (test L; no effect expected without a
+   signal on FAN+).
+
 ## Why PM20 does not work and what else could
 
 Evidenced:
@@ -35,8 +60,11 @@ Evidenced:
   defines it as the display setting "via Display (read only)" [HB 5.3].
 * There is no fan enable among the Modbus enables, which are
   [PH01](../doc/references/MODBUS_REGISTERS.md#ph01), [PH02](../doc/references/MODBUS_REGISTERS.md#ph02), [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) and [PH28](../doc/references/MODBUS_REGISTERS.md#ph28) [MB p.5].
-* The fan has two request sources, the display and the 0–10 V input
-  FAN+/FAN−. The higher wins, within the band [HB 4.5, 6.2].
+* The fan's request sources are the display, the 0–10 V input FAN+/FAN−,
+  the room temperature (INT only), the time bands, the air-quality control and
+  a forced-fan input; each is placed in the active band and the highest wins
+  ([`UNIT_BEHAVIOUR.md` §9.1](../doc/references/UNIT_BEHAVIOUR.md#91-bands-and-sources)). On the reference unit none of them asks for
+  more than the minimum during DEU, which is why the fan stays at [PF28](../doc/references/MODBUS_REGISTERS.md#pf28).
   [PF31](../doc/references/MODBUS_REGISTERS.md#pf31) changes only the integration (INT) fan control: 0 temperature,
   1 maximum of manual and remote, 2 maximum of all [HB 5.3].
 * With time programs on ([PH03](../doc/references/MODBUS_REGISTERS.md#ph03)), the fan setpoints [FSC](../doc/references/MODBUS_REGISTERS.md#fsc)/[FSE](../doc/references/MODBUS_REGISTERS.md#fse)/[FSN](../doc/references/MODBUS_REGISTERS.md#fsn)
@@ -68,7 +96,8 @@ Evidenced:
 
 What else could act, each with a test below: a different function code on
 [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) (test H), another order of the write and the request (test K), the time-band route (test I), a voltage on FAN+ (test D), the
-forced-fan input (test J). The band is the lever that works today (tests A, B,
+forced-fan input (test J; test J0 without wiring), the potentiometer
+calibration (test L). The band is the lever that works today (tests A, B,
 F, G refine it).
 
 ## Run order
@@ -79,14 +108,16 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
 |-------|------|------|---------------|
 | 1 | H | One FC 16 write to [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) | One write, no wiring |
 | 2 | K | [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) written before, during the start of, or again with the request | Writes only; K3 repeats the request once |
-| 3 | E | INT run, read [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) | Reads only, needs summer and [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) |
-| 4 | A | Jump or ramp of a raised minimum | 2 EEPROM writes |
-| 5 | F | Band written while idle | 2 EEPROM writes |
-| 6 | B | Top of the band | 2 EEPROM writes |
-| 7 | G | Lower through the maximum | 2 EEPROM writes, pulls the fan down |
-| 8 | I | Time-program route | Writes [PH03](../doc/references/MODBUS_REGISTERS.md#ph03), [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) and a slot; can switch the unit off |
-| 9 | D | 0–10 V on FAN+ | Wiring, no EEPROM write |
-| 10 | J | Forced fan by DI | Wiring, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) and [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) EEPROM writes |
+| 3 | G | Lower through the maximum (pin the band, downward) | 2 EEPROM writes, pulls the fan down |
+| 4 | B | Top of the band, [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) = [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) | 2 EEPROM writes |
+| 5 | J0 | Forced fan from an unwired input | 2 [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) writes, up to 2 [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) writes; no wiring |
+| 6 | E | INT run, read [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) | Reads only, needs summer and [PH27](../doc/references/MODBUS_REGISTERS.md#ph27) |
+| 7 | A | Jump or ramp of a raised minimum | 2 EEPROM writes |
+| 8 | F | Band written while idle | 2 EEPROM writes |
+| 9 | I | Time-program route | Writes [PH03](../doc/references/MODBUS_REGISTERS.md#ph03), [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) and a slot; can switch the unit off |
+| 10 | L | Potentiometer calibration [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) | 2 EEPROM writes |
+| 11 | D | 0–10 V on FAN+ | Wiring, no EEPROM write |
+| 12 | J | Forced fan by a wired contact | Wiring, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) and [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) EEPROM writes |
 
 ## Open questions
 
@@ -102,6 +133,8 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
 | Q8 | Does 0–10 V on FAN+ raise [639](../doc/references/MODBUS_REGISTERS.md#reg-639) and [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) but not [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114)/[1614](../doc/references/MODBUS_REGISTERS.md#reg-1614)? | [HB 4.5, 6.2] | D |
 | Q9 | Does a digital-input function 19/20 on [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03) force the fan to [PF23](../doc/references/MODBUS_REGISTERS.md#pf23)? | [HB 5.3; INFERRED for analog terminals] | J |
 | Q10 | Is a [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) write taken over when it comes before the request, while the fan is still waiting to start, or together with a repeated request? | [INFERRED from T22, T35] | K |
+| Q11 | Does [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 19 with nothing wired set [258](../doc/references/MODBUS_REGISTERS.md#reg-258) bits 2–3 and drive the fan to [PF23](../doc/references/MODBUS_REGISTERS.md#pf23)? With or without a request, with the damper? | [HB 5.3; INFERRED from T31, T21] | J0 |
+| Q12 | Does [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) change [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) or [639](../doc/references/MODBUS_REGISTERS.md#reg-639) with no signal on FAN+? Expected: no | [HB 5.3; INFERRED] | L |
 
 ## Tools and rules
 
@@ -118,8 +151,8 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
   | [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
   | [*Integration request (cool in summer, heat in winter)*](../doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) | [1139](../doc/references/MODBUS_REGISTERS.md#reg-1139) | INT |
 
-* **Writes without an entity** (tests H, I, J: [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) with FC 16, [PH03](../doc/references/MODBUS_REGISTERS.md#ph03),
-  [FSC](../doc/references/MODBUS_REGISTERS.md#fsc), the time-program slot, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), [PF23](../doc/references/MODBUS_REGISTERS.md#pf23)): write directly with a
+* **Writes without an entity** (tests H, I, J, J0, L: [PM20](../doc/references/MODBUS_REGISTERS.md#pm20) with FC 16, [PH03](../doc/references/MODBUS_REGISTERS.md#ph03),
+  [FSC](../doc/references/MODBUS_REGISTERS.md#fsc), the time-program slot, [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), [PF23](../doc/references/MODBUS_REGISTERS.md#pf23), [PM88](../doc/references/MODBUS_REGISTERS.md#pm88)): write directly with a
   Modbus tool, because the integration cannot. Do it by hand, one write at a
   time, with Home Assistant idle (no write of its own is pending) so two
   masters never talk at once. Record each value before the write and
@@ -147,8 +180,8 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
   * the MVHR runs at 150 m³/h or more;
   * the season is summer.
 * **EEPROM:** [PF28](../doc/references/MODBUS_REGISTERS.md#pf28)/[PF10](../doc/references/MODBUS_REGISTERS.md#pf10)/[PF27](../doc/references/MODBUS_REGISTERS.md#pf27)/[PF09](../doc/references/MODBUS_REGISTERS.md#pf09) are EEPROM parameters (ADR-0023), and so are
-  [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03) and [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) [INFERRED]. The band tests (A, B,
-  F, G) need about 8 parameter writes, tests I and J a few more. Count
+  [HA02](../doc/references/MODBUS_REGISTERS.md#ha02)/[HA03](../doc/references/MODBUS_REGISTERS.md#ha03), [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) and [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) [INFERRED]. The band tests (A, B,
+  F, G) need about 8 parameter writes, tests I, J, J0 and L a few more. Count
   them, and do not loop or automate them.
 * **Before the first write,** record [1853](../doc/references/MODBUS_REGISTERS.md#reg-1853), [1647](../doc/references/MODBUS_REGISTERS.md#reg-1647), [1852](../doc/references/MODBUS_REGISTERS.md#reg-1852), [1646](../doc/references/MODBUS_REGISTERS.md#reg-1646) and [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614).
   Restore them at the end. Shipped values: 5000, 8500, 5000, 8500 (§15).
@@ -276,7 +309,7 @@ it down. Do not write a minimum above 85.
 4. Never set [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) below [PF28](../doc/references/MODBUS_REGISTERS.md#pf28).
 
 This decides whether any speed within the band can be set with two band
-writes, or only a raise (`plans/todo.md`, *Speed control through the band*).
+writes (method 1 of *How to scale the fan*), or only a raise (`plans/todo.md`, *Speed control through the band*).
 
 ### I. Time-program route (Q7)
 
@@ -298,6 +331,15 @@ Expected [INFERRED]: [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115) foll
 (manual control is active only without time programs [HB 6.2]). Record
 whether the slot mode 1 (OFF) or the time program as a whole switches the
 unit off, and how the fan behaves outside the slots.
+
+### L. Potentiometer calibration (Q12)
+
+1. During a DEU run with a steady fan, record [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) ([1624](../doc/references/MODBUS_REGISTERS.md#reg-1624)), [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), [507](../doc/references/MODBUS_REGISTERS.md#reg-507), [639](../doc/references/MODBUS_REGISTERS.md#reg-639).
+2. Write [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) = 10. Read [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), [507](../doc/references/MODBUS_REGISTERS.md#reg-507), [639](../doc/references/MODBUS_REGISTERS.md#reg-639) for 2 minutes.
+3. Restore [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) = 0.
+
+Expected [INFERRED]: no change, because [507](../doc/references/MODBUS_REGISTERS.md#reg-507) reads `0x7FFA` with nothing on
+FAN+ (T3). A change would make [PM88](../doc/references/MODBUS_REGISTERS.md#pm88) a Modbus lever of up to 10 %.
 
 ### D. 0–10 V on FAN+ (Q8)
 
@@ -335,6 +377,26 @@ Expected:
 Record: [639](../doc/references/MODBUS_REGISTERS.md#reg-639) and [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) per step; whether [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116) reads the raw percentage
 (about 50 at 5 V) or the value scaled into the band (about 67.5); the
 behaviour at 0 V and above 10 V; whether any alarm bit appears.
+
+### J0. Forced fan from an unwired input (Q11)
+
+No wiring. Two writes to [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) (an I/O allocation, EEPROM) and up to two to
+[PF23](../doc/references/MODBUS_REGISTERS.md#pf23). AI2 (M2) is unused on the reference unit ([HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 0, T21); nothing is
+connected to it, so its contact reads open.
+
+1. Record [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) ([1805](../doc/references/MODBUS_REGISTERS.md#reg-1805)), [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) ([1660](../doc/references/MODBUS_REGISTERS.md#reg-1660)) and [258](../doc/references/MODBUS_REGISTERS.md#reg-258). Unit ON, no request.
+2. Write [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 20 (NO: open = inactive). Read [258](../doc/references/MODBUS_REGISTERS.md#reg-258), [768](../doc/references/MODBUS_REGISTERS.md#reg-768)–[770](../doc/references/MODBUS_REGISTERS.md#reg-770) (alarms):
+   expected bits 2–3 = 0, no alarm.
+3. Write [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 19 (NC: open = active). Read [258](../doc/references/MODBUS_REGISTERS.md#reg-258), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119), [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1134](../doc/references/MODBUS_REGISTERS.md#reg-1134)
+   at 1–5 s for 2 minutes. Records whether a forced fan runs without a
+   request and whether the damper opens.
+4. Start DEU; wait for a steady fan. Read [639](../doc/references/MODBUS_REGISTERS.md#reg-639): [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) (70 % handbook
+   default), the band, or the higher of the two?
+5. Write [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) once to another value inside the band; read [639](../doc/references/MODBUS_REGISTERS.md#reg-639).
+6. Restore [PF23](../doc/references/MODBUS_REGISTERS.md#pf23) and [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 0 (first [HA02](../doc/references/MODBUS_REGISTERS.md#ha02), so the fan is no longer forced),
+   end DEU.
+
+If step 3 runs the fan in standby, stop there and restore [HA02](../doc/references/MODBUS_REGISTERS.md#ha02) = 0.
 
 ### J. Forced fan by a digital input (Q9)
 
