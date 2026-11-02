@@ -190,6 +190,19 @@ settings of the handbook's user menu.
 | `0x0473` | 1139 | <a id="reg-1139"></a>`Status_Integ_byBMS` | R/W | — | — | Integration / **active-cooling** request: `0=No`, `1=Yes`. (Requires [PH27](#ph27)=1.) |
 | `0x0474` | 1140 | <a id="reg-1140"></a>`Status_Dehum_byBMS` | R/W | — | — | Dehumidify request: `0=No`, `1=Yes`. (Requires [PH28](#ph28)=1.) |
 
+**Names.** `Status_OnOff_byBMS`, `Status_Dehum_byBMS` and `Status_Integ_byBMS`
+([1105](#reg-1105), [1140](#reg-1140), [1139](#reg-1139)) are **commands**: the BMS writes them
+(R/W) and the unit acts on them only with the matching enable ([PH02](#ph02),
+[PH28](#ph28), [PH27](#ph27)). Despite the prefix they are not status. What the unit
+reports is `DehumRequest` ([1121](#reg-1121)), its current dehumidify request **from any source**
+(this command, a digital input, the display, its own humidity control), and
+`sm_UnitStatus` ([1104](#reg-1104)). The unit's own terms: **DEU** is the dehumidification
+request (digital input function 5/6 "Dehumidification request", bit
+"Dehum request" of [257](#reg-257)), **INT** the integration request (function 7/8 "Heat
+regulation request", bit "Integration/thermo request"); "by BMS" is the
+manual's word for Modbus [HB 5.3, MB p.5, p.13]. Only DEU can be read back; INT
+cannot ([UNIT_BEHAVIOUR §3.3](UNIT_BEHAVIOUR.md#33-requests-deu-and-int)).
+
 > **Integration (INT)** (`0x0473`) cools in summer and supports heating in
 > winter; **DEU** (`0x0474`) dehumidifies. What each request does in which
 > season: [UNIT_BEHAVIOUR §6–§7](UNIT_BEHAVIOUR.md#6-summer-operation).
