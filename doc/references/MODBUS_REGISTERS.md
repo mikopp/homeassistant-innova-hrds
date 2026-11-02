@@ -104,6 +104,10 @@ Factory serial defaults:
     the shipped limit raw `20000` ("2000.0") is 20000 h.
   * A date or time is a 32-bit value in two words (low word at the lower
     address); the manual gives the range but not the encoding.
+  * The scale of the installer parameters (§6 to §8) was checked against a
+    real unit's raw read-back, except for 22 rows that take the scale of their
+    neighbours: [PF22](#pf22), [PS03](#ps03), [PA20](#pa20), [PA54](#pa54), [PH15](#ph15), [PH18](#ph18),
+    [PE23](#pe23), [PE29](#pe29), [PT05](#pt05)–[PT11](#pt11), [PH31](#ph31)–[PH35](#ph35), [PA61](#pa61), [PA62](#pa62).
 
 ## 3. Menus and parameter groups
 
@@ -257,6 +261,11 @@ The live values of the fan, compressor, dampers and valves. The fan's speed
 band, its other settings and how the bands apply are in [§7.2](#72-fans-pf); the
 compressor's settings are in [§7.3](#73-compressor-pe), the dampers' in [§7.6](#76-dampers-ps), the
 valves' in [§7.4](#74-water-valves-pb).
+
+How the airflow behaves (passive MVHR flow, recirculation coupled to every
+request, the unofficial I/O workaround) is in
+[UNIT_BEHAVIOUR §9](UNIT_BEHAVIOUR.md#9-fan), in particular
+[§9.3 Recirculation is coupled to every request](UNIT_BEHAVIOUR.md#93-recirculation-is-coupled-to-every-request-r-variant).
 
 **Fan**
 
