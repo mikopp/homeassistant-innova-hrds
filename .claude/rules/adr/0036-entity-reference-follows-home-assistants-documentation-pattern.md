@@ -44,7 +44,7 @@ paths:
   NOT name repository internals (keys, entity IDs, unique ids, ADRs, scripts,
   source files, evidence-log tags).
 - Installer parameters (`INSTALLER_KEYS`) MUST NOT be listed one by one;
-  `MODBUS_REGISTERS.md` §16 lists them.
+  `MODBUS_REGISTERS.md` §6 to §8 list them.
 - A change that adds, removes, renames, regroups or moves an entity, or changes
   its English name, register or what it shows, MUST update the reference in the
   same commit.

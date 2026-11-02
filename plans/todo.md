@@ -46,7 +46,7 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
 - [ ] **Does [PE32](../doc/references/MODBUS_REGISTERS.md#pe32) count minutes?** The compressor stops by itself after
       92–94 min (T34); [PE32](../doc/references/MODBUS_REGISTERS.md#pe32) reads 90 and is listed in seconds. Log the
       compressor output against [PE28](../doc/references/MODBUS_REGISTERS.md#pe28) (52 rps) through a run over 90 min. If
-      it holds, correct the unit in `MODBUS_REGISTERS.md` §16.
+      it holds, correct the unit in [`MODBUS_REGISTERS.md` §7.3](../doc/references/MODBUS_REGISTERS.md#73-compressor-pe).
 - [ ] **Stop sequence at 5 s.** Three stops at 1-minute resolution (T19, T36,
       T38). Still to log: compressor stop against [PE02](../doc/references/MODBUS_REGISTERS.md#pe02), the ramp-down
       ([PE25](../doc/references/MODBUS_REGISTERS.md#pe25)), V3V + PM closing against [Pb01](../doc/references/MODBUS_REGISTERS.md#pb01), fan run-on against [PF03](../doc/references/MODBUS_REGISTERS.md#pf03).

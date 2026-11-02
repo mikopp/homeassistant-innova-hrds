@@ -268,7 +268,7 @@ No wiring. The unit can switch itself off by schedule (`sm_UnitStatus` 3,
 [1104](../doc/references/MODBUS_REGISTERS.md#reg-1104)), so keep the owner at hand and the slot short.
 
 1. Record [PH03](../doc/references/MODBUS_REGISTERS.md#ph03) ([1779](../doc/references/MODBUS_REGISTERS.md#reg-1779)), [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) ([1595](../doc/references/MODBUS_REGISTERS.md#reg-1595)), [FSE](../doc/references/MODBUS_REGISTERS.md#fse), [FSN](../doc/references/MODBUS_REGISTERS.md#fsn) and the F1..F4 slot
-   registers of today's weekday ([MODBUS_REGISTERS.md §17.2](../doc/references/MODBUS_REGISTERS.md#172-time-programs)).
+   registers of today's weekday ([MODBUS_REGISTERS.md §5.7](../doc/references/MODBUS_REGISTERS.md#57-time-programs-clock-and-holiday)).
 2. Start DEU and wait for a steady fan at the band minimum. Start the 5 s
    read loop on [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1115](../doc/references/MODBUS_REGISTERS.md#reg-1115), [1106](../doc/references/MODBUS_REGISTERS.md#reg-1106), [1104](../doc/references/MODBUS_REGISTERS.md#reg-1104).
 3. Write [FSC](../doc/references/MODBUS_REGISTERS.md#fsc) to a value inside the band (for example 6000), set one slot of

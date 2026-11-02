@@ -475,7 +475,7 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
     },
     # "Fans integration request" (MB): a 0-100 % fan request like 1113-1116,
     # not a flag and not recirculation; 0 through dehumidify runs
-    # (MODBUS_REGISTERS.md section 6, UNIT_BEHAVIOUR.md T16, T18).
+    # (MODBUS_REGISTERS.md sections 5.3 and 7.2, UNIT_BEHAVIOUR.md T16, T18).
     C_FAN_INTEGRATION_REQUEST: {
         "RT": C_REG_TYPE_INPUT_REGISTERS,
         "REG": 1112,

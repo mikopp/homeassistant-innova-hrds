@@ -78,7 +78,7 @@ Each topic has one home; link to it instead of repeating it (ADR-0027).
 |-------|------|
 | Why the integration is built as it is (guards, write policy, entity mapping, tests, CI) | [`doc/adr/`](doc/adr/README.md) |
 | How the unit behaves, and what was tested on real hardware (evidence log `T1…`) | [`doc/references/UNIT_BEHAVIOUR.md`](doc/references/UNIT_BEHAVIOUR.md) |
-| Which registers exist: addresses, encodings, values, installer table (§16) | [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTERS.md) |
+| Which registers exist: addresses, encodings, values, menus and parameter groups (§3), installer parameters (§6 to §8) | [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTERS.md) |
 | Source PDFs and how to search them, technical data, airflow estimate | [`doc/references/README.md`](doc/references/README.md) |
 | Every entity, by device, and why each device exists | [`doc/entity-reference.md`](doc/entity-reference.md) (ADR-0036) |
 | Adding or changing an entity | `.claude/rules/entities.md` (loads with `const.py`) |
@@ -103,9 +103,10 @@ grep -n 'Status_OnOff_byBMS' doc/references/MODBUS_REGISTERS.md  # by short name
 ```
 
 The row gives address, encoding and values. What the unit does with the
-register is in `UNIT_BEHAVIOUR.md` (grep the code there). Time programs,
-band setpoints, passwords and the like are in §17, installer parameters in
-§16.
+register is in `UNIT_BEHAVIOUR.md` (grep the code there). The page follows
+the unit's menus: live values and the user menu in §5, then maintenance (§6),
+installer (§7) and manufacturer (§8) settings by code group (`PF` fans, `PE`
+compressor, `HA` inputs, …, table in §3); §9 maps address ranges to sections.
 
 ## Commands
 

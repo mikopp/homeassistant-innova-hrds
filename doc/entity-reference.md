@@ -246,7 +246,7 @@ without the installer device.)
 
 The parameters are **not listed one by one** here; the full list with
 addresses and scaling is
-[`references/MODBUS_REGISTERS.md` §16](references/MODBUS_REGISTERS.md#16-installer-menu-parameters-installer-device).
+[`references/MODBUS_REGISTERS.md` §6 to §8](references/MODBUS_REGISTERS.md#3-menus-and-parameter-groups).
 
 * Writable parameters are configuration entities: fans (PF), compressor (PE),
   water valves (Pb), dehumidification (PU), alarms (PA), season change (PC),

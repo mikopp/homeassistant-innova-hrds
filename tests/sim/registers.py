@@ -73,7 +73,7 @@ ALARM_RESET_BASE = 774
 ALARM_RESET_RANGE = range(775, 795)
 
 # Writes that only take effect while their "by BMS" enable is set (handbook /
-# MODBUS_REGISTERS.md section 3).
+# MODBUS_REGISTERS.md section 4).
 ENABLE_FOR = {
     BMS_ON: PH02_ONOFF_BMS,
     DEU_REQUEST: PH28_DEU_BMS,
@@ -81,11 +81,11 @@ ENABLE_FOR = {
 }
 
 
-# Unwired analog input (MODBUS_REGISTERS.md section 14.4).
+# Unwired analog input (MODBUS_REGISTERS.md section 5.4).
 PROBE_SENTINEL = 0x8004
 
 # Input allocations that can carry the fan tachometer (input function 45 / 46
-# on a digital input; MODBUS_REGISTERS.md section 16, UNIT_BEHAVIOUR.md 9.1):
+# on a digital input; MODBUS_REGISTERS.md sections 7 and 8, UNIT_BEHAVIOUR.md 9.1):
 # HA01, HA04-HA18 (1804, 1807-1821), HB01, HB02, HB05-HB07 (1822, 1823,
 # 1826-1828). AI2/AI3 are not among them: there 45/46 are the room probes.
 TACHOMETER_ALLOCATIONS = (1804, *range(1807, 1824), *range(1826, 1829))

@@ -310,7 +310,7 @@ def check_entity_reference(const) -> None:
     for dict_name, platform in REFERENCE_PLATFORMS.items():
         for key in getattr(const, dict_name):
             if key in const.INSTALLER_KEYS:
-                continue  # parameters are generated; MODBUS_REGISTERS.md section 16
+                continue  # parameters are generated; MODBUS_REGISTERS.md sections 6 to 8
             if key in const.INSTALLER_DEVICE_EXTRA_KEYS:
                 device = "installer"
             elif key in const.SETUP_KEYS:

@@ -29,7 +29,7 @@ paths:
   MUST be read-only. MUST NOT add registers above 1900.
 - Rows live in `installer_params.py` (code, register, kind n/s/r, scale,
   range, unit, en/de name, enabled by default); translations are generated
-  from them and `MODBUS_REGISTERS.md` §16 lists them.
+  from them and `MODBUS_REGISTERS.md` §6 to §8 list them.
 
 ## Context
 

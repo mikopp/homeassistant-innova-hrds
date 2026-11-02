@@ -129,7 +129,7 @@ PARAMS: list[tuple[int, str, str, int | None]] = [
     (1890, "PU14", "Room temp differential to re-enable (x0.1 C)", 5),
 ]
 
-# Alarm names from MODBUS_REGISTERS.md section 9.2 (others print as "ALnn").
+# Alarm names from MODBUS_REGISTERS.md section 5.6 (others print as "ALnn").
 ALARM_NAMES = {
     2: "High humidity",
     3: "High summer water temperature",

@@ -636,7 +636,7 @@ an error. The factory-wired water and evaporator temperatures keep working.
 What each display and probe configuration does:
 [UNIT_BEHAVIOUR §8](doc/references/UNIT_BEHAVIOUR.md#8-display-and-probe-configurations).
 The inputs, probe types and [HA00](doc/references/MODBUS_REGISTERS.md#ha00) values:
-[MODBUS_REGISTERS §14](doc/references/MODBUS_REGISTERS.md#14-probes-inputs-and-probe-source).
+[MODBUS_REGISTERS §5.4](doc/references/MODBUS_REGISTERS.md#54-sensors-and-probes).
 
 ## Requirements
 
