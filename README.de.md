@@ -14,21 +14,17 @@ Schnellstart und Funktionsumfang. Alles Weitere steht im
 Abschnitt dort, damit Sie alles finden.
 
 Home-Assistant-Integration (per **HACS** installierbar) für die
-Entfeuchter **hej.luft HRDS+ 30 / 50** (auch HRDS 30 / HRDS 50 geschrieben)
-und **Innova DEH+ 30 / 50** (auch DEH 30 / DEH 50): Taupunktentfeuchtung mit
-Lüftung und Flächenkühlung. Die Integration steuert und überwacht das Gerät
+Entfeuchter **hej.luft HRDS+ 30 / 50** und **Innova DEH+ 30 / 50**:
+Taupunktentfeuchtung mit Lüftung und Flächenkühlung. Die Integration steuert und überwacht das Gerät
 **lokal über Modbus TCP, ganz ohne Cloud**.
 
 ## Kompatible Geräte
 
 Das Gerät wird von **[INNOVA S.r.l.](https://www.innova.it/)** (Storo, Italien)
 hergestellt. hej.luft verkauft es in Österreich unter eigenem Namen als
-OEM-Produkt. Die
-[CE-Konformitätserklärung auf der hej.luft-Seite](https://www.hejluft.at/_files/ugd/714411_e735ab85400c485fa7c042fac92d3230.pdf)
-nennt Innova als Hersteller der Entfeuchtungsgeräte HRDS und HRDS+.
+OEM-Produkt.
 
-* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** (auch HRDS 30 / 50
-  geschrieben), mit den Typenschild-Codes aus dem
+* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)**, mit den Typenschild-Codes aus dem
   [Technischen Handbuch](https://www.hejluft.at/_files/ugd/714411_f1ffc5d222f4476da2e37f29c64a7f93.pdf),
   zum Beispiel *HRDS+ 30 H R K DC*.
 * **[Innova DEH+ 30 H / 50 H](https://www.innova.it/en/products/vmc/dehumidifiers/deh-ad-incasso-orizzontale/)**:
@@ -36,39 +32,34 @@ nennt Innova als Hersteller der Entfeuchtungsgeräte HRDS und HRDS+.
   Nenn-Luftdurchsatz (300 / 500 m³/h). hej.luft baut oder verändert es nicht:
   das HRDS+ 30 des Maintainers wurde direkt aus Italien geliefert und ist
   physisch dasselbe Gerät wie das DEH+ 30 H; die Integration wurde damit
-  entwickelt. Die 50er-Größen sind nicht getestet (siehe Beta-Hinweis). Die in
-  `doc/references/` abgelegte DEH+-Installationsanleitung beschreibt die ältere
-  Steuerung mit Mikroschaltern, nicht die EVCO-„K“-Platine des HRDS+; Register
-  und Verhalten stammen aus den HRDS+-Handbüchern.
+  entwickelt. Die in `doc/references/` abgelegte DEH+-Installationsanleitung
+  beschreibt eine ältere Steuerung, nicht die EVCO-„K“-Platine des HRDS+;
+  Register und Verhalten stammen aus den HRDS+-Handbüchern.
 
 > *Wird Ihr Gerät mit der Innova-Platine unter einem anderen Namen verkauft,
 > eröffnen Sie ein Issue und verlinken Sie die Produktseite.*
 
-## Release 0.9.5: Beta, noch nicht 1.0
+## Release 0.9.5
 
-Die Integration ist veröffentlicht und nutzbar, aber eine **Beta**.
+Die Integration ist veröffentlicht und nutzbar.
 
-* **Entwickelt und getestet** wurde sie nur mit **einem HRDS+ 30 mit Umluft
+* **Entwickelt und getestet** wurde sie an **einem HRDS+ 30 mit Umluft
   (`R`-Variante)**, ohne Display und ohne externe Fühler, hinter einem
   Modbus-RTU-zu-TCP-Gateway, im Solekreis einer Erdwärmepumpe. Welche Geräte und
   Installationen bekanntermaßen funktionieren und was jeweils beobachtet wurde:
   [Getestete Geräte und Installationen](doc/tested-setups.md) (EN).
 * **Auf echter Hardware nicht getestet:** das HRDS+ 50, Geräte ohne Umluft,
-  Geräte mit Display oder Fühlern (automatische Sollwertregelung), Winterbetrieb
-  und Freikühlung. **Die Lüfterdrehzahl bestimmt das Gerät:** Home Assistant
-  zeigt sie an, kann sie aber nicht einstellen, denn das Gerät nimmt über
-  Modbus keine Drehzahlvorgabe an. Ein erhöhtes *Fan min speed* hebt einen
-  laufenden Lüfter an ([Fan speed](README.md#fan-speed), EN).
-  Offene Punkte:
-  [`plans/todo.md`](plans/todo.md).
-* **Der Klima-Modus *Auto* ist nicht an echter Hardware getestet.** Er erscheint
-  nur mit Display oder Raumfühler; die CI prüft ihn gegen ein simuliertes
-  Display-Gerät.
+  Geräte mit Display oder Fühlern (einschließlich des Klima-Modus *Auto*, den
+  die CI nur gegen ein simuliertes Gerät prüft), Winterbetrieb und
+  Freikühlung. Offene Punkte: [`plans/todo.md`](plans/todo.md).
+* **Die Lüfterdrehzahl bestimmt das Gerät:** Home Assistant kann keine Drehzahl
+  direkt vorgeben; es kann den Lüfter über sein Drehzahlband anheben, und ein
+  0–10-V-Signal am Gerät stellt sie frei ein ([Fan speed](README.md#fan-speed), EN).
 
 Berichte von anderen Geräten sind sehr willkommen, siehe
 [Reporting issues](README.md#reporting-issues) (EN). Der Weg zu 1.0:
 [Road to 1.0](README.md#road-to-10) (EN). Details: der
-[englische Abschnitt](README.md#release-095--beta-not-10-yet).
+[englische Abschnitt](README.md#release-095).
 
 ## Schnellstart
 
@@ -79,17 +70,17 @@ Die Einzelheiten stehen im englischen README; die Links führen dorthin.
 2. **[Hinzufügen](README.md#2-add-the-integration)** (EN) unter
    *Einstellungen → Geräte & Dienste*, mit der Adresse Ihres Modbus-TCP-Gateways.
 3. **[Einrichtung prüfen](README.md#3-check-the-setup)** (EN): das Gerät
-   **HRDS+ setup** öffnen und sicherstellen, dass **Setup check** den Wert `ok`
+   **HRDS+ setup** öffnen und sicherstellen, dass [*Setup check*](doc/entity-reference.md#setup-check) den Wert `ok`
    zeigt.
 4. **[Festlegen, was Home Assistant steuern darf](README.md#4-choose-what-home-assistant-may-control)** (EN):
    die **Modbus-Freigaben** für die gewünschten Funktionen einschalten (Ein/Aus,
-   Entfeuchten, Integration) und danach **Allow operational requests**. Beides
+   Entfeuchten, Integration) und danach [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests). Beides
    ist nach einer Neuinstallation **aus**, und die Integration schaltet sie nie
    von selbst ein. Ohne sie beobachtet die Integration nur: Messwerte und
    Einstellungen funktionieren.
-5. **[Wie das Gerät arbeitet](README.md#how-the-unit-works)** (EN): die
-   Betriebsarten, einschließlich des passiven Kaltwasserbetriebs, und wie man
-   sie bedient.
+5. **[Erster Betrieb](README.md#5-first-run)** (EN) und
+   **[Wie das Gerät arbeitet](README.md#how-the-unit-works)** (EN): was
+   *Dry* und *Cool* tun.
 
 ## Was die Integration kann
 
@@ -103,13 +94,10 @@ Sie spricht über Modbus TCP mit der Steuerplatine des Geräts und stellt bereit
   **Auto**. Keine Lüfterstufe: die Drehzahl ist nur ablesbar.
 * **Sensoren, Binärsensoren, Schalter, Zahlen und Auswahlfelder**: Messwerte,
   Betriebszustand, Alarme, Anforderungen (Entfeuchten, Integration), Sollwerte
-  und Lüfterbänder, Saison.
-* **Lüfter** (nur `R`-Variante): der Zuluft-/Umluftlüfter als Messwerte
-  (läuft, Status, Ausgang in %). Ein- und ausschalten kann ihn nur das Gerät
-  mit seinen Anforderungen, nicht Home Assistant.
-* **Wasserkreis-Diagnose**: Ventil/Pumpe, Kondensatorventil, Wasseralarme und
-  eine Zusammenfassung *Water circuit check* (nur lesend, das Gerät steuert
-  seinen Wasserkreis selbst).
+  und Lüfterbänder, Saison, dazu drei berechnete Luftmengen-Sensoren.
+* **Lüfter und Wasserkreis nur als Messwerte**: Das Gerät steuert Lüfter
+  (Umluftlüfter der `R`-Variante), Ventil und Pumpe selbst; Home Assistant zeigt
+  sie nur an, samt einer Zusammenfassung [*Water circuit check*](doc/entity-reference.md#water-circuit-check).
 * **Setup-Gerät** mit einer Einrichtungsprüfung und den Freigaben, und auf
   Wunsch ein **Installateur-Gerät** mit dem gesamten Installateurmenü
   (rund 240 Parameter, standardmäßig aus).
@@ -136,7 +124,6 @@ steht.
     * [Which enable gives which function](README.md#which-enable-gives-which-function) (EN): Welche Freigabe welche Funktion bringt
     * [Allow operational requests](README.md#allow-operational-requests) (EN): Betriebsanforderungen erlauben
   * [5. First run](README.md#5-first-run) (EN): Erster Betrieb
-  * [Airflow calibration (Options)](README.md#airflow-calibration-options) (EN): Luftmengen-Kalibrierung (Optionen)
 * [How the unit works](README.md#how-the-unit-works) (EN): Wie das Gerät arbeitet
   * [What is inside](README.md#what-is-inside) (EN): Aufbau des Geräts
   * [Two requests](README.md#two-requests) (EN): Die zwei Anforderungen (DEU und INT)
@@ -150,8 +137,7 @@ steht.
     * [Brine temperature guard](README.md#brine-temperature-guard) (EN): Solewächter (Temperaturschutz)
   * [Setting target humidity and target temperature](README.md#setting-target-humidity-and-target-temperature) (EN): Soll-Feuchte und Soll-Temperatur einstellen
   * [Fan and recirculation](README.md#fan-and-recirculation) (EN): Lüfter und Umluft
-  * [Drying with the fan on, but active cooling off](README.md#drying-with-the-fan-on-but-active-cooling-off) (EN): Entfeuchten mit Lüfter, ohne aktive Kühlung
-  * [Airflow sensors](README.md#airflow-sensors) (EN): Luftmengen-Sensoren
+  * [Airflow sensors](README.md#airflow-sensors) (EN): Luftmengen-Sensoren und ihre Kalibrierung
   * [Fan speed](README.md#fan-speed) (EN): Lüfterdrehzahl
 * [Entity reference](doc/entity-reference.md) (EN): Alle Entitäten, nach Gerät gegliedert (eigene Datei)
 * [Probe requirements](README.md#probe-requirements) (EN): Anforderungen an Temperatur- und Feuchtefühler

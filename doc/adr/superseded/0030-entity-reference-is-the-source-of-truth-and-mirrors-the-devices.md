@@ -1,14 +1,8 @@
 ---
-status: accepted
+status: superseded by ADR-0036
 date: 2026-10-22
 decision-makers: mikopp
 topics: [entities, docs]
-paths:
-  - "custom_components/innova_hrds/const.py"
-  - "custom_components/innova_hrds/entity_common.py"
-  - "custom_components/innova_hrds/installer_params.py"
-  - "custom_components/innova_hrds/translations/*.json"
-  - "doc/entity-reference.md"
 ---
 
 # ADR-0030: The entity reference is the one source of truth and mirrors the devices
@@ -74,3 +68,12 @@ test -f doc/entity-reference.md
 
 Devices: ADR-0016 (setup device), ADR-0017 (installer device). One home per
 topic: ADR-0027. How to add an entity: `.claude/rules/entities.md`.
+
+## Why it was superseded
+
+Keying the reference on `platform.key` served the check, not the reader: users
+read `switch.dehumidify` as an entity ID that does not exist, and the README
+copied the keys as IDs (reported with screenshots, 2026-10-31). Home
+Assistant's own integration pages list entities by display name, grouped by
+platform or device, and that name is checkable from the translations, so
+ADR-0036 adopts that pattern.

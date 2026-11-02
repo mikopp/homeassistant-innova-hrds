@@ -41,8 +41,8 @@ TAG_RE = re.compile(rf"^v({VERSION})$")
 UNRELEASED = "## Unreleased"
 VERSION_HEADING = re.compile(rf"^## ({VERSION}) \((\d{{4}}-\d{{2}}-\d{{2}})\): (.+)$")
 BANNER = re.compile(rf"^## Release ({VERSION})\b", re.M)
-# GitHub's anchor of the English banner, e.g. README.md#release-094--beta-...
-BANNER_ANCHOR = re.compile(r"(README\.md#release-)(\d+)(-)")
+# GitHub's anchor of the English banner, e.g. README.md#release-094
+BANNER_ANCHOR = re.compile(r"(README\.md#release-)(\d+)(?!\d)")
 
 # ADR-0032: the only subsections, in this order. The last two fold into a
 # <details> block in the release notes.
@@ -250,7 +250,7 @@ def check(root: pathlib.Path, tag: str | None = None) -> str:
             if match.group(2) != digits:
                 raise ReleaseError(
                     f"{path.relative_to(root)}: link to README.md#release-"
-                    f"{match.group(2)}-… is stale; the banner is {version}"
+                    f"{match.group(2)} is stale; the banner is {version}"
                 )
 
     top, found = top_section(root)
@@ -388,7 +388,7 @@ def prepare(root: pathlib.Path, version: str, title: str, date: str) -> list[str
     digits = anchor_digits(version)
     for path in tracked_markdown(root):
         text = path.read_text(encoding="utf-8")
-        new = BANNER_ANCHOR.sub(rf"\g<1>{digits}\g<3>", text)
+        new = BANNER_ANCHOR.sub(rf"\g<1>{digits}", text)
         if new != text:
             path.write_text(new, encoding="utf-8")
             written.append(path.relative_to(root).as_posix())

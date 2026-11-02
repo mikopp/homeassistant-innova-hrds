@@ -10,7 +10,7 @@ writes, a dehumidify cycle) in `tests/ha/test_seeds.py` — no code change neede
 `<model>_<display|headless>_<state>.json`, e.g.
 
 * `hrds_30+_headless_factory_state.json` — HRDS+ 30 R, no display, as found
-  before the integration ever wrote to it (PH01 = 1, PH02 = 0, HA00 = 2).
+  before the integration ever wrote to it ([PH01](../../doc/references/MODBUS_REGISTERS.md#ph01) = 1, [PH02](../../doc/references/MODBUS_REGISTERS.md#ph02) = 0, [HA00](../../doc/references/MODBUS_REGISTERS.md#ha00) = 2).
 
 ## Adding a device
 
@@ -30,8 +30,8 @@ instead. Two scenarios run today:
 
 * **headless (real)**: the dump above, as is.
 * **display (derived)**: `display_cnu2.json` patches that dump best-effort
-  into a unit with a CNU2 display and its built-in room sensors (PH01 = 1,
-  HA00 = 6, room readings instead of the sentinel). `tests/ha/test_display.py`
+  into a unit with a CNU2 display and its built-in room sensors ([PH01](../../doc/references/MODBUS_REGISTERS.md#ph01) = 1,
+  [HA00](../../doc/references/MODBUS_REGISTERS.md#ha00) = 6, room readings instead of the sentinel). `tests/ha/test_display.py`
   and the climate *Auto* mode tests run on it. It is not a real dump: replace
   it with one when a display unit is available.
 

@@ -70,7 +70,7 @@ probe faults, water circuit), and a unit with display and room probes.
 * The debounced post-write refresh survived unload.
 
 Found then and fixed since (PR #34): the climate entity offered COOL on a unit
-without active cooling (PG02 = 0); now
+without active cooling ([PG02](../doc/references/MODBUS_REGISTERS.md#pg02) = 0); now
 `tests/ha/test_seeds.py::test_cool_not_offered_without_integration_function`.
 
 ## 5. Layering decision (2026-10-20)

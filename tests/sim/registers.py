@@ -81,7 +81,7 @@ ENABLE_FOR = {
 }
 
 
-# Unwired analog input (MODBUS_REGISTERS.md section 14.7).
+# Unwired analog input (MODBUS_REGISTERS.md section 14.4).
 PROBE_SENTINEL = 0x8004
 
 # Input allocations that can carry the fan tachometer (input function 45 / 46
