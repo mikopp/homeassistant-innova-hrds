@@ -19,11 +19,11 @@ decisions about the integration, not hardware questions.
       ignores the matching request, that it keeps a request written while the
       enable was off, and starts it once the enable is turned on
       (`UNIT_BEHAVIOUR.md` §3.3, [INFERRED]). Entities (setup device):
-      *Enable on/off via Modbus ([PH02](../doc/references/MODBUS_REGISTERS.md#ph02))* gates [*Unit on/off (Modbus)*](../doc/entity-reference.md#unit-on-off-modbus);
-      *Enable dehumidify (DEU) via Modbus ([PH28](../doc/references/MODBUS_REGISTERS.md#ph28))* gates [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus);
+      *Enable on/off via Modbus ([PH02](../doc/references/MODBUS_REGISTERS.md#ph02))* gates [*Unit on/off request*](../doc/entity-reference.md#unit-on-off-request);
+      *Enable dehumidify (DEU) via Modbus ([PH28](../doc/references/MODBUS_REGISTERS.md#ph28))* gates [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request);
       *Enable integration (INT) via Modbus ([PH27](../doc/references/MODBUS_REGISTERS.md#ph27))* gates *Integration request*.
 - [ ] **Power cycle with a request on.** The on/off state survives a power
-      cycle (T30); do [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) ([1140](../doc/references/MODBUS_REGISTERS.md#reg-1140)) and *Integration request*
+      cycle (T30); do [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request) ([1140](../doc/references/MODBUS_REGISTERS.md#reg-1140)) and *Integration request*
       ([1139](../doc/references/MODBUS_REGISTERS.md#reg-1139)) survive too? Power-cycle once with a dehumidify request on.
 - [ ] **An OFF always wins** over an ON from any source (display/DI/Modbus),
       per the manual [MB p.5].
@@ -46,7 +46,7 @@ Data: `tests/devices/runs/` and T11–T22, T32–T38. Log at 5 s with
 - [ ] **Does [PE32](../doc/references/MODBUS_REGISTERS.md#pe32) count minutes?** The compressor stops by itself after
       92–94 min (T34); [PE32](../doc/references/MODBUS_REGISTERS.md#pe32) reads 90 and is listed in seconds. Log the
       compressor output against [PE28](../doc/references/MODBUS_REGISTERS.md#pe28) (52 rps) through a run over 90 min. If
-      it holds, correct the unit in `MODBUS_REGISTERS.md` §16.
+      it holds, correct the unit in [`MODBUS_REGISTERS.md` §7.3](../doc/references/MODBUS_REGISTERS.md#73-compressor-pe).
 - [ ] **Stop sequence at 5 s.** Three stops at 1-minute resolution (T19, T36,
       T38). Still to log: compressor stop against [PE02](../doc/references/MODBUS_REGISTERS.md#pe02), the ramp-down
       ([PE25](../doc/references/MODBUS_REGISTERS.md#pe25)), V3V + PM closing against [Pb01](../doc/references/MODBUS_REGISTERS.md#pb01), fan run-on against [PF03](../doc/references/MODBUS_REGISTERS.md#pf03).

@@ -529,7 +529,7 @@ Observations and consequences:
 
 * Unwired analog inputs read a sentinel word (`0x8004`), not 0; the factory
   water and evaporator probes read real values [T3]. Details:
-  [`MODBUS_REGISTERS.md` §14.4](MODBUS_REGISTERS.md#144-unwired-analog-inputs-read-a-sentinel-not-a-temperature).
+  [`MODBUS_REGISTERS.md` §5.4](MODBUS_REGISTERS.md#54-sensors-and-probes).
 * Probe alarms AL28 (room T) / AL34 (room RH) are meant to fire when a
   configured source is missing [HB 7.3]. On the headless reference unit,
   "OFF by display", none were set [T4], and none appeared once the
@@ -566,7 +566,7 @@ Observations and consequences:
     [PF23](MODBUS_REGISTERS.md#pf23) (below) [HB 5.3; MB p.14–15].
   * Manual and potentiometer act during DEU, and during INT with [PF31](MODBUS_REGISTERS.md#pf31) ≠ 0
     [HB 6.2]. On the reference unit, in standby: no display, [1116](MODBUS_REGISTERS.md#reg-1116) = 0, [507](MODBUS_REGISTERS.md#reg-507)
-    reads `0x7FFA` like the unwired inputs (MODBUS_REGISTERS §14.4), [PH03](MODBUS_REGISTERS.md#ph03) = 0
+    reads `0x7FFA` like the unwired inputs (MODBUS_REGISTERS §5.4), [PH03](MODBUS_REGISTERS.md#ph03) = 0
     [T2, T3]; [1112](MODBUS_REGISTERS.md#reg-1112) = 0 through the DEU runs [T16, T18]. [INFERRED] from
     HB 6.2: during DEU no source asks for more than the minimum, which is why
     the fan runs at [PF28](MODBUS_REGISTERS.md#pf28) [T16, T18].
@@ -847,7 +847,7 @@ request ending, with the water at 34.3 °C, above the [PC07](MODBUS_REGISTERS.md
 ## 12. Alarms and what they do to the flow
 
 Codes, bit positions and reset registers:
-[`MODBUS_REGISTERS.md` §9](MODBUS_REGISTERS.md#9-alarms). Behaviour [HB 7.3,
+[`MODBUS_REGISTERS.md` §5.6](MODBUS_REGISTERS.md#56-alarms). Behaviour [HB 7.3,
 7.4]:
 
 | Alarm | Trigger | Effect on the flow | Reset |
@@ -947,7 +947,7 @@ Third-party field reports (energiesparhaus.at HRDS+ thread):
 
 How each operation is done through each channel. Register addresses and the
 write recipes are in
-[`MODBUS_REGISTERS.md` §11](MODBUS_REGISTERS.md#11-cookbook--common-operations).
+[`MODBUS_REGISTERS.md` §10](MODBUS_REGISTERS.md#10-common-operations).
 
 | Action | CNU2 display | Terminals | Modbus | Unit behaviour / notes |
 |--------|--------------|-----------|--------|------------------------|
@@ -963,7 +963,7 @@ write recipes are in
 | Time programs | Time program menu; disabled as delivered [HB 5.2.4] | — | [PH03](MODBUS_REGISTERS.md#ph03) | Can hold the unit OFF and block the compressor (§3.1, §10) |
 | Clock | `CLOCK` line [HB 5.2.4] | — | — | Lost after a long power cut → AL26 [HB 5.2.4] |
 | Modbus address / baud / parity / stop bits | Installer menu → MODBUS (installer password) [MB p.11] | — | Listed R/W, but only configurable at the display or service software [MB p.5] | Power-cycle after a change [MB p.11] |
-| Other parameters | Service, maintenance, installer, manufacturer menus (password levels; manufacturer only while OFF) [HB 5.2.4] | — | Most are holding registers ([`MODBUS_REGISTERS.md` §16](MODBUS_REGISTERS.md#16-installer-menu-parameters-installer-device)) | Changes can void the warranty [HB 5.2.4] |
+| Other parameters | Service, maintenance, installer, manufacturer menus (password levels; manufacturer only while OFF) [HB 5.2.4] | — | Most are holding registers ([`MODBUS_REGISTERS.md` §6 to §8](MODBUS_REGISTERS.md#3-menus-and-parameter-groups)) | Changes can void the warranty [HB 5.2.4] |
 
 ### 14.1 Settings that decide the flow
 

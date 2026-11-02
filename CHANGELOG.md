@@ -16,6 +16,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 ### 🛠️ Fixes and other changes
 
 - **The integration now names its categories.** Home Assistant and HACS list it under *Climate: air purifiers and humidifiers* and *Climate: fans and ventilation*, and HACS no longer warns about missing categories.
+- **The request switches are named as requests.** *Unit on/off (Modbus)* is now [*Unit on/off request*](doc/entity-reference.md#unit-on-off-request), *Dehumidify (Modbus)* is [*Dehumidify request*](doc/entity-reference.md#dehumidify-request) and the sensor *Dehumidify requested* is [*Dehumidify request active*](doc/entity-reference.md#dehumidify-request-active) (German: *Gerät Ein/Aus-Anforderung*, *Entfeuchtungsanforderung*, *Entfeuchtungsanforderung aktiv*). They ask the unit for something it may delay or refuse; the sensor shows what the unit has requested from any source. Entity IDs of existing installations do not change; new installations get IDs from the new names.
 
 ### 📚 Documentation
 
@@ -24,6 +25,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 - **The entity reference reads like a Home Assistant integration page.** Entities are listed by the name Home Assistant shows, per device and platform (Sensors, Switches, …), each with a one-line description, its Modbus register in parentheses and the units it is available for; configuration entities are marked, and diagnostic entities have their own section. The README, the tested setups and the test plans name entities the same way instead of by internal keys such as `switch.dehumidify`, and each name in those documents links to its entry in the entity reference.
 - **The README is shorter and easier to read.** Unit and Modbus detail (operating modes, the passive cold-water path, winter heating, fan bands) is left to the unit behaviour reference and linked from the README; the setup check and the first-use checklist are one list, and the climate's *Heating* conditions moved to the entity reference. The German summary follows.
 - **The fan reference lists the fan-speed sources.** The unit behaviour reference names the inputs the handbook gives for the fan speed (display, 0–10 V, and room temperature during integration) and why a unit without display or probes stays at the band minimum. The fan test plan describes ways to set the speed, each with the test that decides it, and drops tests that cannot work. The README and the entity reference no longer suggest the fan cannot be changed at all: the band raises it, and a 0–10 V signal sets it freely.
+- **The Modbus register reference follows the unit's own menus.** Setup and operation come first (live values and the user menu), then the maintenance, installer and manufacturer settings, each grouped by topic (fans, compressor, alarms, water valves, I/O allocation …) as in the handbook's parameter list. Every register is in one place with the same columns, the manual's access mode and name; a table explains the code groups (`PF`, `PE`, `HA`, …) and the menu levels, and an address map shows where each range lives. Anchors and links to registers are unchanged.
 
 ---
 
