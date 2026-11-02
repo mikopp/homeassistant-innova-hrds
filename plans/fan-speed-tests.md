@@ -148,7 +148,7 @@ Cheapest and least risky first. The letters are fixed labels, not an order.
   | [*Fan max speed (dehumidify)*](../doc/entity-reference.md#fan-max-speed-dehumidify) | [1647](../doc/references/MODBUS_REGISTERS.md#reg-1647) | [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) |
   | [*Fan min speed (cooling)*](../doc/entity-reference.md#fan-min-speed-cooling) | [1852](../doc/references/MODBUS_REGISTERS.md#reg-1852) | [PF27](../doc/references/MODBUS_REGISTERS.md#pf27) |
   | [*Fan max speed (cooling)*](../doc/entity-reference.md#fan-max-speed-cooling) | [1646](../doc/references/MODBUS_REGISTERS.md#reg-1646) | [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) |
-  | [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
+  | [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request) | [1140](../doc/references/MODBUS_REGISTERS.md#reg-1140) | DEU |
   | [*Integration request (cool in summer, heat in winter)*](../doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) | [1139](../doc/references/MODBUS_REGISTERS.md#reg-1139) | INT |
 
 * **Writes without an entity** (tests I, J, J0: [PH03](../doc/references/MODBUS_REGISTERS.md#ph03),
@@ -209,7 +209,7 @@ Expected [INFERRED]: [1112](../doc/references/MODBUS_REGISTERS.md#reg-1112) read
 Raising and lowering [PF28](../doc/references/MODBUS_REGISTERS.md#pf28) are proven (T24–T26); what remains is the 5 s
 log of a raise.
 
-1. Start DEU ([*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) on). Wait until [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) = ON and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) is
+1. Start DEU ([*Dehumidify request*](../doc/entity-reference.md#dehumidify-request) on). Wait until [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119) = ON and [639](../doc/references/MODBUS_REGISTERS.md#reg-639) is
    steady (about 2 min after the damper opens).
 2. Start the 5 s read loop: [639](../doc/references/MODBUS_REGISTERS.md#reg-639), [1114](../doc/references/MODBUS_REGISTERS.md#reg-1114), [1614](../doc/references/MODBUS_REGISTERS.md#reg-1614), [1116](../doc/references/MODBUS_REGISTERS.md#reg-1116), [1119](../doc/references/MODBUS_REGISTERS.md#reg-1119).
 3. With the fan at 50, set [*Fan min speed (dehumidify)*](../doc/entity-reference.md#fan-min-speed-dehumidify) to 65. Log for

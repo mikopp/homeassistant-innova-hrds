@@ -19,11 +19,11 @@ decisions about the integration, not hardware questions.
       ignores the matching request, that it keeps a request written while the
       enable was off, and starts it once the enable is turned on
       (`UNIT_BEHAVIOUR.md` §3.3, [INFERRED]). Entities (setup device):
-      *Enable on/off via Modbus ([PH02](../doc/references/MODBUS_REGISTERS.md#ph02))* gates [*Unit on/off (Modbus)*](../doc/entity-reference.md#unit-on-off-modbus);
-      *Enable dehumidify (DEU) via Modbus ([PH28](../doc/references/MODBUS_REGISTERS.md#ph28))* gates [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus);
+      *Enable on/off via Modbus ([PH02](../doc/references/MODBUS_REGISTERS.md#ph02))* gates [*Unit on/off request*](../doc/entity-reference.md#unit-on-off-request);
+      *Enable dehumidify (DEU) via Modbus ([PH28](../doc/references/MODBUS_REGISTERS.md#ph28))* gates [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request);
       *Enable integration (INT) via Modbus ([PH27](../doc/references/MODBUS_REGISTERS.md#ph27))* gates *Integration request*.
 - [ ] **Power cycle with a request on.** The on/off state survives a power
-      cycle (T30); do [*Dehumidify (Modbus)*](../doc/entity-reference.md#dehumidify-modbus) ([1140](../doc/references/MODBUS_REGISTERS.md#reg-1140)) and *Integration request*
+      cycle (T30); do [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request) ([1140](../doc/references/MODBUS_REGISTERS.md#reg-1140)) and *Integration request*
       ([1139](../doc/references/MODBUS_REGISTERS.md#reg-1139)) survive too? Power-cycle once with a dehumidify request on.
 - [ ] **An OFF always wins** over an ON from any source (display/DI/Modbus),
       per the manual [MB p.5].

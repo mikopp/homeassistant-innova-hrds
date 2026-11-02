@@ -471,7 +471,7 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "REG": 1121,
         "DT": C_DT_UINT16,
         "SWITCH": {"off": 0, "on": 1},
-        "NAME": "Dehumidify requested",
+        "NAME": "Dehumidify request active",
     },
     # "Fans integration request" (MB): a 0-100 % fan request like 1113-1116,
     # not a flag and not recirculation; 0 through dehumidify runs
@@ -608,14 +608,14 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "REG": 1105,
         "DT": C_DT_UINT16,
         "SWITCH": {"off": 0, "on": 1},
-        "NAME": "Unit on/off (BMS)",
+        "NAME": "Unit on/off request",
     },
     C_DEHUMIDIFY: {
         "RT": C_REG_TYPE_HOLDING_REGISTERS,
         "REG": 1140,
         "DT": C_DT_UINT16,
         "SWITCH": {"off": 0, "on": 1},
-        "NAME": "Dehumidify (BMS)",
+        "NAME": "Dehumidify request",
     },
     C_INTEGRATION_REQUEST: {
         "RT": C_REG_TYPE_HOLDING_REGISTERS,
@@ -1117,18 +1117,18 @@ SWITCH_HINTS: Dict[str, tuple[str, str]] = {
     ),
     C_ENABLE_ONOFF_BMS: (
         "Turn ON to switch the unit on and off from Home Assistant (climate Off, "
-        "turn on/off, 'Unit on/off (Modbus)'). OFF: Home Assistant only shows "
+        "turn on/off, 'Unit on/off request'). OFF: Home Assistant only shows "
         "whether the unit runs; its own controls switch it.",
         "AN, um das Gerät aus Home Assistant ein- und auszuschalten (Klima Aus, "
-        "Ein/Aus, 'Gerät ein/aus (Modbus)'). AUS: Home Assistant zeigt nur an, "
+        "Ein/Aus, 'Gerät Ein/Aus-Anforderung'). AUS: Home Assistant zeigt nur an, "
         "ob das Gerät läuft; es wird über seine eigenen Bedienelemente geschaltet.",
     ),
     C_ENABLE_DEHUM_BMS: (
         "Turn ON to request dehumidifying from Home Assistant (climate Dry, "
-        "'Dehumidify (Modbus)'). OFF: the unit ignores that request; Home Assistant only "
+        "'Dehumidify request'). OFF: the unit ignores that request; Home Assistant only "
         "shows what the unit does.",
         "AN, um die Entfeuchtung aus Home Assistant anzufordern (Klima Entfeuchten, "
-        "'Entfeuchtung (Modbus)'). AUS: das Gerät ignoriert diese Anforderung; Home "
+        "'Entfeuchtungsanforderung'). AUS: das Gerät ignoriert diese Anforderung; Home "
         "Assistant zeigt nur an, was das Gerät tut.",
     ),
     C_ENABLE_INT_BMS: (
@@ -1157,12 +1157,12 @@ SETUP_ISSUE_TEXTS: Dict[str, tuple[str, str]] = {
         "The unit still shows 'off by display' although no display is used: it "
         "keeps that stored OFF until the first Modbus ON. Turn on 'Enable on/off "
         "via Modbus (PH02)' and 'Allow operational requests', then switch on "
-        "'Unit on/off (Modbus)' once on the main device",
+        "'Unit on/off request' once on the main device",
         "Das Gerät zeigt noch 'Aus durch Display', obwohl kein Display genutzt "
         "wird: es behält dieses gespeicherte AUS bis zum ersten Modbus-EIN. "
         "'Ein/Aus über Modbus freigeben (PH02)' und 'Betriebsanforderungen "
-        "erlauben' einschalten, dann auf dem Hauptgerät einmal 'Gerät ein/aus "
-        "(Modbus)' einschalten",
+        "erlauben' einschalten, dann auf dem Hauptgerät einmal 'Gerät "
+        "Ein/Aus-Anforderung' einschalten",
     ),
     "unit_off_by_scheduler": (
         "Unit held off by a time program: turn off 'Time programs enabled' (PH03)",

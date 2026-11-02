@@ -16,6 +16,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 ### 🛠️ Fixes and other changes
 
 - **The integration now names its categories.** Home Assistant and HACS list it under *Climate: air purifiers and humidifiers* and *Climate: fans and ventilation*, and HACS no longer warns about missing categories.
+- **The request switches are named as requests.** *Unit on/off (Modbus)* is now *Unit on/off request*, *Dehumidify (Modbus)* is *Dehumidify request* and the sensor *Dehumidify requested* is *Dehumidify request active* (German: *Gerät Ein/Aus-Anforderung*, *Entfeuchtungsanforderung*, *Entfeuchtungsanforderung aktiv*). They ask the unit for something it may delay or refuse; the sensor shows what the unit has requested from any source. Entity IDs of existing installations do not change; new installations get IDs from the new names.
 
 ### 📚 Documentation
 

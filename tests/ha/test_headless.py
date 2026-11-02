@@ -61,7 +61,7 @@ async def test_headless_unit_stuck_off_by_display_says_how_to_start_it(setup, cl
     assert s.state("sensor", "unit_status").state == "off_by_display"
     assert "unit_waiting_for_first_on" in _issues(s)
     assert any(
-        "Unit on/off (Modbus)" in text
+        "Unit on/off request" in text
         for text in s.state("sensor", "setup_check").attributes["to_fix"]
     )
     await allow_operation(s)

@@ -1598,8 +1598,8 @@ class HrdsModbusHub:
                     self._check_operation(request, 1)
                 except ServiceValidationError as err:
                     name = {
-                        C_UNIT_ON_OFF: "Unit on/off (Modbus)",
-                        C_DEHUMIDIFY: "Dehumidify (Modbus)",
+                        C_UNIT_ON_OFF: "Unit on/off request",
+                        C_DEHUMIDIFY: "Dehumidify request",
                         C_INTEGRATION_REQUEST: "Integration request",
                     }[request]
                     raise ServiceValidationError(

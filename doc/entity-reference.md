@@ -5,8 +5,8 @@ the integration pages of [home-assistant.io](https://www.home-assistant.io/integ
 It is in English only. Back to the [README](../README.md).
 
 Entity names start with the name you gave the unit when adding the
-integration (*HRDS+* by default), so *Dehumidify (Modbus)* shows as
-*HRDS+ Dehumidify (Modbus)*. The setup and installer devices add *setup* and
+integration (*HRDS+* by default), so *Dehumidify request* shows as
+*HRDS+ Dehumidify request*. The setup and installer devices add *setup* and
 *installer* to that name.
 
 Each entity has a short description, with its Modbus register at the end in
@@ -34,7 +34,7 @@ configuration and diagnostic entities that belong to operating the unit.
 
 ### Binary sensors
 
-- **Dehumidify requested**: On while the unit has a dehumidify request, from any source ([1121](references/MODBUS_REGISTERS.md#reg-1121)). <a id="dehumidify-requested"></a>
+- **Dehumidify request active**: On while the unit has a dehumidify request, from any source ([1121](references/MODBUS_REGISTERS.md#reg-1121)). <a id="dehumidify-request-active"></a>
 - **Recirculation active**: On while the recirculation damper is open **and** the fan status is *On*: room air is drawn across the coil. Off while the fan is still starting or runs on after the damper closed (derived from [1134](references/MODBUS_REGISTERS.md#reg-1134) and [1119](references/MODBUS_REGISTERS.md#reg-1119)). <a id="recirculation-active"></a>
   - **Available for**: `R` units.
 - **Supply fan running**: On while the fan turns: *Supply fan status* is *On* or *Stopping* (the run-on at [PF26](references/MODBUS_REGISTERS.md#pf26)). Off while *Starting* (the [PS01](references/MODBUS_REGISTERS.md#ps01) delay before the fan starts), off and in alarm; unknown when the status is unknown. Home Assistant cannot switch the fan (derived from [1119](references/MODBUS_REGISTERS.md#reg-1119)). <a id="supply-fan-running"></a>
@@ -150,9 +150,9 @@ configuration and diagnostic entities that belong to operating the unit.
 
 ### Switches
 
-- **Unit on/off (Modbus)**: Switches the unit on and off over Modbus ([1105](references/MODBUS_REGISTERS.md#reg-1105)). <a id="unit-on-off-modbus"></a>
+- **Unit on/off request**: Switches the unit on and off over Modbus ([1105](references/MODBUS_REGISTERS.md#reg-1105)). <a id="unit-on-off-request"></a>
   - **Remarks**: Needs *Enable on/off via Modbus (PH02)* on the setup device.
-- **Dehumidify (Modbus)**: The dehumidify request. In winter on a brine circuit only with a passing brine temperature guard ([1140](references/MODBUS_REGISTERS.md#reg-1140)). <a id="dehumidify-modbus"></a>
+- **Dehumidify request**: The dehumidify request. In winter on a brine circuit only with a passing brine temperature guard ([1140](references/MODBUS_REGISTERS.md#reg-1140)). <a id="dehumidify-request"></a>
   - **Remarks**: Needs *Enable dehumidify (DEU) via Modbus (PH28)* on the setup device.
 - **Integration request (cool in summer, heat in winter)**: The integration request: dehumidify and cool in summer, **heat in winter**. Refused outside summer unless *Allow winter heating* is on in the integration options; always refused in winter on a brine circuit ([1139](references/MODBUS_REGISTERS.md#reg-1139)). <a id="integration-request-cool-in-summer-heat-in-winter"></a>
   - **Remarks**: Needs *Enable integration (INT) via Modbus (PH27)* on the setup device.

@@ -455,7 +455,7 @@
     },
     "binary_sensor": {
       "dehumidify_request": {
-        "name": "Dehumidify requested"
+        "name": "Dehumidify request active"
       },
       "recirculation_active": {
         "name": "Recirculation active"
@@ -505,10 +505,10 @@
     },
     "switch": {
       "unit_on_off": {
-        "name": "Unit on/off (Modbus)"
+        "name": "Unit on/off request"
       },
       "dehumidify": {
-        "name": "Dehumidify (Modbus)"
+        "name": "Dehumidify request"
       },
       "integration_request": {
         "name": "Integration request (cool in summer, heat in winter)"

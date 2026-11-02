@@ -455,7 +455,7 @@
     },
     "binary_sensor": {
       "dehumidify_request": {
-        "name": "Entfeuchtung angefordert"
+        "name": "Entfeuchtungsanforderung aktiv"
       },
       "recirculation_active": {
         "name": "Umluft aktiv"
@@ -505,10 +505,10 @@
     },
     "switch": {
       "unit_on_off": {
-        "name": "Gerät ein/aus (Modbus)"
+        "name": "Gerät Ein/Aus-Anforderung"
       },
       "dehumidify": {
-        "name": "Entfeuchtung (Modbus)"
+        "name": "Entfeuchtungsanforderung"
       },
       "integration_request": {
         "name": "Integrationsanforderung (Sommer kühlen, Winter heizen)"

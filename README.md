@@ -212,7 +212,7 @@ as short codes, explained below.
    | `headless_settings_pending` | Without a display, [PH01](doc/references/MODBUS_REGISTERS.md#ph01) and [HA00](doc/references/MODBUS_REGISTERS.md#ha00) must be 0. The integration writes them on the next poll; if this persists, the unit does not keep the write and the integration gives up (check the log). |
    | `unit_off_by_digital_input` | The remote on/off contact (OFF/OFF terminals, [HB03](doc/references/MODBUS_REGISTERS.md#hb03)) is open, so the unit is forced off. Close it (the factory bridge) or set [HB03](doc/references/MODBUS_REGISTERS.md#hb03) accordingly. |
    | `unit_off_by_scheduler` / `unit_off_by_clock` | A time program or the internal clock holds the unit off. Switch off *Time programs enabled* ([PH03](doc/references/MODBUS_REGISTERS.md#ph03)) for Modbus-only control. |
-   | `unit_waiting_for_first_on` | Without a display, [*Unit status*](doc/entity-reference.md#unit-status) still reads *off by display* although [PH01](doc/references/MODBUS_REGISTERS.md#ph01) is 0: the unit keeps a stored OFF until the first Modbus ON. Turn on *Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))* and [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests), then switch on [*Unit on/off (Modbus)*](doc/entity-reference.md#unit-on-off-modbus) once. |
+   | `unit_waiting_for_first_on` | Without a display, [*Unit status*](doc/entity-reference.md#unit-status) still reads *off by display* although [PH01](doc/references/MODBUS_REGISTERS.md#ph01) is 0: the unit keeps a stored OFF until the first Modbus ON. Turn on *Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))* and [*Allow operational requests*](doc/entity-reference.md#allow-operational-requests), then switch on [*Unit on/off request*](doc/entity-reference.md#unit-on-off-request) once. |
    | `unit_off_by_display` | Only with the display option ticked: the display has switched the unit off. |
    | `room_temperature_probe_missing` / `room_humidity_probe_missing` | A probe input ([HA02](doc/references/MODBUS_REGISTERS.md#ha02) for temperature on AI2, [HA03](doc/references/MODBUS_REGISTERS.md#ha03) for humidity on AI3) says a probe is connected, but nothing is wired, so the unit waits for a reading. Set the input to *Unused* or wire the probe. |
    | `probe_input_unrecognised` | [HA02](doc/references/MODBUS_REGISTERS.md#ha02) or [HA03](doc/references/MODBUS_REGISTERS.md#ha03) holds a code that is not a documented probe code, so the select shows unknown (the raw code is in the log). Pick an option, or ask the installer. |
@@ -271,8 +271,8 @@ reading, status, alarm and setting works, and nothing can make the unit act.
 
 | To do this from Home Assistant | Turn on (setup device) | Register | While it is off |
 |---|---|---|---|
-| Switch the unit **on and off**: climate *Off*, climate *turn on/off*, switching from *Off* to any mode, [*Unit on/off (Modbus)*](doc/entity-reference.md#unit-on-off-modbus) | **Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))** | [1778](doc/references/MODBUS_REGISTERS.md#reg-1778) | The unit's own controls switch it. The climate offers only the modes on the side the unit is on: no *Off* while it runs, only *Off* while it is off. |
-| **Dehumidify**: climate *Dry*, [*Dehumidify (Modbus)*](doc/entity-reference.md#dehumidify-modbus) | **Enable dehumidify (DEU) via Modbus ([PH28](doc/references/MODBUS_REGISTERS.md#ph28))** | [1870](doc/references/MODBUS_REGISTERS.md#reg-1870) | No *Dry*. A dehumidify request from the unit's own humidity logic or the DEU input still shows as *Dry*. |
+| Switch the unit **on and off**: climate *Off*, climate *turn on/off*, switching from *Off* to any mode, [*Unit on/off request*](doc/entity-reference.md#unit-on-off-request) | **Enable on/off via Modbus ([PH02](doc/references/MODBUS_REGISTERS.md#ph02))** | [1778](doc/references/MODBUS_REGISTERS.md#reg-1778) | The unit's own controls switch it. The climate offers only the modes on the side the unit is on: no *Off* while it runs, only *Off* while it is off. |
+| **Dehumidify**: climate *Dry*, [*Dehumidify request*](doc/entity-reference.md#dehumidify-request) | **Enable dehumidify (DEU) via Modbus ([PH28](doc/references/MODBUS_REGISTERS.md#ph28))** | [1870](doc/references/MODBUS_REGISTERS.md#reg-1870) | No *Dry*. A dehumidify request from the unit's own humidity logic or the DEU input still shows as *Dry*. |
 | **Cool in summer, heat in winter**: climate *Cool* / *Heat*, [*Integration request (cool in summer, heat in winter)*](doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) | **Enable integration (INT) via Modbus ([PH27](doc/references/MODBUS_REGISTERS.md#ph27))**; the unit also needs the integration function ([PG02](doc/references/MODBUS_REGISTERS.md#pg02), `DC` models) | [1869](doc/references/MODBUS_REGISTERS.md#reg-1869) | No *Cool* / *Heat*. The unit's own integration (its room temperature logic, the INT input) still shows. |
 
 Good to know:
@@ -296,7 +296,7 @@ Good to know:
 
 | Blocked while the switch is off | Always works |
 |---|---|
-| Turning the unit **on** (also climate *Auto*), **dehumidify** (climate *Dry*, [*Dehumidify (Modbus)*](doc/entity-reference.md#dehumidify-modbus)), **integration** (climate *Cool* / *Heat*, [*Integration request (cool in summer, heat in winter)*](doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter)) | Turning things **off** (climate *Off*, switches off), reading every sensor, and every configuration write (setpoints, selects, setup entities) |
+| Turning the unit **on** (also climate *Auto*), **dehumidify** (climate *Dry*, [*Dehumidify request*](doc/entity-reference.md#dehumidify-request)), **integration** (climate *Cool* / *Heat*, [*Integration request (cool in summer, heat in winter)*](doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter)) | Turning things **off** (climate *Off*, switches off), reading every sensor, and every configuration write (setpoints, selects, setup entities) |
 
 A blocked request fails with *"Operational requests are not allowed yet. Review
 the setup entities, then turn on 'Allow operational requests'."* That message
@@ -321,8 +321,8 @@ target:
 
 ### 5. First run
 
-1. Set the climate entity to **Dry** (or turn on [*Dehumidify (Modbus)*](doc/entity-reference.md#dehumidify-modbus)). Only
-   turning on [*Unit on/off (Modbus)*](doc/entity-reference.md#unit-on-off-modbus) is not enough on a unit without a display
+1. Set the climate entity to **Dry** (or turn on [*Dehumidify request*](doc/entity-reference.md#dehumidify-request)). Only
+   turning on [*Unit on/off request*](doc/entity-reference.md#unit-on-off-request) is not enough on a unit without a display
    or room probe: it then has nothing to act on, so the climate entity shows
    *Standby* with the action *Idle*.
 2. Watch [*Unit status*](doc/entity-reference.md#unit-status): a unit waiting for its first request reads *Off
@@ -356,7 +356,7 @@ separate ground loop. `R` units add a recirculation fan and damper that run with
 The unit knows exactly two requests, and the integration's switches and climate
 modes map onto them:
 
-* **DEU**, dehumidify: [*Dehumidify (Modbus)*](doc/entity-reference.md#dehumidify-modbus), climate **Dry**.
+* **DEU**, dehumidify: [*Dehumidify request*](doc/entity-reference.md#dehumidify-request), climate **Dry**.
 * **INT**, integration: [*Integration request (cool in summer, heat in winter)*](doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter),
   climate **Cool** in summer and **Heat** in winter.
 
@@ -406,7 +406,7 @@ register can freeze) and recommends switching the unit off in winter, see
    **Standby** to have it on and waiting (without a display or room probe),
    **Off** to stop: it clears both requests and turns the unit off. *Turn on*
    goes to Standby (Auto where the unit regulates by itself), *turn off* to
-   Off. The switches [*Dehumidify (Modbus)*](doc/entity-reference.md#dehumidify-modbus) and *Integration request (cool in
+   Off. The switches [*Dehumidify request*](doc/entity-reference.md#dehumidify-request) and *Integration request (cool in
    summer, heat in winter)* do the same per request. Every start needs the
    matching Modbus enable and [Allow operational requests](#4-choose-what-home-assistant-may-control).
 3. **Decide who regulates.** Without a display or room probe the unit runs
