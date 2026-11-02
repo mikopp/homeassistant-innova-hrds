@@ -15,6 +15,12 @@ this page; it can go stale.
   `radiant-cooling`, `vmc`.
 * Optional: a social preview image (Settings -> General).
 
+## Pull requests (Settings -> General -> Pull Requests)
+
+* Allow squash merging only, with the default commit message **Pull request
+  title and description**, so the squash commit on `main` carries the PR
+  description. Write the description for users: what changed for them.
+
 ## Ruleset on the default branch (Settings -> Rules -> Rulesets)
 
 * Enforcement active; target the default branch.
