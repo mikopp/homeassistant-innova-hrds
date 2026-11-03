@@ -9,6 +9,10 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 `### ✨ Highlights`, `### 🛠️ Fixes and other changes`, `### 📚 Documentation`,
 `### 🧪 Tests and CI`. Sections before 0.9.4 use the older free-form style.
 
+### 🧪 Tests and CI
+
+- **The release workflow's HACS check no longer ignores `brands`.** The integration ships its own `brand/icon.png`, so the check passes without the exception, as `hacs.yaml` already does.
+
 ---
 
 ## Unreleased
@@ -21,6 +25,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 ### 📚 Documentation
 
 - **The integration is in HACS' default list, and the install instructions say so.** Install is *search, Download, restart*; the custom-repository and copy-by-hand steps are gone, and so are their links in the German table of contents.
+- **The README says how to update through HACS:** read the release notes there, select *Update*, restart.
 - **Tested setups and the open hardware questions brought up to date.** A full dehumidify cycle, the season switch, a power cycle, the compressor's timers and a lost brine flow are now recorded as seen on the reference unit; `plans/todo.md` keeps only what is still open, sorted by topic.
 - **The register reference is complete, and every document links to it.** All registers of the manufacturer's list are now in `MODBUS_REGISTERS.md` (time programs, band setpoints, clock, further status and test-mode registers, `PE29`), with an anchor per row. A parameter code (PH02) and a register address (1105) link to their row wherever they are mentioned in the READMEs, the references, the ADRs, the plans and the test notes, and the reference says how to write them. The README, the entity reference and the unit behaviour were checked against each other: the airflow and alarm sensor counts, entity names, the broken release-notice and winter-table layout and duplicated register rows are fixed.
 - **The entity reference reads like a Home Assistant integration page.** Entities are listed by the name Home Assistant shows, per device and platform (Sensors, Switches, …), each with a one-line description, its Modbus register in parentheses and the units it is available for; configuration entities are marked, and diagnostic entities have their own section. The README, the tested setups and the test plans name entities the same way instead of by internal keys such as `switch.dehumidify`, and each name in those documents links to its entry in the entity reference.

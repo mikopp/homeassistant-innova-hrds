@@ -44,18 +44,16 @@ paths:
   `innova_hrds.zip` (`hacs.json`: `zip_release`, `filename`) and fills an
   empty release body from `release.py notes`. A release without the zip
   MUST be fixed by re-running `package`, not left.
-- Brand images MUST ship in `custom_components/innova_hrds/brand/`
-  (`icon`, `logo`, `@2x`, `dark_*`), the Innova mark recoloured `#00643e`
-  (white for dark). MUST NOT use Home Assistant branded images. `hacs.yaml`
-  ignores the `brands` check.
+- Brand images MUST ship in `custom_components/innova_hrds/brand/` (`icon`,
+  `logo`, `@2x`, `dark_*`; the Innova mark `#00643e`, white for dark), not
+  Home Assistant branded images. The HACS checks MUST NOT ignore `brands`.
 
 ## Context
 
-ADR-0021 stamped the tag into the zip only, so main never reliably held
-the released version and PRs guessed it (0.9.4 on main, unreleased).
-Writing it back after publishing needs a bypass ADR-0020 forbids. Titles
-and bodies were hand-written in differing formats. Home Assistant 2026.3+
-prefers brand images in the integration over the brands CDN.
+ADR-0021 stamped the tag into the zip only, so main never held the
+released version and PRs guessed it (0.9.4 on main, unreleased). Writing
+it back needs a bypass ADR-0020 forbids. Home Assistant 2026.3+ prefers
+brand images in the integration over the brands CDN.
 
 ## Considered options
 
@@ -82,6 +80,7 @@ grep -q 'release.py check "$TAG"' .github/workflows/release.yaml
 grep -q -- '--draft' .github/workflows/release-draft.yaml
 grep -q '"zip_release": true' hacs.json
 grep -q 'innova_hrds.zip' .github/workflows/release.yaml
+! grep -q 'ignore: brands' .github/workflows/*.yaml
 ```
 
 ## More information
