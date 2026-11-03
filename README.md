@@ -5,8 +5,7 @@
 [![Lint](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/lint.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/lint.yaml)
 [![hassfest](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hassfest.yaml)
 [![HACS](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml)
-
-[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 
 **English** · [Deutsch](README.de.md)
 
@@ -112,7 +111,7 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
 
 Install it with [HACS](https://www.hacs.xyz/).
 
-[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
 
 Or in HACS:
 

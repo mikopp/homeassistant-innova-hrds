@@ -24,7 +24,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ### 📚 Documentation
 
-- **The integration is in HACS' default list, and the install instructions say so.** Install is *search, Download, restart*; the custom-repository and copy-by-hand steps are gone, and so are their links in the German table of contents.
+- **The integration is in HACS' default list, and the install instructions say so.** Install is *search, Download, restart*; the custom-repository and copy-by-hand steps are gone, and so are their links in the German table of contents. Both READMEs carry the "HACS Default" badge, and the "open in HACS" button appears once, in the install section.
 - **The README says how to update through HACS:** read the release notes there, select *Update*, restart.
 - **Tested setups and the open hardware questions brought up to date.** A full dehumidify cycle, the season switch, a power cycle, the compressor's timers and a lost brine flow are now recorded as seen on the reference unit; `plans/todo.md` keeps only what is still open, sorted by topic.
 - **The register reference is complete, and every document links to it.** All registers of the manufacturer's list are now in `MODBUS_REGISTERS.md` (time programs, band setpoints, clock, further status and test-mode registers, `PE29`), with an anchor per row. A parameter code (PH02) and a register address (1105) link to their row wherever they are mentioned in the READMEs, the references, the ADRs, the plans and the test notes, and the reference says how to write them. The README, the entity reference and the unit behaviour were checked against each other: the airflow and alarm sensor counts, entity names, the broken release-notice and winter-table layout and duplicated register rows are fixed.
