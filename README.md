@@ -110,8 +110,7 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
 
 ### 1. Install
 
-Install it with [HACS](https://www.hacs.xyz/). The integration is in HACS'
-default list, so there is nothing to add first.
+Install it with [HACS](https://www.hacs.xyz/).
 
 [![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
 
