@@ -10,7 +10,7 @@
 
 **English** · [Deutsch](README.de.md)
 
-Home Assistant custom integration (installable with **HACS**) for the **Innova
+Home Assistant integration (installable with **HACS**) for the **Innova
 DEH+** / **hej.luft HRDS+** ducted dehumidifiers (models *HRDS+ 30* and
 *HRDS+ 50*, or *DEH+ 30* / *DEH+ 50*). It controls and monitors the unit
 locally over **Modbus TCP**, without any cloud.
@@ -115,19 +115,12 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
 
 Or by hand:
 
-1. In HACS, add this repository as a custom repository (category: *Integration*):
-   `https://github.com/mikopp/homeassistant-innova-hrds`
-2. Install **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and restart Home Assistant.
+1. In HACS download **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and restart Home Assistant.
 
-HACS installs the `innova_hrds.zip` attached to each
+HACS installs the latest
 [GitHub release](https://github.com/mikopp/homeassistant-innova-hrds/releases)
 and offers updates when a new release is published. Releases 0.9.x are normal
 (not "pre-release") releases, so you do not need HACS' beta versions.
-
-#### Manual
-
-Copy `custom_components/innova_hrds/` into your Home Assistant
-`config/custom_components/` directory and restart.
 
 ### 2. Add the integration
 
