@@ -2,7 +2,7 @@
 #
 # Validates that the repository is a well-formed HACS "integration": correct
 # repository structure, a hacs.json, a README, a valid manifest, etc. This is
-# what lets users install the integration as a HACS custom repository. Runs on
+# what keeps the integration installable from HACS' default list. Runs on
 # pull requests, on main, and once a day on a schedule so we notice if a
 # change in HACS' rules breaks the repo.
 name: HACS

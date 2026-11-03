@@ -113,10 +113,8 @@ Die Abschnitte sind auf Englisch (EN); die deutsche Zeile nennt, was dort
 steht.
 
 * [Install and set up](README.md#install-and-set-up) (EN): Installation und Einrichtung
-  * [Before you start](README.md#before-you-start) (EN): Was Sie brauchen (Gerät, Gateway, Adresse)
+  * [Before you start](README.md#before-you-start) (EN): Was Sie brauchen (Gerät, Gateway, Adresse, HACS)
   * [1. Install](README.md#1-install) (EN): Installation mit HACS
-    * [HACS (custom repository)](README.md#hacs-custom-repository) (EN): HACS als benutzerdefiniertes Repository
-    * [Manual](README.md#manual) (EN): Manuelle Installation
   * [2. Add the integration](README.md#2-add-the-integration) (EN): Integration hinzufügen (Modbus-TCP-Adresse)
   * [3. Check the setup](README.md#3-check-the-setup) (EN): Einrichtung prüfen (Setup-Check)
     * [First-use checklist](README.md#first-use-checklist) (EN): Checkliste für die erste Benutzung

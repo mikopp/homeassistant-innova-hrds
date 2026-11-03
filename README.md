@@ -103,19 +103,23 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
   IP address or hostname, its port (usually [502](doc/references/MODBUS_REGISTERS.md#reg-502)) and the unit's Modbus slave ID
   (factory: 1).
 * Home Assistant 2026.10 or newer (see [Requirements](#requirements)).
+* [HACS](https://www.hacs.xyz/) installed in Home Assistant.
 * Room temperature and humidity readings need the wired CNU2 display or external
   probes (see [Probe requirements](#probe-requirements)). Without either, the
   integration still works; Home Assistant then does the regulating.
 
 ### 1. Install
 
-#### HACS (custom repository)
+Install it with [HACS](https://www.hacs.xyz/). The integration is in HACS'
+default list, so there is nothing to add first.
 
 [![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
 
-Or by hand:
+Or in HACS:
 
-1. In HACS download **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and restart Home Assistant.
+1. Search for **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and select
+   **Download**.
+2. Restart Home Assistant.
 
 HACS installs the latest
 [GitHub release](https://github.com/mikopp/homeassistant-innova-hrds/releases)
