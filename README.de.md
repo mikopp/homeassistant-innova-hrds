@@ -3,6 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/mikopp/homeassistant-innova-hrds)](https://github.com/mikopp/homeassistant-innova-hrds/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![HACS](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 
 [![Dieses Repository in HACS öffnen.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
 
@@ -113,10 +114,8 @@ Die Abschnitte sind auf Englisch (EN); die deutsche Zeile nennt, was dort
 steht.
 
 * [Install and set up](README.md#install-and-set-up) (EN): Installation und Einrichtung
-  * [Before you start](README.md#before-you-start) (EN): Was Sie brauchen (Gerät, Gateway, Adresse)
+  * [Before you start](README.md#before-you-start) (EN): Was Sie brauchen (Gerät, Gateway, Adresse, HACS)
   * [1. Install](README.md#1-install) (EN): Installation mit HACS
-    * [HACS (custom repository)](README.md#hacs-custom-repository) (EN): HACS als benutzerdefiniertes Repository
-    * [Manual](README.md#manual) (EN): Manuelle Installation
   * [2. Add the integration](README.md#2-add-the-integration) (EN): Integration hinzufügen (Modbus-TCP-Adresse)
   * [3. Check the setup](README.md#3-check-the-setup) (EN): Einrichtung prüfen (Setup-Check)
     * [First-use checklist](README.md#first-use-checklist) (EN): Checkliste für die erste Benutzung

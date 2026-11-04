@@ -5,12 +5,13 @@
 [![Lint](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/lint.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/lint.yaml)
 [![hassfest](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hassfest.yaml)
 [![HACS](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 
-[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
 
 **English** · [Deutsch](README.de.md)
 
-Home Assistant custom integration (installable with **HACS**) for the **Innova
+Home Assistant integration (install with **HACS**) for the **Innova
 DEH+** / **hej.luft HRDS+** ducted dehumidifiers (models *HRDS+ 30* and
 *HRDS+ 50*, or *DEH+ 30* / *DEH+ 50*). It controls and monitors the unit
 locally over **Modbus TCP**, without any cloud.
@@ -103,31 +104,33 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
   IP address or hostname, its port (usually [502](doc/references/MODBUS_REGISTERS.md#reg-502)) and the unit's Modbus slave ID
   (factory: 1).
 * Home Assistant 2026.10 or newer (see [Requirements](#requirements)).
+* [HACS](https://www.hacs.xyz/) installed in Home Assistant.
 * Room temperature and humidity readings need the wired CNU2 display or external
   probes (see [Probe requirements](#probe-requirements)). Without either, the
   integration still works; Home Assistant then does the regulating.
 
 ### 1. Install
 
-#### HACS (custom repository)
+Install it with [HACS](https://www.hacs.xyz/).
 
-[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
 
-Or by hand:
+Or in HACS:
 
-1. In HACS, add this repository as a custom repository (category: *Integration*):
-   `https://github.com/mikopp/homeassistant-innova-hrds`
-2. Install **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and restart Home Assistant.
+Search for **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and select
+   **Download**.
 
-HACS installs the `innova_hrds.zip` attached to each
-[GitHub release](https://github.com/mikopp/homeassistant-innova-hrds/releases)
-and offers updates when a new release is published. Releases 0.9.x are normal
-(not "pre-release") releases, so you do not need HACS' beta versions.
+Restart Home Assistant.
 
-#### Manual
+HACS installs the latest
+[GitHub release](https://github.com/mikopp/homeassistant-innova-hrds/releases).
+Releases 0.9.x are normal (not "pre-release") releases, so you do not need
+HACS' beta versions.
 
-Copy `custom_components/innova_hrds/` into your Home Assistant
-`config/custom_components/` directory and restart.
+To update, wait for HACS to show a new release of the integration, read its
+release notes there, select **Update** and restart Home Assistant. Check the
+notes for breaking changes first: they list what to change in automations,
+scripts and dashboards.
 
 ### 2. Add the integration
 
