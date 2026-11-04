@@ -228,9 +228,11 @@ No INT request has been run yet. One summer INT run answers most of these.
       the Mai 2026 handbook) or ×1 (Sept. 2026 handbook defaults 2 / 12 / 8
       rps)? The installer rows use ×0.1 until answered.
 - [ ] **HRDS (on/off) and HRD+** (asked the vendor 2026-11). Innova's
-      declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…); the
-      HRDS is sold in Italy under other brands. Same EVCO controller, register
-      map and `EPB9…` code? The HRD+ (a complete ventilation unit) shares the
+      declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). The
+      on/off HRDS appears to be sold in Italy as Vortice HRDS 30/50 (R) DC
+      and VMC Group MDR K / MDR K R (sizes 15-30 / 25-50, D and DC; same
+      housing 690×690×270 / 690×800×320 mm). Are they Innova HRDS units, with
+      the same EVCO controller, register map and `EPB9…` code? The HRD+ (a complete ventilation unit) shares the
       controller and register list; support only if someone with one asks.
 - [ ] **Non-`R` unit read-back.** Does `outDO_RecircDamper` ([1134](../doc/references/MODBUS_REGISTERS.md#reg-1134)) read
       `2 = Disable` without recirculation, and what do the fan registers read?
