@@ -35,7 +35,7 @@ hej.luft sells it in Austria under its own name as an OEM product.
 > *If your unit uses the Innova board and is sold under another name, open an
 > issue and link its product page.*
 
-## Release 0.9.5
+## Release 0.9.6
 
 The integration is released and usable.
 

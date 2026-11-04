@@ -40,7 +40,7 @@ OEM-Produkt.
 > *Wird Ihr Gerät mit der Innova-Platine unter einem anderen Namen verkauft,
 > eröffnen Sie ein Issue und verlinken Sie die Produktseite.*
 
-## Release 0.9.5
+## Release 0.9.6
 
 Die Integration ist veröffentlicht und nutzbar.
 
@@ -60,7 +60,7 @@ Die Integration ist veröffentlicht und nutzbar.
 Berichte von anderen Geräten sind sehr willkommen, siehe
 [Reporting issues](README.md#reporting-issues) (EN). Der Weg zu 1.0:
 [Road to 1.0](README.md#road-to-10) (EN). Details: der
-[englische Abschnitt](README.md#release-095).
+[englische Abschnitt](README.md#release-096).
 
 ## Schnellstart
 
