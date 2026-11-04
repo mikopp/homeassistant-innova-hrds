@@ -7,6 +7,8 @@
 [![HACS](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml/badge.svg)](https://github.com/mikopp/homeassistant-innova-hrds/actions/workflows/hacs.yaml)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mikopp&repository=homeassistant-innova-hrds&category=integration)
+
 **English** · [Deutsch](README.de.md)
 
 Home Assistant integration (install with **HACS**) for the **Innova
@@ -115,9 +117,10 @@ Install it with [HACS](https://www.hacs.xyz/).
 
 Or in HACS:
 
-1. Search for **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and select
+Search for **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and select
    **Download**.
-2. Restart Home Assistant.
+
+Restart Home Assistant.
 
 HACS installs the latest
 [GitHub release](https://github.com/mikopp/homeassistant-innova-hrds/releases).
