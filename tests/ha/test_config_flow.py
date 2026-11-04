@@ -5,7 +5,12 @@ from __future__ import annotations
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.config_entries import ConfigEntryState
-from homeassistant.const import CONF_HOST, CONF_PORT, CONF_SCAN_INTERVAL
+from homeassistant.const import (
+    CONF_HOST,
+    CONF_PORT,
+    CONF_SCAN_INTERVAL,
+    STATE_UNKNOWN,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.helpers import device_registry as dr
@@ -38,6 +43,18 @@ async def test_user_flow_creates_entry(hass, sim):
     )
     assert device.model_id == "EPB9ORSINDEU"
     assert device.sw_version == "V01.00.09.02"
+
+
+async def test_firmware_sensor_shows_the_identity_revision(hass, sim):
+    s = await add_entry(hass, sim)
+    assert s.state("sensor", "firmware").state == "V01.00.09.02"
+
+
+async def test_firmware_sensor_unknown_without_fc43(hass, sim):
+    sim.fc43 = False
+    sim.apply_identity()
+    s = await add_entry(hass, sim)
+    assert s.state("sensor", "firmware").state == STATE_UNKNOWN
 
 
 async def test_setup_and_installer_devices_hang_off_the_main_device(hass, sim):

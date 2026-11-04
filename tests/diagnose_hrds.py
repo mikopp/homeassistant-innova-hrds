@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only bring-up diagnostic for an HRDS+ / Innova DEH+ Modbus TCP gateway.
+"""Read-only bring-up diagnostic for an HRDS+ Modbus TCP gateway.
 
 Run it from a machine that can reach the unit, *before* installing the
 integration, to verify the assumptions the integration makes:

@@ -117,7 +117,7 @@ def build_device_infos(
         identifiers={(DOMAIN, entry.entry_id)},
         name=name,
         manufacturer=ATTR_MANUFACTURER,
-        model="HRDS+ / DEH+",
+        model="HRDS+",
         # The controller's own identification, as read by the identity check.
         model_id=identity.product_code,
         sw_version=identity.revision,

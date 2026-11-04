@@ -1,4 +1,4 @@
-# Innova DEH+ / hej.luft HRDS+ — Home Assistant integration
+# hej.luft HRDS+ — Home Assistant integration
 
 [![Release](https://img.shields.io/github/v/release/mikopp/homeassistant-innova-hrds)](https://github.com/mikopp/homeassistant-innova-hrds/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
@@ -11,29 +11,24 @@
 
 **English** · [Deutsch](README.de.md)
 
-Home Assistant integration (install with **HACS**) for the **Innova
-DEH+** / **hej.luft HRDS+** ducted dehumidifiers (models *HRDS+ 30* and
-*HRDS+ 50*, or *DEH+ 30* / *DEH+ 50*). It controls and monitors the unit
-locally over **Modbus TCP**, without any cloud.
+Home Assistant integration (install with **HACS**) for the **hej.luft HRDS+**
+dehumidification and cooling module (models *HRDS+ 30* and *HRDS+ 50*). It
+controls and monitors the unit locally over **Modbus TCP**, without any cloud.
 
 ## Compatible devices
 
-The unit is made by **[INNOVA S.r.l.](https://www.innova.it/)** (Storo, Italy).
-hej.luft sells it in Austria under its own name as an OEM product.
+The **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** is a
+dehumidification and cooling module for the supply duct of a central
+ventilation system (MVHR). It is made by **INNOVA S.r.l.** (Storo, Italy) with
+an EVCO controller and sold by hej.luft. It comes "with recirculation"
+(`R`, own recirculation fan and damper) or "supply air only", in sizes 30 and
+50; the type-plate code is explained in the technical handbook (download page
+above, copy in [`doc/references/`](doc/references/README.md)), for example
+*HRDS+ 30 H R K DC*. Units and installations known to work:
+[Tested units and installations](doc/tested-setups.md).
 
-* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)**, with the
-  type-plate codes of the [technical handbook](https://www.hejluft.at/_files/ugd/714411_f1ffc5d222f4476da2e37f29c64a7f93.pdf),
-  for example *HRDS+ 30 H R K DC*.
-* **[Innova DEH+ 30 / 50 H](https://www.innova.it/en/products/vmc/dehumidifiers/deh-ad-incasso-orizzontale/)**:
-  Innova's own name for the same unit, with the same sizes and nominal airflow
-  (300 / 500 m³/h). The maintainer's HRDS+ 30 was shipped directly from Italy
-  and is physically a DEH+ 30 H; the integration was developed against it. The
-  DEH+ installation manual in `doc/references/` describes an older controller,
-  not the EVCO "K" board of the HRDS+: registers and behaviour here come from
-  the HRDS+ handbooks.
-
-> *If your unit uses the Innova board and is sold under another name, open an
-> issue and link its product page.*
+> *Have an HRDS+ that behaves differently, or another unit that reports an
+> EVCO `EPB9` controller? Open an issue, see [Reporting issues](#reporting-issues).*
 
 ## Release 0.9.6
 
@@ -99,7 +94,7 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
 
 ### Before you start
 
-* An Innova DEH+ / hej.luft HRDS+ with the Modbus RTU/RS-485 control board and a
+* A hej.luft HRDS+ with the Modbus RTU/RS-485 control board and a
   Modbus-RTU-to-TCP gateway reachable on your network. You need the gateway's
   IP address or hostname, its port (usually [502](doc/references/MODBUS_REGISTERS.md#reg-502)) and the unit's Modbus slave ID
   (factory: 1).
@@ -117,7 +112,7 @@ Install it with [HACS](https://www.hacs.xyz/).
 
 Or in HACS:
 
-Search for **Innova DEH+ / hej.luft HRDS+ Dehumidifier** and select
+Search for **hej.luft HRDS+ Dehumidifier** and select
    **Download**.
 
 Restart Home Assistant.
@@ -135,7 +130,7 @@ scripts and dashboards.
 ### 2. Add the integration
 
 Add the integration from **Settings → Devices & Services → Add Integration →
-Innova HRDS+**, then provide:
+hej.luft HRDS+**, then provide:
 
 | Field | Default | Notes |
 |-------|---------|-------|
@@ -184,7 +179,7 @@ written on connection: the Modbus enables are yours
 
 All setup happens through the integration, after it has connected. Nothing needs
 to be changed on the unit beforehand. Open **Settings → Devices & Services →
-Innova HRDS+** and look at the **HRDS+ setup** device first. The entities are
+hej.luft HRDS+** and look at the **HRDS+ setup** device first. The entities are
 split over three devices by purpose:
 
 | Device | What is there | When you touch it |
@@ -687,7 +682,8 @@ The file contains the gateway address in its `host` field: replace it before
 posting.
 
 Please also say which unit it is (HRDS+ 30 or 50, `R` or non-`R`, display or
-headless, which probes are wired), the Home Assistant and integration versions,
+headless, which probes are wired), its [*Firmware*](doc/entity-reference.md#firmware),
+the Home Assistant and integration versions,
 the `issues` of [*Setup check*](doc/entity-reference.md#setup-check), and the relevant part of the Home
 Assistant log. The issue form asks for all of this.
 [Open an issue](https://github.com/mikopp/homeassistant-innova-hrds/issues/new/choose).
@@ -711,4 +707,4 @@ it refuses, what the climate modes mean) is recorded one decision per file in
 
 Architecture closely follows the
 [`ha_comfoconnectpro`](https://github.com/hstrohmaier/ha_comfoconnectpro)
-integration. Documentation © Innova / hej.luft (see `doc/references/`).
+integration. Documentation © hej.luft / INNOVA S.r.l. (see `doc/references/`).

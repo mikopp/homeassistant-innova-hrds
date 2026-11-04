@@ -22,16 +22,16 @@ WICHTIGE INFORMATIONEN
 
 2
 
-......................................................................................... 36
+......................................................................................... 37
 
-Allgemeine Hinweise und Warnungen .................................................................................................................................................. 36
-Zugang für den elektrischen Anschluss ................................................................................................................................................. 36
-Schaltplan ............................................................................................................................................................................................. 37
-Anschlussklemmen ............................................................................................................................................................................... 38
-Funktionsbeschreibung der externen Steuerungsmöglichkeiten ......................................................................................................... 39
-Anschluss der CNU2 – Bedieneinheit .................................................................................................................................................... 42
+Allgemeine Hinweise und Warnungen .................................................................................................................................................. 37
+Zugang für den elektrischen Anschluss ................................................................................................................................................. 37
+Schaltplan ............................................................................................................................................................................................. 38
+Anschlussklemmen ............................................................................................................................................................................... 39
+Funktionsbeschreibung der externen Steuerungsmöglichkeiten ......................................................................................................... 40
+Anschluss der CNU2 – Bedieneinheit .................................................................................................................................................... 43
 
-BETRIEB UND BEDIENUNG ......................................................................................................................... 44
+BETRIEB UND BEDIENUNG ......................................................................................................................... 45
 5.1
 5.2
 5.3
@@ -43,9 +43,9 @@ BETRIEB UND BEDIENUNG ..........................................................
 Installationsbedingungen...................................................................................................................................................................... 15
 Montage an der Decke .......................................................................................................................................................................... 15
 Abmessungen und Wartungsfreiräume ................................................................................................................................................ 16
-Kondensatablauf ................................................................................................................................................................................... 21
-Luftauslass ............................................................................................................................................................................................ 22
-Lufteinlässe ........................................................................................................................................................................................... 22
+Kondensatablauf ................................................................................................................................................................................... 19
+Lufteinlässe ........................................................................................................................................................................................... 20
+Luftauslass ............................................................................................................................................................................................ 20
 Integration im Luftverteilungssystem ................................................................................................................................................... 23
 Hydraulische Anschlüsse ....................................................................................................................................................................... 26
 
@@ -103,11 +103,11 @@ PRODUKT-INFORMATIONEN...........................................................
 
 .................................................................................................... 4
 
-Steuerungs-Möglichkeiten .................................................................................................................................................................... 44
-CNU2 Bedieneinheit - Anleitung ........................................................................................................................................................... 45
-Parameter-Liste .................................................................................................................................................................................... 50
+Steuerungs-Möglichkeiten .................................................................................................................................................................... 45
+CNU2 Bedieneinheit - Anleitung ........................................................................................................................................................... 46
+Parameter-Liste .................................................................................................................................................................................... 52
 
-REGELUNG ................................................................................................................................................ 64
+REGELUNG ................................................................................................................................................ 66
 6.1
 6.2
 6.3
@@ -116,18 +116,18 @@ REGELUNG .......................................................................
 6.6
 6.7
 
-Anforderung der Betriebsarten Entfeuchtung oder Integration ........................................................................................................... 64
-Lüfter-Regelung .................................................................................................................................................................................... 66
-Kompressor-Regelung ........................................................................................................................................................................... 67
-Wasserventile ....................................................................................................................................................................................... 69
-Umluftklappe ........................................................................................................................................................................................ 69
-Konfiguration der digitalen Schalteingänge (NO/NC) ........................................................................................................................... 69
-Konfiguration externer Temperatur- und Feuchtigkeits-Sensoren ....................................................................................................... 70
+Anforderung der Betriebsarten Entfeuchtung oder Integration ........................................................................................................... 66
+Lüfter-Regelung .................................................................................................................................................................................... 68
+Kompressor-Regelung ........................................................................................................................................................................... 69
+Wasserventile ....................................................................................................................................................................................... 71
+Umluftklappe ........................................................................................................................................................................................ 71
+Konfiguration der digitalen Schalteingänge (NO/NC) ........................................................................................................................... 71
+Konfiguration externer Temperatur- und Feuchtigkeits-Sensoren ....................................................................................................... 72
 Seite 2
 
 7
 
-ALARME.................................................................................................................................................... 71
+ALARME.................................................................................................................................................... 73
 7.1
 7.2
 7.3
@@ -135,37 +135,37 @@ ALARME..........................................................................
 
 8
 
-INBETRIEBNAHME ..................................................................................................................................... 75
+INBETRIEBNAHME ..................................................................................................................................... 77
 8.1
 8.2
 8.3
 
 9
 
-Allgemeine Hinweise............................................................................................................................................................................. 71
-Probleme ohne Fehleranzeige .............................................................................................................................................................. 71
-Alarm-Übersicht .................................................................................................................................................................................... 72
-Alarm-Details ........................................................................................................................................................................................ 73
+Allgemeine Hinweise............................................................................................................................................................................. 73
+Probleme ohne Fehleranzeige .............................................................................................................................................................. 73
+Alarm-Übersicht .................................................................................................................................................................................... 74
+Alarm-Details ........................................................................................................................................................................................ 75
 
-Vorabprüfungen .................................................................................................................................................................................... 75
-Erstinbetriebnahme .............................................................................................................................................................................. 75
-Übergabe der Anlage ............................................................................................................................................................................ 75
+Vorabprüfungen .................................................................................................................................................................................... 77
+Erstinbetriebnahme .............................................................................................................................................................................. 78
+Übergabe der Anlage ............................................................................................................................................................................ 78
 
-INSTANDHALTUNG .................................................................................................................................... 76
+INSTANDHALTUNG .................................................................................................................................... 79
 9.1
 9.2
 
-Filter-Wartung ...................................................................................................................................................................................... 76
-Allgemeine Reinigung ........................................................................................................................................................................... 76
+Filter-Wartung ...................................................................................................................................................................................... 79
+Allgemeine Reinigung ........................................................................................................................................................................... 79
 
-10 Technische Daten ...................................................................................................................................... 77
+10 Technische Daten ...................................................................................................................................... 80
 10.1
 10.2
 10.3
 
-Leistungsdaten – Kühlen und Entfeuchten HRDS+ 30 ..................................................................................................................... 78
-Leistungsdaten – Kühlen und Entfeuchten HRDS+ 50 ..................................................................................................................... 79
-Leistungskurven ............................................................................................................................................................................... 80
+Leistungsdaten – Kühlen und Entfeuchten HRDS+ 30 ..................................................................................................................... 81
+Leistungsdaten – Kühlen und Entfeuchten HRDS+ 50 ..................................................................................................................... 82
+Leistungskurven ............................................................................................................................................................................... 83
 
 Seite 3
 
@@ -429,11 +429,11 @@ Aufbau des Gerätes
 
 4
 
-Variante mit Umluft
+Variante „mit Umluft“
 
 6
 
-Variante ohne Umluft
+Variante „nur Zuluft“
 
 1
 
@@ -463,16 +463,16 @@ Konstruktionsmerkmale
 
 AUFBAU:
 
-Selbsttragende Struktur aus verzinktem Stahlblech, kombiniert mit einer innen angebrachten Isolierung,
-bestehend aus einer 6 mm dicken Polyethylen-Matte für Wärmeisolierung und Schalldämmung.
-Leicht abnehmbare Wartungsdeckel an der Seite und am Boden.
-Seitlicher Kondensatablauf
+Selbsttragende Struktur aus verzinktem Stahlblech mit matt lackierter Außenoberfläche in RAL 9003, kombiniert
+mit einer innen angebrachten Isolierung, bestehend aus einer 6 mm dicken Polyethylen-Matte für
+Wärmeisolierung und Schalldämmung.
+Leicht abnehmbare Wartungsdeckel an der Seite und am Boden. Seitlicher Kondensatablauf
 
 LÜFTUNG:
 
-Radialer Zentrifugallüfter mit bürstenlosem EC-Motor mit Drehzahlregelung und nach vorne gerichteten
-Lüfterblättern. Maximale Effizienz bei minimalem Energieverbrauch und geringer Geräuschentwicklung Konform
-mit den ERP-Richtlinien. Inklusive Absperrklappe mit Stellmotor für den Umluftkreis.
+Bürstenloser EC-Ventilator mit elektronischer Drehzahlregelung. Maximale Effizienz bei minimalem
+Energieverbrauch und geringer Geräuschentwicklung, Konform mit den ERP-Richtlinien. Inklusive Absperrklappe
+mit Stellmotor für den Umluftkreis.
 
 LUFTAUFBEREITUNG & Geschlossener Kältekreislauf zur Entfeuchtung oder Kühlung der durchströmten Umluft und Frischluft.
 KÄLTEKREIS:
@@ -481,7 +481,7 @@ Inverter-Kompressor, wassergekühlter Kondensator abseits vom Luftstrom, Wasser-
 Wasser-Umschaltventil für eine Nacherwärmung der Luft.
 FILTRIERUNG:
 
-ISO Grobluftfilter in der Umluftsektion, mit geringem Druckverlust; einfach zugänglich entnehmbar für
+ISO Coarse-Filter in der Umluftsektion, mit geringem Druckverlust; einfach zugänglich entnehmbar für
 regelmäßige Wartung oder Austausch, waschbar.
 
 REGELUNG:
@@ -602,7 +602,7 @@ und über diesen nach außen abgeführt. Die entfeuchtete Luft wird danach direk
 
 Entfeuchten:
 Im Entfeuchtungsmodus öffnet ein 3-Wege-Ventil am Ausgang des Plattenwärmetauschers. Das erwärmte Wasser wird dadurch in ein
-Wasserregister geleitet, das im Luftstrom hinter dem Verdampferregister angeordnet ist. Dort wird die zuvor gekühlte, entfeuchtete Luft
+Wasserregister geleitet, das im Luftstrom nach dem Verdampferregister angeordnet ist. Dort wird die zuvor gekühlte, entfeuchtete Luft
 wieder ca. auf Raumtemperatur erwärmt, bevor sie in die Räume eingeblasen wird.
 Hinweis: Das 3-Wege-Ventil im Wasserkreis arbeitet nicht proportional, sondern im reinen Ein/Aus-Betrieb. Die Luftauslasstemperatur
 liegt daher entweder deutlich unter der Raumtemperatur (bei Sommer-Integration) oder nahe der Raumtemperatur (bei
@@ -612,8 +612,8 @@ Entfeuchtungsbetrieb).
 
 Winterbetrieb (ohne a ktiven Kompressor):
 
-Im Heizbetrieb öffnet das 3-Wege-Ventil, sodass das Nachheizregister mit warmem Wasser aus dem Heizsystem versorgt wird. Die Zuluft wird
-dabei erwärmt, bevor sie in die Räume eingeblasen wird.
+Im Heizbetrieb (Winter-Integration) öffnet das 3-Wege-Ventil, sodass das Nachheizregister mit warmem Wasser aus dem Heizsystem versorgt
+wird. Die Zuluft wird dabei erwärmt, bevor sie in die Räume eingeblasen wird.
 
 Seite 10
 
@@ -628,6 +628,10 @@ Kompressor (Inverter)
 PH
 
 Hochdruck-Schalter
+
+PL
+
+Niederdruck-Schalter
 
 PS
 
@@ -678,17 +682,16 @@ Lüftungsgerät
 In diesem Modus durchströmt die Frischluft das Modul ohne Luftaufbereitung.
 -
 
-Zuluft in
 die Umluftklappe ist geschlossen
-die Räume
 der Lüfter ist deaktiviert
 der Kompressor ist deaktiviert
 das externe Wasserventil (V3V) ist geschlossen
 die externe Umwälzpumpe (PM) ist deaktiviert
 der potentialfreie Ausgang (VMC) ist geöffnet
 das interne Wasserventil ist geöffnet
-(ohne externes Ventil kann Wasser durch den Wasserkondensator UND durch das
-Nachheizregister fließen)
+
+Zuluft in
+die Räume
 
 Klappe
 geschlossen
@@ -700,7 +703,7 @@ Blockaden zu verhindern.
 
 Betriebsmodus Entfeuchten - Gerät Sta tus: „DEU“
 In diesem Betriebsmodus ist die Umluftumwälzung aktiviert, und der Kompressor
-wird eingeschaltet, um die Zuluft aktiv zu entfeuchten. Nach der Entfeuchtung wird
+wird eingeschaltet um die Zuluft aktiv zu entfeuchten. Nach der Entfeuchtung wird
 die gekühlte Luft wieder ca. auf Raumtemperatur erwärmt und anschließend in die
 Räume eingeblasen.
 -
@@ -726,10 +729,10 @@ Vorraum)
 
 Seite 12
 
-Betriebsmodus „Integration“ - Gerät Sta tus: „INT“ im Sommermodus
+Betriebsmodus „Kühlen“ - Gerät Status: „INT“ im Sommermodus
 
 In diesem Betriebsmodus ist die Umluftumwälzung aktiviert, und der Kompressor
-wird eingeschaltet, um die Zuluft aktiv zu entfeuchten und zu kühlen.
+wird eingeschaltet um die Zuluft aktiv zu entfeuchten und zu kühlen.
 Das interne 3-Wege-Wasserventil wird geschlossen, sodass das Wasser
 ausschließlich durch den Plattenwärmetauscher (Wasserkondensator) fließt.
 Dadurch wird die gesamte Abwärme des Kältekreises vollständig auf den
@@ -757,12 +760,12 @@ der potentialfreie Ausgang (VMC) ist geschlossen
 das interne Wasserventil ist geschlossen:
 (Wasser fließt nur durch den Wasserkondensator)
 
-Betriebsmodus „Integration“ - Gerät Sta tus: „INT“ im Wintermodus
+Betriebsmodus „Heizen“ - Gerät Status: „INT“ im Wintermodus
 Winter Heizungs-Unterstützung:
 diesem Betriebsmodus wird die Umluftumwälzung aktiviert, während der
 Kompressor inaktiv bleibt, sodass keine „aktive“ Luftaufbereitung erfolgt
-Sofern dem Gerät warmes Wasser über das integrierte Wasserregister zur
-Verfügung steht, kann eine „passive“ Lufterwärmung erfolgen. Dabei wird die
+Sofern dem Gerät ausreichend warmes Wasser über das integrierte Wasserregister
+zur Verfügung steht, kann eine „passive“ Lufterwärmung erfolgen. Dabei wird die
 durchströmende Luft über das Wasserregister erwärmt und anschließend in die
 Räume eingeblasen.
 -
@@ -799,57 +802,55 @@ Benennung
 
 V08000002D
 
-HRDS+ 30 H R K DC - INVERTER
+HRDS+ 30 H R K DC – INVERTER – mit Umluft
 
 V07000002D
 
-HRDS+ 30 H K DC - INVERTER – ohne Umluft
+HRDS+ 30 H K DC - INVERTER – nur Zuluft
 
 V08000002C
 
-HRDS+ 50 H R K DC - INVERTER
+HRDS+ 50 H R K DC – INVERTER – mit Umluft
 
 V07000002C
 
-HRDS+ 50 H K DC - INVERTER - ohne Umluft
+HRDS+ 50 H K DC - INVERTER – nur Zuluft
 
 AHRD0053II
 
-CNU2 – Fernbedienmodul mit integrierten Temperatur- und Feuchtefühler
+CNU2 – Fernbedienmodul mit integrierten Temperatur- und Feuchtefühlern
 
 AHRD0217II
 
-PL1 - Plenum HRDS 30 – 1xDN200
+PL1 - Plenum HRDS 30 – 1x DN200
 
 AHRD0017II
 
-PL3 - Plenum HRDS 30 – 3xDN125
+PL3 - Plenum HRDS 30 – 3x DN125
 
 AHRD0227II
 
-PL1 - Plenum HRDS 50 – 1xDN200
+PL1 - Plenum HRDS 50 – 1x DN200
 
 AHRD0018II
 
-PL5 - Plenum HRDS 50 – 5xDN125
+PL5 - Plenum HRDS 50 – 5x DN125
 
 SCO312008II
 
-PL8 - Plenum HRDS 30 – 8xDN75/DN90
+PL8 - Plenum HRDS 30 – 8x DN75/DN90
 
 SCO502512II
 
-PL12 - Plenum HRDS 50 – 12xDN75/DN90
+PL12 - Plenum HRDS 50 – 12x DN75/DN90
 
 SRS075140II
 
-Steck-Adapter für Anschluss DN75
-(4 Stk. pro Packung, inkl. O-Ringe)
+Steck-Adapter für Anschluss DN75 (4 Stk. pro Packung, inkl. O-Ringe)
 
 SRS090140II
 
-Steck-Adapter für Anschluss DN90
-(4 Stk. pro Packung, inkl. O-Ringe)
+Steck-Adapter für Anschluss DN90 (4 Stk. pro Packung, inkl. O-Ringe)
 
 SCO454084II
 
@@ -882,7 +883,7 @@ Das Gerät ist unter Einhaltung der nationalen und lokalen Vorschriften sowie ge
 - Eine Installation in der Nähe von Wärmequellen, Dampfaustritt, brennbaren oder explosionsgefährdeten Gasen sowie in stark
 staubbelasteten Bereichen ist zu vermeiden.
 - der Kondensatablauf muss mit Gefälle verlegt werden, um einen ungehinderten Wasserabfluss zu gewährleisten.
-- ist ausreichend Platz für den Anschluss der Luftkanäle sowie für Wartungs- und Servicearbeiten vorzusehen.
+- Es ist ausreichend Platz für den Anschluss der Luftkanäle sowie für Wartungs- und Servicearbeiten vorzusehen.
 - Vor der Montage ist die Tragfähigkeit der Decke zu prüfen. Die Deckenstruktur muss das Gerätegewicht sicher aufnehmen können
 und darf keine übermäßigen Vibrationen übertragen.
 
@@ -971,77 +972,45 @@ Seite 17
 
 3.3.2
 
-Abmessungen - Luftauslassa dapter (Plenum) HRDS+ 30
-
-Seite 18
-
-3.3.3
-
 Abmessungen HRDS+ 50
 
-Seite 19
-
-3.3.4
-
-Abmessungen - Luftauslassa dapter (Plenum) HRDS+ 50
-
-Seite 20
+Seite 18
 
 3.4
 
 Kondensatablauf
 
 Für einen ordnungsgemäßen Betrieb muss der Kondensatablauf an das Abwassersystem angeschlossen werden. Um falsche Luftzirkulation,
-gluckernde Geräusche und Gerüche zu vermeiden, sind zwei Siphons erforderlich: ein Siphon im Ablaufschlauch und ein Geruchsverschluss
-(Siphon) am Kanalanschluss.
+gluckernde Geräusche und Gerüche zu vermeiden, sind zwei Siphons erforderlich: ein Siphon am Geräteanschluss und ein Geruchsverschluss
+(Siphon) am gebäudeseitigen Kanalanschluss.
 Für die Installation des Kondensatablaufs sind folgende Anforderungen zu beachten:
 
-Anschluss an das Abwassersystem:
-
-
-Der Ablaufschlauch darf nicht direkt mit dem Abwassersystem verbunden sein
-oder dieses berühren, um mikrobielle Kontamination der Lüftungsanlage (z. B.
-Biofilmbildung) zu verhindern.
-
-
-
-Daher ist eine freie Tropfstrecke für das Kondensat erforderlich.
-
-
-
-Am Kanalanschluss muss ein Siphon installiert werden. Da eine dauerhafte
-Wasserfüllung meist nicht gewährleistet ist, ist ein Trockensiphon (z. B.
-Kugelsiphon) zu verwenden.
-Anschluss - Kondensatablauf
-
-Anschluss am Gerät:
+Anschluss am HRDS+ Gerät:
 
 
 Kondensatablauf-Anschlussdurchmesser am Gerät: Ø 12mm
 
 
 
-Der Ablaufschlauch muss mit einem Gefälle von min. 2 % verlegt werden
+Der Ablaufschlauch muss mit einem Gefälle von min. 2% verlegt werden
 
 
 
 Der Schlauch muss leicht abklemmbar und entfernbar sein, um
 Wartungsarbeiten zu ermöglichen.
 
-Ausführungsvarianten der Schlauchverlegung:
+Anschluss - Kondensatablauf
+
+mögliche, geräteseitige Siphon-Ausführungen:
 1.
 
 Schlauchverlegung in Siphon-Form:
 
-Der Ablaufschlauch kann in Siphon-Form verlegt werden. Aufgrund der im
-Betrieb auftretenden Druckverhältnisse müssen folgende Mindesthöhen
-eingehalten werden:
+Der Ablaufschlauch kann in Siphon-Form verlegt werden. Aufgrund der im Betrieb
+auftretenden Druckverhältnisse müssen folgende Mindesthöhen eingehalten
+werden:
 H1 > 40 mm
-
-freie Tropfstrecke
-
 H2 > 40 mm
-
 2.
 
 Inline-Siphon mit Membran:
@@ -1051,50 +1020,36 @@ direkt in den Ablaufschlauch integriert werden kann. Beachten Sie die Einbauhinw
 
 Flussrichtung
 
-3. Sondersiphon HL138NH (Kondensat-Siphon mit Hygieneadapter):
-Der Unterputz-Sondersiphon HL138NH ist ein Trocken-Kugelsiphon mit
-integrierter freier Tropfstrecke. Mit dieser Ausführung kann der Ablaufschlauch
-mit durchgehendem Gefälle direkt an das Abwassersystem angeschlossen
-werden.
+Anschluss an das Abwassersystem:
+Der Ablaufschlauch darf nicht direkt mit dem Abwassersystem verbunden sein oder dieses
+berühren, um mikrobielle Kontamination der Lüftungsanlage (z. B. Biofilmbildung) zu verhindern.
+Zur hygienischen Trennung ist am gebäudeseitigen Kanalanschluss ein Siphon mit Aufsatztrichter
+vorzusehen, sodass das Kondensat über eine freie Tropfstrecke eingeleitet wird.
+Da eine dauerhafte Wasserfüllung herkömmlicher Siphons häufig nicht gewährleistet ist, wird die
+Verwendung eines Trockensiphons (z.B. Kugelsiphon) empfohlen, um das Austreten von
+Kanalgerüchen auch bei ausgetrocknetem Siphon zuverlässig zu verhindern.
+freie Tropfstrecke
+Trockensiphon
+mit Trichter
+
+Alternative: Sondersiphon HL138NH (Kondensat-Siphon mit Hygieneadapter):
+Der Unterputz-Sondersiphon HL138NH ist ein Trocken-Kugelsiphon mit integrierter freier Tropfstrecke.
+Mit dieser Ausführung kann der Ablaufschlauch mit durchgehendem Gefälle direkt an das
+Abwassersystem angeschlossen werden.
 
 HL 138NH
 
-Seite 21
+Seite 19
 
 3.5
 
-Luftauslass
-
-An der Vorderseite des Geräts befindet sich ein rechteckiger Luftauslass,
-über den die aufbereitete Luft in die Räume strömt.
-Zur Befestigung eines optionalen Plenums oder Schalldämpferadapters
-sind entsprechende Befestigungspunkte (M4 Gewinde) vorbereitet.
-Passende Anschlussadapter in verschiedenen Ausführungen sind als
-Zubehör erhältlich.
-
-Luftauslass für aufbereitete Raumluft (Zuluft)
-
-Befestigungspunkte für Luftauslass-Plenum:
-
-HRDS+ 30
-
-HRDS+ 50
-
-Achtung: bei Verwendung der Kühlfunktion zusätzlich beachten:
-Im Kühlbetrieb kann die Zuluftverrohrung nach dem Gerät unter den Taupunkt abkühlen, wodurch sich an der
-Rohraußenfläche Kondenswasser bilden kann. Um dies zu verhindern, muss die Zuluftverrohrung nach dem
-Gerät lückenlos mit dampfdichtem Kautschuk-Dämmmaterial isoliert werden. Eine Dämmstärke von mindestens
-9mm wird empfohlen.
-Bei Anlagen ohne Isolierung der Zuluftrohre kann die Kühlfunktion generell blockiert werden, siehe dazu Kapitel 6.1.3
-
-3.6
-
 Lufteinlässe
-Variante mit Umluft:
 
 Die beiden runden Einlässe auf der Rückseite des Geräts dienen zum Anschluss
 der Raumluft für die Umluftumwälzung, sowie der Frischluft, die vom
 Wohnraumlüftungsgerät zugeführt wird.
+
+Variante „mit Umluft“:
 
 Bei Geräten ohne Umluftfunktion ist lediglich ein Lufteinlass für die
 Frischluftzufuhr vom Lüftungsgerät vorhanden.
@@ -1119,7 +1074,7 @@ Modell
 Lufteinlass für die Zuluft
 vom Lüftungsgerät
 
-Variante ohne Umluft:
+Variante „nur Zuluft“:
 
 Lufteinlass für die Zuluft
 vom Lüftungsgerät
@@ -1127,6 +1082,43 @@ vom Lüftungsgerät
 Hinweis:
 Bei der Verwendung starrer Rohrleitungen wird empfohlen, flexible Schlauchstücke als Übergang an den Luftein- und -auslässen zu
 installieren. Dies reduziert die Übertragung von Vibrationen und minimiert mögliche Störgeräusche im Luftverteilungssystem des Gebäudes.
+
+3.6
+
+Luftauslass
+
+An der Vorderseite des Geräts befindet sich ein rechteckiger Luftauslass, über
+den die aufbereitete Zuluft in das Luftverteilsystem eingeleitet wird.
+Passende Anschlussadapter (Plenums) sind in verschiedenen Ausführungen als
+Zubehör erhältlich.
+Zur Befestigung des Plenums oder eines Schalldämpferadapters sind am Gerät
+entsprechende Befestigungspunkte mit M4-Gewinden vorbereitet.
+Luftauslass für aufbereitete Raumluft (Zuluft)
+
+Befestigungspunkte für Luftauslass-Plenum:
+
+HRDS+ 30
+
+HRDS+ 50
+
+Achtung: bei Verwendung der Kühlfunktion zusätzlich beachten:
+Im Kühlbetrieb kann die Zuluftverrohrung nach dem Gerät unter den Taupunkt abkühlen, wodurch sich an der
+Rohraußenfläche Kondenswasser bilden kann. Um dies zu verhindern, muss die Zuluftverrohrung nach dem
+Gerät lückenlos mit dampfdichtem Kautschuk-Dämmmaterial isoliert werden. Eine Dämmstärke von mindestens
+9mm wird empfohlen.
+Bei Anlagen ohne Isolierung der Zuluftrohre kann die Kühlfunktion generell blockiert werden, siehe dazu Kapitel 6.1.3
+
+Seite 20
+
+3.6.1
+
+Abmessungen - Luftauslassa dapter (Plenum) HRDS+ 30
+
+Seite 21
+
+3.6.1
+
+Abmessungen - Luftauslassa dapter (Plenum) HRDS+ 50
 
 Seite 22
 
@@ -1144,7 +1136,7 @@ Diese wird der Zuluft als Umluft beigemischt, wodurch der Luftdurchsatz im Gerä
 Ein höherer Umluftanteil reduziert den Feuchteeintrag durch die Außenluft und verbessert die Effizienz der Luftaufbereitung. Gleichzeitig
 ermöglicht der erhöhte Gesamtluftdurchsatz eine höhere übertragbare Leistung bei Entfeuchtungs-, Kühl- und Heizprozessen.
 
-HRDS+ Modul
+HRDS+ „mit Umluft“
 
 Wohnraum-Lüftungsgerät
 Zuluft
@@ -1249,15 +1241,13 @@ Anschluss-Schema, Version „ohne Umluftumwälzung“:
 Diese Geräte-Variante wird ausschließlich in die Zuluft-Leitung eingebunden, ohne eine zusätzliche Umluftansaugung. Der Verzicht auf den
 Umluftanschluss vereinfacht die Installation und reduziert den Planungsaufwand. Da ausschließlich Außenluft aufbereitet wird, verringert sich
 jedoch die energetische Effizienz, insbesondere bei höheren Luftvolumenströmen.
-DWF oder
-HRDS+ Version ohne Umluft
+HRDS+ „nur Zuluft“
 Wasser vom Kühlkreis
-
 Wohnraum-Lüftungsgerät
 Zuluft
-Fortluft
-
 aufbereitete Zuluft
+
+Fortluft
 
 Außenluft
 
@@ -1289,8 +1279,10 @@ Allgemeines
 
 Die Geräte sind mit wasserdurchströmten Kühl- und Heizregistern zur Luftaufbereitung ausgestattet.
 Achten Sie darauf, dass die vorgesehene Durchflussrichtung eingehalten wird.
-Die anzuschließenden Rohrleitungen sind fachgerecht abzufangen, sodass deren Gewicht nicht auf den Geräteanschlüssen lastet.
-Bei Wassertemperaturen unter ca. 15 °C sind die Leitungen diffusions- und dampfdicht zu isolieren, um Kondensatbildung zu vermeiden.
+Es wird empfohlen, in den Vor- und Rücklaufleitungen geeignete Absperrventile vorzusehen, um Wartungsarbeiten zu erleichtern.
+Die anzuschließenden Rohrleitungen sind fachgerecht abzustützen, sodass deren Gewicht nicht auf den Geräteanschlüssen lastet.
+Bei Wassertemperaturen unter ca. 15 °C sind sämtliche Rohrleitungen, Armaturen und Anschlussstellen diffusions- und dampfdicht zu
+isolieren, um Kondensatbildung und unerwünschte Wärmeaufnahme zu vermeiden.
 Vor dem Befüllen der Rohrleitungen ist sicherzustellen, dass keine Fremdstoffe oder Verunreinigungen in den Wasserkreis des Geräts
 gelangen können.
 Nach Abschluss der Installation ist der Wasserkreis vollständig zu entlüften. Ein entsprechendes Entlüftungsventil befindet sich oberhalb
@@ -1305,59 +1297,129 @@ Komponenten des Gerätes führen.
 Anforderungen:
 Parameter
 
+Einheit
+
 Grenzwert
+
+pH-Wert
+
+-
+
+7,5 ÷ 9,0
 
 Gesamthärte
 
-< 10 °dH
+°dH
 
-PH-Wert
+4,5 ÷ 8,5
 
-7.5 – 9.0
+Elektrische Leitfähigkeit
 
-Sauerstoff
+µS/cm
 
-< 2 mg / l
+10 ÷ 500
 
-Leitfähigkeit
+Chloride (Cl⁻)
 
-< 500 μS/cm
+ppm
 
-Eisen
+< 50
 
-< 2 mg/l
+Sulfat (SO₄)
 
-Magnesium
+ppm
 
-< 1 mg/l
+< 70
 
-Nitrat
+Verhältnis Bikarbonat / Sulfat (HCO₃/SO₄)
 
-< 70 mg/l
+-
 
-Sulfat
+> 1,0
 
-< 70 mg/l
+Bikarbonat (HCO₃)
 
-Chlorid
+ppm
 
-< 300 mg/l
+70 ÷ 300
 
-freies Kohlendioxid
+Gelöster Sauerstoff
 
-< 10 mg/l
+ppm
 
-Ammonium
+< 0,1
 
-< 20 mg/l
+Freies Kohlendioxid (CO₂)
 
-Wasser-Glykol-Mischungen
+ppm
 
-max. 50%
+<5
 
-Wasser-Ethanol-Mischungen
+Ammoniak (NH₃)
 
-max. 28%
+ppm
+
+< 0,5
+
+Freies Chlor (Cl₂)
+
+ppm
+
+< 0,5
+
+Eisen (Fe³⁺)
+
+ppm
+
+< 0,2
+
+Mangan (Mn²⁺)
+
+ppm
+
+< 0,05
+
+Nitrat (NO₃)
+
+ppm
+
+< 100
+
+Phosphat (PO₄)
+
+ppm
+
+< 2,0
+
+Aluminium (Al)
+
+ppm
+
+< 0,2
+
+Schwefelwasserstoff (H₂S)
+
+ppm
+
+< 0,05
+
+Frostschutzmittel (Glykol)
+
+Vol.-%
+
+≤ 50
+
+Frostschutzmittel (Ethanol)
+
+Vol.-%
+
+≤ 28
+
+Brunnen- oder Grundwasser muss sorgfältig analysiert und vor der Verwendung entsprechend den Anforderungen aufbereitet werden.
+Bei Überschreitung der angegebenen Grenzwerte der Wasserhärte ist eine geeignete Wasserenthärtungsanlage einzusetzen.
+Eine zu starke Enthärtung des Wassers (Gesamthärte < 1,5 mmol/l) kann bei Kontakt mit metallischen Komponenten
+Korrosionserscheinungen verursachen.
+Nach der Regeneration von Enthärtungsharzen ist die Chloridkonzentration zu überprüfen.
 
 Seite 26
 
@@ -1369,7 +1431,6 @@ Die Wasserkreis-Anschlüsse befinden sich an der Vorderseite des Geräts
 und sind als G ½"-Innengewinde mit Flachdichtung ausgeführt.
 (Schlüsselweite SW = 24 mm).
 
-Entlüftungsventil
 IN
 
 Beachten Sie die Kennzeichnungen:
@@ -1377,6 +1438,8 @@ Beachten Sie die Kennzeichnungen:
 „OUT“ steht für den Wasserauslass aus dem Gerät
 
 3.8.4
+
+Entlüftungsventil
 
 OUT
 
@@ -1407,14 +1470,12 @@ Ein begrenzter Wasserdurchsatz erzeugt die notwendige Temperaturspreizung im
 Plattenwärmetauscher und gewährleistet eine ausreichende Nachheizung der Luft. Bei
 korrekter Einstellung liegt die Luftauslasstemperatur etwa auf Raumtemperaturniveau.
 Es erfolgt somit eine reine Entfeuchtung ohne zusätzliche Abkühlung der Zuluft.
-Eine moderate Überhöhung des Wasserdurchsatzes kann gezielt eingesetzt werden, um auch im Entfeuchtungsmodus eine leichte
-Absenkung der Zulufttemperatur zu erreichen.
-Bei sehr niedrigen Wassertemperaturen ist ein zu hoher Wasserdurchsatz jedoch zu vermeiden, da dies zu einer starken Absenkung der
-Luftauslasstemperatur und damit zu Kondensatbildung in den Luftleitungen führen kann.
+Eine Überhöhung des kühlen Wasserdurchsatzes kann gezielt eingesetzt werden, um auch im Entfeuchtungsmodus eine leichte Absenkung
+der Zulufttemperatur zu erreichen.
 
 Empfohlene Durchsatzbereiche:
 min. WasserGerät
-durchsatz
+durchsatz*
 
 max. Wasserdurchsatz*
 
@@ -1431,8 +1492,7 @@ HRDS+ 50
 4.0 L/min
 
 * Die angegebenen Durchflusswerte beziehen sich auf eine Wassereinlasstemperatur von 16 °C.
-Bei niedrigeren Wassertemperaturen ist ein reduzierter Durchflussbereich einzustellen,
-bei höheren Wassertemperaturen ein erhöhter Durchflussbereich.
+Bei höheren Wassertemperaturen ist ein entsprechend erhöhter Durchflussbereich einzustellen.
 
 Seite 27
 
@@ -1468,10 +1528,10 @@ Umwälzpumpe aktiviert wird und die Wärmepumpe in den aktiven Kühlmodus wechse
 Bei Anforderung durch das HRDS+ Gerät (Entfeuchtungs-, Kühl- oder Heizbetrieb) schließt der potentialfreie Ausgang „VMC“ und gibt damit
 das Signal an die Wärmepumpe, um den Kühlbetrieb zu aktivieren und den erforderlichen Wasserdurchsatz sowie die Kühlleistung
 bereitzustellen.
-Das HRDS+ Modul wird parallel in den Hauptstrang des Wärmepumpen-Heiz-/Kühlkreises eingebunden - vergleichbar mit einem zusätzlichen
-Heizkreisverteiler.
-Im ausgeschalteten Zustand des HRDS+ verhindert das 2-Wege-Zonenventil (Pos. 11) eine Fehlzirkulation. Das Ventil öffnet ausschließlich
-bei aktiviertem Entfeuchtungs-, Kühl- oder Heizbetrieb des HRDS+ und gibt den Durchfluss durch das Modul frei.
+Das HRDS+ Modul wird parallel in den Hauptstrang des Wärmepumpen-Heiz-/Kühlkreises eingebunden – hydraulisch vergleichbar mit einem
+zusätzlichen Heizkreisverteiler. Berücksichtigen Sie bei der Auslegung den Druckverlust des HRDS+ Moduls gemäß Kapitel 10.3.6.
+Im ausgeschalteten Zustand des HRDS+ verhindert das 2-Wege-Zonenventil (Pos. 11) eine Fehlzirkulation. Das Ventil öffnet bei aktiviertem
+Entfeuchtungs-, Kühl- oder Heizbetrieb des HRDS+ und gibt den Durchfluss durch das Modul frei.
 * Hinweis:
 Ist eine Warmwasserbereitung mit Vorrangschaltung und Umschaltventil (Pos. 13) vorhanden, müssen Entfeuchtungs- und Kühlbetrieb
 während der Warmwasserbereitung deaktiviert werden. Dies erfolgt beispielsweise über ein Relais, welches das Signal des Umschaltventils
@@ -1510,9 +1570,11 @@ Regelt die WP „Rücklauf-geführt“ → Einbindung im Vorlauf (vor dem Heiz-/
 15 – Warmwasserspeicher
 16 – Rückschlagklappe mit geringem Druckverlust (muss horizontal eingebaut werden)
 Durch diese hydraulische Einbindung ist ein ausreichender Durchsatz durch HRDS+ und Flächenkühlung sichergestellt, unabhängig vom
-Betriebszustand der WP-Pumpe. Die Wärmepumpe muss sich dennoch im Kühlmodus befinden. Bei einigen WP-Modellen gibt es div.
-Verzögerungs-Strategien bis die aktive Kühlung einsetzt. Die Kühlflächen bzw. der Estrich wirken als thermischer Puffer bis die WP die
-Wassertemperatur wieder aktiv absenkt.
+Betriebszustand der WP-Pumpe. Die Wärmepumpe muss sich dennoch im Kühlmodus befinden. Bei einigen Wärmepumpenmodellen können
+interne Verzögerungsstrategien dazu führen, dass die aktive Kühlung erst zeitverzögert startet. Während dieser Zeit wirken die Kühlflächen
+bzw. der Estrich als thermischer Puffer, bis die Wärmepumpe die Wassertemperatur wieder aktiv absenkt.
+Für diese hydraulische Einbindung muss die Umwälzpumpe der Wärmepumpe mit konstanter Drehzahl betrieben werden. Automatische
+Regelungen wie beispielsweise eine ΔT-Regelung sind für diese Betriebsweise nicht geeignet.
 Wichtig: Für einen störungsfreien Betrieb müssen immer ausreichend Kühlkreise hydraulisch geöffnet bleiben (es ist keine vollständige
 Absperrung aller Kreise zulässig). Zur Vermeidung von Fehlzirkulationen wird ein federbelastetes Rückschlagventil (Pos. 12) im Abgang des
 HRDS+ Moduls sowie eine Rückschlagklappe (Pos. 16) im Hauptstrang der Wärmepumpe installiert.
@@ -1578,6 +1640,7 @@ Sole-Auslass-Seite der Wärmepumpe. (siehe Variante 5) Die bei dieser Variante h
 Leistungsabgabe des HRDS+ Geräts weitgehend unabhängig von der Soletemperatur erfolgt. Bei dieser Anschlussart reduziert sich die
 Kühlleistung des Flächenkühl-systems weniger stark bzw. erst zeitverzögert.
 Hinweise zur Anbindung im Solekreis:
+Für diese Einbindung ist die Solepumpe der WP mit konstanter Drehzahl zu betreiben. Automatische Regelungen (z.B. ΔT-Regelung) sind nicht geeignet.
 Mit dieser Variante ist eine Heizungsunterstützung über die Lüftung im Winter nicht möglich.
 Aktive Entfeuchtung im Winter ist untersagt – Einfriergefahr der Register!
 Der Antistagnations-Modus (kurze Ansteuerung von externem Wasserventil + Pumpe) kann kurze kalte Zuluftstöße erzeugen.
@@ -1603,9 +1666,9 @@ Hydraulik Variante 4: im Solekreis – mit Zusatzpumpe, auf Sole-Einlass-Seite:
 Seite 32
 
 Hydraulik Variante 5: im Solekreis – mit Zusatzpumpe, auf Sole-Auslass-Seite:
-Falls gegen Ende es Sommer mit höheren Soletemperaturen zu rechnen ist und/oder die maximale Kühlleistung des Flächenkühlsystems im
-Vordergrund steht, empfiehlt sich die Installation des HRDS+ Geräts auf der Sole-Auslass-Seite der Wärmepumpe. Die bei dieser Variante
-höheren Soletemperaturen sind unproblematisch, da die Leistungsabgabe des HRDS+ Geräts weitgehend unabhängig von der
+Falls gegen Ende des Sommers mit höheren Soletemperaturen zu rechnen ist und/oder die maximale Kühlleistung des Flächenkühlsystems
+im Vordergrund steht, empfiehlt sich die Installation des HRDS+ Geräts auf der Sole-Auslass-Seite der Wärmepumpe. Die bei dieser
+Variante höheren Soletemperaturen sind unproblematisch, da die Leistungsabgabe des HRDS+ Geräts weitgehend unabhängig von der
 Soletemperatur erfolgt. Bei dieser Anschlussart reduziert sich die Kühlleistung des Flächenkühl-systems weniger stark bzw. erst
 zeitverzögert.
 
@@ -1637,6 +1700,7 @@ gleichzeitigem Betrieb beider Solepumpen jederzeit gewährleistet bleibt. Dies k
 und/oder eine Justierung des Drosselventils (Pos. 14) erfolgen. Weitere Details zur Einstellung des Soledurchsatzes finden Sie unter Punkt
 3.8.5.
 Hinweise zur Anbindung im Solekreis:
+Für diese Einbindung ist die Solepumpe der WP mit konstanter Drehzahl zu betreiben. Automatische Regelungen (z.B. ΔT-Regelung) sind nicht geeignet.
 Mit dieser Variante ist eine Heizungsunterstützung über die Lüftung im Winter nicht möglich.
 Aktive Entfeuchtung im Winter ist untersagt – Einfriergefahr der Register!
 Der Antistagnations-Modus (kurze Ansteuerung von externem Wasserventil + Pumpe) kann kurze kalte Zuluftstöße erzeugen.
@@ -1657,8 +1721,38 @@ Der Antistagnations-Modus (kurze Ansteuerung von externem Wasserventil + Pumpe) 
 13 – Zusatz Solepumpe für HRDS+ Gerät (Schaltausgang PM)
 14 – Durchfluss-Drosselventil
 15 – Federbelastetes Rückschlagventil
-
 Seite 34
+
+Hydraulik Variante 6b: im Solekreis – parallel - für Wärmepumpen mit externer Solepumpe:
+Für Sole-Wärmepumpen mit einer externen Solepumpe und 230V On/Off-Ansteuersignal ist eine einfache und effiziente Einbindung möglich.
+Durch die parallele Anbindung werden sowohl die Flächenkühlung als auch das HRDS+ Gerät gleichmäßig mit kühler Sole versorgt. Eine
+zusätzliche Pumpe für das HRDS+ ist nicht erforderlich.
+Für die Ansteuerung der Solepumpe muss bei dieser Variante eine Relais-Schaltung vorgesehen werden, damit die Solepumpe unabhängig
+vom Entfeuchtungsmodul und/oder der Wärmepumpe eingeschaltet werden kann.
+Der Durchsatz der Solepumpe ist bei der Inbetriebnahme so einzustellen, dass der erforderliche Mindestdurchfluss der Wärmepumpe auch
+bei geöffnetem Entfeuchterkreis jederzeit gewährleistet ist. Hierfür kann gegebenenfalls eine höhere Drehzahlstufe der Pumpe erforderlich
+sein. Weitere Details zur Einstellung des erforderlichen Soledurchsatzes durch das Entfeuchtungsmodul finden Sie unter Punkt 3.8.5.
+Hinweise zur Anbindung im Solekreis:
+Mit dieser Variante ist eine Heizungsunterstützung über die Lüftung im Winter nicht möglich.
+Aktive Entfeuchtung im Winter ist untersagt – Einfriergefahr der Register!
+Der Antistagnations-Modus (kurze Ansteuerung von externem Wasserventil + Pumpe) kann kurze kalte Zuluftstöße erzeugen.
+→ Abhilfe: Gerät im Winter auf OFF schalten oder Solepumpe separat (nicht über PM-Ausgang) steuern.
+
+1 – HRDS+ Gerät
+2 – Sole-Wärmepumpe mit Passiv-Kühlfunktion
+3 – Wärme/Kälte-Quelle (Tiefensonde oder Ringgrabenkollektor)
+4 – Flächen-Heiz/Kühlkreis
+5 – Membran-Ausdehnungsgefäß
+6 – Entlüftungsventil
+7 – Manometer
+8 – Sicherheitsventil
+9 – Absperrventil
+10 – Schmutzfilter
+11 – Sole Füll- und Spülarmatur mit Filter
+12 – externe Solepumpe (Schaltausgang PM)
+13 – Durchfluss-Drosselventil
+14 – 2-Wege-Zonenventil (Schaltausgang V3V)
+Seite 35
 
 3.8.8
 
@@ -1703,7 +1797,7 @@ HRDS+ 50
 
 200m
 
-Seite 35
+Seite 36
 
 4
 
@@ -1717,19 +1811,20 @@ Allgemeine Hinweise und Warnungen
 
 -
 
-Bei sämtlichen elektrischen Arbeiten sind die Sicherheitshinweise dieses Handbuchs zu beachten.
+Sämtliche elektrischen Arbeiten dürfen ausschließlich durch entsprechend qualifiziertes Elektrofachpersonal durchgeführt werden.
+Bei sämtlichen elektrischen Arbeiten sind die Sicherheitshinweise dieses Handbuchs sowie die geltenden nationalen und lokalen
+Vorschriften zu beachten
 Bevor Sie mit jeglichen elektrischen Anschlussarbeiten beginnen, stellen Sie sicher, dass das Gerät spannungsfrei ist
 Der elektrische Anschluss hat gemäß dem im Handbuch enthaltenen Anschlussschema zu erfolgen.
 Es wird empfohlen, das Gerät über einen eigenen Stromkreis mit geeigneter Abschaltvorrichtung anzuschließen.
 Der Potentialausgleich bzw. die Erdung des Geräts ist entsprechend den geltenden nationalen und lokalen Vorschriften herzustellen.
 Art und Querschnitt der Leitungen, Auswahl geeigneter Leitungsschutzschalter sowie deren Verlegung sind von einer autorisierten
 Elektrofachkraft festzulegen. Dabei sind die Anlaufströme des Kompressors und die maximalen Leistungsaufnahmen zu berücksichtigen.
-Die entsprechenden Angaben finden sich in der nachfolgenden Tabelle sowie im technischen Datenblatt des Geräts.
+Die entsprechenden Angaben finden sich in der nachfolgenden Tabelle sowie am Ende dieses Handbuches.
 Datenkabel bzw. Kleinspannungsleitungen sind getrennt zu verlegen oder es sind geschirmte Kabel zu verwenden.
 Elektrische Leitungen dürfen nicht in direkten Kontakt mit Rohrleitungen oder Komponenten im Inneren des Geräts kommen.
 Vor der Inbetriebnahme ist der feste Sitz sämtlicher elektrischer Anschlüsse zu prüfen.
-Nach Abschluss der Arbeiten sind alle erforderlichen Schutzmaßnahmen zu überprüfen (z. B. Erdungswiderstand, Abschaltvorrichtungen,
-etc.).
+Nach Abschluss der Arbeiten sind alle erforderlichen Schutzmaßnahmen zu überprüfen.
 
 Tabelle zur Dimensionierung der Kabelquerschnitte und Absicherung:
 Modell
@@ -1770,7 +1865,7 @@ des Elektroanschlusses zu führen.
 
 Klemmblöcke für elektrischen Anschluss
 
-Seite 36
+Seite 37
 
 4.3
 
@@ -1778,7 +1873,7 @@ Schaltplan
 
 HRDS+
 
-Seite 37
+Seite 38
 
 4.4
 
@@ -1856,7 +1951,7 @@ Modbus RTU-Anbindung
 
 RS 485 RTU
 
-Seite 38
+Seite 39
 
 4.5
 
@@ -1870,16 +1965,17 @@ OFF
 
 OFF
 
-Dieser Schaltkontakt hat Vorrang gegenüber der CNU-Bedieneinheit. Das bedeutet, wenn ein CNU-Display
-installiert ist, kann die Einheit über das Display nur dann ein- und ausgeschaltet werden, wenn die Klemmen OFFOFF durch eine Drahtbrücke kurzgeschlossen sind (Standardzustand)
+Dieser Schaltkontakt hat Vorrang gegenüber der CNU2-Bedieneinheit. Ist ein CNU2-Display installiert, ist ein
+Einschalten über die Bedieneinheit nur möglich, wenn die Klemmen OFF–OFF mit einer Drahtbrücke
+kurzgeschlossen sind (Standardzustand)
 Funktion Parameter PC12: Wird Parameter PC12 auf 1 gesetzt, startet das Gerät auch bei geöffnetem OFF/OFFSchaltkontakt, wenn eine Betriebsanforderung über die digitalen Schalteingänge DEU oder INT vorliegt, und
 ignoriert den Status des OFF/OFF-Kontaktes.
 
 SOMMER / WINTER SAISON UMSCHALTUNG – Digitaler Eingang
 Mit diesem potentialfreien Kontakt kann die Betriebsart je nach Saison umgeschaltet werden.
 Bei geöffnetem Kontakt befindet sich die Einheit im Sommermodus, bei geschlossenem Kontakt im Wintermodus.
-Falls eine CNU-Bedieneinheit angeschlossen ist, hat die Einstellung im Display Priorität.
-(Diese Priorität kann in den Geräte-Einstellungen oder per Modbus geändert werden – Parameter PC11)
+Falls eine CNU2-Bedieneinheit angeschlossen ist, hat die Einstellung im Display Priorität.
+(Diese Priorität kann über den Parameter PC11 geändert werden)
 E/I
 
 E/I
@@ -1893,7 +1989,7 @@ DEU
 
 DEU
 
-Falls eine CNU-Bedieneinheit angeschlossen ist, wird die Luftfeuchte damit gemessen und die Entfeuchtung
+Falls eine CNU2-Bedieneinheit angeschlossen ist, wird die Luftfeuchte damit gemessen und die Entfeuchtung
 automatisch angefordert. Der Schalteingang bleibt jedoch weiterhin aktiv und kann unabhängig vom Display, die
 Entfeuchtungsfunktion erzwingen.
 
@@ -1907,9 +2003,9 @@ INT
 INT
 
 Im Sommermodus wird die Luft gekühlt, im Wintermodus geheizt
-Falls eine CNU-Bedieneinheit angeschlossen ist, wird die Raumtemperatur damit gemessen und die INTEGRATION
-automatisch angefordert. Der Schalteingang bleibt jedoch weiterhin aktiv und kann unabhängig vom Display die
-INTEGRATION erzwingen.
+Falls eine CNU2-Bedieneinheit angeschlossen ist, wird die Raumtemperatur damit gemessen und die
+INTEGRATION automatisch angefordert. Der Schalteingang bleibt jedoch weiterhin aktiv und kann unabhängig
+vom Display die INTEGRATION erzwingen.
 Sommer-Kühlfunktion Funktion:
 - Kompressor wird aktiviert
 - Das interne Wasserventil ist geschlossen. Die Kondensation erfolgt im Plattenwärmetauscher
@@ -1917,17 +2013,18 @@ Winter-Heizfunktion:
 - Kompressor bleibt abgeschaltet
 - Beide Wasserventile sind geöffnet und ermöglichen Durchsatz durch die Wasserregister
 
-Seite 39
+Seite 40
 
 LÜFTER-STEUERUNG – 0-10V Eingang
+An diesen Klemmen kann die Drehzahl des Umluftventilators mit einem 0-10-VDC-Signal erhöht oder verringert
+werden. Die Lüfterdrehzahl kann alternativ auch über das Display angepasst werden.
+Die höhere der beiden Vorgaben (0-10V Signal oder Display) bestimmt die Lüfterdrehzahl.
 
 FAN-
 
 FAN+
 
-An diesen Klemmen kann die Drehzahl des Umluftventilators mit einem 0-10-VDC-Signal erhöht oder verringert
-werden. Die Lüfterdrehzahl kann auch über das Display angepasst werden. Die höhere der beiden Vorgaben
-(0-10V Signal oder Display) bestimmt die Lüfterdrehzahl. Das Eingangssignal ist linear und reicht von:
+Das Eingangssignal ist linear und reicht von:
 Min. Lüfter 0V= 50%
 Max. Lüfter 10V = 85%
 Dieser Arbeitsbereich des Lüfters kann in den Geräte-Einstellungen oder per Modbus individuell für die
@@ -1935,7 +2032,7 @@ Betriebsweisen ENTFEUCHTEN und INTEGRATION konfiguriert werden.
 FAN - = GND
 FAN + = 0 bis +10VDC
 
-Beispiel: Ansteuerung über Potentiometer mit interner 12V Versorgung:
+Verdrahtungsvariante: Ansteuerung über Potentiometer mit interner 12V Versorgung:
 Am Anschlussklemmenblock des Displays steht ein 12 V-Ausgang zur Verfügung, der zur Versorgung eines
 handelsüblichen linearen Potentiometers (10 kΩ, 1 W) genutzt werden kann. Damit lässt sich ein analoges
 Steuersignal (0–10 VDC) zur Regelung des Lüfters erzeugen.
@@ -1945,8 +2042,8 @@ Steuersignal (0–10 VDC) zur Regelung des Lüfters erzeugen.
 3 = 12 VDC Versorgung mit Vorwiderstand
 Hinweis:
 Wird am Eingang FAN+ eine Spannung über 10 VDC erkannt, deaktiviert die Gerätesteuerung automatisch das
-Steuersignal für den Ventilator. Für eine zuverlässige Spannungs-Begrenzung, ist ein 2 kΩ Widerstand (1 W) in
-Serie vor das Potentiometer zu schalten, wie oben im Schaltbild dargestellt.
+Steuersignal für den Ventilator. Für eine zuverlässige Spannungs-Begrenzung, ist daher ein 2 kΩ Widerstand (1 W)
+in Serie vor das Potentiometer zu schalten, wie oben im Schaltbild dargestellt.
 
 ALARMSIGNAL – Ausgang Potentialfrei
 Wenn mindestens eine Alarmmeldung aktiv ist, wird dieser potentialfreie Kontakt geschlossen.
@@ -1973,7 +2070,7 @@ Das Ventil öffnet, sobald an V3V (L2) eine Spannung von 230 V anliegt.
 Der Ausgang wird unabhängig vom Betrieb in regelmäßigen Abständen für kurze Zeit angesteuert, um
 Stagnation zu verhindern. (siehe Kapitel 6.4 für Details)
 
-Seite 40
+Seite 41
 
 PUMPEN-ANSTEUERUNG – Ausgang 230V
 
@@ -1987,10 +2084,10 @@ Anforderung aktiv = 230 V AC an den PM-Klemmen.
 Elektrische Spezifikationen:
 Maximale Spannung: 230 V AC
 Maximaler Strom: 2 A
-Dieser Ausgang wird immer gleichzeitig mit dem Ventilausgang V3V geschaltet. Bei Verwendung einer
-ungeregelten Pumpe kann dies zu Geräuschen oder Problemen führen. In solchen Fällen empfiehlt sich die
-Verwendung eines Ventils mit Hilfs- oder Endlagenschalter, sodass die Pumpe erst angesteuert wird, wenn das
-Ventil vollständig geöffnet ist.
+Der Ausgang wird stets gemeinsam mit dem Ventilausgang V3V geschaltet. Bei Verwendung einer ungeregelten
+Umwälzpumpe kann dies zu Strömungsgeräuschen oder hydraulischen Problemen führen. In diesem Fall wird
+empfohlen, ein Ventil mit Hilfs- oder Endlagenschalter einzusetzen, sodass die Pumpe erst eingeschaltet wird,
+nachdem das Ventil vollständig geöffnet ist.
 Der Ausgang wird unabhängig vom Betrieb in regelmäßigen Abständen für kurze Zeit angesteuert, um Stagnation
 zu verhindern. (siehe Kapitel 6.4 für Details)
 
@@ -2028,7 +2125,7 @@ A+/ B- Intrabus (für alte CNU Display-Version)
 C- / D+ CAN-Bus (für CNU2 Display-Version)
 12 0 A+ B- C+ D-
 
-Seite 41
+Seite 42
 
 4.6
 
@@ -2088,7 +2185,7 @@ CAN-Bus:
 Stellen Sie den DIP-Schalter 2 auf ON um den
 Abschlusswiderstand zu aktivieren
 
-Seite 42
+Seite 43
 
 Installation der CNU2 – Bedieneinheit
 DIMENSIONEN:
@@ -2101,13 +2198,25 @@ wie Nischen, Bereiche zwischen Regalen, hinter Vorhängen, in der Nähe von Wär
 in Zugluft von Außentüren oder bei direkter Sonneneinstrahlung.
 
 MONTAGE:
-Das CNU2-Bediengerät kann an einer Wand oder auf einer StandardUnterputzdose montiert werden. Hierfür wird der Frontteil mithilfe
-eines Schraubendrehers an den dafür vorgesehenen Punkten gelöst.
+Das CNU2-Bediengerät kann an einer Wand oder auf einer StandardUnterputzdose montiert werden. Hierzu wird der Frontteil mithilfe eines
+Schraubendrehers an den dafür vorgesehenen Punkten von der hinteren
+Gehäuseschale gelöst.
+Bei Wandmontage ist die hintere Gehäuseschale an der gewünschten Position
+auszurichten. Die Anschlusskabel sind durch die vorgesehene
+Kabeldurchführung zu führen. Anschließend ist die Gehäuseschale mit
+geeigneten Dübeln und vier Schrauben an der Wand zu befestigen.
 Für die Befestigung werden Senkkopfschrauben empfohlen.
+Der elektrische Anschluss ist ohne angelegte Versorgungsspannung
+durchzuführen. Nach erfolgtem Anschluss wird der Frontteil wieder auf der
+hinteren Gehäuseschale befestigt.
 
 MONTAGE AUF EINER UNTERPUTZDOSE:
+Bei Montage auf einer Standard-Unterputzdose wird die hintere Gehäuseschale
+direkt mit vier Schrauben an der Unterputzdose befestigt. Anschließend ist der
+elektrische Anschluss ohne angelegte Versorgungsspannung durchzuführen
+und der Frontteil wieder aufzusetzen
 
-Seite 43
+Seite 44
 
 5
 
@@ -2167,9 +2276,9 @@ Andernfalls bleibt das Gerät ohne angeschlossenes Display dauerhaft im OFF-Zust
 
 HA00 – „Quelle der Temperatur- und Feuchtesensoren“ auf 0 (= None) einstellen.
 Andernfalls erwartet das Gerät Sensordaten vom Display und kann entsprechende Fehlermeldungen ausgeben.
-Die Parameter können im Zuge der Inbetriebnahme über die Service-Software oder alternativ über die Modbus-Schnittstelle eingestellt werden
+Die Parameter können bei der Inbetriebnahme über die Service-Software oder alternativ über die Modbus-Schnittstelle angepasst werden.
 
-Seite 44
+Seite 45
 
 5.2
 
@@ -2203,7 +2312,7 @@ Ca. 2 Sekunden lang gedrückt halten, schaltet das Gerät ein oder aus.
 12. DIP-Schalter für CAN-Terminierung
 13. Reserviert für den Hersteller
 
-Seite 45
+Seite 46
 
 5.2.2
 
@@ -2212,24 +2321,25 @@ Symbol
 Gra fische Visualisierung
 
 Bedeutung
-- Sommermodus
+Sommermodus
 
-- Wintermodus
+Wintermodus
 
-- Entfeuchtungs-Anforderung aktiv
+Entfeuchtungs-Anforderung aktiv
 
-- Integrations-Anforderung aktiv
-- Aus: kein Alarm aktiv
-- An: zumindest ein Alarm aktiv
+Integrations-Anforderung aktiv
+Aus: kein Alarm aktiv
+An: zumindest ein Alarm aktiv
 
 OFF
 
-- Gerät ist ausgeschaltet
-Lüfter ist aktiv - Umluftbetrieb
+Gerät ist ausgeschaltet
 
-- eingestellte Lüfterdrehzahl (Display-Vorgabe)
+Lüfter aktiv
 
-Seite 46
+eingestellte Lüfterdrehzahl (Display-Vorgabe)
+
+Seite 47
 
 5.2.3
 
@@ -2275,13 +2385,15 @@ Lüfter-Bildschirm
 Auf diesem Bildschirm wird die aktuell eingestellte Lüfterdrehzahl angezeigt
 Werden die AUF/AB Pfeiltasten bei aktivem Lüfter ca. 2 Sekunden lang gehalten, kann die
 Vorgabe für die Lüftergeschwindigkeit angepasst werden.
-Die minimalen und maximalen Drehzahlen sind werksseitig konfiguriert.
+Bei der Inbetriebnahme wird der Regelbereich zwischen minimaler und maximaler
+Lüfterdrehzahl festgelegt. Die Lüfterdrehzahl kann anschließend innerhalb dieses Bereichs
+von 0–100 % eingestellt werden
 Die Lüfterdrehzahl kann entweder über diesen Bildschirm oder über den 0-10VDC
 Eingang an den Anschlussklemmen eingestellt werden.
 Die höhere der beiden Anforderungen bestimmt die Lüfterdrehzahl.
 Die Lüfter-Statusseite zeigt ausschließlich den am Display eingestellten Sollwert an.
 
-Seite 47
+Seite 48
 
 5.2.4
 
@@ -2302,47 +2414,47 @@ Benutzer-Menü
 Zeitprogramm und Zeit-Einstellungen
 Zählerstände
 Alarm-Menü
-Service-Menü (Zusammenfassung der wichtigsten Einstell-Parameter)
+Service-Menü (Passwort-geschützt)
 Wartungs-Menü (Passwort-geschützt)
 Installateur-Menu (Passwort-geschützt)
 Hersteller-Menü (Passwort-geschützt – nur im OFF-Zustand verfügbar)
 
 Benutzer-Menü
-Im Benutzermenü kann die Saison-Einstellung zwischen Winter/Sommer umgestellt werden*
-Darüber hinaus lassen sich hier die Sollwerte für die Raumlufttemperatur und die
-Raumluftfeuchte einstellen. Zusätzlich werden die aktuellen Messwerte der
-Temperatursensoren sowie der Status aller wichtigen Parameter angezeigt.
-Um das Menü zu verlassen, drücken Sie die ON/OFF-Taste.
-* Wenn das CNU2-Bedienmodul angeschlossen ist, kann der saisonale Wechsel nur über das Display erfolgen. Soll der
-saisonale Wechsel trotz angeschlossenem Display über den digitalen Schalteingang erfolgen, muss die Priorität in der
-Gerätekonfiguration angepasst werden (Parameter PC11 auf 1 setzen)
+Im Benutzermenü kann die Betriebsart für Winter- oder Sommerbetrieb ausgewählt werden*
+Außerdem können die Sollwerte für Raumlufttemperatur und Raumluftfeuchte eingestellt sowie die aktuellen Messwerte der
+Sensoren und alle relevanten Betriebszustände angezeigt werden.
+Zum Verlassen des Menüs die ON/OFF-Taste drücken.
 
-Zeitprogramm und Zeit-Einstellungen
+* ist das CNU2-Bedienmodul angeschlossen, erfolgt die Umschaltung zwischen Winter- und Sommerbetrieb
+standardmäßig über das Display. Soll die Umschaltung trotz angeschlossenem CNU2 über den digitalen Schalteingang
+erfolgen, muss die Priorität in der Gerätekonfiguration angepasst werden (Parameter PC11 auf 1 setzen)
+
+Seite 49
+
+Zeitprogramm und Zeit-Einstellungen
 Dieses Menü dient zur Aktivierung und Bearbeitung von Zeitprogrammen.
-Bei HRDS+ Geräten ist die Zeitprogramm-Funktion im Auslieferungszustand jedoch
-deaktiviert.
-Unter „CLOCK“ in der letzten Zeile können Datum und Uhrzeit eingestellt werden. Bei einem
-längeren Stromausfall verliert die Uhr ihre Zeit, und der Alarm AL26 wird ausgelöst. Beim
-Neustart wird automatisch der Einstellungsbildschirm angezeigt.
-Zusätzlich kann in diesem Unterpunkt auch die Dauer der Display-Hintergrundbeleuchtung
-festgelegt werden.
-Um das Menü zu verlassen, drücken Sie die ON/OFF-Taste
+Bei HRDS+ Geräten ist die Zeitprogramm-Funktion deaktiviert.
+Unter „CLOCK“ in der letzten Zeile können Datum und Uhrzeit eingestellt werden.
+Nach einem längeren Stromausfall verliert die interne Uhr die gespeicherten Zeitdaten und
+der Alarm AL26 wird ausgelöst. Beim Neustart wird automatisch der Einstellbildschirm zur
+erneuten Einstellung von Datum und Uhrzeit angezeigt.
+Zusätzlich kann hier die Dauer der Display-Hintergrundbeleuchtung eingestellt werden.
+Zum Verlassen des Menüs die ON/OFF-Taste drücken.
 
 Zählerstände
 In diesem Menü werden die Betriebsstunden des Lüfters und des Kompressors angezeigt.
 Der Lüfter-Limit-Wert definiert die Standzeit des Luftfilters.
 Bei Erreichen dieses Werts wird der Alarm AL22 ausgelöst.
+Filter-Standzeit zurücksetzen:
 Zum Zurücksetzen von AL22 kann entweder ein Reset im Alarmmenü durchgeführt
 oder die Lüfterlaufzeit in diesem Menü auf 0 gesetzt werden.
 Die Anzeige der Werte erfolgt in „Stunde ×10“:
-Beispiel: die Anzeige „57 h ×10“ bedeuted: 570 Stunden
+Beispiel: die Anzeige „57 h ×10“ bedeutet: 570 Stunden
 Navigieren Sie zum Menüpunkt „Update“ und drücken Sie die OK-Taste, um Datum und Uhrzeit des Filterwechsels zu speichern.
 Hinweis: Die Einstellung und Anzeige des Kompressor-Limits ist bei HRDS+ Geräten ohne Funktion.
 Zum Verlassen des Menüs die ON/OFF-Taste drücken.
 
-Seite 48
-
-Alarm-Menü
+Alarm-Menü
 Im Alarm-Menü kann zwischen der Anzeige von aktiven Alarmen und dem gespeicherten
 Alarmverlauf gewählt werden.
 Aktive Alarme:
@@ -2361,12 +2473,13 @@ Alarmmenü.
 Um das Alarm-Menü zu verlassen, drücken Sie die ON/OFF-Taste oder warten 60 Sekunden, um
 zum Hauptmenü zurückzugelangen.
 
-Service-Menü
-Das Service-Menü bietet eine übersichtliche Zusammenfassung aller wesentlichen
-Geräteeinstellparameter und stellt diese als Volltext dar.
-Detaillierte Informationen zu den einzelnen Parametern finden Sie im Kapitel 5.3 „Parameter-Liste“
-sowie im Kapitel 6 „Regelung“.
-Passwort für Zugang zum Servicemenü: „2“
+Seite 50
+
+Service-Menü
+Das Service-Menü bietet eine Übersicht über alle wesentlichen Geräteeinstellparameter und zeigt diese in Klartext an.
+Detaillierte Informationen zu den einzelnen Parametern finden Sie im Kapitel 5.3 „Parameter-Liste“ sowie im Kapitel 6 „Regelung“.
+Passwort für Zugang zum
+Servicemenü: „2“
 
 Menüs für „Wartung, Installateur, Hersteller“
 In diesen Menüs können alle Controller-Parameter eingesehen und angepasst werden.
@@ -2384,7 +2497,7 @@ Level 3 – Installateur = Passwort „2“
 Level 4 – Hersteller = Passwort „10“
 Das Hersteller-Menü ist nur im ausgeschalteten Zustand (OFF) zugänglich.
 
-Seite 49
+Seite 51
 
 5.3
 
@@ -2689,7 +2802,7 @@ Passwort Benutzerebene (1)
 
 User Password
 
-Seite 50
+Seite 52
 
 5.3.1
 
@@ -3008,7 +3121,7 @@ Offset T.room probe
 
 Offset RH% probe
 
-Seite 51
+Seite 53
 
 Level 3 – Installateur-Menü – Installer Menu (InSt)
 Code
@@ -3179,7 +3292,7 @@ YES (1)
 
 S/W by DI
 
-Seite 52
+Seite 54
 
 Code
 
@@ -3587,7 +3700,7 @@ Sec
 
 Return Postspeed
 
-Seite 53
+Seite 55
 
 Code
 
@@ -3812,7 +3925,7 @@ Bar
 
 PE18
 
-Differential Vorwarnung Hochdruck
+Hysterese Vorwarnung Hochdruck
 
 5.0
 
@@ -3875,7 +3988,7 @@ PE24
 
 Drehzahl-Änderungsrate des Kompressors
 
-0.2
+2
 
 0
 
@@ -3887,7 +4000,7 @@ PE25
 
 Absenkgeschwindigkeit des Kompressors bei Alarm oder Abschaltung
 
-1.2
+12
 
 0
 
@@ -3899,7 +4012,7 @@ PE26
 
 Rampe von 0 bis zur min. Modulationstufe, oder von dort bis 0
 
-0.8
+8
 
 0
 
@@ -4043,7 +4156,7 @@ Sollwert Funktion Vorwärmung
 
 Pb05
 
-Differential Funktion Vorwärmung
+Hysterese Funktion Vorwärmung
 
 10.0
 
@@ -4095,7 +4208,7 @@ DEHU comp max %
 
 INT comp max %
 
-Seite 54
+Seite 56
 
 Code
 
@@ -4348,7 +4461,7 @@ Set freecool/heat
 
 PS07
 
-Differential Aktivierung Free-Cooling / Free-Heating
+Hysterese Aktivierung Free-Cooling / Free-Heating
 
 2.0
 
@@ -4396,7 +4509,7 @@ WÄRMERÜCKGEWINNUNG (HEAT REC.)
 
 Pr01
 
-Sollwert Differential für Regelung des Rotationswärmerückgewinners
+Sollwert Hysterese für Regelung des Rotationswärmerückgewinners
 
 5.0
 
@@ -4408,7 +4521,7 @@ Sollwert Differential für Regelung des Rotationswärmerückgewinners
 
 Pr02
 
-Differential Regelung des Rotationswärmerückgewinners
+Hysterese Regelung des Rotationswärmerückgewinners
 
 3.0
 
@@ -4444,7 +4557,7 @@ Totband Abtauung Wärmerückgewinner
 
 Pr05
 
-Zykluszeit Bypass Wärmerückgewinner mit Kreuzstrom für Abtauung
+Zykluszeit Bypass-Abtauung Kreuzstrom-Wärmerückgewinner
 
 5
 
@@ -4468,7 +4581,7 @@ Sollwert Stillstand Wärmerückgewinner für Abtauung
 
 Pr07
 
-Differential Stillstand Wärmerückgewinner für Abtauung
+Hysterese Stillstand Wärmerückgewinner für Abtauung
 
 3.0
 
@@ -4516,7 +4629,7 @@ PWM-Frequenz Rotationswärmerückgewinner bei Abtauung
 
 Hz
 
-Seite 55
+Seite 57
 
 Code
 
@@ -4716,7 +4829,7 @@ Sec
 
 PA17
 
-Differential Alarm Hoch-/Niedrigtemperatur
+Hysterese Alarm Hoch-/Niedrigtemperatur
 
 2.0
 
@@ -4751,7 +4864,7 @@ PU01
 
 PA20
 
-Differential Warnbedingung hohe Luftfeuchtigkeit
+Hysterese Warnbedingung hohe Luftfeuchtigkeit
 
 5
 
@@ -4908,7 +5021,7 @@ Bar
 
 PA34
 
-Differential Alarm Hochdruck
+Hysterese Alarm Hochdruck
 
 7.0
 
@@ -4928,7 +5041,7 @@ Anzahl Alarme Hochdruck/Stunde für manuelles Rücksetzen
 
 5
 
-Seite 56
+Seite 58
 
 Code
 
@@ -4977,7 +5090,7 @@ Sollwert Alarm Kompressor-Auslasstemperatur
 
 PA39
 
-Differential Alarm Kompressor-Auslasstemperatur
+Hysterese Alarm Kompressor-Auslasstemperatur
 
 20.0
 
@@ -5032,7 +5145,7 @@ Sollwert Alarm Frostschutz Wassertemperatur
 
 PA44
 
-Differential Alarm Frostschutz Wassertemperatur
+Hysterese Alarm Frostschutz Wassertemperatur
 
 2.0
 
@@ -5263,7 +5376,7 @@ Min
 
 RH enable time
 
-Seite 57
+Seite 59
 
 Code
 
@@ -5345,7 +5458,7 @@ Kbit
 
 Modbus baud rate
 
-Seite 58
+Seite 60
 
 Code
 
@@ -5711,7 +5824,7 @@ im Service-Menü
 
 Sec
 
-Seite 59
+Seite 61
 
 Code
 
@@ -5861,7 +5974,7 @@ Passwort Installateurebene (3)
 
 im Service-Menü
 
-Seite 60
+Seite 62
 
 Level 4 – Hersteller-Menü – Manufacturer Menu (COnS)
 Dieses Menü ist nur zugänglich, wenn sich das Gerät im ausgeschalteten Zustand (OFF) befindet.
@@ -6170,7 +6283,7 @@ INT Mode
 
 Disable T/H probes
 
-Seite 61
+Seite 63
 
 Code
 
@@ -6514,7 +6627,7 @@ Hinweis:
 Bei der Konfiguration von Maschinenparametern oder beim Ändern von Konfigurationsparametern wird empfohlen, das Gerät auszuschalten
 und das System neu zu starten, damit die Platine korrekt konfiguriert werden kann.
 
-Seite 62
+Seite 64
 
 Analogue & Digital Input Configuration Codes
 Code Description
@@ -6869,7 +6982,7 @@ Water temperature
 
 48
 
-Expulsion temperature
+Exhaust temperature
 
 49
 
@@ -6927,7 +7040,7 @@ Evaporator pressure 4-20mA
 
 Evaporator pressure 0-10V
 
-Seite 63
+Seite 65
 
 6
 
@@ -6972,7 +7085,7 @@ Deaktiviert, wenn die Raumtemperatur unter den Grenzwert PU13 fällt.
 Aktiviert, wenn die Raumtemperatur den Grenzwert PU13 plus die Differenz PU14 überschreitet und weiterhin eine
 Entfeuchtungsanforderung aufgrund der Raumluftfeuchtigkeit vorliegt.
 
-Seite 64
+Seite 66
 
 6.1.2
 
@@ -7016,7 +7129,7 @@ Kondensatbildung an der Rohroberfläche auftreten kann.
 Hinweis:
 Mit dieser Einstellung sind sowohl die Kühlfunktion im Sommer als auch die Heizfunktion im Winter deaktiviert.
 
-Seite 65
+Seite 67
 
 6.2
 
@@ -7081,7 +7194,7 @@ Wait ON: Der Lüfter ist bereit zum Einschalten, befindet sich jedoch momentan i
 –
 Wait OFF: Der Lüfter befindet sich im Nachlauf. Das Display zeigt „tOFF“ an.
 
-Seite 66
+Seite 68
 
 6.3
 
@@ -7140,7 +7253,7 @@ PE08: Schrittprozentsatz für die Erhöhung/Verringerung des Kompressors
 –
 PE09: Zeitintervall zwischen Erhöhung/Verringerung des Kompressorprozentsatzes
 
-Seite 67
+Seite 69
 
 Kompressor-Inverter-Management
 Es gibt drei Beschleunigungs-/Verzögerungsrampen für den modulierenden Kompressor, die durch Parameter PE33 aktiviert werden:
@@ -7219,7 +7332,7 @@ Wait ON: Der Kompressor ist bereit zum Einschalten und wartet die Sicherheitszei
 Wait OFF: Der Kompressor ist bereit zum Ausschalten und wartet die Sicherheitszeit ab. Das Display zeigt „tOFF“ an.
 ON: Der Kompressor ist eingeschaltet. Das Display zeigt „On“ an.
 
-Seite 68
+Seite 70
 
 6.4
 
@@ -7308,7 +7421,7 @@ Summer/Winter
 
 3
 
-Seite 69
+Seite 71
 
 6.7
 
@@ -7349,7 +7462,7 @@ Anzeige und Kalibrierung:
 Der Sensorwert wird auf dem Display angezeigt und für die Regelstrategien verwendet.
 Mit dem Parameter PM86 kann der Sensorwert kalibriert und mit einem Offset versehen werden.
 
-Seite 70
+Seite 72
 
 7
 
@@ -7462,7 +7575,7 @@ Kondenswasser fließt nicht ab
 Stellen Sie sicher, dass das Gerät waagerecht ausgerichtet ist.
 Prüfen und reinigen Sie den Kondensatablauf
 
-Seite 71
+Seite 73
 
 7.3
 
@@ -7582,8 +7695,7 @@ Deaktiviert die Regelungen, die davon abhängen
 
 AL29
 
-Externer Temperaturfühler defekt oder
-abgeklemmt
+Außentemperaturfühler defekt oder abgeklemmt
 
 Automatisch
 
@@ -7629,7 +7741,7 @@ Stoppt den Lüfter
 
 Schaltet alle Komponenten aus
 
-Seite 72
+Seite 74
 
 7.4
 
@@ -7668,7 +7780,7 @@ Die Regelung der Heiz-Integration wird unterbunden und der „Schnüffelzyklus�
 Sperrbedingungen zu überprüfen.
 Der Alarm wird zurückgesetzt, wenn die Wassertemperatur über den Schwellenwert PC08 plus die Differenz PA17 steigt.
 
-Seite 73
+Seite 75
 
 Niederdruckalarm (AL11)
 Wenn der Niederdruckschalter (oder das Frostschutzthermostat) auslöst und für die durch den Parameter PA31 festgelegte Verzögerungszeit
@@ -7713,7 +7825,7 @@ Setzen Sie die Lüfterlaufzeit auf 0 Stunden zurück, um den Alarm AL22 zu lösc
 Um den Zeitpunkt des Filterwechsels festzuhalten, klicken Sie auf „Update“, wodurch das
 aktuelle Datum und die Uhrzeit gespeichert werden.
 
-Seite 74
+Seite 76
 
 8
 
@@ -7754,19 +7866,36 @@ Prüfung auf aktive Alarme
 Verwenden Sie die Parameter-Service-Software oder das CNU2-Display, um vorhandene aktive Alarme zu überprüfen.
 Beheben Sie gegebenenfalls bestehende Alarme vor der Inbetriebnahme. Weitere Informationen hierzu finden Sie in Kapitel 7.
 
-8.2
+Seite 77
+
+8.2
 
 Erstinbetriebnahme
 
-Nach Abschluss aller Prüfungen kann das Gerät in Betrieb genommen werden.
-Prüfungen mit eingeschaltetem Gerät:
 Überprüfen und passen Sie alle Einstellparameter an die Anlagenbedingungen oder Kundenanforderungen an.
-Stellen Sie sicher, dass alle Betriebsmodi ordnungsgemäß funktionieren, indem diese temporär über angepasste Sollwerte aktiviert bzw.
-erzwungen werden.
-Hinweis: Von der Aktivierung bis zum Erststart des Kompressors vergehen mindestens 7 Minuten.
-Prüfen Sie, ob das Gerät korrekt stoppt und anschließend wieder startet.
-Überprüfen Sie den einwandfreien Ablauf des Kondenswassers.
-Stellen Sie den passenden Wasserdurchsatz ein und kontrollieren Sie die Wassertemperatur.
+Nach Abschluss aller Prüfungen kann das Gerät in Betrieb genommen werden.
+
+Prüfungen mit eingeschaltetem Gerät:
+Stellen Sie sicher, dass alle Betriebsmodi ordnungsgemäß funktionieren, indem Sie diese z. B. vorübergehend über angepasste Sollwerte
+aktivieren oder über geschlossene Digitaleingänge erzwingen.
+
+Verdampfertemperatur prüfen:
+Akivieren Sie den Entfeuchtungsbetrieb
+Hinweis: Von der Aktivierung einer Entfeuchtungsanforderung bis zum Start des Kompressors vergehen mindestens 7 Minuten.
+Lassen Sie den Kompressor anschließend mindestens 10 Minuten laufen und prüfen Sie die Verdampfertemperatur (Evaporator
+Temperature). Diese sollte sich im Bereich von 5,0–7,0 °C einpendeln.
+Bleibt die Verdampfertemperatur dauerhaft über diesem Bereich, kann dies folgende Ursachen haben:
+- zu geringer Wasser-/Sole-Durchsatz durch das Gerät,
+- zu hohe Wasser-/Sole-Temperatur,
+- zu hoher Luftdurchsatz im Verhältnis zur verfügbaren Geräteleistung.
+Treffen Sie bei Bedarf entsprechende Maßnahmen:
+- Erhöhen Sie den Wasser-/Sole-Durchsatz durch das Gerät, sofern möglich.
+- Reduzieren Sie die Wasser-/Sole-Temperatur, sofern möglich.
+- Reduzieren Sie den Luftdurchsatz durch das Gerät (z. B. durch Begrenzung der maximalen Umluftventilatordrehzahl über die
+Parameter PF09/PF10 und/oder durch Reduzierung des Zuluftstroms des Lüftungsgeräts).
+Führen Sie eine oder eine Kombination der genannten Maßnahmen durch, bis die Verdampfertemperatur im Entfeuchtungsbetrieb einen
+geeigneten Bereich erreicht.
+Überprüfen Sie während des Entfeuchtungsbetriebs außerdem den einwandfreien Ablauf des Kondenswassers.
 
 8.3
 
@@ -7781,7 +7910,7 @@ Die grundlegenden Funktionsmerkmale des Geräts.
 Die Bedienungsanweisungen.
 Die routinemäßige Wartung.
 
-Seite 75
+Seite 78
 
 9
 
@@ -7845,7 +7974,7 @@ Achtung!
 An den Lüfterblättern befinden sich kleine Metallclips, um die Lüfter auszubalancieren,
 entfernen Sie diese NICHT.
 
-Seite 76
+Seite 79
 
 10 Technische Daten
 
@@ -7968,21 +8097,21 @@ max. Stromstärke für Anschluss-Auslegung - A
 
 max. el. Leistung im Betrieb - W
 
-820
+800
 
-1130
+1110
 
-Nominale el. Leistung Kompressor - W
+max. el. Leistung Kompressor - W
 
 690
 
 950
 
-Nominale el. Leistung Umluft-Lüfter- W
+max. el. Leistung Umluft-Lüfter- W
 
-120
+90
 
-170
+150
 
 IP Schutzklasse
 
@@ -8002,7 +8131,7 @@ Filtermatte
 
 Filter Klasse / Effizienz
 
-ISO Coarse 85%
+ISO Coarse
 
 Gewicht
 Gewicht - kg
@@ -8019,7 +8148,7 @@ Gewicht - kg (Version ohne Umluftumwälzung)
 
 (3) Laut Norm DIN EN ISO 3741 und DIN EN ISO 3744
 
-Seite 77
+Seite 80
 
 10.1 Leistungsdaten – Kühlen und Entfeuchten HRDS+ 30
 
@@ -8168,7 +8297,7 @@ Entfeuchten
 
 * KWL-Zuluft: 26,5°C, 75%rF (Anteil 50%); Raumluft: 25°C, 50%rF (Anteil 50%); Wasser-Einlasstemperatur 16°C
 
-Seite 78
+Seite 81
 
 10.2 Leistungsdaten – Kühlen und Entfeuchten HRDS+ 50
 
@@ -8316,7 +8445,7 @@ Entfeuchten
 
 * KWL-Zuluft: 26,5°C, 75%rF (Anteil 50%); Raumluft: 25°C, 50%rF (Anteil 50%); Wasser-Einlasstemperatur 16°C
 
-Seite 79
+Seite 82
 
 10.3 Leistungskurven
 
@@ -8334,7 +8463,7 @@ HRDS+ 50
 
 Luftdurchsatz [m³/h]
 
-Seite 80
+Seite 83
 
 10.3.2 Umluftkreis Lüfterda ten
 
@@ -8407,7 +8536,7 @@ Verfügbarer Druck [PA]
 
 Luftdurchsatz [m³/h]
 
-Seite 81
+Seite 84
 
 10.3.3 Entfeuchtungskapazitä t
 
@@ -8429,7 +8558,7 @@ Lufttemperatur bei Registerpaket-Eintritt [°C]
 relative Luftfeuchtigkeit 63%
 Wassereinlass-Temp. 16°C
 Luft-Nenndurchsatz
-Seite 82
+Seite 85
 
 10.3.4 Kühlleistung
 
@@ -8448,7 +8577,7 @@ Lufttemperatur bei Registerpaket-Eintritt [°C]
 relative Luftfeuchtigkeit 63%
 Wassereinlass-Temp. 16°C
 Luft-Nenndurchsatz
-Seite 83
+Seite 86
 
 10.3.5 Heizleistung (nur Wasserregister)
 
@@ -8500,7 +8629,7 @@ Lufttemperatur bei Registerpaket-Eintritt [°C]
 Wassereinlass-Temp. 35°C
 Luft-Nenndurchsatz
 
-Seite 84
+Seite 87
 
 10.3.6 Druckverlust Wa sserkreis
 
@@ -8519,25 +8648,7 @@ Wasserdurchsatz [L/h]
 Einstellung: Wasser-Nachheizventil voll offen:
 Durchfluss seriell durch Wasserkondensator und Nachheizregister
 
-Seite 85
-
-10.3.7 Elektrische Leistungsa ufnahme
-
-el. Leistung [W]
-
-HRDS+ 30 / HRDS+ 50
-
-Kompressor-Anforderung [%]
-(Stromaufnahme: nur Kompressor ohne Lüfter)
-
-el. Leistung [W]
-
-HRDS+ 30
-
-Lüfter-Anforderung [%]
-(Stromaufnahme: Lüfter inkl. Steuereinheit)
-
-Seite 86
+Seite 88
 
 Änderungen vorbehalten
 Zeichnungen, Abmessungen, Gewichte und alle anderen technischen Daten der Produkte in Katalogen und Listen sind indikativ und
@@ -8550,8 +8661,8 @@ hej.Luft e.U.
 Hauptstraße 36b
 7301 Deutschkreutz, Österreich
 office@hejluft.at
-Stand: Mai2026
+Stand: Sept.2026
 
-Seite 87
+Seite 89
 
 

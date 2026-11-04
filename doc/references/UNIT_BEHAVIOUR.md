@@ -1,4 +1,4 @@
-# HRDS+ / Innova DEH+ — how the unit behaves
+# HRDS+ — how the unit behaves
 
 The **single source of truth on what the unit does**: which operation happens
 in which state, for which variant, season and probe configuration, and how
@@ -29,7 +29,6 @@ Scope rules:
 |-----|---------|
 | `[HB 6.3]` | Technical handbook `HRDS+_Technisches_Handbuch_DE.pdf` (text: `.txt`), section number. The end-user handbook (`HRDS+_Benutzerhandbuch_DE.pdf`) is a word-for-word subset of HB §2.4, §5.2, §7 and §9, so it is cited as HB. |
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
-| `[IM]` | Innova DEH+ H installation manual EN (OEM original). It describes an **older controller** (microswitches, three fixed fan speeds), not the EVCO "K" board of the HRDS+; cited only for the product line. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
@@ -72,15 +71,13 @@ When two sources disagree, both are given and the conflict is marked.
 | `DC` | — | Dehumidification and cooling [HB 2.4] |
 
 The handbook lists four part numbers: 30 and 50, each with and without
-recirculation, all `K DC` inverter [HB 2.8]. The Innova line also has a `D`
-version ("neutral air dehumidification", isothermal) [IM 2.3]; no `D` HRDS+ is
-listed [HB 2.8]. On the K controller, [PG02](MODBUS_REGISTERS.md#pg02) = 0 switches off cooling and
+recirculation, all `K DC` inverter [HB 2.8]. On the K controller, [PG02](MODBUS_REGISTERS.md#pg02) = 0 switches off cooling and
 heating ("integration") [HB 6.1.3], which gives the same function set
 [INFERRED].
 
 ### 1.2 What differs between the variants
 
-| Aspect | `R` (with recirculation) | non-`R` ("ohne Umluft") |
+| Aspect | `R` (with recirculation, "mit Umluft") | non-`R` ("nur Zuluft") |
 |--------|--------------------------|-------------------------|
 | Air connections | Supply duct from the MVHR **plus** a room-air inlet [HB 3.7.1] | Supply duct only [HB 3.7.2] |
 | Own fan, damper, filter | Yes [HB 2.1] | No [HB 2.1, 3.7.2] |
@@ -107,6 +104,14 @@ How to tell them apart from the controller: no register states size or `R`
   code `EPB9ORSINDEU`, firmware `V01.00.09.02` on the reference unit [T1].
   Whether other sizes/variants report the same product code is open
   [INFERRED; `plans/todo.md`].
+* **Firmware:** at least three firmware states are in the field: without
+  CNU2 display support; from early 2026 with CNU2 support; from March 2026
+  with a reworked menu and a fix for the recirculation damper closing before
+  the fan has finished running on [V#68]. Units shipped from 2026 carry the
+  newer firmware with revised defaults [V#47, V#91]. Firmware and parameter
+  updates are backward compatible [V#50]; the current firmware is available
+  from the vendor on request [V#76]. Which FC 43 revision string belongs to
+  which state is open [`plans/todo.md`].
 
 ### 1.3 Variants seen so far
 
@@ -156,7 +161,9 @@ Hydraulic installations [HB 3.8.6–3.8.8]:
 |---------|-------|-------|
 | 1–3: heating/cooling circuit of a heat pump | 16–20 °C in cooling mode [INFERRED typical] | The heat pump must be in cooling mode for summer DEU/INT; the `VMC` contact can request it [HB 3.8.6]. With domestic hot water priority, open the `OFF` input during DHW [HB 3.8.6]. |
 | 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. |
+| 6b: brine circuit, in parallel, for heat pumps with an external 230 V on/off brine pump | brine | No extra pump: a relay lets the `PM` output or the heat pump switch the brine pump; the pump flow must keep the heat pump's minimum flow with the module's branch open. Same three winter notes [HB 3.8.7]. |
 | separate ground loop | brine | Fully independent; same three winter notes [HB 3.8.8]. |
+| several (see the variant) | — | Where the module relies on the heat pump's own circulation or brine pump, that pump must run at a constant speed; ΔT or other automatic pump control does not suit it [HB 3.8.6, 3.8.7]. |
 
 ### 2.3 Terminals (inputs and outputs)
 
@@ -303,10 +310,6 @@ running speed raises it, lowering the minimum does not lower it
 
 ### 3.6 Persistence across a power cycle
 
-* Parameters are kept. The Innova display-panel manual lists "internal memory
-  with data storage even in the event of abnormal shutdown or power failure"
-  [IM p.28]; that text describes the older panel, not the K board, so for the
-  K board it is only supporting evidence.
 * On the reference unit [PH01](MODBUS_REGISTERS.md#ph01) = 0 and [PH02](MODBUS_REGISTERS.md#ph02) = 1 survived a power cycle: the
   first Modbus ON took effect immediately afterwards, which an OFF-by-display
   priority ([PH01](MODBUS_REGISTERS.md#ph01) back at 1) or an ignored write ([PH02](MODBUS_REGISTERS.md#ph02) back at 0) would
@@ -319,9 +322,8 @@ running speed raises it, lowering the minimum does not lower it
   `Status_Dehum_byBMS` survive is untested (neither was on at the power cycle)
   [`plans/todo.md`].
 * The clock does not survive a long power cut (AL26) [HB 5.2.4].
-* Parameters are held in non-volatile memory [IM p.28 wording "internal
-  memory"]; a write-cycle limit is not documented anywhere [INFERRED that
-  there is one].
+* Parameters are held in non-volatile memory [T7, T30, T40]; a write-cycle
+  limit is not documented anywhere [INFERRED that there is one].
 
 ---
 
@@ -552,6 +554,8 @@ Observations and consequences:
 ### 9.1 Bands and sources
 
 * Active band: DEU [PF28](MODBUS_REGISTERS.md#pf28)..[PF10](MODBUS_REGISTERS.md#pf10), INT [PF27](MODBUS_REGISTERS.md#pf27)..[PF09](MODBUS_REGISTERS.md#pf09); defaults and shipped values in §15 [HB 6.2; MB p.7].
+  The band is set at commissioning; the display's fan setting then runs
+  0–100 % within it [HB 5.2].
 * Sources during DEU and INT: the display's manual request (fan screen, steps
   [PF11](MODBUS_REGISTERS.md#pf11), [1114](MODBUS_REGISTERS.md#reg-1114)) and the 0–10 V potentiometer on `FAN+` ([1116](MODBUS_REGISTERS.md#reg-1116), raw [507](MODBUS_REGISTERS.md#reg-507),
   calibrated by [PM88](MODBUS_REGISTERS.md#pm88), −10…10 %, default 0), each placed in the active band;
@@ -734,6 +738,12 @@ refrigerant circuit works on MVHR flow alone follows from the design
   [PE04](MODBUS_REGISTERS.md#pe04) fan-to-compressor delay [HB 6.3].
 * No active defrost; a frost thermostat on the low-pressure input stops the
   compressor via AL11 [HB 6.3].
+* Commissioning check: after at least 10 minutes of compressor operation in
+  DEU the evaporator should settle at 5.0–7.0 °C. If it stays above, the
+  water/brine flow is too low, the water/brine too warm, or the airflow too
+  high for the unit; remedies are more flow, colder water, or less air (for
+  example a lower recirculation-fan maximum [PF09](MODBUS_REGISTERS.md#pf09)/[PF10](MODBUS_REGISTERS.md#pf10)) [HB 8.2]. The
+  reference unit settled at 6.3 to 6.7 °C [T18].
 * Status values Disabled / Alarm / Manual / OFF / Wait ON / Wait OFF / ON
   [HB 6.3]. Read back `CmpStatus` and `outAO_Cmp` [MB p.8, p.9].
 * Wait ON is the minimum off time: with the request still on, the status reads

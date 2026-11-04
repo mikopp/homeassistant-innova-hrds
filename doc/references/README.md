@@ -1,7 +1,7 @@
-# References — HRDS+ / Innova DEH+
+# References — HRDS+
 
 Manufacturer documentation for the **hej.luft HRDS+** air-dehumidification
-module for residential ventilation systems (OEM: **Innova DEH+**), plus the
+module for residential ventilation systems (made by INNOVA S.r.l.), plus the
 repository's own distilled references.
 
 ## Which file answers what
@@ -21,11 +21,20 @@ it.
 
 | File | What it is | Cited as |
 |------|------------|----------|
-| [HRDS+_Technisches_Handbuch_DE.pdf](HRDS+_Technisches_Handbuch_DE.pdf) | Technical handbook (German, 87 pp): operating modes (§2.7), terminals (§4.4–4.5), parameter list with defaults (§5.3), control logic (§6), alarms (§7), technical data (§10). Search the `.txt`, check tables here. | `[HB n]` |
-| [HRDS+_Technisches_Handbuch_DE.txt](HRDS+_Technisches_Handbuch_DE.txt) | Full text of the handbook, for searching. Tables are flattened; check the PDF for column alignment. | `[HB n]` |
-| [HRDS+_Modbus_RTU_RS485_DE.pdf](HRDS+_Modbus_RTU_RS485_DE.pdf) | Modbus RTU/RS-485 connection and register manual (German). Source of every register address. | `[MB p.n]` |
-| [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp); a subset of the technical handbook. | `[HB n]` |
-| [Innova_DEH+_H_Installation_Manual_EN.txt](Innova_DEH+_H_Installation_Manual_EN.txt) | Innova DEH+ H installation manual (English), the OEM original. Describes an **older controller** (microswitches, three fixed fan speeds), not the EVCO "K" board of the HRDS+. | `[IM]` |
+| [HRDS+_Technisches_Handbuch_DE.pdf](HRDS+_Technisches_Handbuch_DE.pdf) | Technical handbook (German, 89 pp, Stand Sept. 2026): operating modes (§2.7), terminals (§4.4–4.5), parameter list with defaults (§5.3), control logic (§6), alarms (§7), commissioning (§8), technical data (§10). Search the `.txt`, check tables here. | `[HB n]` |
+| [HRDS+_Technisches_Handbuch_DE.txt](HRDS+_Technisches_Handbuch_DE.txt) | Full text of the handbook (`pdftotext`), for searching. Tables are flattened; check the PDF for column alignment. | `[HB n]` |
+| [HRDS+_Modbus_RTU_RS485_DE.pdf](HRDS+_Modbus_RTU_RS485_DE.pdf) | Modbus RTU/RS-485 connection and register manual (German, Stand Mai 2026). Source of every register address. | `[MB p.n]` |
+| [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp, Stand August 2026); a subset of the technical handbook. | `[HB n]` |
+| [HRDS+_Hydraulikplaene_DE.pdf](HRDS+_Hydraulikplaene_DE.pdf) | Hydraulic plans (German, 13 pp, Stand Aug. 2026): decision tree and the integration variants 1–9 (heating/cooling circuit, brine circuit, special cases); the same variants as HB §3.8. | `[HB 3.8]` |
+| [HRDS_CE_Konformitaetserklaerung_Innova.pdf](HRDS_CE_Konformitaetserklaerung_Innova.pdf) | EU declaration of conformity by INNOVA S.r.l. (Storo, 20 Jan 2024) for the dehumidification units HRDS (codes DHAD…) and HRDS+ (codes DHAI…). | — |
+| [HRD+_Technisches_Handbuch_DE.pdf](HRD+_Technisches_Handbuch_DE.pdf), [HRD+_Modbus_RTU_RS485_DE.pdf](HRD+_Modbus_RTU_RS485_DE.pdf) | Background only. The HRD+ is a different unit: a complete ventilation unit (heat exchanger, supply and extract fans) with built-in dehumidification. It has the same EVCO controller and the same full register list as the HRDS+, plus documented ventilation registers (supply and return fans, external damper, free cooling, defrost); some parameters are set differently. Not supported by the integration. | — |
+
+All manuals come from the hej.luft download page,
+[hejluft.at/hrds](https://www.hejluft.at/hrds) (HRD+:
+[hejluft.at/kwl-geräte-mit-entfeuchtung](https://www.hejluft.at/kwl-geräte-mit-entfeuchtung)).
+The file links there change with every new edition, so the copies here carry
+the edition (Stand) instead. Online EVCO controller manuals do not match the
+Innova firmware of the unit and are not used.
 
 The vendor's and other users' statements from the energiesparhaus.at HRDS+
 forum thread are quoted with their post numbers in
@@ -33,7 +42,7 @@ forum thread are quoted with their post numbers in
 
 ## Technical data (airflow, capacity, power)
 
-From the technical handbook §10, p.77 ("Leistungsdaten Luftaufbereitung" /
+From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /
 "Elektrische Daten"). The two columns are the **30** and **50** variants.
 
 | Spec | HRDS+ 30 | HRDS+ 50 |
@@ -45,15 +54,15 @@ From the technical handbook §10, p.77 ("Leistungsdaten Luftaufbereitung" /
 | Usable dehumidification capacity ¹ | 56 L/24h | 89 L/24h |
 | Total cooling capacity ¹ | 2.59 kW | 3.95 kW |
 | Compressor frequency range | 23–63 Hz | 23–78 Hz |
-| **Max. electrical power (operating)** | **820 W** | **1130 W** |
-| — compressor nominal | 690 W | 950 W |
-| — **recirc fan nominal** | **120 W** | **170 W** |
+| **Max. electrical power (operating)** | **800 W** | **1110 W** |
+| — compressor max. | 690 W | 950 W |
+| — **recirc fan max.** | **90 W** | **150 W** |
 | Sound pressure @ 3 m | 39.5 dB(A) | 40.8 dB(A) |
 | Weight (with recirc / without) | 46 / 43 kg | 57 / 54 kg |
 
 ¹ At nominal airflow and the reference conditions footnoted in the handbook.
 
-The handbook table prints the pressure drop as kPa; its curve (§10.3.1, p.80)
+The handbook table prints the pressure drop as kPa; its curve (§10.3.1, p.83)
 shows about 31 Pa at 300 m³/h and 38 Pa at 500 m³/h, so the unit is Pa.
 
 The 130–300 / 190–500 m³/h recirculation band is the **tested operating
@@ -65,7 +74,7 @@ supply ducts must be sized for it (HB 3.7.1, p.24).
 
 ### Dehumidification capacity vs. airflow
 
-From the per-flow performance tables (HB p.78 / p.79, reference inlet
+From the per-flow performance tables (HB §10.1 / §10.2, p.81 / p.82, reference inlet
 conditions):
 
 | Airflow | HRDS+ 30 dehum. | HRDS+ 50 dehum. |
@@ -83,7 +92,7 @@ The unit has **no airflow register**; it cannot measure its own m³/h. It
 reports the fan's analog output `outAO_SupplyFan` ([639](MODBUS_REGISTERS.md#reg-639), %) and its speed
 `actRPMsupplyFan` ([1117](MODBUS_REGISTERS.md#reg-1117), rpm) [MB p.8, p.15].
 
-The handbook's performance curves (§10.3, p.80–81) are pressure-vs-flow system
+The handbook's performance curves (§10.3, p.83–84) are pressure-vs-flow system
 curves, not an RPM-vs-flow table, so there is no published conversion. An
 estimate with the **fan affinity law** (for a centrifugal EC fan on a fixed
 duct, flow is proportional to speed, `Q ∝ N`) [our derivation, not from the

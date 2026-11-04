@@ -1,4 +1,4 @@
-# Innova DEH+ / hej.luft HRDS+ — Home-Assistant-Integration
+# hej.luft HRDS+ — Home-Assistant-Integration
 
 [![Release](https://img.shields.io/github/v/release/mikopp/homeassistant-innova-hrds)](https://github.com/mikopp/homeassistant-innova-hrds/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
@@ -14,31 +14,25 @@ Schnellstart und Funktionsumfang. Alles Weitere steht im
 [englischen README](README.md); das Inhaltsverzeichnis unten verweist auf jeden
 Abschnitt dort, damit Sie alles finden.
 
-Home-Assistant-Integration (per **HACS** installierbar) für die
-Entfeuchter **hej.luft HRDS+ 30 / 50** und **Innova DEH+ 30 / 50**:
+Home-Assistant-Integration (per **HACS** installierbar) für das
+Entfeuchtungs- und Kühlmodul **hej.luft HRDS+ 30 / 50**:
 Taupunktentfeuchtung mit Lüftung und Flächenkühlung. Die Integration steuert und überwacht das Gerät
 **lokal über Modbus TCP, ganz ohne Cloud**.
 
 ## Kompatible Geräte
 
-Das Gerät wird von **[INNOVA S.r.l.](https://www.innova.it/)** (Storo, Italien)
-hergestellt. hej.luft verkauft es in Österreich unter eigenem Namen als
-OEM-Produkt.
+Das **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** ist ein
+Entfeuchtungs- und Kühlmodul für die Zuluftleitung einer zentralen
+Wohnraumlüftung (KWL). Es wird von **INNOVA S.r.l.** (Storo, Italien) mit einer
+EVCO-Steuerung gebaut und von hej.luft vertrieben. Es gibt das Gerät „mit
+Umluft“ (`R`, eigener Umluftventilator und Klappe) oder „nur Zuluft“, in den
+Größen 30 und 50; der Typenschild-Code ist im Technischen Handbuch erklärt
+(Download-Seite oben, Kopie in [`doc/references/`](doc/references/README.md)),
+zum Beispiel *HRDS+ 30 H R K DC*. Welche Geräte und Anlagen bekannt
+funktionieren: [Getestete Geräte und Anlagen](doc/tested-setups.md).
 
-* **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)**, mit den Typenschild-Codes aus dem
-  [Technischen Handbuch](https://www.hejluft.at/_files/ugd/714411_f1ffc5d222f4476da2e37f29c64a7f93.pdf),
-  zum Beispiel *HRDS+ 30 H R K DC*.
-* **[Innova DEH+ 30 H / 50 H](https://www.innova.it/en/products/vmc/dehumidifiers/deh-ad-incasso-orizzontale/)**:
-  Innovas eigener Name für dasselbe Gerät, mit denselben Größen und demselben
-  Nenn-Luftdurchsatz (300 / 500 m³/h). hej.luft baut oder verändert es nicht:
-  das HRDS+ 30 des Maintainers wurde direkt aus Italien geliefert und ist
-  physisch dasselbe Gerät wie das DEH+ 30 H; die Integration wurde damit
-  entwickelt. Die in `doc/references/` abgelegte DEH+-Installationsanleitung
-  beschreibt eine ältere Steuerung, nicht die EVCO-„K“-Platine des HRDS+;
-  Register und Verhalten stammen aus den HRDS+-Handbüchern.
-
-> *Wird Ihr Gerät mit der Innova-Platine unter einem anderen Namen verkauft,
-> eröffnen Sie ein Issue und verlinken Sie die Produktseite.*
+> *Verhält sich Ihr HRDS+ anders, oder meldet ein anderes Gerät eine
+> EVCO-`EPB9`-Steuerung? Eröffnen Sie ein Issue.*
 
 ## Release 0.9.6
 

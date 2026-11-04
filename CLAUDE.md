@@ -1,7 +1,7 @@
 # ha_innova_hrds
 
-Home Assistant custom integration for the **Innova DEH+ / hej.luft HRDS+** air
-dehumidification module over **Modbus TCP**. Domain `innova_hrds`, code in
+Home Assistant custom integration for the **hej.luft HRDS+** air
+dehumidification module (made by INNOVA S.r.l.) over **Modbus TCP**. Domain `innova_hrds`, code in
 `custom_components/innova_hrds/`. Minimum Home Assistant 2026.10, `pymodbus>=3.13.1`
 (ADR-0004). Architecture shared with the sibling `ha_comfoconnectpro`.
 
