@@ -42,8 +42,8 @@ names:
 
 | Brand | Models | Status |
 |-------|--------|--------|
-| Vortice | HRDS 30 DC, HRDS 30 R DC, HRDS 50 DC, HRDS 50 R DC | Not tested |
-| VMC Group | MDR K (supply air only) and MDR K R (with recirculation), sizes 15-30 and 25-50, versions D and DC | Not tested |
+| [Vortice](https://www.vortice.it/it/vmc_recupero_calore/moduli-aggiuntivi-da-condotto/per-deumidificazione) | HRDS 30 DC, HRDS 30 R DC, HRDS 50 DC, HRDS 50 R DC | Not tested |
+| [VMC Group](https://www.vmcgroup.it/prodotti-deumidificatori/mdr-k) | MDR K (supply air only) and MDR K R (with recirculation), sizes 15-30 and 25-50, versions D and DC | Not tested |
 
 Their manuals ([`references/`](references/README.md)) show the same unit: the
 same type code (size, `H`, `R`, `K` electronics, `D`/`DC`), terminal strip,
