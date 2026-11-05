@@ -28,6 +28,11 @@ above, copy in [`doc/references/`](doc/references/README.md)), for example
 *HRDS+ 30 H R K DC*. Units and installations known to work:
 [Tested units and installations](doc/tested-setups.md).
 
+The same Innova unit with an on/off compressor is sold in Italy as **Vortice
+HRDS** and **VMC Group MDR K**. It is **not tested** and needs a report from a
+real unit before it is supported:
+[The same unit under other names](doc/tested-setups.md#the-same-unit-under-other-names).
+
 > *Have an HRDS+ that behaves differently, or another unit that reports an
 > EVCO `EPB9` controller? Open an issue, see [Reporting issues](#reporting-issues).*
 

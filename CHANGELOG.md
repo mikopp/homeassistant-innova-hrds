@@ -23,6 +23,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 - **The unit is described as the hej.luft HRDS+, made by INNOVA S.r.l.** README, German README and references name only the HRDS+; the DEH+ installation manual is removed from `doc/references/`, and the facts that rested on it are backed by the hardware tests.
 - **Reference manuals updated to the vendor's current editions.** Technical handbook Sept. 2026 (with its text copy), user handbook Aug. 2026, the new hydraulic plans (Aug. 2026), Innova's declaration of conformity, and the HRD+ handbook and Modbus manual as background. Changed figures folded in: maximum electrical power 800 / 1110 W (recirculation fan 90 / 150 W), page citations, AL29 as outdoor probe fault, the commissioning check of the evaporator temperature, hydraulic variant 6b, and the firmware versions in the field.
+- **The same unit under other names.** Vortice HRDS and VMC Group MDR K are the Innova HRDS with an on/off compressor; they are listed as not tested, with how they differ from the HRDS+, in [Tested units and installations](doc/tested-setups.md#the-same-unit-under-other-names). Their manuals are in `doc/references/`.
 - **Open vendor questions recorded** in `plans/todo.md`: firmware revisions, the PE24–PE26 scale, the product code of other variants, and defaults per firmware.
 
 ### 🧪 Tests and CI
