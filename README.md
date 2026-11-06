@@ -20,7 +20,8 @@ controls and monitors the unit locally over **Modbus TCP**, without any cloud.
 The **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** is a
 dehumidification and cooling module for the supply duct of a central
 ventilation system (MVHR). It is made by **INNOVA S.r.l.** (Storo, Italy) with
-an EVCO controller and sold by hej.luft. It comes "with recirculation"
+an EVCO controller and sold by hej.luft (Austria), which delivers within Austria and
+to selected EU countries, including Germany. It comes "with recirculation"
 (`R`, own recirculation fan and damper) or "supply air only", in sizes 30 and
 50; the type-plate code is explained in the technical handbook (download page
 above, copy in [`doc/references/`](doc/references/README.md)), for example

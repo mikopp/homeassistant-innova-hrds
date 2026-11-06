@@ -24,7 +24,8 @@ Taupunktentfeuchtung mit Lüftung und Flächenkühlung. Die Integration steuert 
 Das **[hej.luft HRDS+ 30 / HRDS+ 50](https://www.hejluft.at/hrds)** ist ein
 Entfeuchtungs- und Kühlmodul für die Zuluftleitung einer zentralen
 Wohnraumlüftung (KWL). Es wird von **INNOVA S.r.l.** (Storo, Italien) mit einer
-EVCO-Steuerung gebaut und von hej.luft vertrieben. Es gibt das Gerät „mit
+EVCO-Steuerung gebaut und von hej.luft (Österreich) vertrieben, die in
+Österreich und in ausgewählte EU-Länder liefert, darunter Deutschland. Es gibt das Gerät „mit
 Umluft“ (`R`, eigener Umluftventilator und Klappe) oder „nur Zuluft“, in den
 Größen 30 und 50; der Typenschild-Code ist im Technischen Handbuch erklärt
 (Download-Seite oben, Kopie in [`doc/references/`](doc/references/README.md)),
