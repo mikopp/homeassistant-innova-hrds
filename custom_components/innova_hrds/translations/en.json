@@ -119,6 +119,9 @@
       "fan_integration_request": {
         "name": "Fan integration request"
       },
+      "firmware": {
+        "name": "Firmware"
+      },
       "max_total_airflow": {
         "name": "Max total airflow"
       },

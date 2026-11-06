@@ -119,6 +119,9 @@
       "fan_integration_request": {
         "name": "Lüfter-Integrationsanforderung"
       },
+      "firmware": {
+        "name": "Firmware"
+      },
       "max_total_airflow": {
         "name": "Max. Gesamt-Volumenstrom"
       },

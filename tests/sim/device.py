@@ -130,8 +130,8 @@ class HrdsDevice:
     def power_cycle(self) -> None:
         """Mains off/on: the unit keeps every setting.
 
-        Its memory keeps data on a power failure (installation manual), and a
-        real unit read PH01 = 0, HA00 = 0, PH02 = 1 unchanged after one. Whether
+        A real unit read PH01 = 0, HA00 = 0, PH02 = 1 unchanged after one
+        (T7, T30, T40). Whether
         the Modbus requests (1105/1139/1140) survive is unverified; they are
         kept too.
         """

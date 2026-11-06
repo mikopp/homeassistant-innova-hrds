@@ -1,4 +1,4 @@
-"""Constants and the central register table for the Innova HRDS+ integration.
+"""Constants and the central register table for the hej.luft HRDS+ integration.
 
 All Modbus registers are declared once in ``ENTITIES_DICT``. ``init()`` (called
 at import time) classifies every entry into the typed dicts consumed by the
@@ -90,7 +90,7 @@ MODEL_SPECS: Dict[str, Dict[str, float]] = {
 # per-mode and register-backed (PF27/PF28/PF07) - the device owns it, and it is
 # exposed as writable numbers rather than shadowed by a config option.
 CONF_AIRFLOW_MAX = "airflow_max_m3h"
-ATTR_MANUFACTURER = "Innova / hej.luft"
+ATTR_MANUFACTURER = "hej.luft (Innova)"
 
 # FC 43/14 (Read Device Identification) as reported by a real HRDS+ 30:
 # vendor "EVCO", product code "EPB9ORSINDEU", revision "V01.00.09.02". The
@@ -314,6 +314,8 @@ C_ALARM_COMPRESSOR_LP = "alarm_compressor_lowpressure"
 C_ALARM_COMPRESSOR_HP = "alarm_compressor_highpressure"
 C_ALARM_ANTIFREEZE = "alarm_water_antifreeze"
 C_ALARM_FILTER = "alarm_dirty_filter"
+# The controller's firmware revision, from the FC 43 identity read at setup.
+C_FIRMWARE = "firmware"
 # Computed (non-register-backed) airflow sensors
 C_MAX_TOTAL_AIRFLOW = "max_total_airflow"
 # The fan entity up to 0.9.4; only its registry entry is removed at setup.
@@ -1329,6 +1331,7 @@ DIAGNOSTIC_KEYS = frozenset(
         C_WATER_CONDENSER_VALVE,
         C_WATER_CHECK,
         C_FAN_INTEGRATION_REQUEST,
+        C_FIRMWARE,
     }
 )
 # Suffixes of the child devices' identifiers (parent identifier + suffix).
@@ -1405,6 +1408,9 @@ COMPUTED_SENSORS: Dict[str, Dict[str, Any]] = {
         "NAME": "Installer parameters last read",
         "DC": SensorDeviceClass.TIMESTAMP,
     },
+    # Read once at setup (ADR-0009); None when the gateway does not forward
+    # FC 43. A firmware update shows after a reload.
+    C_FIRMWARE: {"NAME": "Firmware"},
 }
 # Computed binary sensors, written by the hub like COMPUTED_SENSORS. The brine
 # guard is a problem indicator: on = the guard blocks requests. It is only

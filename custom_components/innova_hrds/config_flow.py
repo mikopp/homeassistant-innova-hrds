@@ -1,4 +1,4 @@
-"""Config and options flow for the Innova HRDS+ integration."""
+"""Config and options flow for the hej.luft HRDS+ integration."""
 
 from __future__ import annotations
 

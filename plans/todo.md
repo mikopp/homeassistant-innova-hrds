@@ -212,10 +212,28 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 8. Needs another unit, a display, a probe or extra wiring
 
-- [ ] **Other variants' identity.** Does an HRDS+ 50, a non-`R` or a non-`DC`
-      unit report an `EPB9…` product code (FC 43)? Loosen
-      `EXPECTED_PRODUCT_PREFIX` if not. Also: what does a gateway that does
-      not forward FC 43 return?
+- [ ] **Other variants' identity** (asked the vendor 2026-11). Does an
+      HRDS+ 50, a non-`R` or a non-`DC` unit, or another firmware, report an
+      `EPB9…` product code (FC 43)? Loosen `EXPECTED_PRODUCT_PREFIX` if not.
+      Also: what does a gateway that does not forward FC 43 return?
+- [ ] **Firmware revisions** (asked the vendor 2026-11). Which FC 43 revision
+      string belongs to which of the three firmware states
+      ([UNIT_BEHAVIOUR §1.2](../doc/references/UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants)), and which is current? The
+      reference unit reports `V01.00.09.02`.
+- [ ] **Defaults per firmware** (asked the vendor 2026-11). The vendor offered
+      the parameter-default file; compare it with the reference unit's
+      shipped values (`UNIT_BEHAVIOUR.md` §15).
+- [ ] **PE24–PE26 scale** (asked the vendor 2026-11). ×0.1 (Modbus manual
+      range raw 0…200 for 0…20 rps; raw 2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps as in
+      the Mai 2026 handbook) or ×1 (Sept. 2026 handbook defaults 2 / 12 / 8
+      rps)? The installer rows use ×0.1 until answered.
+- [ ] **HRDS (on/off) and HRD+** (asked the vendor 2026-11). Innova's
+      declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). The
+      on/off HRDS appears to be sold in Italy as Vortice HRDS 30/50 (R) DC
+      and VMC Group MDR K / MDR K R (sizes 15-30 / 25-50, D and DC; same
+      housing 690×690×270 / 690×800×320 mm). Are they Innova HRDS units, with
+      the same EVCO controller, register map and `EPB9…` code? The HRD+ (a complete ventilation unit) shares the
+      controller and register list; support only if someone with one asks.
 - [ ] **Non-`R` unit read-back.** Does `outDO_RecircDamper` ([1134](../doc/references/MODBUS_REGISTERS.md#reg-1134)) read
       `2 = Disable` without recirculation, and what do the fan registers read?
 - [ ] **As-delivered settings.** The reference unit shipped with values that

@@ -1,4 +1,4 @@
-"""Composite climate entity for the Innova HRDS+ dehumidifier.
+"""Composite climate entity for the hej.luft HRDS+ dehumidifier.
 
 This entity is not backed by a single register. It aggregates several status
 registers for display (temperature, humidity, HVAC action) and translates the

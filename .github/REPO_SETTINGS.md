@@ -6,12 +6,13 @@ this page; it can go stale.
 
 ## About panel (discoverability)
 
-* Description: `Home Assistant (HACS) integration for the hej.luft HRDS+ and Innova
-  DEH+ dehumidifiers: local control and monitoring over Modbus TCP, no cloud`
+* Description: `Home Assistant (HACS) integration for the hej.luft HRDS+
+  dehumidification and cooling module: local control and monitoring over
+  Modbus TCP, no cloud`
 * Topics (20 is the GitHub maximum): `dehumidifier`, `dehumidifiers`,
   `hacs-integration`, `hacs`, `hejluft`, `home-assistant`, `homeassistant`,
   `homeassistant-custom-component`, `custom-component`, `hrds`, `hvac`, `innova`,
-  `innova-deh`, `modbus`, `modbus-tcp`, `taupunktentfeuchtung`, `entfeuchter`,
+  `modbus`, `modbus-tcp`, `taupunktentfeuchtung`, `entfeuchter`,
   `radiant-cooling`, `vmc`.
 * Optional: a social preview image (Settings -> General).
 

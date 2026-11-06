@@ -172,6 +172,7 @@ Read-only values for troubleshooting. Home Assistant shows them in the Diagnosti
 - **Water circuit check**: `ok` or `attention`; the attribute `issues` lists what is wrong, see [Water circuit](../README.md#water-circuit-and-brine). <a id="water-circuit-check"></a>
 - **Supply fan max airflow**: The maximum fan airflow in m³/h, from the airflow calibration in the integration options. <a id="supply-fan-max-airflow"></a>
 - **Max total airflow**: The same value as *Supply fan max airflow*, kept for convenience. <a id="max-total-airflow"></a>
+- **Firmware**: The firmware revision the unit's controller reports when the integration sets up, for example `V01.00.09.02` (Modbus device identification). Unknown when the Modbus gateway does not forward the device identification. After a firmware update, reload the integration to see the new revision. <a id="firmware"></a>
 ## HRDS+ setup
 
 **Why it exists.** A headless unit needs a dozen settings reviewed before it is

@@ -1,4 +1,4 @@
-"""Innova DEH+ / hej.luft HRDS+ dehumidifier — Modbus TCP integration."""
+"""hej.luft HRDS+ dehumidifier — Modbus TCP integration."""
 
 from __future__ import annotations
 
@@ -57,6 +57,7 @@ from .const import (
     C_ENABLE_INT_BMS,
     C_FAN_ENTITY,
     C_FAN_MANUAL,
+    C_FIRMWARE,
     C_HUMIDITY_PROBE_OK,
     C_INSTALLER_LAST_READ,
     C_INTEGRATION_AVAILABLE,
@@ -1562,6 +1563,8 @@ class HrdsModbusHub:
         self.water_issues = self._compute_water_issues()
         self.data[C_WATER_CHECK] = "attention" if self.water_issues else "ok"
         self.data[C_AUTO_HEATING] = "on" if self.auto_heating_active else "off"
+        # Unknown, not an empty string, when FC 43 carries no revision.
+        self.data[C_FIRMWARE] = self.identity.revision or None
         self.data[C_MAX_TOTAL_AIRFLOW] = self._airflow_max
         self.data[C_SUPPLY_FAN_MAX_AIRFLOW] = self._airflow_max
         out = self.data.get(C_SUPPLY_FAN_OUTPUT)

@@ -1,7 +1,7 @@
-# HRDS+ / Innova DEH+ — Modbus Register Definition
+# HRDS+ — Modbus Register Definition
 
 Machine-readable extraction of the Modbus register map for the **hej.luft HRDS+**
-air-dehumidification module (OEM: **Innova DEH+**), taken from
+air-dehumidification module (made by INNOVA S.r.l.), taken from
 [`HRDS+_Modbus_RTU_RS485_DE.pdf`](HRDS+_Modbus_RTU_RS485_DE.pdf) (Stand: Mai 2026).
 
 This file is the **single source of truth for the registers**: which exist,
@@ -108,6 +108,14 @@ Factory serial defaults:
     real unit's raw read-back, except for 22 rows that take the scale of their
     neighbours: [PF22](#pf22), [PS03](#ps03), [PA20](#pa20), [PA54](#pa54), [PH15](#ph15), [PH18](#ph18),
     [PE23](#pe23), [PE29](#pe29), [PT05](#pt05)–[PT11](#pt11), [PH31](#ph31)–[PH35](#ph35), [PA61](#pa61), [PA62](#pa62).
+  * **[PE24](#pe24)–[PE26](#pe26) scale is open.** The Modbus manual gives raw
+    0…200 for the handbook's 0…20 rps range, which fits ×0.1 (the reference
+    unit's raw 2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps). The technical handbook
+    (Sept. 2026) lists the defaults as 2 / 12 / 8 rps, which fits ×1. The
+    rows below use ×0.1 until the vendor confirms (`plans/todo.md`).
+  * The parameters named "differential" here (for example [PE18](#pe18),
+    [Pb05](#pb05), [PS07](#ps07), [PA17](#pa17), [PA34](#pa34), [PA44](#pa44)) are called
+    "Hysterese" in the German handbook.
 
 ## 3. Menus and parameter groups
 
@@ -428,7 +436,7 @@ per signal** (`bitN..bitN+1`); a non-zero pair means active. The exception is
 | AL25 | I/O configuration error |
 | AL26 | RTC clock failed/disconnected |
 | AL28 | Room/return temperature probe fault |
-| AL29 | External temperature probe fault |
+| AL29 | Outdoor temperature probe fault |
 | AL30 | Water temperature probe fault |
 | AL34 | Room/return humidity probe fault |
 | AL36 | Fan potentiometer fault |

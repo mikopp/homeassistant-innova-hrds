@@ -21,7 +21,10 @@ paths:
   forward FC 43, the register fingerprint alone decides.
 - A wrong device MUST raise `ConfigEntryError` (flow error `wrong_device`);
   no answer MUST raise `ConfigEntryNotReady` (flow error `cannot_connect`).
-- The identity feeds the device registry (`model_id`, `sw_version`).
+- The identity feeds the device registry (`model_id`, `sw_version`) and the
+  diagnostic *Firmware* sensor (`revision`, unknown when FC 43 carries none).
+  It is read once at setup; a firmware update shows after a reload. MUST NOT
+  poll FC 43 periodically.
 - MUST NOT loosen the product prefix without a dump from another variant.
 
 ## Context
@@ -30,7 +33,9 @@ The integration writes configuration registers (ADR-0010) as soon as it
 connects. A wrong IP or a wrong unit id behind a shared RS-485 gateway would
 write them into another device. The reference unit reports `EVCO` /
 `EPB9ORSINDEU` / `V01.00.09.02`; other variants are unconfirmed
-(`plans/todo.md`).
+(`plans/todo.md`). At least three firmware states are in the field (vendor,
+energiesparhaus.at thread #68), so the revision is shown where users see it
+and can report it.
 
 ## Consequences
 
@@ -45,6 +50,8 @@ write them into another device. The reference unit reports `EVCO` /
 - `tests/ha/test_config_flow.py::test_user_flow_without_fc43_uses_fingerprint`
 - `tests/ha/test_config_flow.py::test_setup_fails_on_wrong_device`
 - `tests/e2e/test_install_and_flow.py::test_flow_wrong_device`
+- `tests/ha/test_config_flow.py::test_firmware_sensor_shows_the_identity_revision`
+- `tests/ha/test_config_flow.py::test_firmware_sensor_unknown_without_fc43`
 
 ## More information
 

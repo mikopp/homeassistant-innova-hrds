@@ -21,14 +21,17 @@ in [`references/UNIT_BEHAVIOUR.md` §13](references/UNIT_BEHAVIOUR.md#13-evidenc
 
 ## Units
 
-| Unit | Status | Notes |
-|------|--------|-------|
-| hej.luft **HRDS+ 30** `H R K DC` (Innova DEH+ 30 H), headless | **Works** | The maintainer's unit (reference unit). Seen: identity and the whole register map read, the required settings and the first Modbus ON, OFF written over Modbus [T1 to T9, T14]; full dehumidify cycles with valve and pump, damper, fan and compressor read-backs, start and stop [T10 to T19]; the fan speed owned by the unit [T22 to T28]; the season switch [T31]; the on/off state kept across a power cycle [T30]. An integration (INT) cycle is not recorded yet |
-| HRDS+ 50 / DEH+ 50 H | Not tested | The size has no register (the `model` option sets it). Only the airflow estimate differs |
-| Units without recirculation (non-`R`) | Not tested | No fan, damper or fan entities are created when the damper output ([1134](references/MODBUS_REGISTERS.md#reg-1134)) reads *disabled* |
-| Units without the integration function (no `DC`, [PG02](references/MODBUS_REGISTERS.md#pg02) = 0) | Not tested | *Cool* and *Heat* are not offered |
-| Unit with a CNU2 display | Not tested | The display and [HA00](references/MODBUS_REGISTERS.md#ha00) = 1/2 path, the headless sync skipped |
-| Unit with external room or outdoor probes | Not tested | Target humidity and temperature, climate *Auto* mode (CI only) |
+| Unit | Firmware | Status | Notes |
+|------|----------|--------|-------|
+| hej.luft **HRDS+ 30** `H R K DC`, headless | `V01.00.09.02` [T1] | **Works** | The maintainer's unit (reference unit). Seen: identity and the whole register map read, the required settings and the first Modbus ON, OFF written over Modbus [T1 to T9, T14]; full dehumidify cycles with valve and pump, damper, fan and compressor read-backs, start and stop [T10 to T19]; the fan speed owned by the unit [T22 to T28]; the season switch [T31]; the on/off state kept across a power cycle [T30]. An integration (INT) cycle is not recorded yet |
+| HRDS+ 50 | — | Not tested | The size has no register (the `model` option sets it). Only the airflow estimate differs |
+| Units without recirculation (non-`R`) | — | Not tested | No fan, damper or fan entities are created when the damper output ([1134](references/MODBUS_REGISTERS.md#reg-1134)) reads *disabled* |
+| Units without the integration function (no `DC`, [PG02](references/MODBUS_REGISTERS.md#pg02) = 0) | — | Not tested | *Cool* and *Heat* are not offered |
+| Unit with a CNU2 display | — | Not tested | The display and [HA00](references/MODBUS_REGISTERS.md#ha00) = 1/2 path, the headless sync skipped |
+| Unit with external room or outdoor probes | — | Not tested | Target humidity and temperature, climate *Auto* mode (CI only) |
+
+The firmware column is the revision the unit reports, shown as
+[*Firmware*](entity-reference.md#firmware) on the device page; please include it in a report.
 
 ## Installation scenarios
 
@@ -56,7 +59,7 @@ handbook's variants 1 to 6 and the separate ground loop).
 ### Operating modes
 
 | Mode | Status | Notes |
-|------|--------|-------|
+|------|----------|--------|-------|
 | Dehumidify (DEU) request over Modbus, summer | **Works** | Valve and pump, damper, fan and compressor start and stop in order, no alarm, the climate entity shows *Drying* [T11 to T19]. Seen on 0.9.4 at a stop: *Drying* changed to *Fan* when the request ended and to *Idle* when the compressor was off, while the fan could still be running on [T19, T36]. [*Supply fan running*](entity-reference.md#supply-fan-running) has not been through a run yet. The passive cold-water path (water below [PU08](references/MODBUS_REGISTERS.md#pu08), compressor off) is open |
 | Integration (INT) request over Modbus, summer (cooling) | Not tested | |
 | Season switch without a display ([*Season*](entity-reference.md#season), [HB04](references/MODBUS_REGISTERS.md#hb04)) | **Partly** | Summer to winter works. The select shows the old season right after the write and the new one at the next read cycle [T31]. Back to summer is not tested |
