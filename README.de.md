@@ -32,6 +32,12 @@ Größen 30 und 50; der Typenschild-Code ist im Technischen Handbuch erklärt
 zum Beispiel *HRDS+ 30 H R K DC*. Welche Geräte und Anlagen bekannt
 funktionieren: [Getestete Geräte und Anlagen](doc/tested-setups.md).
 
+Dasselbe Innova-Gerät mit On/Off-Kompressor wird in Italien als [**Vortice
+HRDS**](https://www.vortice.it/it/vmc_recupero_calore/moduli-aggiuntivi-da-condotto/per-deumidificazione) und [**VMC Group MDR K**](https://www.vmcgroup.it/prodotti-deumidificatori/mdr-k) verkauft. Es ist **nicht getestet** und braucht
+eine Rückmeldung von einem echten Gerät, bevor es unterstützt wird:
+[The same unit under other names](doc/tested-setups.md#the-same-unit-under-other-names)
+(englisch).
+
 > *Verhält sich Ihr HRDS+ anders, oder meldet ein anderes Gerät eine
 > EVCO-`EPB9`-Steuerung? Eröffnen Sie ein Issue.*
 

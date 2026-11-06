@@ -27,13 +27,15 @@ it.
 | [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp, Stand August 2026); a subset of the technical handbook. | `[HB n]` |
 | [HRDS+_Hydraulikplaene_DE.pdf](HRDS+_Hydraulikplaene_DE.pdf) | Hydraulic plans (German, 13 pp, Stand Aug. 2026): decision tree and the integration variants 1–9 (heating/cooling circuit, brine circuit, special cases); the same variants as HB §3.8. | `[HB 3.8]` |
 | [HRDS_CE_Konformitaetserklaerung_Innova.pdf](HRDS_CE_Konformitaetserklaerung_Innova.pdf) | EU declaration of conformity by INNOVA S.r.l. (Storo, 20 Jan 2024) for the dehumidification units HRDS (codes DHAD…) and HRDS+ (codes DHAI…). | — |
-| [HRD+_Technisches_Handbuch_DE.pdf](HRD+_Technisches_Handbuch_DE.pdf), [HRD+_Modbus_RTU_RS485_DE.pdf](HRD+_Modbus_RTU_RS485_DE.pdf) | Background only. The HRD+ is a different unit: a complete ventilation unit (heat exchanger, supply and extract fans) with built-in dehumidification. It has the same EVCO controller and the same full register list as the HRDS+, plus documented ventilation registers (supply and return fans, external damper, free cooling, defrost); some parameters are set differently. Not supported by the integration. | — |
+| [Vortice_HRDS_Libretto_IT-EN_2024.pdf](Vortice_HRDS_Libretto_IT-EN_2024.pdf), [Vortice_CNU_21607_Libretto_IT-EN_2019.pdf](Vortice_CNU_21607_Libretto_IT-EN_2019.pdf) | Vortice HRDS 30 / 50 (R) DC instruction booklet (Italian/English, 23 Feb 2024) and the manual of its CNU wall panel, code 21607 (2019). The same unit with an on/off compressor, see [the same unit under other names](../tested-setups.md#the-same-unit-under-other-names). Background only. | — |
+| [VMCGroup_MDR_K_Manuale_IT_2020.pdf](VMCGroup_MDR_K_Manuale_IT_2020.pdf) | VMC Group MDR K / MDR K R manual (Italian, 2020): type code, terminals, CNU menus and alarm list of the same on/off unit. Background only. | — |
 
 All manuals come from the hej.luft download page,
-[hejluft.at/hrds](https://www.hejluft.at/hrds) (HRD+:
-[hejluft.at/kwl-geräte-mit-entfeuchtung](https://www.hejluft.at/kwl-geräte-mit-entfeuchtung)).
+[hejluft.at/hrds](https://www.hejluft.at/hrds).
 The file links there change with every new edition, so the copies here carry
-the edition (Stand) instead. Online EVCO controller manuals do not match the
+the edition (Stand) instead. The Vortice and VMC Group manuals come from
+[vortice.it](https://www.vortice.it/it/vmc_recupero_calore/moduli-aggiuntivi-da-condotto/per-deumidificazione)
+and [vmcgroup.it/download](https://www.vmcgroup.it/download). Online EVCO controller manuals do not match the
 Innova firmware of the unit and are not used.
 
 The vendor's and other users' statements from the energiesparhaus.at HRDS+
