@@ -133,7 +133,8 @@ How to tell them apart from the controller: no register states size or `R`
   HRDS+ (alarms, functions missing). The HRDS+ parameter file is then loaded
   with the EVCO Parameters Manager over USB [FW, VM]. The vendor's parameter
   files set [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) to 1 and [PH02](MODBUS_REGISTERS.md#ph02) to 0, and differ between
-  "CNU2" and "noDisplay" only in [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) [FW].
+  "CNU2" and "noDisplay" only in [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) [FW]. [Pb01](MODBUS_REGISTERS.md#pb01) belongs with the damper behaviour (30 s on
+  firmware 9.2 and lower, 255 s with 9.3, where the damper waits for the valve) [FW].
 
 ### 1.3 Variants seen so far
 
@@ -1032,9 +1033,13 @@ default on a real unit; read it. Where behaviour could be checked (§13) it
 followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), [Pb07](MODBUS_REGISTERS.md#pb07)/[Pb08](MODBUS_REGISTERS.md#pb08), [PF28](MODBUS_REGISTERS.md#pf28),
 [PU11](MODBUS_REGISTERS.md#pu11)); the compressor start delay is not yet explained (§4.3).
 
-The vendor's final settings for firmware 9.2 and 9.3 equal the handbook
-default in every row below except [Pb01](MODBUS_REGISTERS.md#pb01) (30 s) [FW]. HRDS+ 30 and 50 differ there
-only in [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [PH19](MODBUS_REGISTERS.md#ph19) [FW].
+The vendor's firmware 9.3 parameter files equal the handbook default in every
+row below [FW]. The firmware 9.2 table differs in [Pb01](MODBUS_REGISTERS.md#pb01) (30 s), which belongs with the 9.2
+damper behaviour (§1.2) [FW]. The 9.2 columns for HRDS 30, HRDS+ 30, HRDS 50 and
+HRDS+ 50 differ from each other only in [PE07](MODBUS_REGISTERS.md#pe07) and [PE22](MODBUS_REGISTERS.md#pe22) (50 / 55 / 62 / 68 %) and in the
+[PH19](MODBUS_REGISTERS.md#ph19) label (15 / 16 / 17 / 18) [FW]. The reference unit carries the HRDS 30
+(on/off) values for these three: [PE07](MODBUS_REGISTERS.md#pe07) = [PE22](MODBUS_REGISTERS.md#pe22) = 50 % and [PH19](MODBUS_REGISTERS.md#ph19) = 15, not the HRDS+ 30
+values [T2].
 
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|
@@ -1064,6 +1069,7 @@ only in [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [
 | [PS01](MODBUS_REGISTERS.md#ps01) | HB 5.3, 6.2 | 20 s | 90 s | Fan starts 90 s after the damper opens |
 | [PE01](MODBUS_REGISTERS.md#pe01) / [PE02](MODBUS_REGISTERS.md#pe02) / [PE03](MODBUS_REGISTERS.md#pe03) | HB 5.3, 6.3 | 300 / 20 / 420 s | same | — |
 | [PE04](MODBUS_REGISTERS.md#pe04) | HB 5.3, 6.3 | 120 s | 180 s | Longer fan to compressor delay (not what held the first start, T11) |
+| [PE07](MODBUS_REGISTERS.md#pe07) / [PE22](MODBUS_REGISTERS.md#pe22) | HB 5.3, 6.3 | 55 % (HRDS+ 30), 68 % (HRDS+ 50) | 50 % / 50 % | Compressor capped at 50 % instead of 55 % |
 | [PE28](MODBUS_REGISTERS.md#pe28) / [PE30](MODBUS_REGISTERS.md#pe30) | HB 5.3, 6.3 | 52 rps / 60 s | same | — |
 | [PF01](MODBUS_REGISTERS.md#pf01) / [PF03](MODBUS_REGISTERS.md#pf03) | HB 5.3, 6.2 | 10 / 0 s | 60 / 30 s | Longer fan minimum run and a run-on |
 | [PF26](MODBUS_REGISTERS.md#pf26) | HB 5.3, 6.2 | 40 % | 40 % | — |
@@ -1071,4 +1077,5 @@ only in [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [
 | [Pb01](MODBUS_REGISTERS.md#pb01) | HB 5.3, 6.4 | 255 s | 30 s | Shorter valve run-on |
 | [Pb02](MODBUS_REGISTERS.md#pb02) / [Pb03](MODBUS_REGISTERS.md#pb03) | HB 5.3, 6.4 | 60 s / 3 min | 360 s / 3 min | Longer valve opening in each sniffing step |
 | [Pb07](MODBUS_REGISTERS.md#pb07) / [Pb08](MODBUS_REGISTERS.md#pb08) | HB 5.3, 6.4 | 60 s / 99 min | 60 s / 60 min | Pulse every 61 min instead of every 100 min ([Pb08](MODBUS_REGISTERS.md#pb08) is minutes in the handbook's parameter table) |
+| [PH19](MODBUS_REGISTERS.md#ph19) | HB 5.3 | 16 (HRDS+ 30), 18 (HRDS+ 50) | 15 | None (no air-quality probe; vendor label) |
 | [HD05](MODBUS_REGISTERS.md#hd05) | HB 5.3 | not checked | water valve | Water valve allocated to its output |

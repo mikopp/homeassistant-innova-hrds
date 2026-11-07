@@ -244,6 +244,11 @@ No INT request has been run yet. One summer INT run answers most of these.
 - [ ] **As-delivered settings.** The reference unit shipped with values that
       differ from the handbook (`UNIT_BEHAVIOUR.md` §15). A second unit's dump
       shows whether these are the distributor's presets.
+- [ ] **Reference unit parameter set** (asked the vendor 2026-11). The
+      reference unit carries the HRDS 30 (on/off) values for PE07/PE22 (50 %)
+      and PH19 (15). Should it get the HRDS+ 30 values and the other
+      firmware 9.2 values (PE04, PE32, PU12, PF01, PF03, PS01, Pb02, Pb08,
+      PA16, PA11), or be updated to 9.3? After the change, log it as a T entry.
 - [ ] **Supply-air temperature.** The unit's supply probe ([503](../doc/references/MODBUS_REGISTERS.md#reg-503)) is not fitted,
       so "DEU gives dry air at about room temperature" (HB 2.6.1) is
       unverified. Log an external sensor downstream of the HRDS through a run;
