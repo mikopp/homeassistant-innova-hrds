@@ -78,13 +78,20 @@ From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /
 | Usable dehumidification capacity ¹ | 56 L/24h | 89 L/24h |
 | Total cooling capacity ¹ | 2.59 kW | 3.95 kW |
 | Compressor frequency range | 23–63 Hz | 23–78 Hz |
+| Max. current for sizing the supply | 6.0 A ² | 7.5 A |
 | **Max. electrical power (operating)** | **800 W** | **1110 W** |
 | — compressor max. | 690 W | 950 W |
 | — **recirc fan max.** | **90 W** | **150 W** |
 | Sound pressure @ 3 m | 39.5 dB(A) | 40.8 dB(A) |
 | Weight (with recirc / without) | 46 / 43 kg | 57 / 54 kg |
+| Refrigerant | R410A, 440 g | R410A, 450 g |
 
 ¹ At nominal airflow and the reference conditions footnoted in the handbook.
+
+² The type plate of the reference unit (`V08000002D`) gives 6.78 A; size the
+supply for the plate value. The plate also gives 230 V / 50 Hz, 300 m³/h,
+R410A 0.44 kg, maximum water pressure 10 bar and maximum refrigerant pressure
+42 bar.
 
 The handbook table prints the pressure drop as kPa; its curve (§10.3.1, p.83)
 shows about 31 Pa at 300 m³/h and 38 Pa at 500 m³/h, so the unit is Pa.
