@@ -40,6 +40,30 @@ The vendor's and other users' statements from the energiesparhaus.at HRDS+
 forum thread are quoted with their post numbers in
 [`UNIT_BEHAVIOUR.md` §13](UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware).
 
+## Who makes and sells the unit
+
+The unit is built by Sinergia S.r.l., a subsidiary of INNOVA S.r.l.; Innova
+sells it and signs the declaration of conformity. hej.luft is the first to
+sell it under the Innova name. In Italy it has been sold as HRDS by
+Cappellotto, Geatherm, VMC Group, Vortice and others, partly with their own
+displays or small differences; those units may run older firmware (vendor
+e-mail, 7 Nov 2026).
+
+Part numbers on the order and the type plate (same source):
+
+| Part number | Unit |
+|-------------|------|
+| `DHAD30HC3II` / `DHAD50HC3II` | HRDS 30 / 50 H R K D, on/off compressor (2025) |
+| `DHAI30HCKII` / `DHAI50HCKII` | HRDS+ 30 / 50 H R K DC, inverter, with recirculation (2025) |
+| `DHTI30HCKII` / `DHTI50HCKII` | HRDS+ 30 / 50 H K DC, inverter, supply only (2025) |
+| `V08000002D` / `V08000002C` | HRDS+ 30 / 50 with recirculation (2026) |
+| `V07000002D` / `V07000002C` | HRDS+ 30 / 50 supply only (2026) |
+
+The vendor's firmware 9.3 package (firmware, EVCO Parameters Manager, driver
+`Drv970`, parameter files, update guide) and the "final settings" table are
+not stored here; they are available from hej.luft on request. What they show
+is cited as `[FW]` in [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md).
+
 ## Technical data (airflow, capacity, power)
 
 From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /

@@ -332,6 +332,30 @@ target:
    and at the Home Assistant log. See [Reporting issues](#reporting-issues) if
    you need help.
 
+### After a firmware update
+
+A firmware update does not change the unit's Modbus registers. It does reset
+**every parameter** to the controller's generic defaults, which are not the
+HRDS+ settings, so the unit may raise alarms or not work until they are
+restored. The vendor's update guide describes both steps: the firmware from a
+USB stick, then the HRDS+ parameter file loaded with the EVCO Parameters
+Manager. Firmware, parameter files and software are available from hej.luft on
+request.
+
+After the update:
+
+1. Reload the integration, so [*Firmware*](doc/entity-reference.md#firmware) shows the new revision.
+2. Check the [*Setup check*](doc/entity-reference.md#setup-check). The vendor's parameter files turn off
+   [*Enable on/off via Modbus (PH02)*](doc/entity-reference.md#enable-on-off-via-modbus-ph02); turn it on again (step 4) if Home
+   Assistant should switch the unit on and off. The integration never sets
+   it by itself.
+3. Settings you changed on the unit, for example target humidity limits or
+   installer parameters, are back at the vendor's values; set them again.
+
+Firmware 9.3 is the last version for units built before November 2026.
+Firmware 9.4 is only for the newer controller board; whether its registers
+differ is not known yet ([`UNIT_BEHAVIOUR.md` §1.2](doc/references/UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants)).
+
 ## How the unit works
 
 A short summary for using the integration. The full description, with handbook

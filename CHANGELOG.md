@@ -17,12 +17,14 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ### 🛠️ Fixes and other changes
 
+- **The installer number *PU11 Evaporator temperature setpoint* goes up to 12 °C.** That is the vendor's safe limit; the controller itself accepts up to 68 °C.
 - **The integration is named *hej.luft HRDS+ Dehumidifier*.** The device shows manufacturer *hej.luft (Innova)* and model *HRDS+*. Entity IDs and the configuration do not change.
 
 ### 📚 Documentation
 
 - **The unit is described as the hej.luft HRDS+, made by INNOVA S.r.l.** README, German README and references name only the HRDS+; the DEH+ installation manual is removed from `doc/references/`, and the facts that rested on it are backed by the hardware tests.
 - **Reference manuals updated to the vendor's current editions.** Technical handbook Sept. 2026 (with its text copy), user handbook Aug. 2026, the new hydraulic plans (Aug. 2026), Innova's declaration of conformity, and the HRD+ handbook and Modbus manual as background. Changed figures folded in: maximum electrical power 800 / 1110 W (recirculation fan 90 / 150 W), page citations, AL29 as outdoor probe fault, the commissioning check of the evaporator temperature, hydraulic variant 6b, and the firmware versions in the field.
+- **Firmware updates.** The README explains what to do after a firmware update: the update resets every parameter, and the vendor's parameter files turn off [*Enable on/off via Modbus (PH02)*](doc/entity-reference.md#enable-on-off-via-modbus-ph02). The registers do not change between firmware versions (checked against the vendor's firmware 9.3 package). The unit references list the firmware versions, part numbers and who builds and sells the unit, the vendor's final default settings, the PE24–PE26 scale as the vendor gives it, and PE23 and PA22 as missing from the 9.x parameter driver.
 - **Open vendor questions recorded** in `plans/todo.md`: firmware revisions, the PE24–PE26 scale, the product code of other variants, and defaults per firmware.
 
 ### 🧪 Tests and CI

@@ -108,11 +108,18 @@ Factory serial defaults:
     real unit's raw read-back, except for 22 rows that take the scale of their
     neighbours: [PF22](#pf22), [PS03](#ps03), [PA20](#pa20), [PA54](#pa54), [PH15](#ph15), [PH18](#ph18),
     [PE23](#pe23), [PE29](#pe29), [PT05](#pt05)–[PT11](#pt11), [PH31](#ph31)–[PH35](#ph35), [PA61](#pa61), [PA62](#pa62).
-  * **[PE24](#pe24)–[PE26](#pe26) scale is open.** The Modbus manual gives raw
-    0…200 for the handbook's 0…20 rps range, which fits ×0.1 (the reference
-    unit's raw 2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps). The technical handbook
-    (Sept. 2026) lists the defaults as 2 / 12 / 8 rps, which fits ×1. The
-    rows below use ×0.1 until the vendor confirms (`plans/todo.md`).
+  * **[PE24](#pe24)–[PE26](#pe26) scale.** The Modbus manual gives raw 0…200 for the
+    handbook's 0…20 rps range, which fits ×0.1 (the reference unit's raw
+    2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps). The technical handbook (Sept. 2026)
+    and the EVCO parameter driver show the raw values as rps without a
+    decimal. The vendor gives the real ramps of [PE24](#pe24) and [PE26](#pe26) as 0.2 and
+    0.8 per second, which fits ×0.1; for [PE25](#pe25) he is not sure (1.2 or 12).
+    The rows below use ×0.1 (`plans/todo.md`).
+  * The vendor's parameter table ("final settings", 25 Feb 2026) numbers
+    registers from 1: its decimal column is one higher than the address here
+    (PH02 is 1779 there, `0x06F2` = 1778 here); its hex column matches.
+  * [PE23](#pe23) and [PA22](#pa22) are not in the EVCO parameter driver revisions 07 to 09
+    (firmware 9.x parameter files).
   * The parameters named "differential" here (for example [PE18](#pe18),
     [Pb05](#pb05), [PS07](#ps07), [PA17](#pa17), [PA34](#pa34), [PA44](#pa44)) are called
     "Hysterese" in the German handbook.
@@ -774,7 +781,7 @@ humidity setpoint [PU01](#pu01) is in [§5.2](#52-setpoints).
 | `0x069F` | 1695 | <a id="pu08"></a><a id="reg-1695"></a>`PU08_SetpointOnlyWaterDehum` | R/W | ×0.1 | 0…30 °C | Cold-water-only dehumidify below water temperature |
 | `0x06A0` | 1696 | <a id="pu09"></a><a id="reg-1696"></a>`PU09_EnableCmpSecondStep` | R/W | ×1 | 0…1 | Compressor as second step |
 | `0x06A1` | 1697 | <a id="pu10"></a><a id="reg-1697"></a>`PU10_DehumOutBandTime` | R/W | ×1 | 0…240 min | Delay before compressor second step |
-| `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>`PU11_Evaporation_Setpoint` | R/W | ×0.1 | 0…68 °C | Evaporator temperature setpoint |
+| `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>`PU11_Evaporation_Setpoint` | R/W | ×0.1 | 0…68 °C | Evaporator temperature setpoint (vendor advice: at most 12 °C) |
 | `0x0752` | 1874 | <a id="pu12"></a><a id="reg-1874"></a>`PU12_Evaporation_DeadZone` | R/W | ×0.1 | 0.1…18 °C | Evaporator dead band |
 | `0x0761` | 1889 | <a id="reg-1889"></a><a id="pu13"></a>`PU13_MinTRoom_disableDEU` | R/W | — | 0-30.0 °C (×0.1) | Room temperature below which dehumidification (and the compressor) is disabled. |
 | `0x0762` | 1890 | <a id="reg-1890"></a><a id="pu14"></a>`PU14_TRoomDIFF_enableDEU` | R/W | — | 0.1-20.0 °C (×0.1) | Differential above [PU13](#pu13) at which dehumidification is re-enabled. |

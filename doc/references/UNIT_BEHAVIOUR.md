@@ -30,6 +30,8 @@ Scope rules:
 | `[HB 6.3]` | Technical handbook `HRDS+_Technisches_Handbuch_DE.pdf` (text: `.txt`), section number. The end-user handbook (`HRDS+_Benutzerhandbuch_DE.pdf`) is a word-for-word subset of HB §2.4, §5.2, §7 and §9, so it is cited as HB. |
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
+| `[VM]` | The vendor's (hej.luft) e-mail answer to the repository owner, 7 Nov 2026. |
+| `[FW]` | The vendor's firmware 9.3 package, sent with that answer and not stored here: the update guide (Aug. 2026), the EVCO Parameters Manager driver `Drv970` revisions 01 to 09 (parameter names, Modbus addresses, ranges), the HRDS+ 30/50 parameter files (May 2026, with and without CNU2) and the "final settings" table (25 Feb 2026). Available from the vendor on request. |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -102,16 +104,36 @@ How to tell them apart from the controller: no register states size or `R`
 * **30 vs 50:** not readable [INFERRED]. Type plate only [HB 2.3].
 * **Controller:** FC 43 device identification returns vendor `EVCO`, product
   code `EPB9ORSINDEU`, firmware `V01.00.09.02` on the reference unit [T1].
-  Whether other sizes/variants report the same product code is open
-  [INFERRED; `plans/todo.md`].
-* **Firmware:** at least three firmware states are in the field: without
-  CNU2 display support; from early 2026 with CNU2 support; from March 2026
-  with a reworked menu and a fix for the recirculation damper closing before
-  the fan has finished running on [V#68]. Units shipped from 2026 carry the
-  newer firmware with revised defaults [V#47, V#91]. Firmware and parameter
-  updates are backward compatible [V#50]; the current firmware is available
-  from the vendor on request [V#76]. Which FC 43 revision string belongs to
-  which state is open [`plans/todo.md`].
+  The firmware 9.3 image contains the same product code [FW]; the vendor
+  does not know whether the code differs between variants [VM]. Whether
+  other sizes and variants report it is open [INFERRED; `plans/todo.md`].
+* **Firmware versions** [VM]:
+
+  | Version | Units | Notes |
+  |---------|-------|-------|
+  | 4.7 and lower | 2025 models | No CNU2 display support; the recirculation damper sometimes closes too early |
+  | 9.2 | 2026 models | CNU2 support, new parameter sets; the same damper fault |
+  | 9.3 | none (not in production) | No known faults; available from the vendor on request |
+  | 9.4 | built from November 2026 | Same functions as 9.3, for a new controller board with plug-in connectors; does not run on the older board |
+
+  9.3 is the last version for boards built before November 2026 [VM]. The
+  reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
+  [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
+* **Registers across firmware:** in the parameter driver, no parameter
+  changes its Modbus address from revision 01 to 09; new parameters are added
+  at new addresses [FW]. Every installer parameter of
+  [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) is at the same address in
+  revision 09, the one the firmware 9.3 parameter files use, except
+  [PE23](MODBUS_REGISTERS.md#pe23) and [PA22](MODBUS_REGISTERS.md#pa22), which revisions 07 to 09 do not contain [FW].
+  The oldest driver revisions (01, 02) do not contain
+  [PH27](MODBUS_REGISTERS.md#ph27), [PH28](MODBUS_REGISTERS.md#ph28), [PU11](MODBUS_REGISTERS.md#pu11) or [PE24](MODBUS_REGISTERS.md#pe24); which firmware they belong to is not stated
+  [FW].
+* **Firmware update:** the firmware is copied from a USB stick; it resets
+  every parameter to the controller's generic defaults, which do not suit the
+  HRDS+ (alarms, functions missing). The HRDS+ parameter file is then loaded
+  with the EVCO Parameters Manager over USB [FW, VM]. The vendor's parameter
+  files set [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) to 1 and [PH02](MODBUS_REGISTERS.md#ph02) to 0, and differ between
+  "CNU2" and "noDisplay" only in [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) [FW].
 
 ### 1.3 Variants seen so far
 
@@ -132,7 +154,10 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
 2. Directly behind it sits the **water register** ("Nachheizregister"), a water
    coil [HB 2.6, 2.6.3].
 3. The compressor modulates to hold the evaporator at its setpoint [PU11](MODBUS_REGISTERS.md#pu11),
-   independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12].
+   independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12]. A
+   higher setpoint dehumidifies less and leaves warmer supply air, which
+   lowers the risk of condensation on uninsulated ducts during INT cooling;
+   the vendor's advice is never to set it above 12 °C [VM].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
 
 ### 2.2 Water path
@@ -1006,6 +1031,10 @@ distributor presumably pre-configures units [INFERRED]. Do not assume the handbo
 default on a real unit; read it. Where behaviour could be checked (§13) it
 followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), [Pb07](MODBUS_REGISTERS.md#pb07)/[Pb08](MODBUS_REGISTERS.md#pb08), [PF28](MODBUS_REGISTERS.md#pf28),
 [PU11](MODBUS_REGISTERS.md#pu11)); the compressor start delay is not yet explained (§4.3).
+
+The vendor's final settings for firmware 9.2 and 9.3 equal the handbook
+default in every row below except [Pb01](MODBUS_REGISTERS.md#pb01) (30 s) [FW]. HRDS+ 30 and 50 differ there
+only in [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [PH19](MODBUS_REGISTERS.md#ph19) [FW].
 
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|
