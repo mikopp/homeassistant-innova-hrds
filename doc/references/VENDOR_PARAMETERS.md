@@ -6,12 +6,12 @@ firmware 9.3 and 9.4, for the HRDS+ 30 and the HRDS+ 50. They come from
 hej.luft, not from the handbooks; where a handbook default differs,
 [`UNIT_BEHAVIOUR.md` §15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value) says so. What a register is (address, scale, range)
 is in [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md); what the unit does with a parameter is in
-[`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md). Cited there as `[FW]` (hej.luft's files) and `[VM]`
-(hej.luft's e-mail answers).
+[`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md). Cited there as `[FW]` (provided by hej.luft) and `[VC]`
+(confirmed by the vendor).
 
 ## Sources
 
-All from hej.luft, November 2026 [FW, VM]: its list of the parameter values for
+Provided by hej.luft, November 2026 [FW]: the parameter file with the values for
 firmware 9.2 and 9.3 / 9.4; firmware 9.3 with its parameter files for the
 HRDS+ 30 and the HRDS+ 50, each with and without a CNU2 display; the
 parameter definitions of the EVCO Parameters Manager (the service software
@@ -25,35 +25,35 @@ image carries the product code `EPB9ORSINDEU`.
   [`README.md`](README.md#who-makes-and-sells-the-unit)) differ only in [PE07](MODBUS_REGISTERS.md#pe07) and [PE22](MODBUS_REGISTERS.md#pe22), the maximum
   compressor output (55.00 % and 68.00 %), and in [PH19](MODBUS_REGISTERS.md#ph19). [PH19](MODBUS_REGISTERS.md#ph19) is the air-quality
   probe minimum, which the HRDS+ does not use; hej.luft uses it as a size
-  code: 16 = HRDS+ 30, 18 = HRDS+ 50 [FW, VM].
+  code: 16 = HRDS+ 30, 18 = HRDS+ 50 [FW, VC].
 * ¹ Older units carry the parameter sets of two earlier sizes: [PE07](MODBUS_REGISTERS.md#pe07) and
   [PE22](MODBUS_REGISTERS.md#pe22) 50.00 % or 62.00 %, size code 15 or 17. Their hardware is that of the HRDS+ 30
-  and the HRDS+ 50; hej.luft says current units should carry the HRDS+ 30 or 50 set [VM].
-* hej.luft has no parameter values for the HRDS with an on/off compressor [VM].
+  and the HRDS+ 50; current units should carry the HRDS+ 30 or 50 set (confirmed by the vendor) [VC].
+* hej.luft has no parameter values for the HRDS with an on/off compressor [VC].
 
 ## Firmware 9.2 and 9.3 / 9.4
 
 The values for firmware 9.2 and for 9.3 / 9.4 are the same except [Pb01](MODBUS_REGISTERS.md#pb01), the
-water valve off delay: 30 s on 9.2, 250 s on 9.3 / 9.4 [FW, VM]. hej.luft's
+water valve off delay: 30 s on 9.2, 250 s on 9.3 / 9.4 [FW, VC]. hej.luft's
 parameter files for 9.3 hold 255 s.
 
 * On 9.2, 30 s is a deliberate compromise by Innova. The recirculation damper
   then closes too early only rarely and briefly, which can cause a slight
   hissing or whistling; the compressor can run briefly without water flow,
   which Innova considers too short to matter. A longer delay on 9.2 makes the
-  early damper closing more frequent and longer [VM].
+  early damper closing more frequent and longer [VC].
 * On 9.3, 250 s keeps the water flowing until the compressor has ramped down,
-  even from full speed [VM]. How the damper behaves on each firmware:
+  even from full speed [VC]. How the damper behaves on each firmware:
   [`UNIT_BEHAVIOUR.md` §1.2](UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants).
 * According to Innova, a unit updated to 9.2 already carries the 9.2 values
-  [VM]. The reference unit does not ([`UNIT_BEHAVIOUR.md` §15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value)).
+  [VC]. The reference unit does not ([`UNIT_BEHAVIOUR.md` §15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value)).
 * [PH02](MODBUS_REGISTERS.md#ph02) is Disabled and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) are Enabled in every set: after loading
   a parameter file, on/off over Modbus is off.
 * hej.luft's parameter files for units without a CNU2 display set [PH01](MODBUS_REGISTERS.md#ph01) to
   Disabled and [HA00](MODBUS_REGISTERS.md#ha00) to None; those for units with one, Enabled and
   EPJ Graph TH. Otherwise the two are the same.
 * Innova's earlier minimum fan speed [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28) was 30.00 %. hej.luft considers
-  50.00 % high and has set 30.00 % at commissioning without problems [VM].
+  50.00 % high and has set 30.00 % at commissioning without problems [VC].
 
 ## Updating the firmware
 

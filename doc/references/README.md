@@ -47,8 +47,8 @@ The unit is built by Sinergia S.r.l., a subsidiary of INNOVA S.r.l.; Innova
 sells it and signs the declaration of conformity. hej.luft is the first to
 sell it under the Innova name. In Italy it has been sold as HRDS by
 Cappellotto, Geatherm, VMC Group, Vortice and others, partly with their own
-displays or small differences; those units may run older firmware (vendor
-e-mail, 7 Nov 2026).
+displays or small differences; those units may run older firmware (confirmed
+by the vendor).
 
 Part numbers on the order and the type plate (same source):
 

@@ -30,8 +30,8 @@ Scope rules:
 | `[HB 6.3]` | Technical handbook `HRDS+_Technisches_Handbuch_DE.pdf` (text: `.txt`), section number. The end-user handbook (`HRDS+_Benutzerhandbuch_DE.pdf`) is a word-for-word subset of HB §2.4, §5.2, §7 and §9, so it is cited as HB. |
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
-| `[VM]` | hej.luft's e-mail answers to the repository owner, November 2026. |
-| `[FW]` | hej.luft's parameter values, firmware 9.3 package and update guide, not stored here. What they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
+| `[VC]` | Confirmed by the vendor (hej.luft), November 2026. |
+| `[FW]` | Parameter file, firmware 9.3 and update guide provided by hej.luft, not stored here. What they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -105,9 +105,9 @@ How to tell them apart from the controller: no register states size or `R`
 * **Controller:** FC 43 device identification returns vendor `EVCO`, product
   code `EPB9ORSINDEU`, firmware `V01.00.09.02` on the reference unit [T1].
   The firmware 9.3 image contains the same product code [FW]; the vendor
-  does not know whether the code differs between variants [VM]. Whether
+  does not know whether the code differs between variants [VC]. Whether
   other sizes and variants report it is open [INFERRED; `plans/todo.md`].
-* **Firmware versions** [VM]:
+* **Firmware versions** [VC]:
 
   | Version | Units | Notes |
   |---------|-------|-------|
@@ -116,7 +116,7 @@ How to tell them apart from the controller: no register states size or `R`
   | 9.3 | none (not in production) | No known faults; available from the vendor on request |
   | 9.4 | built from November 2026 | Same functions as 9.3, for a new controller board with plug-in connectors; does not run on the older board |
 
-  9.3 is the last version for boards built before November 2026 [VM]. The
+  9.3 is the last version for boards built before November 2026 [VC]. The
   reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
   [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
 * **Registers across firmware:** no parameter changes its Modbus address
@@ -126,7 +126,7 @@ How to tell them apart from the controller: no register states size or `R`
   [PA22](MODBUS_REGISTERS.md#pa22) gone from the fifth): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions-by-revision).
 * **Firmware update:** it resets every parameter to the controller's generic
   defaults, which do not suit the HRDS+ (alarms, functions missing); the
-  HRDS+ parameter file for the model must be loaded afterwards [FW, VM]. The
+  HRDS+ parameter file for the model must be loaded afterwards [FW, VC]. The
   vendor's files leave [PH02](MODBUS_REGISTERS.md#ph02) at 0 and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) at 1, so after loading them
   Modbus on/off stays disabled [FW]. The steps, and the values per firmware and size:
   [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). Damper: up to firmware 9.2 the recirculation damper
@@ -156,7 +156,7 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
    independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12]. A
    higher setpoint dehumidifies less and leaves warmer supply air, which
    lowers the risk of condensation on uninsulated ducts during INT cooling;
-   the vendor's advice is never to set it above 12 °C [VM].
+   the vendor's advice is never to set it above 12 °C [VC].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
 
 ### 2.2 Water path
@@ -184,7 +184,7 @@ Hydraulic installations [HB 3.8.6–3.8.8]:
 | Variant | Water | Notes |
 |---------|-------|-------|
 | 1–3: heating/cooling circuit of a heat pump | 16–20 °C in cooling mode [INFERRED typical] | The heat pump must be in cooling mode for summer DEU/INT; the `VMC` contact can request it [HB 3.8.6]. With domestic hot water priority, open the `OFF` input during DHW [HB 3.8.6]. |
-| 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. In variant 6 the spring-loaded check valve 15 keeps brine from flowing through the module while its pump is off (cold supply air in winter), and the non-return flap 12 prevents wrong circulation when only the module's pump runs [VM]. |
+| 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. In variant 6 the spring-loaded check valve 15 keeps brine from flowing through the module while its pump is off (cold supply air in winter), and the non-return flap 12 prevents wrong circulation when only the module's pump runs [VC]. |
 | 6b: brine circuit, in parallel, for heat pumps with an external 230 V on/off brine pump | brine | No extra pump: a relay lets the `PM` output or the heat pump switch the brine pump; the pump flow must keep the heat pump's minimum flow with the module's branch open. Same three winter notes [HB 3.8.7]. |
 | separate ground loop | brine | Fully independent; same three winter notes [HB 3.8.8]. |
 | several (see the variant) | — | Where the module relies on the heat pump's own circulation or brine pump, that pump must run at a constant speed; ΔT or other automatic pump control does not suit it [HB 3.8.6, 3.8.7]. |
@@ -578,7 +578,7 @@ Observations and consequences:
 ### 9.1 Bands and sources
 
 * Active band: DEU [PF28](MODBUS_REGISTERS.md#pf28)..[PF10](MODBUS_REGISTERS.md#pf10), INT [PF27](MODBUS_REGISTERS.md#pf27)..[PF09](MODBUS_REGISTERS.md#pf09); defaults and shipped values in §15 [HB 6.2; MB p.7].
-  hej.luft has set the minimum [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28) to 30 % at commissioning without problems [VM].
+  hej.luft has set the minimum [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28) to 30 % at commissioning without problems [VC].
   The band is set at commissioning; the display's fan setting then runs
   0–100 % within it [HB 5.2].
 * Sources during DEU and INT: the display's manual request (fan screen, steps
@@ -1036,8 +1036,8 @@ hej.luft's values for each parameter, per firmware and size, are in
 [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). In every row below that has a handbook default, they equal it,
 except [Pb01](MODBUS_REGISTERS.md#pb01) on firmware 9.2 (30 s), and [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) on units without a display [FW].
 The reference unit carries the set of an older size for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and the size
-code [PH19](MODBUS_REGISTERS.md#ph19) (50 %, 50 %, 15), not that of the HRDS+ 30 (55 %, 55 %, 16) [T2, VM].
-hej.luft has asked Innova why [VM].
+code [PH19](MODBUS_REGISTERS.md#ph19) (50 %, 50 %, 15), not that of the HRDS+ 30 (55 %, 55 %, 16) [T2, VC].
+hej.luft has asked Innova why [VC].
 
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|
