@@ -115,12 +115,8 @@ Factory serial defaults:
     decimal. The vendor gives the real ramps of [PE24](#pe24) and [PE26](#pe26) as 0.2 and
     0.8 per second, which fits ×0.1; for [PE25](#pe25) he is not sure (1.2 or 12).
     The rows below use ×0.1 (`plans/todo.md`).
-  * The vendor's settings table numbers registers from 1 (its PH02 is 1779,
-    `0x06F2` = 1778 here); its hex column matches
-    ([`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#addressing)).
-  * [PE23](#pe23) and [PA22](#pa22) are not in the vendor's EVCO driver files from the seventh on
-    (the 9.3 parameter files use the ninth;
-    [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-driver-revisions)).
+  * [PE23](#pe23) and [PA22](#pa22) are not in hej.luft's parameter definitions for firmware 9.3
+    ([`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions-by-revision)).
   * The parameters named "differential" here (for example [PE18](#pe18),
     [Pb05](#pb05), [PS07](#ps07), [PA17](#pa17), [PA34](#pa34), [PA44](#pa44)) are called
     "Hysterese" in the German handbook.
@@ -908,7 +904,7 @@ The Modbus link ([PH11](#ph11)–[PH14](#ph14)) can only be changed at the displ
 | `0x06FC` | 1788 | <a id="reg-1788"></a><a id="ph16"></a>`PH16_CAN_1st_BaudRate` | R/W | ×1 | 1…4 | CAN baud rate code |
 | `0x06FD` | 1789 | <a id="ph17"></a><a id="reg-1789"></a>`PH17_CAN_1st_MyNode` | R/W | ×1 | 1…127 | CAN node |
 | `0x06FE` | 1790 | <a id="reg-1790"></a><a id="ph18"></a>`PH18_HistoryReset` | R/W | ×1 | 0…1 | History reset (clears the alarm history) |
-| `0x06FF` | 1791 | <a id="reg-1791"></a><a id="ph19"></a>`PH19_MinPPM_AirQuality` | R/W | ×1 | 0…9999 | Air quality probe min. The HRDS+ has no air-quality probe; the vendor's parameter sets use the value as a label (16 = HRDS+ 30) |
+| `0x06FF` | 1791 | <a id="reg-1791"></a><a id="ph19"></a>`PH19_MinPPM_AirQuality` | R/W | ×1 | 0…9999 | Air quality probe min. The HRDS+ has no air-quality probe; hej.luft uses the value as a size code (16 = HRDS+ 30, 18 = HRDS+ 50) |
 | `0x0700` | 1792 | <a id="reg-1792"></a><a id="ph20"></a>`PH20_MaxPPM_AirQuality` | R/W | ×1 | 0…9999 | Air quality probe max |
 | `0x0701` | 1793 | <a id="reg-1793"></a><a id="ph21"></a>`PH21_MinValHighPressure` | R/W | ×0.1 | 0…87 bar | Pressure probe min |
 | `0x0702` | 1794 | <a id="reg-1794"></a><a id="ph22"></a>`PH22_MaxValHighPressure` | R/W | ×0.1 | 0…87 bar | Pressure probe max |

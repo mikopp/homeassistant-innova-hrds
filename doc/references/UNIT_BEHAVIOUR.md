@@ -30,8 +30,8 @@ Scope rules:
 | `[HB 6.3]` | Technical handbook `HRDS+_Technisches_Handbuch_DE.pdf` (text: `.txt`), section number. The end-user handbook (`HRDS+_Benutzerhandbuch_DE.pdf`) is a word-for-word subset of HB §2.4, §5.2, §7 and §9, so it is cited as HB. |
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
-| `[VM]` | The vendor's (hej.luft) e-mail answer to the repository owner, 7 Nov 2026. |
-| `[FW]` | The vendor's firmware 9.3 package and settings table, sent with that answer and not stored here. What the files contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
+| `[VM]` | hej.luft's e-mail answers to the repository owner, November 2026. |
+| `[FW]` | hej.luft's parameter values, firmware 9.3 package and update guide, not stored here. What they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -120,15 +120,15 @@ How to tell them apart from the controller: no register states size or `R`
   reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
   [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
 * **Registers across firmware:** no parameter changes its Modbus address
-  across the vendor's seven driver files, and the 9.3 parameter files use the
-  addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW]. Which parameters appear in which driver file
-  (for example [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) only from the third file, [PE23](MODBUS_REGISTERS.md#pe23) and [PA22](MODBUS_REGISTERS.md#pa22) gone from the
-  seventh): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-driver-revisions).
+  across the seven revisions of hej.luft's parameter definitions, and the 9.3
+  parameter files use the addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW]. Which parameters
+  each revision has (for example [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) only from the third, [PE23](MODBUS_REGISTERS.md#pe23) and
+  [PA22](MODBUS_REGISTERS.md#pa22) gone from the fifth): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions-by-revision).
 * **Firmware update:** it resets every parameter to the controller's generic
   defaults, which do not suit the HRDS+ (alarms, functions missing); the
   HRDS+ parameter file for the model must be loaded afterwards [FW, VM]. The
   vendor's files leave [PH02](MODBUS_REGISTERS.md#ph02) at 0 and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) at 1, so after loading them
-  Modbus on/off stays disabled [FW]. The steps, and the values per firmware and model:
+  Modbus on/off stays disabled [FW]. The steps, and the values per firmware and size:
   [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). Damper: up to firmware 9.2 the recirculation damper
   closes at once when the requests end, while the fan may still run on; from
   9.3 it closes only when all requests are satisfied, the compressor is off and
@@ -184,7 +184,7 @@ Hydraulic installations [HB 3.8.6–3.8.8]:
 | Variant | Water | Notes |
 |---------|-------|-------|
 | 1–3: heating/cooling circuit of a heat pump | 16–20 °C in cooling mode [INFERRED typical] | The heat pump must be in cooling mode for summer DEU/INT; the `VMC` contact can request it [HB 3.8.6]. With domestic hot water priority, open the `OFF` input during DHW [HB 3.8.6]. |
-| 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. |
+| 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. In variant 6 the spring-loaded check valve 15 keeps brine from flowing through the module while its pump is off (cold supply air in winter), and the non-return flap 12 prevents wrong circulation when only the module's pump runs [VM]. |
 | 6b: brine circuit, in parallel, for heat pumps with an external 230 V on/off brine pump | brine | No extra pump: a relay lets the `PM` output or the heat pump switch the brine pump; the pump flow must keep the heat pump's minimum flow with the module's branch open. Same three winter notes [HB 3.8.7]. |
 | separate ground loop | brine | Fully independent; same three winter notes [HB 3.8.8]. |
 | several (see the variant) | — | Where the module relies on the heat pump's own circulation or brine pump, that pump must run at a constant speed; ΔT or other automatic pump control does not suit it [HB 3.8.6, 3.8.7]. |
@@ -578,6 +578,7 @@ Observations and consequences:
 ### 9.1 Bands and sources
 
 * Active band: DEU [PF28](MODBUS_REGISTERS.md#pf28)..[PF10](MODBUS_REGISTERS.md#pf10), INT [PF27](MODBUS_REGISTERS.md#pf27)..[PF09](MODBUS_REGISTERS.md#pf09); defaults and shipped values in §15 [HB 6.2; MB p.7].
+  hej.luft has set the minimum [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28) to 30 % at commissioning without problems [VM].
   The band is set at commissioning; the display's fan setting then runs
   0–100 % within it [HB 5.2].
 * Sources during DEU and INT: the display's manual request (fan screen, steps
@@ -1031,12 +1032,12 @@ default on a real unit; read it. Where behaviour could be checked (§13) it
 followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), [Pb07](MODBUS_REGISTERS.md#pb07)/[Pb08](MODBUS_REGISTERS.md#pb08), [PF28](MODBUS_REGISTERS.md#pf28),
 [PU11](MODBUS_REGISTERS.md#pu11)); the compressor start delay is not yet explained (§4.3).
 
-The vendor's own parameter sets, per firmware and model, are in
-[`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). In every row below that has a handbook default, the vendor's
-HRDS+ sets equal it except the rows listed there under "Where the sets differ"
-([Pb01](MODBUS_REGISTERS.md#pb01), [PH01](MODBUS_REGISTERS.md#ph01), [HA00](MODBUS_REGISTERS.md#ha00), [PH19](MODBUS_REGISTERS.md#ph19)) [FW]. The reference unit carries the values of the
-vendor's column "30" (read as the on/off HRDS 30) for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [PH19](MODBUS_REGISTERS.md#ph19), not those of
-"40 (=HRDS+30)" [T2; INFERRED from the column labels].
+hej.luft's values for each parameter, per firmware and size, are in
+[`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). In every row below that has a handbook default, they equal it,
+except [Pb01](MODBUS_REGISTERS.md#pb01) on firmware 9.2 (30 s), and [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) on units without a display [FW].
+The reference unit carries the set of an older size for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and the size
+code [PH19](MODBUS_REGISTERS.md#ph19) (50 %, 50 %, 15), not that of the HRDS+ 30 (55 %, 55 %, 16) [T2, VM].
+hej.luft has asked Innova why [VM].
 
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|
@@ -1074,5 +1075,5 @@ vendor's column "30" (read as the on/off HRDS 30) for [PE07](MODBUS_REGISTERS.md
 | [Pb01](MODBUS_REGISTERS.md#pb01) | HB 5.3, 6.4 | 255 s | 30 s | Shorter valve run-on |
 | [Pb02](MODBUS_REGISTERS.md#pb02) / [Pb03](MODBUS_REGISTERS.md#pb03) | HB 5.3, 6.4 | 60 s / 3 min | 360 s / 3 min | Longer valve opening in each sniffing step |
 | [Pb07](MODBUS_REGISTERS.md#pb07) / [Pb08](MODBUS_REGISTERS.md#pb08) | HB 5.3, 6.4 | 60 s / 99 min | 60 s / 60 min | Pulse every 61 min instead of every 100 min ([Pb08](MODBUS_REGISTERS.md#pb08) is minutes in the handbook's parameter table) |
-| [PH19](MODBUS_REGISTERS.md#ph19) | HB 5.3 | 16 (HRDS+ 30), 18 (HRDS+ 50) | 15 | None (no air-quality probe; vendor label) |
+| [PH19](MODBUS_REGISTERS.md#ph19) | HB 5.3 | 16 (HRDS+ 30), 18 (HRDS+ 50) | 15 | Size code of an older size; no effect on operation (no air-quality probe) |
 | [HD05](MODBUS_REGISTERS.md#hd05) | HB 5.3 | not checked | water valve | Water valve allocated to its output |

@@ -160,7 +160,9 @@ No INT request has been run yet. One summer INT run answers most of these.
       AL12, then AL03 ended the request (T38). Fix the hydraulics (for example
       a stronger pump or a check valve; not chosen yet), then repeat a run with
       the heat pump compressor on. Until then avoid long requests while it
-      runs.
+      runs. First check that the hydraulic plan's spring-loaded check valve 15
+      and non-return flap 12 are fitted and work: hej.luft names both as
+      required for variant 6 (`UNIT_BEHAVIOUR.md` §2.2).
 - [ ] **Passive path (water below [PU08](../doc/references/MODBUS_REGISTERS.md#pu08)).** With water ([501](../doc/references/MODBUS_REGISTERS.md#reg-501)) below [PU08](../doc/references/MODBUS_REGISTERS.md#pu08) ([1695](../doc/references/MODBUS_REGISTERS.md#reg-1695),
       10 °C) and a DEU or INT request in summer: `compressor_status` ([1122](../doc/references/MODBUS_REGISTERS.md#reg-1122))
       stays off, `water_valve_pump` ([1126](../doc/references/MODBUS_REGISTERS.md#reg-1126)) is On, supply air colder and drier.
@@ -244,12 +246,21 @@ No INT request has been run yet. One summer INT run answers most of these.
 - [ ] **As-delivered settings.** The reference unit shipped with values that
       differ from the handbook (`UNIT_BEHAVIOUR.md` §15). A second unit's dump
       shows whether these are the distributor's presets.
-- [ ] **Reference unit parameter set** (asked the vendor 2026-11). The
-      reference unit carries the values of the vendor's column "30" for
-      PE07/PE22 (50 %) and PH19 (15). Should it get the HRDS+ 30 values and the
-      other firmware 9.2 values (PE04, PE32, PU12, PF01, PF03, PS01, Pb02, Pb08,
-      PA16, PA11), or be updated to 9.3? The sets:
-      [`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md). After the change, log it as a T entry.
+- [ ] **Reference unit parameter set.** The reference unit carries an older
+      size's set for PE07/PE22 (50 %) and PH19 (15); hej.luft recommends the
+      current values and has asked Innova why the unit came with it. Set the
+      HRDS+ 30 values for firmware 9.2 (PE07/PE22 55 %, PH19 16, and PE04,
+      PE32, PU12, PF01, PF03, PS01, Pb02, Pb08, PA16, PA11), keep Pb01 at 30 s
+      on 9.2, then log it as a T entry. Values:
+      [`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md).
+- [ ] **PH19 in the HRDS+ 50 parameter files.** hej.luft's size code for the
+      HRDS+ 50 is 18, but its firmware 9.3 files for the HRDS+ 50 hold 16. Ask
+      hej.luft which is right.
+- [ ] **Extra brine pump speed (high summer).** Following handbook §8.2
+      ("Verdampfertemperatur prüfen"), run a dehumidify request once with only
+      the unit's pump and once with both pumps running; the evaporator
+      temperature should settle in the target range in both cases. If not,
+      reduce the brine flow and/or [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) / [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) (hej.luft).
 - [ ] **Supply-air temperature.** The unit's supply probe ([503](../doc/references/MODBUS_REGISTERS.md#reg-503)) is not fitted,
       so "DEU gives dry air at about room temperature" (HB 2.6.1) is
       unverified. Log an external sensor downstream of the HRDS through a run;
