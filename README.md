@@ -340,7 +340,8 @@ HRDS+ settings, so the unit may raise alarms or not work until they are
 restored. The vendor's update guide describes both steps: the firmware from a
 USB stick, then the HRDS+ parameter file loaded with the EVCO Parameters
 Manager. Firmware, parameter files and software are available from hej.luft on
-request.
+request; what they contain, per firmware and model, is in
+[`VENDOR_PARAMETERS.md`](doc/references/VENDOR_PARAMETERS.md).
 
 After the update:
 

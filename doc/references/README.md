@@ -13,6 +13,7 @@ it.
 |-------|------|
 | **How the unit behaves**: variants, states, start/stop sequences, summer/winter, display/probe configurations, fan, compressor, water circuit, alarm effects, display and Modbus actions, what was tested on real hardware | [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md) |
 | **Which registers exist**: addresses, names, encodings, ranges, value meanings, write recipes | [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) |
+| **What the vendor's parameter files say**: every parameter as sent, per firmware and model, the firmware update steps, the driver revisions | [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md) |
 | Technical data (airflow, capacity, power) and the fan-speed → airflow estimate | this file, below |
 | What the Home Assistant integration does on top of the unit, and why | [`../adr/`](../adr/README.md) (decisions), [`../../README.md`](../../README.md) (users) |
 | Open hardware questions and test plans | [`../../plans/todo.md`](../../plans/todo.md) |
@@ -59,10 +60,8 @@ Part numbers on the order and the type plate (same source):
 | `V08000002D` / `V08000002C` | HRDS+ 30 / 50 with recirculation (2026) |
 | `V07000002D` / `V07000002C` | HRDS+ 30 / 50 supply only (2026) |
 
-The vendor's firmware 9.3 package (firmware, EVCO Parameters Manager, driver
-`Drv970`, parameter files, update guide) and the "final settings" table are
-not stored here; they are available from hej.luft on request. What they show
-is cited as `[FW]` in [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md).
+The vendor's firmware 9.3 package and settings table are not stored here;
+what they contain is in [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md).
 
 ## Technical data (airflow, capacity, power)
 

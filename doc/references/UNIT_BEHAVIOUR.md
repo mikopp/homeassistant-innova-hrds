@@ -31,7 +31,7 @@ Scope rules:
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
 | `[VM]` | The vendor's (hej.luft) e-mail answer to the repository owner, 7 Nov 2026. |
-| `[FW]` | The vendor's firmware 9.3 package, sent with that answer and not stored here: the update guide (Aug. 2026), the EVCO Parameters Manager driver `Drv970` revisions 01 to 09 (parameter names, Modbus addresses, ranges), the HRDS+ 30/50 parameter files (May 2026, with and without CNU2) and the "final settings" table (25 Feb 2026). Available from the vendor on request. |
+| `[FW]` | The vendor's firmware 9.3 package and settings table, sent with that answer and not stored here. What the files contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -119,22 +119,20 @@ How to tell them apart from the controller: no register states size or `R`
   9.3 is the last version for boards built before November 2026 [VM]. The
   reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
   [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
-* **Registers across firmware:** in the parameter driver, no parameter
-  changes its Modbus address from revision 01 to 09; new parameters are added
-  at new addresses [FW]. Every installer parameter of
-  [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) is at the same address in
-  revision 09, the one the firmware 9.3 parameter files use, except
-  [PE23](MODBUS_REGISTERS.md#pe23) and [PA22](MODBUS_REGISTERS.md#pa22), which revisions 07 to 09 do not contain [FW].
-  The oldest driver revisions (01, 02) do not contain
-  [PH27](MODBUS_REGISTERS.md#ph27), [PH28](MODBUS_REGISTERS.md#ph28), [PU11](MODBUS_REGISTERS.md#pu11) or [PE24](MODBUS_REGISTERS.md#pe24); which firmware they belong to is not stated
-  [FW].
-* **Firmware update:** the firmware is copied from a USB stick; it resets
-  every parameter to the controller's generic defaults, which do not suit the
-  HRDS+ (alarms, functions missing). The HRDS+ parameter file is then loaded
-  with the EVCO Parameters Manager over USB [FW, VM]. The vendor's parameter
-  files set [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) to 1 and [PH02](MODBUS_REGISTERS.md#ph02) to 0, and differ between
-  "CNU2" and "noDisplay" only in [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) [FW]. [Pb01](MODBUS_REGISTERS.md#pb01) belongs with the damper behaviour (30 s on
-  firmware 9.2 and lower, 255 s with 9.3, where the damper waits for the valve) [FW].
+* **Registers across firmware:** no parameter changes its Modbus address
+  across the vendor's seven driver files, and the 9.3 parameter files use the
+  addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW]. Which parameters appear in which driver file
+  (for example [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) only from the third file, [PE23](MODBUS_REGISTERS.md#pe23) and [PA22](MODBUS_REGISTERS.md#pa22) gone from the
+  seventh): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-driver-revisions).
+* **Firmware update:** it resets every parameter to the controller's generic
+  defaults, which do not suit the HRDS+ (alarms, functions missing); the
+  HRDS+ parameter file for the model must be loaded afterwards [FW, VM]. The
+  vendor's files leave [PH02](MODBUS_REGISTERS.md#ph02) at 0 and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) at 1, so after loading them
+  Modbus on/off stays disabled [FW]. The steps, and the values per firmware and model:
+  [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). Damper: up to firmware 9.2 the recirculation damper
+  closes at once when the requests end, while the fan may still run on; from
+  9.3 it closes only when all requests are satisfied, the compressor is off and
+  the water valve is closed, and [Pb01](MODBUS_REGISTERS.md#pb01) sets how long the valve stays open [FW].
 
 ### 1.3 Variants seen so far
 
@@ -1033,13 +1031,12 @@ default on a real unit; read it. Where behaviour could be checked (§13) it
 followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), [Pb07](MODBUS_REGISTERS.md#pb07)/[Pb08](MODBUS_REGISTERS.md#pb08), [PF28](MODBUS_REGISTERS.md#pf28),
 [PU11](MODBUS_REGISTERS.md#pu11)); the compressor start delay is not yet explained (§4.3).
 
-The vendor's firmware 9.3 parameter files equal the handbook default in every
-row below [FW]. The firmware 9.2 table differs in [Pb01](MODBUS_REGISTERS.md#pb01) (30 s), which belongs with the 9.2
-damper behaviour (§1.2) [FW]. The 9.2 columns for HRDS 30, HRDS+ 30, HRDS 50 and
-HRDS+ 50 differ from each other only in [PE07](MODBUS_REGISTERS.md#pe07) and [PE22](MODBUS_REGISTERS.md#pe22) (50 / 55 / 62 / 68 %) and in the
-[PH19](MODBUS_REGISTERS.md#ph19) label (15 / 16 / 17 / 18) [FW]. The reference unit carries the HRDS 30
-(on/off) values for these three: [PE07](MODBUS_REGISTERS.md#pe07) = [PE22](MODBUS_REGISTERS.md#pe22) = 50 % and [PH19](MODBUS_REGISTERS.md#ph19) = 15, not the HRDS+ 30
-values [T2].
+The vendor's own parameter sets, per firmware and model, are in
+[`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). In every row below that has a handbook default, the vendor's
+HRDS+ sets equal it except the rows listed there under "Where the sets differ"
+([Pb01](MODBUS_REGISTERS.md#pb01), [PH01](MODBUS_REGISTERS.md#ph01), [HA00](MODBUS_REGISTERS.md#ha00), [PH19](MODBUS_REGISTERS.md#ph19)) [FW]. The reference unit carries the values of the
+vendor's column "30" (read as the on/off HRDS 30) for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [PH19](MODBUS_REGISTERS.md#ph19), not those of
+"40 (=HRDS+30)" [T2; INFERRED from the column labels].
 
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|

@@ -115,11 +115,12 @@ Factory serial defaults:
     decimal. The vendor gives the real ramps of [PE24](#pe24) and [PE26](#pe26) as 0.2 and
     0.8 per second, which fits ×0.1; for [PE25](#pe25) he is not sure (1.2 or 12).
     The rows below use ×0.1 (`plans/todo.md`).
-  * The vendor's parameter table ("final settings", 25 Feb 2026) numbers
-    registers from 1: its decimal column is one higher than the address here
-    (PH02 is 1779 there, `0x06F2` = 1778 here); its hex column matches.
-  * [PE23](#pe23) and [PA22](#pa22) are not in the EVCO parameter driver revisions 07 to 09
-    (firmware 9.x parameter files).
+  * The vendor's settings table numbers registers from 1 (its PH02 is 1779,
+    `0x06F2` = 1778 here); its hex column matches
+    ([`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#addressing)).
+  * [PE23](#pe23) and [PA22](#pa22) are not in the vendor's EVCO driver files from the seventh on
+    (the 9.3 parameter files use the ninth;
+    [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-driver-revisions)).
   * The parameters named "differential" here (for example [PE18](#pe18),
     [Pb05](#pb05), [PS07](#ps07), [PA17](#pa17), [PA34](#pa34), [PA44](#pa44)) are called
     "Hysterese" in the German handbook.
