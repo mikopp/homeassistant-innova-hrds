@@ -13,6 +13,7 @@ it.
 |-------|------|
 | **How the unit behaves**: variants, states, start/stop sequences, summer/winter, display/probe configurations, fan, compressor, water circuit, alarm effects, display and Modbus actions, what was tested on real hardware | [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md) |
 | **Which registers exist**: addresses, names, encodings, ranges, value meanings, write recipes | [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) |
+| **What the vendor's parameter files say**: every parameter as sent, per firmware and model, the firmware update steps, the driver revisions | [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md) |
 | Technical data (airflow, capacity, power) and the fan-speed → airflow estimate | this file, below |
 | What the Home Assistant integration does on top of the unit, and why | [`../adr/`](../adr/README.md) (decisions), [`../../README.md`](../../README.md) (users) |
 | Open hardware questions and test plans | [`../../plans/todo.md`](../../plans/todo.md) |
@@ -40,6 +41,28 @@ The vendor's and other users' statements from the energiesparhaus.at HRDS+
 forum thread are quoted with their post numbers in
 [`UNIT_BEHAVIOUR.md` §13](UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware).
 
+## Who makes and sells the unit
+
+The unit is built by Sinergia S.r.l., a subsidiary of INNOVA S.r.l.; Innova
+sells it and signs the declaration of conformity. hej.luft is the first to
+sell it under the Innova name. In Italy it has been sold as HRDS by
+Cappellotto, Geatherm, VMC Group, Vortice and others, partly with their own
+displays or small differences; those units may run older firmware (vendor
+e-mail, 7 Nov 2026).
+
+Part numbers on the order and the type plate (same source):
+
+| Part number | Unit |
+|-------------|------|
+| `DHAD30HC3II` / `DHAD50HC3II` | HRDS 30 / 50 H R K D, on/off compressor (2025) |
+| `DHAI30HCKII` / `DHAI50HCKII` | HRDS+ 30 / 50 H R K DC, inverter, with recirculation (2025) |
+| `DHTI30HCKII` / `DHTI50HCKII` | HRDS+ 30 / 50 H K DC, inverter, supply only (2025) |
+| `V08000002D` / `V08000002C` | HRDS+ 30 / 50 with recirculation (2026) |
+| `V07000002D` / `V07000002C` | HRDS+ 30 / 50 supply only (2026) |
+
+The vendor's firmware 9.3 package and settings table are not stored here;
+what they contain is in [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md).
+
 ## Technical data (airflow, capacity, power)
 
 From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /
@@ -54,13 +77,20 @@ From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /
 | Usable dehumidification capacity ¹ | 56 L/24h | 89 L/24h |
 | Total cooling capacity ¹ | 2.59 kW | 3.95 kW |
 | Compressor frequency range | 23–63 Hz | 23–78 Hz |
+| Max. current for sizing the supply | 6.0 A ² | 7.5 A |
 | **Max. electrical power (operating)** | **800 W** | **1110 W** |
 | — compressor max. | 690 W | 950 W |
 | — **recirc fan max.** | **90 W** | **150 W** |
 | Sound pressure @ 3 m | 39.5 dB(A) | 40.8 dB(A) |
 | Weight (with recirc / without) | 46 / 43 kg | 57 / 54 kg |
+| Refrigerant | R410A, 440 g | R410A, 450 g |
 
 ¹ At nominal airflow and the reference conditions footnoted in the handbook.
+
+² The type plate of the reference unit (`V08000002D`) gives 6.78 A; size the
+supply for the plate value. The plate also gives 230 V / 50 Hz, 300 m³/h,
+R410A 0.44 kg, maximum water pressure 10 bar and maximum refrigerant pressure
+42 bar.
 
 The handbook table prints the pressure drop as kPa; its curve (§10.3.1, p.83)
 shows about 31 Pa at 300 m³/h and 38 Pa at 500 m³/h, so the unit is Pa.

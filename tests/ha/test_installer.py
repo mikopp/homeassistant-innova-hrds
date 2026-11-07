@@ -5,6 +5,7 @@ from __future__ import annotations
 import pytest
 from homeassistant.const import STATE_UNKNOWN
 from homeassistant.data_entry_flow import FlowResultType
+from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
 
@@ -107,6 +108,16 @@ async def test_write_reads_back_only_that_register(hass, sim, clock):
     assert s.device.holding[PA03] == 1
     assert float(s.state("number", "inst_pa03").state) == 1
     assert holding_addresses_read(s) == {PA03}
+
+
+async def test_pu11_is_capped_at_the_vendor_limit(hass, sim, clock):
+    """The vendor's advice: never set the evaporator setpoint above 12 °C."""
+    s = await add_entry(hass, sim, installer_device=True)
+    assert s.state("number", "inst_pu11").attributes["max"] == 12
+    with pytest.raises(ServiceValidationError):
+        await s.service("number", "set_value", "inst_pu11", value=13)
+    await s.service("number", "set_value", "inst_pu11", value=11)
+    assert s.device.holding[1873] == 110
 
 
 async def test_turning_the_option_on_and_off(hass, sim):

@@ -212,21 +212,26 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 8. Needs another unit, a display, a probe or extra wiring
 
-- [ ] **Other variants' identity** (asked the vendor 2026-11). Does an
-      HRDS+ 50, a non-`R` or a non-`DC` unit, or another firmware, report an
-      `EPB9…` product code (FC 43)? Loosen `EXPECTED_PRODUCT_PREFIX` if not.
-      Also: what does a gateway that does not forward FC 43 return?
-- [ ] **Firmware revisions** (asked the vendor 2026-11). Which FC 43 revision
-      string belongs to which of the three firmware states
-      ([UNIT_BEHAVIOUR §1.2](../doc/references/UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants)), and which is current? The
-      reference unit reports `V01.00.09.02`.
-- [ ] **Defaults per firmware** (asked the vendor 2026-11). The vendor offered
-      the parameter-default file; compare it with the reference unit's
-      shipped values (`UNIT_BEHAVIOUR.md` §15).
-- [ ] **PE24–PE26 scale** (asked the vendor 2026-11). ×0.1 (Modbus manual
-      range raw 0…200 for 0…20 rps; raw 2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps as in
-      the Mai 2026 handbook) or ×1 (Sept. 2026 handbook defaults 2 / 12 / 8
-      rps)? The installer rows use ×0.1 until answered.
+- [ ] **Other variants' identity.** The firmware 9.3 image carries the
+      same `EPB9ORSINDEU`; the vendor does not know whether variants differ.
+      Does an HRDS+ 50, a supply-only unit, a 2025 unit (firmware 4.7) or a
+      9.4 unit report an `EPB9…` product code (FC 43)? Loosen
+      `EXPECTED_PRODUCT_PREFIX` if not. Also: what does a gateway that does
+      not forward FC 43 return?
+      The revision string of a 9.3 or 4.7 unit would confirm that
+      `V01.00.09.02` is firmware 9.2.
+- [ ] **PE25 scale.** The vendor confirms 0.2 / 0.8 per second for
+      [PE24](../doc/references/MODBUS_REGISTERS.md#pe24) / [PE26](../doc/references/MODBUS_REGISTERS.md#pe26) (×0.1); for [PE25](../doc/references/MODBUS_REGISTERS.md#pe25) (raw 12) he is not sure whether it
+      is 1.2 or 12 and will check. The row uses ×0.1 until then.
+- [ ] **Firmware 9.4 registers.** 9.4 runs only on the board built from
+      November 2026. Does its register map match? A diagnostic dump from a
+      9.4 unit answers it.
+- [ ] **Firmware 4.7 and lower over Modbus.** The oldest EVCO driver
+      revisions lack PH27/PH28 (the DEU/INT Modbus enables) and PU11. Does a
+      2025 unit accept DEU and INT requests over Modbus?
+- [ ] **PA22 on firmware 9.x.** [PA22](../doc/references/MODBUS_REGISTERS.md#pa22) ([1738](../doc/references/MODBUS_REGISTERS.md#reg-1738)) and PE23 are not in the 9.x
+      parameter driver. Check what 1738 returns on the reference unit; drop
+      the installer row if it is unused.
 - [ ] **HRDS (on/off) and HRD+** (asked the vendor 2026-11). Innova's
       declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). The
       on/off HRDS appears to be sold in Italy as Vortice HRDS 30/50 (R) DC
@@ -239,6 +244,12 @@ No INT request has been run yet. One summer INT run answers most of these.
 - [ ] **As-delivered settings.** The reference unit shipped with values that
       differ from the handbook (`UNIT_BEHAVIOUR.md` §15). A second unit's dump
       shows whether these are the distributor's presets.
+- [ ] **Reference unit parameter set** (asked the vendor 2026-11). The
+      reference unit carries the values of the vendor's column "30" for
+      PE07/PE22 (50 %) and PH19 (15). Should it get the HRDS+ 30 values and the
+      other firmware 9.2 values (PE04, PE32, PU12, PF01, PF03, PS01, Pb02, Pb08,
+      PA16, PA11), or be updated to 9.3? The sets:
+      [`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md). After the change, log it as a T entry.
 - [ ] **Supply-air temperature.** The unit's supply probe ([503](../doc/references/MODBUS_REGISTERS.md#reg-503)) is not fitted,
       so "DEU gives dry air at about room temperature" (HB 2.6.1) is
       unverified. Log an external sensor downstream of the HRDS through a run;

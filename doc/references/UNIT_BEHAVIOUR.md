@@ -30,6 +30,8 @@ Scope rules:
 | `[HB 6.3]` | Technical handbook `HRDS+_Technisches_Handbuch_DE.pdf` (text: `.txt`), section number. The end-user handbook (`HRDS+_Benutzerhandbuch_DE.pdf`) is a word-for-word subset of HB §2.4, §5.2, §7 and §9, so it is cited as HB. |
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
+| `[VM]` | The vendor's (hej.luft) e-mail answer to the repository owner, 7 Nov 2026. |
+| `[FW]` | The vendor's firmware 9.3 package and settings table, sent with that answer and not stored here. What the files contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -102,16 +104,35 @@ How to tell them apart from the controller: no register states size or `R`
 * **30 vs 50:** not readable [INFERRED]. Type plate only [HB 2.3].
 * **Controller:** FC 43 device identification returns vendor `EVCO`, product
   code `EPB9ORSINDEU`, firmware `V01.00.09.02` on the reference unit [T1].
-  Whether other sizes/variants report the same product code is open
-  [INFERRED; `plans/todo.md`].
-* **Firmware:** at least three firmware states are in the field: without
-  CNU2 display support; from early 2026 with CNU2 support; from March 2026
-  with a reworked menu and a fix for the recirculation damper closing before
-  the fan has finished running on [V#68]. Units shipped from 2026 carry the
-  newer firmware with revised defaults [V#47, V#91]. Firmware and parameter
-  updates are backward compatible [V#50]; the current firmware is available
-  from the vendor on request [V#76]. Which FC 43 revision string belongs to
-  which state is open [`plans/todo.md`].
+  The firmware 9.3 image contains the same product code [FW]; the vendor
+  does not know whether the code differs between variants [VM]. Whether
+  other sizes and variants report it is open [INFERRED; `plans/todo.md`].
+* **Firmware versions** [VM]:
+
+  | Version | Units | Notes |
+  |---------|-------|-------|
+  | 4.7 and lower | 2025 models | No CNU2 display support; the recirculation damper sometimes closes too early |
+  | 9.2 | 2026 models | CNU2 support, new parameter sets; the same damper fault |
+  | 9.3 | none (not in production) | No known faults; available from the vendor on request |
+  | 9.4 | built from November 2026 | Same functions as 9.3, for a new controller board with plug-in connectors; does not run on the older board |
+
+  9.3 is the last version for boards built before November 2026 [VM]. The
+  reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
+  [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
+* **Registers across firmware:** no parameter changes its Modbus address
+  across the vendor's seven driver files, and the 9.3 parameter files use the
+  addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW]. Which parameters appear in which driver file
+  (for example [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) only from the third file, [PE23](MODBUS_REGISTERS.md#pe23) and [PA22](MODBUS_REGISTERS.md#pa22) gone from the
+  seventh): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-driver-revisions).
+* **Firmware update:** it resets every parameter to the controller's generic
+  defaults, which do not suit the HRDS+ (alarms, functions missing); the
+  HRDS+ parameter file for the model must be loaded afterwards [FW, VM]. The
+  vendor's files leave [PH02](MODBUS_REGISTERS.md#ph02) at 0 and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) at 1, so after loading them
+  Modbus on/off stays disabled [FW]. The steps, and the values per firmware and model:
+  [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). Damper: up to firmware 9.2 the recirculation damper
+  closes at once when the requests end, while the fan may still run on; from
+  9.3 it closes only when all requests are satisfied, the compressor is off and
+  the water valve is closed, and [Pb01](MODBUS_REGISTERS.md#pb01) sets how long the valve stays open [FW].
 
 ### 1.3 Variants seen so far
 
@@ -132,7 +153,10 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
 2. Directly behind it sits the **water register** ("Nachheizregister"), a water
    coil [HB 2.6, 2.6.3].
 3. The compressor modulates to hold the evaporator at its setpoint [PU11](MODBUS_REGISTERS.md#pu11),
-   independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12].
+   independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12]. A
+   higher setpoint dehumidifies less and leaves warmer supply air, which
+   lowers the risk of condensation on uninsulated ducts during INT cooling;
+   the vendor's advice is never to set it above 12 °C [VM].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
 
 ### 2.2 Water path
@@ -1007,6 +1031,13 @@ default on a real unit; read it. Where behaviour could be checked (§13) it
 followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), [Pb07](MODBUS_REGISTERS.md#pb07)/[Pb08](MODBUS_REGISTERS.md#pb08), [PF28](MODBUS_REGISTERS.md#pf28),
 [PU11](MODBUS_REGISTERS.md#pu11)); the compressor start delay is not yet explained (§4.3).
 
+The vendor's own parameter sets, per firmware and model, are in
+[`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). In every row below that has a handbook default, the vendor's
+HRDS+ sets equal it except the rows listed there under "Where the sets differ"
+([Pb01](MODBUS_REGISTERS.md#pb01), [PH01](MODBUS_REGISTERS.md#ph01), [HA00](MODBUS_REGISTERS.md#ha00), [PH19](MODBUS_REGISTERS.md#ph19)) [FW]. The reference unit carries the values of the
+vendor's column "30" (read as the on/off HRDS 30) for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and [PH19](MODBUS_REGISTERS.md#ph19), not those of
+"40 (=HRDS+30)" [T2; INFERRED from the column labels].
+
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|
 | [HA00](MODBUS_REGISTERS.md#ha00) | HB 5.3, MB p.5 | 6 (CNU2 T+H) | 2 (old CNU T+H) | Expects a display that is not there |
@@ -1035,6 +1066,7 @@ followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), 
 | [PS01](MODBUS_REGISTERS.md#ps01) | HB 5.3, 6.2 | 20 s | 90 s | Fan starts 90 s after the damper opens |
 | [PE01](MODBUS_REGISTERS.md#pe01) / [PE02](MODBUS_REGISTERS.md#pe02) / [PE03](MODBUS_REGISTERS.md#pe03) | HB 5.3, 6.3 | 300 / 20 / 420 s | same | — |
 | [PE04](MODBUS_REGISTERS.md#pe04) | HB 5.3, 6.3 | 120 s | 180 s | Longer fan to compressor delay (not what held the first start, T11) |
+| [PE07](MODBUS_REGISTERS.md#pe07) / [PE22](MODBUS_REGISTERS.md#pe22) | HB 5.3, 6.3 | 55 % (HRDS+ 30), 68 % (HRDS+ 50) | 50 % / 50 % | Compressor capped at 50 % instead of 55 % |
 | [PE28](MODBUS_REGISTERS.md#pe28) / [PE30](MODBUS_REGISTERS.md#pe30) | HB 5.3, 6.3 | 52 rps / 60 s | same | — |
 | [PF01](MODBUS_REGISTERS.md#pf01) / [PF03](MODBUS_REGISTERS.md#pf03) | HB 5.3, 6.2 | 10 / 0 s | 60 / 30 s | Longer fan minimum run and a run-on |
 | [PF26](MODBUS_REGISTERS.md#pf26) | HB 5.3, 6.2 | 40 % | 40 % | — |
@@ -1042,4 +1074,5 @@ followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), 
 | [Pb01](MODBUS_REGISTERS.md#pb01) | HB 5.3, 6.4 | 255 s | 30 s | Shorter valve run-on |
 | [Pb02](MODBUS_REGISTERS.md#pb02) / [Pb03](MODBUS_REGISTERS.md#pb03) | HB 5.3, 6.4 | 60 s / 3 min | 360 s / 3 min | Longer valve opening in each sniffing step |
 | [Pb07](MODBUS_REGISTERS.md#pb07) / [Pb08](MODBUS_REGISTERS.md#pb08) | HB 5.3, 6.4 | 60 s / 99 min | 60 s / 60 min | Pulse every 61 min instead of every 100 min ([Pb08](MODBUS_REGISTERS.md#pb08) is minutes in the handbook's parameter table) |
+| [PH19](MODBUS_REGISTERS.md#ph19) | HB 5.3 | 16 (HRDS+ 30), 18 (HRDS+ 50) | 15 | None (no air-quality probe; vendor label) |
 | [HD05](MODBUS_REGISTERS.md#hd05) | HB 5.3 | not checked | water valve | Water valve allocated to its output |

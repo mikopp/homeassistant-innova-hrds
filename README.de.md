@@ -118,6 +118,7 @@ steht.
     * [Which enable gives which function](README.md#which-enable-gives-which-function) (EN): Welche Freigabe welche Funktion bringt
     * [Allow operational requests](README.md#allow-operational-requests) (EN): Betriebsanforderungen erlauben
   * [5. First run](README.md#5-first-run) (EN): Erster Betrieb
+  * [After a firmware update](README.md#after-a-firmware-update) (EN): Nach einem Firmware-Update (alle Parameter zurückgesetzt, PH02 wieder einschalten)
 * [How the unit works](README.md#how-the-unit-works) (EN): Wie das Gerät arbeitet
   * [What is inside](README.md#what-is-inside) (EN): Aufbau des Geräts
   * [Two requests](README.md#two-requests) (EN): Die zwei Anforderungen (DEU und INT)
