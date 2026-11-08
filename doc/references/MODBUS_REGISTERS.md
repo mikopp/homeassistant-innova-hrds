@@ -115,8 +115,8 @@ Factory serial defaults:
     decimal. The vendor gives the real ramps of [PE24](#pe24) and [PE26](#pe26) as 0.2 and
     0.8 per second, which fits ×0.1; for [PE25](#pe25) he is not sure (1.2 or 12).
     The rows below use ×0.1 (`plans/todo.md`).
-  * [PE23](#pe23) and [PA22](#pa22) are not in hej.luft's parameter definitions for firmware 9.3
-    ([`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions-by-revision)).
+  * [PE23](#pe23) and [PA22](#pa22) are not in hej.luft's parameter definitions `AA09`
+    ([`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions)).
   * The parameters named "differential" here (for example [PE18](#pe18),
     [Pb05](#pb05), [PS07](#ps07), [PA17](#pa17), [PA34](#pa34), [PA44](#pa44)) are called
     "Hysterese" in the German handbook.

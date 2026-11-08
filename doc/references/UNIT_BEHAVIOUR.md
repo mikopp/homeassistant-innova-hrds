@@ -120,10 +120,8 @@ How to tell them apart from the controller: no register states size or `R`
   reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
   [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
 * **Registers across firmware:** no parameter changes its Modbus address
-  across the seven revisions of hej.luft's parameter definitions, and the 9.3
-  parameter files use the addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW]. Which parameters
-  each revision has (for example [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) only from the third, [PE23](MODBUS_REGISTERS.md#pe23) and
-  [PA22](MODBUS_REGISTERS.md#pa22) gone from the fifth): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions-by-revision).
+  between revisions of hej.luft's parameter definitions; the 9.3 parameter
+  files (revision `AA09`) use the addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW].
 * **Firmware update:** it resets every parameter to the controller's generic
   defaults, which do not suit the HRDS+; the parameter file for the size must
   be loaded afterwards, or the values written over Modbus [FW, VC]. The files

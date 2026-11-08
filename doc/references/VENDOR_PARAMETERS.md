@@ -67,23 +67,10 @@ file fixes it [FW].
 * [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28), the minimum fan speed, are 50 %; 30 % has been used at
   commissioning without problems [VC].
 
-## Parameter definitions by revision
+## Parameter definitions
 
-The parameter definitions come in seven revisions; the parameter files use
-`AA09`. Which firmware uses which revision is not stated [FW].
-
-| Revision | Internal date | What it adds or removes |
-|----------|---------------|-------------------------|
-| `AA01` | 19 Dec 2018 | First revision |
-| `AA02` | 19 Dec 2018 | New: [PF27](MODBUS_REGISTERS.md#pf27) to [PF34](MODBUS_REGISTERS.md#pf34), [PM22](MODBUS_REGISTERS.md#pm22). Gone: PF06, PF14, PF24, PF25 |
-| `AA03` | 9 Nov 2020 | New: [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) (Modbus enables for the INT and DEU requests) with the two registers that hold those requests, [PU11](MODBUS_REGISTERS.md#pu11), [PU12](MODBUS_REGISTERS.md#pu12), [PE22](MODBUS_REGISTERS.md#pe22), [PE23](MODBUS_REGISTERS.md#pe23), [PH24](MODBUS_REGISTERS.md#ph24) to [PH26](MODBUS_REGISTERS.md#ph26), [PM91](MODBUS_REGISTERS.md#pm91), [PM92](MODBUS_REGISTERS.md#pm92), and registers to reset alarms over Modbus. Gone: PU06 |
-| `AA04` | 12 Feb 2021 | New: [PE24](MODBUS_REGISTERS.md#pe24) to [PE33](MODBUS_REGISTERS.md#pe33), [PC11](MODBUS_REGISTERS.md#pc11), [PA57](MODBUS_REGISTERS.md#pa57), [PA58](MODBUS_REGISTERS.md#pa58) |
-| `AA07` | 26 Feb 2025 | New: [PC12](MODBUS_REGISTERS.md#pc12), [PU13](MODBUS_REGISTERS.md#pu13), [PU14](MODBUS_REGISTERS.md#pu14), [PH29](MODBUS_REGISTERS.md#ph29) to [PH34](MODBUS_REGISTERS.md#ph34), [PT01](MODBUS_REGISTERS.md#pt01) to [PT09](MODBUS_REGISTERS.md#pt09), [PA59](MODBUS_REGISTERS.md#pa59), [PA60](MODBUS_REGISTERS.md#pa60), the language setting. Gone: [PE23](MODBUS_REGISTERS.md#pe23), [PA22](MODBUS_REGISTERS.md#pa22) |
-| `AA08` | 26 Feb 2025 | New: [PA61](MODBUS_REGISTERS.md#pa61), [PA62](MODBUS_REGISTERS.md#pa62), [PH35](MODBUS_REGISTERS.md#ph35), [PT10](MODBUS_REGISTERS.md#pt10), [PT11](MODBUS_REGISTERS.md#pt11) |
-| `AA09` | 10 Jul 2025 | [HA00](MODBUS_REGISTERS.md#ha00) takes the values 5 and 6 (EPJ Graph T / TH) besides 0 to 4 |
-
-No parameter changes its Modbus address between revisions; every parameter
-in [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) is at its documented address in each revision that has it. [PE24](MODBUS_REGISTERS.md#pe24) to [PE26](MODBUS_REGISTERS.md#pe26) are defined as 0 to 200 "rps" without a decimal.
+The parameter definitions (`Drv970`) exist in several revisions; the values and
+files here are for revision `AA09` [FW].
 
 ## Every parameter
 

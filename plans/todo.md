@@ -228,11 +228,10 @@ No INT request has been run yet. One summer INT run answers most of these.
 - [ ] **Firmware 9.4 registers.** 9.4 runs only on the board built from
       November 2026. Does its register map match? A diagnostic dump from a
       9.4 unit answers it.
-- [ ] **Firmware 4.7 and lower over Modbus.** The oldest EVCO driver
-      revisions lack PH27/PH28 (the DEU/INT Modbus enables) and PU11. Does a
-      2025 unit accept DEU and INT requests over Modbus?
-- [ ] **PA22 on firmware 9.x.** [PA22](../doc/references/MODBUS_REGISTERS.md#pa22) ([1738](../doc/references/MODBUS_REGISTERS.md#reg-1738)) and PE23 are not in the 9.x
-      parameter driver. Check what 1738 returns on the reference unit; drop
+- [ ] **Firmware 4.7 and lower over Modbus.** Does a 2025 unit accept DEU
+      and INT requests over Modbus (PH27/PH28)?
+- [ ] **PA22 on firmware 9.x.** [PA22](../doc/references/MODBUS_REGISTERS.md#pa22) ([1738](../doc/references/MODBUS_REGISTERS.md#reg-1738)) and PE23 are not in the
+      parameter definitions `AA09`. Check what 1738 returns on the reference unit; drop
       the installer row if it is unused.
 - [ ] **HRDS (on/off) and HRD+** (asked the vendor 2026-11). Innova's
       declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). The
