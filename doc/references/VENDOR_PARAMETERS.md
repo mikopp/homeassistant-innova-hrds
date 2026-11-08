@@ -24,7 +24,7 @@ the vendor).
   255 s (table: 250 s), and [PH19](MODBUS_REGISTERS.md#ph19) is 16 in the HRDS+ 50 files (table: 18).
 * The files are for the EVCO Parameters Manager, which also needs hej.luft's
   parameter definitions (`Drv970AA09`). Both, and the firmware, come from
-  hej.luft on request.
+  hej.luft.
 
 ## Loading the values
 
