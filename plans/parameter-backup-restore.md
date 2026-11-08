@@ -57,8 +57,21 @@ files (all eight hold the same keys), each against the address in hej.luft's par
 So no separate key table is needed. The program reads the register rows of
 `MODBUS_REGISTERS.md` (address, scale, range, enum values) the way the
 simulator (`tests/sim/registers.py`) does, and resolves each key with the rules
-above. A key that resolves to nothing stops the program. A test checks that
-all 372 keys of every stored file resolve.
+above. A key that resolves to nothing stops the program.
+
+**Kept in sync by `wiring_check.py`** (no Home Assistant needed, runs in the
+lint CI), a new check "parameter files resolve against the reference doc":
+
+* every key of every `.map` in `parameter-files/` resolves to exactly one
+  register row, with the rules above;
+* each value in those files is inside the row's range and, for an enum, one
+  of its values;
+* every `_custom` or never-written key is on the program's explicit list.
+
+With the existing check that every `REG` in `const.py` has its row in
+`MODBUS_REGISTERS.md`, the integration, the register page, the program and
+the stored files cannot drift apart: changing a row name or address that a
+file uses fails CI.
 
 ## Program
 
@@ -119,11 +132,11 @@ hold it.
    write rules, may write parameters when the owner runs it with `--apply`
    and confirms the firmware; dry run by default.
 2. Shared parser for the register rows of `MODBUS_REGISTERS.md` (move the
-   simulator's reader to a module both use) and the key rules.
+   simulator's reader to a module both use) and the key rules; the new
+   `wiring_check.py` check uses them.
 3. `tests/hrds_parameters.py` with `backup` and `restore`; `.map` read/write
    in the same file.
 4. Tests (`tests/sim`):
-   * All 372 keys of every stored file resolve.
    * Round trip: load hej.luft's file into the simulator, back it up; the
      backup equals the file except `DATE` (byte for byte, encoding and CRLF
      included).
