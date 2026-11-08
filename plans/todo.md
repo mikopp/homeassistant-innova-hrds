@@ -233,13 +233,16 @@ No INT request has been run yet. One summer INT run answers most of these.
 - [ ] **PA22 on firmware 9.x.** [PA22](../doc/references/MODBUS_REGISTERS.md#pa22) ([1738](../doc/references/MODBUS_REGISTERS.md#reg-1738)) and PE23 are not in the
       parameter definitions `AA09`. Check what 1738 returns on the reference unit; drop
       the installer row if it is unused.
-- [ ] **HRDS (on/off) and HRD+** (asked the vendor 2026-11). Innova's
-      declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). The
-      on/off HRDS appears to be sold in Italy as Vortice HRDS 30/50 (R) DC
-      and VMC Group MDR K / MDR K R (sizes 15-30 / 25-50, D and DC; same
-      housing 690×690×270 / 690×800×320 mm). Are they Innova HRDS units, with
-      the same EVCO controller, register map and `EPB9…` code? The HRD+ (a complete ventilation unit) shares the
-      controller and register list; support only if someone with one asks.
+- [ ] **HRDS (on/off)** (asked the vendor 2026-11). Innova's
+      declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). Vortice
+      HRDS 30/50 (R) DC and VMC Group MDR K / MDR K R are the on/off HRDS:
+      their manuals show the same type code, terminals, alarm numbers, menus
+      and compressor states
+      ([tested setups](../doc/tested-setups.md#the-same-unit-under-other-names)).
+      The vendor confirms the Italian sellers (also Cappellotto, Geatherm)
+      but knows no details; their units may run older firmware.
+      Open: do they report an `EPB9…` product code, and is the register map
+      the HRDS+ one? Needs a diagnostic dump from an owner.
 - [ ] **Non-`R` unit read-back.** Does `outDO_RecircDamper` ([1134](../doc/references/MODBUS_REGISTERS.md#reg-1134)) read
       `2 = Disable` without recirculation, and what do the fan registers read?
 - [ ] **As-delivered settings.** The reference unit shipped with values that
