@@ -146,6 +146,6 @@ hold it.
    * No `y` to the firmware question: nothing written.
    * Out-of-range value, unknown key, wrong driver: refused before any write.
    * Run-time registers are never read into a backup nor written.
-5. Docs: usage in `tests/CLAUDE.md`; the firmware-update steps in
+5. Docs: usage in `tests/CLAUDE.md`; the parameter loading in
    `VENDOR_PARAMETERS.md` "Loading the values" and the README "After a
    firmware update" point to it. CHANGELOG entry.

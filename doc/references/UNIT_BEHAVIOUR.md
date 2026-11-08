@@ -31,7 +31,7 @@ Scope rules:
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
 | `[VC]` | Confirmed by the vendor (hej.luft), November 2026. |
-| `[FW]` | Parameter files, firmware 9.3 and update guide provided by hej.luft. The parameter files and what they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
+| `[FW]` | Parameter files and update guide provided by hej.luft. The parameter files and what they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -104,8 +104,7 @@ How to tell them apart from the controller: no register states size or `R`
 * **30 vs 50:** not readable [INFERRED]. Type plate only [HB 2.3].
 * **Controller:** FC 43 device identification returns vendor `EVCO`, product
   code `EPB9ORSINDEU`, firmware `V01.00.09.02` on the reference unit [T1].
-  The firmware 9.3 image contains the same product code [FW]; the vendor
-  does not know whether the code differs between variants [VC]. Whether
+  The vendor does not know whether the code differs between variants [VC]. Whether
   other sizes and variants report it is open [INFERRED; `plans/todo.md`].
 * **Firmware versions** [VC]:
 

@@ -13,7 +13,7 @@ it.
 |-------|------|
 | **How the unit behaves**: variants, states, start/stop sequences, summer/winter, display/probe configurations, fan, compressor, water circuit, alarm effects, display and Modbus actions, what was tested on real hardware | [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md) |
 | **Which registers exist**: addresses, names, encodings, ranges, value meanings, write recipes | [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) |
-| **hej.luft's parameter values**: every parameter per firmware and size, the firmware update steps | [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md) |
+| **hej.luft's parameter values**: every parameter per firmware and size, loading them after a firmware update | [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md) |
 | Technical data (airflow, capacity, power) and the fan-speed → airflow estimate | this file, below |
 | What the Home Assistant integration does on top of the unit, and why | [`../adr/`](../adr/README.md) (decisions), [`../../README.md`](../../README.md) (users) |
 | Open hardware questions and test plans | [`../../plans/todo.md`](../../plans/todo.md) |

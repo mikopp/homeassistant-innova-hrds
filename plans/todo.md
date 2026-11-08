@@ -214,8 +214,8 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 8. Needs another unit, a display, a probe or extra wiring
 
-- [ ] **Other variants' identity.** The firmware 9.3 image carries the
-      same `EPB9ORSINDEU`; the vendor does not know whether variants differ.
+- [ ] **Other variants' identity.** The vendor does not know whether
+      variants report a different product code.
       Does an HRDS+ 50, a supply-only unit, a 2025 unit (firmware 4.7) or a
       9.4 unit report an `EPB9…` product code (FC 43)? Loosen
       `EXPECTED_PRODUCT_PREFIX` if not. Also: what does a gateway that does

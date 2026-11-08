@@ -28,24 +28,20 @@ the vendor).
 
 ## Loading the values
 
-1. **New firmware** (only for an update): copy `work.ucjb` and
-   `work.ucje` to an empty FAT32 USB stick and plug it into the controller's USB
-   port with the unit in OFF (under the top cover, or behind the terminal plate).
-   The update starts by itself; without a display, the three red LEDs on the back
-   blink five times at the start and L1 blinks when it is done [FW].
-2. **Parameters**, either:
-   * with the EVCO Parameters Manager over USB: connect with "USBAdapter", open
-     the file for the size and display, Device → Program [FW]; or
-   * over Modbus: every parameter is a holding register at the address in the
-     table, so the values can be written one by one [VC]. Write the Modbus
-     address and baud rate last, if at all: changing them cuts the connection.
-     Written values are kept across a power cycle
-     ([`UNIT_BEHAVIOUR.md` §3.6](UNIT_BEHAVIOUR.md#36-persistence-across-a-power-cycle)).
-
 A firmware update resets every parameter to the controller's generic defaults,
-which do not suit the HRDS+, so step 2 always follows step 1 [FW]. If the
-display then loops on "checking 20k, 50k, 125k, 500k …", loading a parameter
-file fixes it [FW].
+which do not suit the HRDS+, so the parameters must be loaded afterwards [FW],
+either:
+
+* with the EVCO Parameters Manager over USB: connect with "USBAdapter", open
+  the file for the size and display, Device → Program [FW]; or
+* over Modbus: every parameter is a holding register at the address in the
+  table, so the values can be written one by one [VC]. Write the Modbus
+  address and baud rate last, if at all: changing them cuts the connection.
+  Written values are kept across a power cycle
+  ([`UNIT_BEHAVIOUR.md` §3.6](UNIT_BEHAVIOUR.md#36-persistence-across-a-power-cycle)).
+
+If the display loops on "checking 20k, 50k, 125k, 500k …" after the update,
+loading a parameter file fixes it [FW].
 
 ## Sizes
 
