@@ -33,6 +33,38 @@ in [`references/UNIT_BEHAVIOUR.md` §13](references/UNIT_BEHAVIOUR.md#13-evidenc
 The firmware column is the revision the unit reports, shown as
 [*Firmware*](entity-reference.md#firmware) on the device page; please include it in a report.
 
+## The same unit under other names
+
+Before hej.luft, the HRDS was sold in Italy only by other companies, partly
+with their own displays or small differences; who builds and sells the unit:
+[`references/README.md`](references/README.md#who-makes-and-sells-the-unit).
+The sellers named by the vendor:
+
+| Brand | Models | Status |
+|-------|--------|--------|
+| [Vortice](https://www.vortice.it/it/vmc_recupero_calore/moduli-aggiuntivi-da-condotto/per-deumidificazione) | HRDS 30 DC, HRDS 30 R DC, HRDS 50 DC, HRDS 50 R DC | Not tested |
+| [VMC Group](https://www.vmcgroup.it/prodotti-deumidificatori/mdr-k) | MDR K (supply air only) and MDR K R (with recirculation), sizes 15-30 and 25-50, versions D and DC | Not tested |
+| Cappellotto S.r.l. | Not known (no product page found) | Not tested |
+| Geatherm | Not known (no product page found) | Not tested |
+
+The Vortice and VMC Group manuals ([`references/`](references/README.md))
+show the same unit: the same type code (size, `H`, `R`, `K` electronics,
+`D`/`DC`), terminal strip, alarm numbers, menu levels and compressor states
+as the HRDS+. How they differ from the hej.luft HRDS+:
+
+* **On/off compressor instead of an inverter.** It runs at one speed and
+  switches on and off to hold the humidity instead of modulating, so the
+  capacity is lower (about 22–40 L/day against 56 / 89 L/day), and the
+  inverter settings (compressor speed and ramps, PE24 to PE33) do not apply.
+* Refrigerant R134a instead of R410A.
+* The older CNU display panel instead of the CNU2.
+
+**None of these units has been tried with the integration.** It connects only
+when the controller reports an EVCO `EPB9…` product code, and whether the
+registers match the HRDS+ register map is unconfirmed. If you have one of
+them and try it, please report what you see, working or not: open an issue
+with the diagnostic output, see [Add your setup](#add-your-setup).
+
 ## Installation scenarios
 
 ### Control path
