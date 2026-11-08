@@ -138,9 +138,10 @@ How to tell them apart from the controller: no register states size or `R`
     9.3, 250 s keeps the water flowing until the compressor has ramped down [VC].
   * Workaround on 9.2: [Pb01](MODBUS_REGISTERS.md#pb01) = 0. The output, the fan and the damper then stop
     as soon as the request ends; the compressor runs on until it is down to
-    20 Hz, so the water or brine must keep flowing until then [VC]. This only
-    suits installations whose flow does not hang on the unit's valve / pump
-    output; on the reference unit the pump does [T10].
+    20 Hz, so the water or brine must keep flowing until then [VC]. Use it only
+    where the flow is controlled outside the unit. If the pump or valve is
+    driven by the unit's valve / pump output (`PM`, `V3V`), [Pb01](MODBUS_REGISTERS.md#pb01) = 0 stops the
+    flow while the compressor still runs [INFERRED from VC].
 
 ### 1.3 Variants seen so far
 
