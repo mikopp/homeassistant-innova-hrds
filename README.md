@@ -334,13 +334,10 @@ target:
 
 ### After a firmware update
 
-A firmware update does not change the unit's Modbus registers. It does reset
-**every parameter** to the controller's generic defaults, which are not the
-HRDS+ settings, so the unit may raise alarms or not work until they are
-restored. The vendor's update guide describes both steps: the firmware from a
-USB stick, then the HRDS+ parameter file loaded with the EVCO Parameters
-Manager. Firmware, parameter files and software are available from hej.luft on
-request; hej.luft's values per firmware and size are in
+A firmware update does not change the unit's Modbus registers, but it resets
+**every parameter** to the controller's generic defaults, which do not suit the
+HRDS+. Restore them with hej.luft's parameter file for your size and display,
+or by writing the values over Modbus. Files, values and steps:
 [`VENDOR_PARAMETERS.md`](doc/references/VENDOR_PARAMETERS.md).
 
 After the update:

@@ -31,7 +31,7 @@ Scope rules:
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
 | `[VC]` | Confirmed by the vendor (hej.luft), November 2026. |
-| `[FW]` | Parameter file, firmware 9.3 and update guide provided by hej.luft, not stored here. What they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
+| `[FW]` | Parameter files, firmware 9.3 and update guide provided by hej.luft. The parameter files and what they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -125,14 +125,24 @@ How to tell them apart from the controller: no register states size or `R`
   each revision has (for example [PH27](MODBUS_REGISTERS.md#ph27) and [PH28](MODBUS_REGISTERS.md#ph28) only from the third, [PE23](MODBUS_REGISTERS.md#pe23) and
   [PA22](MODBUS_REGISTERS.md#pa22) gone from the fifth): [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions-by-revision).
 * **Firmware update:** it resets every parameter to the controller's generic
-  defaults, which do not suit the HRDS+ (alarms, functions missing); the
-  HRDS+ parameter file for the model must be loaded afterwards [FW, VC]. The
-  vendor's files leave [PH02](MODBUS_REGISTERS.md#ph02) at 0 and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) at 1, so after loading them
-  Modbus on/off stays disabled [FW]. The steps, and the values per firmware and size:
-  [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). Damper: up to firmware 9.2 the recirculation damper
-  closes at once when the requests end, while the fan may still run on; from
-  9.3 it closes only when all requests are satisfied, the compressor is off and
-  the water valve is closed, and [Pb01](MODBUS_REGISTERS.md#pb01) sets how long the valve stays open [FW].
+  defaults, which do not suit the HRDS+; the parameter file for the size must
+  be loaded afterwards, or the values written over Modbus [FW, VC]. The files
+  leave [PH02](MODBUS_REGISTERS.md#ph02) at 0, so on/off over Modbus is off afterwards [FW]. Files and
+  steps: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md).
+* **Firmware 9.3, the main difference:** when a request ends, 9.2 and lower
+  close the recirculation damper at once, while the valve / pump output stays
+  on for [Pb01](MODBUS_REGISTERS.md#pb01) and the fan runs on with it (whatever [PF03](MODBUS_REGISTERS.md#pf03) says): the fan can
+  blow against the closed damper, a slight hiss. 9.3 closes the damper only once
+  all requests are satisfied, the compressor is off and the valve is closed
+  [FW, VC].
+  * On 9.2, [Pb01](MODBUS_REGISTERS.md#pb01) = 30 s keeps this rare and short, at the cost of the compressor
+    running a moment without water flow, which Innova considers harmless. On
+    9.3, 250 s keeps the water flowing until the compressor has ramped down [VC].
+  * Workaround on 9.2: [Pb01](MODBUS_REGISTERS.md#pb01) = 0. The output, the fan and the damper then stop
+    as soon as the request ends; the compressor runs on until it is down to
+    20 Hz, so the water or brine must keep flowing until then [VC]. This only
+    suits installations whose flow does not hang on the unit's valve / pump
+    output; on the reference unit the pump does [T10].
 
 ### 1.3 Variants seen so far
 

@@ -27,6 +27,7 @@ it.
 | [HRDS+_Modbus_RTU_RS485_DE.pdf](HRDS+_Modbus_RTU_RS485_DE.pdf) | Modbus RTU/RS-485 connection and register manual (German, Stand Mai 2026). Source of every register address. | `[MB p.n]` |
 | [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp, Stand August 2026); a subset of the technical handbook. | `[HB n]` |
 | [HRDS+_Hydraulikplaene_DE.pdf](HRDS+_Hydraulikplaene_DE.pdf) | Hydraulic plans (German, 13 pp, Stand Aug. 2026): decision tree and the integration variants 1–9 (heating/cooling circuit, brine circuit, special cases); the same variants as HB §3.8. | `[HB 3.8]` |
+| [parameter-files/](parameter-files/) | hej.luft's parameter files for the HRDS+ 30 and 50, with and without display: firmware 9.3 / 9.4 (May 2026) and 9.2. See [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). | `[FW]` |
 | [HRDS_CE_Konformitaetserklaerung_Innova.pdf](HRDS_CE_Konformitaetserklaerung_Innova.pdf) | EU declaration of conformity by INNOVA S.r.l. (Storo, 20 Jan 2024) for the dehumidification units HRDS (codes DHAD…) and HRDS+ (codes DHAI…). | — |
 | [HRD+_Technisches_Handbuch_DE.pdf](HRD+_Technisches_Handbuch_DE.pdf), [HRD+_Modbus_RTU_RS485_DE.pdf](HRD+_Modbus_RTU_RS485_DE.pdf) | Background only. The HRD+ is a different unit: a complete ventilation unit (heat exchanger, supply and extract fans) with built-in dehumidification. It has the same EVCO controller and the same full register list as the HRDS+, plus documented ventilation registers (supply and return fans, external damper, free cooling, defrost); some parameters are set differently. Not supported by the integration. | — |
 
@@ -60,8 +61,9 @@ Part numbers on the order and the type plate (same source):
 | `V08000002D` / `V08000002C` | HRDS+ 30 / 50 with recirculation (2026) |
 | `V07000002D` / `V07000002C` | HRDS+ 30 / 50 supply only (2026) |
 
-hej.luft's parameter values, firmware 9.3 package and update guide are not
-stored here; what they contain is in [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md).
+hej.luft's parameter files are in [`parameter-files/`](parameter-files/), described with
+their values in [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). The firmware, the service software
+and the update guide are not stored here.
 
 ## Technical data (airflow, capacity, power)
 

@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MAP>
+<HEADER>
+<DATE>2026_05_17_17_48_35</DATE>
+<LANGUAGE ID="ITA">Italian</LANGUAGE>
+<DEVICE>
+<DRIVER  ID_A="50122" ID_B="9" ID_C="" code="1">
+CPRO\VENDOR1\drv970AA09
+</DRIVER>
+<MODEL>50122_9_1</MODEL>
+<LISTMODE>1</LISTMODE>
+</DEVICE>
+</HEADER>
+<ITEMS>
+<ITEM key="kyHoliday_Days" R_map="RW"> <VTP> <DESC>Holiday period days</DESC> </VTP>
+<VALUE> <USR>7</USR> </VALUE> </ITEM>
+<ITEM key="kyHoliday_Hours" R_map="RW"> <VTP> <DESC>Holiday period hours</DESC> </VTP>
+<VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPH04_HolidayType_custom" R_map="RW"> <VTP> <DESC>Holiday unit status</DESC>
+</VTP> <VALUE> <USR>Unit ON</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyStartHoliday_custom" R_map="RW"> <VTP> <DESC>Holiday start command</DESC>
+</VTP> <VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Monday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE> <USR>Comfort</USR>
+<INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Monday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Monday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE> <USR>Economy</USR>
+<INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Monday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>7h30'</USR> <VALBLOB>27000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Monday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE> <USR>Comfort</USR>
+<INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Monday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>17h</USR> <VALBLOB>$EF10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Monday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE> <USR>Night</USR>
+<INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Monday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF1_Tuesday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Tuesday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Tuesday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE>
+<USR>Economy</USR> <INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Tuesday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>7h30'</USR> <VALBLOB>27000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Tuesday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Tuesday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>17h</USR> <VALBLOB>$EF10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Tuesday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE>
+<USR>Night</USR> <INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Tuesday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF1_Wednesday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Wednesday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Wednesday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE>
+<USR>Economy</USR> <INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Wednesday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>7h30'</USR> <VALBLOB>27000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Wednesday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Wednesday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>17h</USR> <VALBLOB>$EF10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Wednesday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE>
+<USR>Night</USR> <INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Wednesday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF1_Thursday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Thursday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Thursday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE>
+<USR>Economy</USR> <INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Thursday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>7h30'</USR> <VALBLOB>27000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Thursday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Thursday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>17h</USR> <VALBLOB>$EF10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Thursday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE>
+<USR>Night</USR> <INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Thursday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF1_Friday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE> <USR>Comfort</USR>
+<INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Friday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Friday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE> <USR>Economy</USR>
+<INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Friday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>7h30'</USR> <VALBLOB>27000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Friday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE> <USR>Comfort</USR>
+<INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Friday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>17h</USR> <VALBLOB>$EF10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Friday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE> <USR>Night</USR>
+<INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Friday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF1_Saturday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Saturday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Saturday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE>
+<USR>Economy</USR> <INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Saturday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>7h30'</USR> <VALBLOB>27000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Saturday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE>
+<USR>Comfort</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Saturday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>12h</USR> <VALBLOB>$A8C0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Saturday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE>
+<USR>Night</USR> <INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Saturday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF1_Sunday_p1" R_map="RW"> <VTP> <DESC>F1 mode</DESC> </VTP> <VALUE> <USR>Economy</USR>
+<INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF1_Sunday_h1" R_map="RW"> <VTP> <DESC>F1 starting hours</DESC> </VTP>
+<VALUE> <USR>4h</USR> <VALBLOB>14400</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF2_Sunday_p2" R_map="RW"> <VTP> <DESC>F2 mode</DESC> </VTP> <VALUE> <USR>Comfort</USR>
+<INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF2_Sunday_h2" R_map="RW"> <VTP> <DESC>F2 starting hours</DESC> </VTP>
+<VALUE> <USR>6h</USR> <VALBLOB>21600</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF3_Sunday_p3" R_map="RW"> <VTP> <DESC>F3 mode</DESC> </VTP> <VALUE> <USR>Economy</USR>
+<INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF3_Sunday_h3" R_map="RW"> <VTP> <DESC>F3 starting hours</DESC> </VTP>
+<VALUE> <USR>20h</USR> <VALBLOB>$11940</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyF4_Sunday_p4" R_map="RW"> <VTP> <DESC>F4 mode</DESC> </VTP> <VALUE> <USR>Night</USR>
+<INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyF4_Sunday_h4" R_map="RW"> <VTP> <DESC>F4 starting hours</DESC> </VTP>
+<VALUE> <USR>21h</USR> <VALBLOB>$12750</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyMOdE_OperatingMode" R_map="RW"> <VTP> <DESC>Summer/Winter mode</DESC>
+</VTP> <VALUE> <USR>Summer</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kySEtC_SummerSetpoint" R_map="RW"> <VTP> <DESC>Summer setpoint</DESC> </VTP>
+<VALUE> <USR>24.0</USR> <VALBLOB>240</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kySEtH_WinterSetpoint" R_map="RW"> <VTP> <DESC>Winter setpoint</DESC> </VTP>
+<VALUE> <USR>14.0</USR> <VALBLOB>140</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPU01_Humidity_Setpoint" R_map="RW"> <VTP> <DESC>Humidity setpoint</DESC>
+</VTP> <VALUE> <USR>55</USR> </VALUE> </ITEM>
+<ITEM key="kySCC_Comfort_SetpointCold" R_map="RW"> <VTP> <DESC>Comfort band cooling setpoint</DESC>
+</VTP> <VALUE> <USR>24.0</USR> <VALBLOB>240</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kySCH_Comfort_SetpointHot" R_map="RW"> <VTP> <DESC>Comfort band heating setpoint</DESC>
+</VTP> <VALUE> <USR>14.0</USR> <VALBLOB>140</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyOEC_Economy_OffsetCold" R_map="RW"> <VTP> <DESC>Economy band cooling offset</DESC>
+</VTP> <VALUE> <USR>1.0</USR> <VALBLOB>10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyOEH_Economy_OffsetHot" R_map="RW"> <VTP> <DESC>Economy band heating offset</DESC>
+</VTP> <VALUE> <USR>-1.0</USR> <VALBLOB>$FFFFFFF6</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyONC_Night_OffsetCold" R_map="RW"> <VTP> <DESC>Night band cooling offset</DESC>
+</VTP> <VALUE> <USR>2.0</USR> <VALBLOB>20</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyONH_Night_OffsetHot" R_map="RW"> <VTP> <DESC>Night band heating offset</DESC>
+</VTP> <VALUE> <USR>-2.0</USR> <VALBLOB>$FFFFFFEC</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kySDC_SetpointCold_DI" R_map="RW"> <VTP> <DESC>Cooling setpoint forced by DI</DESC>
+</VTP> <VALUE> <USR>26.0</USR> <VALBLOB>260</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kySDH_SetpointHot_DI" R_map="RW"> <VTP> <DESC>Heating setpoint forced by DI</DESC>
+</VTP> <VALUE> <USR>14.0</USR> <VALBLOB>140</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyFSC_SupplyFan_Comfort" R_map="RW"> <VTP> <DESC>Comfort band supply fan setpoint</DESC>
+</VTP> <VALUE> <USR>60.00</USR> <VALBLOB>6000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyFSE_SupplyFan_Economy" R_map="RW"> <VTP> <DESC>Economy band supply fan setpoint</DESC>
+</VTP> <VALUE> <USR>50.00</USR> <VALBLOB>5000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyFSN_SupplyFan_Night" R_map="RW"> <VTP> <DESC>Night band supply fan setpoint</DESC>
+</VTP> <VALUE> <USR>40.00</USR> <VALBLOB>4000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyFRC_ReturnFan_Comfort" R_map="RW"> <VTP> <DESC>Comfort band return fan setpoint</DESC>
+</VTP> <VALUE> <USR>60.00</USR> <VALBLOB>6000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyFRE_ReturnFan_Economy" R_map="RW"> <VTP> <DESC>Economy band return fan setpoint</DESC>
+</VTP> <VALUE> <USR>50.00</USR> <VALBLOB>5000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyFRN_ReturnFan_Night" R_map="RW"> <VTP> <DESC>Night band return fan setpoint</DESC>
+</VTP> <VALUE> <USR>40.00</USR> <VALBLOB>4000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyBKM_EvjBacklightMode" R_map="RW"> <VTP> <DESC>Evj/Epj LCD backlight mode</DESC>
+</VTP> <VALUE> <USR>2</USR> </VALUE> </ITEM>
+<ITEM key="kyBKU_EvjBacklightPerc" R_map="RW"> <VTP> <DESC>Evj/Epj LCD backlight percentage</DESC>
+</VTP> <VALUE> <USR>15</USR> </VALUE> </ITEM>
+<ITEM key="kyBKT_EvjBacklightTimeout" R_map="RW"> <VTP> <DESC>Evj/Epj LCD backlight timeout</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyLNG_Language" R_map="RW"> <VTP> <DESC>Language</DESC> </VTP> <VALUE>
+<USR>English</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPM00_Limit_SupplyFanHours" R_map="RW"> <VTP> <DESC>Supply fan working hours limit</DESC>
+</VTP> <VALUE> <USR>2000.0</USR> <VALBLOB>20000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM03_Limit_CmpHours" R_map="RW"> <VTP> <DESC>Compressor working hours limit</DESC>
+</VTP> <VALUE> <USR>2000.0</USR> <VALBLOB>20000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM80_Calibration_ReturnRoomProbe" R_map="RW"> <VTP> <DESC>Return/Room T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM81_Calibration_OutdoorProbe" R_map="RW"> <VTP> <DESC>Outdoor T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM82_Calibration_WaterProbe" R_map="RW"> <VTP> <DESC>Water T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM83_Calibration_ExhaustProbe" R_map="RW"> <VTP> <DESC>Exhaust T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM84_Calibration_DischargeProbe" R_map="RW"> <VTP> <DESC>Discharge T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM85_Calibration_CmpDefrostProbe" R_map="RW"> <VTP> <DESC>Compressor defrost T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM86_Calibration_HreturnRoomProbe" R_map="RW"> <VTP> <DESC>Room/return H. probe calibration</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPM87_Calibration_AirQualityProbe" R_map="RW"> <VTP> <DESC>Air quality probe calibration</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPM88_Calibration_RemoteFansProbe" R_map="RW"> <VTP> <DESC>Fans potentiometer calibration</DESC>
+</VTP> <VALUE> <USR>0.00</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM89_Calibration_HighPressureProbe" R_map="RW"> <VTP> <DESC>High pressure probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM91_Calibration_FreeCoolingProbe" R_map="RW"> <VTP> <DESC>Free-Cooling T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPM92_Calibration_EvaporationProbe" R_map="RW"> <VTP> <DESC>Evaporation T. probe calibration</DESC>
+</VTP> <VALUE> <USR>0.0</USR> <VALBLOB>0</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPC01_Enable_SniffingMode" R_map="RW"> <VTP> <DESC>Enable sniffing mode</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPC02_WaitTime_Sniffing" R_map="RW"> <VTP> <DESC>Sniffing cycle wait time</DESC>
+</VTP> <VALUE> <USR>15</USR> </VALUE> </ITEM>
+<ITEM key="kyPC03_ActiveTime_Sniffing" R_map="RW"> <VTP> <DESC>Sniffing cycle active time</DESC>
+</VTP> <VALUE> <USR>1</USR> </VALUE> </ITEM>
+<ITEM key="kyPC04_EnableBothFans_Sniffing" R_map="RW"> <VTP> <DESC>Enable both fans for sniffing cycle</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPC05_ChangeMode_Type" R_map="RW"> <VTP> <DESC>Operating mode change type</DESC>
+</VTP> <VALUE> <USR>Manual</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPC06_ChangeoverProbe" R_map="RW"> <VTP> <DESC>Changeover probe</DESC>
+</VTP> <VALUE> <USR>T. water</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPC07_SummerCommutationWater" R_map="RW"> <VTP> <DESC>Summer commutation setpoint water probe</DESC>
+</VTP> <VALUE> <USR>30.0</USR> <VALBLOB>300</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPC08_WinterCommutationWater" R_map="RW"> <VTP> <DESC>Winter commutation setpoint water probe</DESC>
+</VTP> <VALUE> <USR>20.0</USR> <VALBLOB>200</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPC09_SummerCommutationAir" R_map="RW"> <VTP> <DESC>Summer commutation setpoint room probe</DESC>
+</VTP> <VALUE> <USR>20.0</USR> <VALBLOB>200</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPC10_WinterCommutationAir" R_map="RW"> <VTP> <DESC>Winter commutation setpoint room probe</DESC>
+</VTP> <VALUE> <USR>10.0</USR> <VALBLOB>100</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPC11_PriorityChangeMode_Display" R_map="RW"> <VTP> <DESC>Change mode priority with display connected</DESC>
+</VTP> <VALUE> <USR>Display</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPC12_EnableOnOff_ThermoDehDI" R_map="RW"> <VTP> <DESC>Enable on/off by DI thermo/dehumidify request</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPF01_MinTimeOnFan" R_map="RW"> <VTP> <DESC>Minimum time fans ON</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPF02_TonOtherFan" R_map="RW"> <VTP> <DESC>Minimum time between fans startup</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPF03_MinTimePostFan" R_map="RW"> <VTP> <DESC>Post-ventilation time</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPF04_StopSupplyFanOnDefrost" R_map="RW"> <VTP> <DESC>Stop supply fan on compressor defrost</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPF05_SupplyFan_ErrorProbe" R_map="RW"> <VTP> <DESC>Force supply fan in error probe</DESC>
+</VTP> <VALUE> <USR>30.00</USR> <VALBLOB>3000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF07_MinSpeedSupplyFan_VMC" R_map="RW"> <VTP> <DESC>Supply fan minimum speed in VMC mode</DESC>
+</VTP> <VALUE> <USR>20.00</USR> <VALBLOB>2000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF08_MaxSpeedSupplyFan_VMC" R_map="RW"> <VTP> <DESC>Supply fan maximum speed in VMC mode</DESC>
+</VTP> <VALUE> <USR>60.00</USR> <VALBLOB>6000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF09_MaxSpeedFan_Integ" R_map="RW"> <VTP> <DESC>Supply fan maximum speed in integration mode</DESC>
+</VTP> <VALUE> <USR>85.00</USR> <VALBLOB>8500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF10_MaxSpeedFan_Dehum" R_map="RW"> <VTP> <DESC>Supply fan maximum speed in dehumidify</DESC>
+</VTP> <VALUE> <USR>85.00</USR> <VALBLOB>8500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF11_StepFans" R_map="RW"> <VTP> <DESC>Fans speed increase/decrease step number</DESC>
+</VTP> <VALUE> <USR>7</USR> </VALUE> </ITEM>
+<ITEM key="kyPF12_DeadZone_Integration" R_map="RW"> <VTP> <DESC>Integration dead zone</DESC>
+</VTP> <VALUE> <USR>0.5</USR> <VALBLOB>5</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF13_TimeDZ_Integration" R_map="RW"> <VTP> <DESC>Integration inc/dec time</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPF15_minSetpointAQ" R_map="RW"> <VTP> <DESC>Air quality setpoint minimum value</DESC>
+</VTP> <VALUE> <USR>1</USR> </VALUE> </ITEM>
+<ITEM key="kyPF16_maxSetpointAQ" R_map="RW"> <VTP> <DESC>Air quality setpoint maximum value</DESC>
+</VTP> <VALUE> <USR>9999</USR> </VALUE> </ITEM>
+<ITEM key="kyPF17_SetpointAQ" R_map="RW"> <VTP> <DESC>Air quality setpoint</DESC>
+</VTP> <VALUE> <USR>800</USR> </VALUE> </ITEM>
+<ITEM key="kyPF18_DeadZoneAQ" R_map="RW"> <VTP> <DESC>Air quality dead zone</DESC>
+</VTP> <VALUE> <USR>200</USR> </VALUE> </ITEM>
+<ITEM key="kyPF19_TimeDZ_AQ" R_map="RW"> <VTP> <DESC>Air quality inc/dec time</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPF20_FanSpeed_PercDefrost" R_map="RW"> <VTP> <DESC>Heat exchanger defrost inc/dec speed</DESC>
+</VTP> <VALUE> <USR>5.00</USR> <VALBLOB>500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF21_FanSpeed_TimeDefrost" R_map="RW"> <VTP> <DESC>Heat exchanger defrost inc/dec time</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPF22_DeltaReturnFan_Defrost" R_map="RW"> <VTP> <DESC>Return fan delta perc. in heat exchanger defrost</DESC>
+</VTP> <VALUE> <USR>10.00</USR> <VALBLOB>1000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF23_SupplyFan_ForcedByDI" R_map="RW"> <VTP> <DESC>Supply fan speed forced by DI</DESC>
+</VTP> <VALUE> <USR>70.00</USR> <VALBLOB>7000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF26_SupplyFan_PostSpeed" R_map="RW"> <VTP> <DESC>Supply fan post-ventilation speed</DESC>
+</VTP> <VALUE> <USR>40.00</USR> <VALBLOB>4000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF27_MinSpeedFan_Integ" R_map="RW"> <VTP> <DESC>Supply fan minimum speed in integration mode</DESC>
+</VTP> <VALUE> <USR>50.00</USR> <VALBLOB>5000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF28_MinSpeedFan_Dehum" R_map="RW"> <VTP> <DESC>Supply fan minimum speed in dehumidify</DESC>
+</VTP> <VALUE> <USR>50.00</USR> <VALBLOB>5000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF29_MinSpeedReturnFan" R_map="RW"> <VTP> <DESC>Return fan minimum speed</DESC>
+</VTP> <VALUE> <USR>20.00</USR> <VALBLOB>2000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF30_MaxSpeedReturnFan" R_map="RW"> <VTP> <DESC>Return fan maximum speed</DESC>
+</VTP> <VALUE> <USR>75.00</USR> <VALBLOB>7500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF31_IntegrationType" R_map="RW"> <VTP> <DESC>Integration type</DESC>
+</VTP> <VALUE> <USR>Higher manual and remote</USR> <INTERNAL>1</INTERNAL> </VALUE>
+</ITEM>
+<ITEM key="kyPF32_ReturnFan_ForcedByDI" R_map="RW"> <VTP> <DESC>Return fan speed forced by DI</DESC>
+</VTP> <VALUE> <USR>70.00</USR> <VALBLOB>7000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF33_ReturnFan_ErrorProbe" R_map="RW"> <VTP> <DESC>Force return fan in error probe</DESC>
+</VTP> <VALUE> <USR>30.00</USR> <VALBLOB>3000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPF34_ReturnFan_PostSpeed" R_map="RW"> <VTP> <DESC>Return fan post-ventilation speed</DESC>
+</VTP> <VALUE> <USR>40.00</USR> <VALBLOB>4000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE01_TminOffCmp" R_map="RW"> <VTP> <DESC>Compressor minimum off time</DESC>
+</VTP> <VALUE> <USR>300</USR> </VALUE> </ITEM>
+<ITEM key="kyPE02_TminOnCmp" R_map="RW"> <VTP> <DESC>Compressor minimum on time</DESC>
+</VTP> <VALUE> <USR>20</USR> </VALUE> </ITEM>
+<ITEM key="kyPE03_TonOnCmp" R_map="RW"> <VTP> <DESC>Compressor minimum switch-ons time</DESC>
+</VTP> <VALUE> <USR>420</USR> </VALUE> </ITEM>
+<ITEM key="kyPE04_TminFanCmp" R_map="RW"> <VTP> <DESC>Minimum time between fan in dehumidify and compressor start</DESC>
+</VTP> <VALUE> <USR>120</USR> </VALUE> </ITEM>
+<ITEM key="kyPE05_Enable_SecuBypass" R_map="RW"> <VTP> <DESC>Enable security bypass</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPE06_CmpMod_MinPerc" R_map="RW"> <VTP> <DESC>Modulating compressor minimum percentage</DESC>
+</VTP> <VALUE> <USR>20.00</USR> <VALBLOB>2000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE07_CmpMod_MaxPerc" R_map="RW"> <VTP> <DESC>Modulating compressor maximum percentage</DESC>
+</VTP> <VALUE> <USR>68.00</USR> <VALBLOB>6800</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE08_PercIncDec_CmpMod" R_map="RW"> <VTP> <DESC>Modulating compressor inc/dec percentage</DESC>
+</VTP> <VALUE> <USR>1.00</USR> <VALBLOB>100</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE09_TimeIncDec_CmpMod" R_map="RW"> <VTP> <DESC>Modulating compressor inc/dec time</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPE10_DefrostTimeout" R_map="RW"> <VTP> <DESC>Defrost timeout</DESC> </VTP>
+<VALUE> <USR>8</USR> </VALUE> </ITEM>
+<ITEM key="kyPE11_Setpoint_EndDefrost" R_map="RW"> <VTP> <DESC>End defrost setpoint</DESC>
+</VTP> <VALUE> <USR>10.0</USR> <VALBLOB>100</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE12_DefrostMaxTime" R_map="RW"> <VTP> <DESC>Defrost maximum time</DESC>
+</VTP> <VALUE> <USR>1</USR> </VALUE> </ITEM>
+<ITEM key="kyPE13_DrippingTime" R_map="RW"> <VTP> <DESC>Dripping time</DESC> </VTP>
+<VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPE14_DefrostCountingType" R_map="RW"> <VTP> <DESC>Defrost counting type</DESC>
+</VTP> <VALUE> <USR>T.defrost < set</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPE15_SetpointDefrostCount" R_map="RW"> <VTP> <DESC>Defrost counting setpoint</DESC>
+</VTP> <VALUE> <USR>8.0</USR> <VALBLOB>80</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE16_SwitchTimeCondValve" R_map="RW"> <VTP> <DESC>Condensation valves switch time</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPE17_Setpoint_HPprealarm" R_map="RW"> <VTP> <DESC>High pressure prealarm setpoint</DESC>
+</VTP> <VALUE> <USR>37.0</USR> <VALBLOB>370</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE18_Diff_HPprealarm" R_map="RW"> <VTP> <DESC>High pressure prealarm differential</DESC>
+</VTP> <VALUE> <USR>5.0</USR> <VALBLOB>50</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE19_IncDecPerc_HPprealarm" R_map="RW"> <VTP> <DESC>High pressure prealarm inc/dec percentage</DESC>
+</VTP> <VALUE> <USR>5.00</USR> <VALBLOB>500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE20_TimeIncDec_HPprealarm" R_map="RW"> <VTP> <DESC>High pressure prealarm inc/dec time</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPE21_MinPerc_CmpIntegration" R_map="RW"> <VTP> <DESC>Modulating compressor minimum percentage in integration</DESC>
+</VTP> <VALUE> <USR>20.00</USR> <VALBLOB>2000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE22_MaxPerc_CmpIntegration" R_map="RW"> <VTP> <DESC>Modulating compressor maximum percentage in integration</DESC>
+</VTP> <VALUE> <USR>68.00</USR> <VALBLOB>6800</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPE24_RampSpeed_RPS" R_map="RW"> <VTP> <DESC>Compressor ramp speed</DESC>
+</VTP> <VALUE> <USR>2</USR> </VALUE> </ITEM>
+<ITEM key="kyPE25_RampSpeedAlarmOFF_RPS" R_map="RW"> <VTP> <DESC>Compressor ramp speed in alarm/unit OFF</DESC>
+</VTP> <VALUE> <USR>12</USR> </VALUE> </ITEM>
+<ITEM key="kyPE26_RampSpeedMinStep_RPS" R_map="RW"> <VTP> <DESC>Compressor minimum step ramp speed</DESC>
+</VTP> <VALUE> <USR>8</USR> </VALUE> </ITEM>
+<ITEM key="kyPE27_MaxRPS_Cmp" R_map="RW"> <VTP> <DESC>Compressor maximum RPS</DESC>
+</VTP> <VALUE> <USR>115</USR> </VALUE> </ITEM>
+<ITEM key="kyPE28_Frequency_Level1" R_map="RW"> <VTP> <DESC>Compressor level 1 frequency</DESC>
+</VTP> <VALUE> <USR>52</USR> </VALUE> </ITEM>
+<ITEM key="kyPE29_Frequency_Level2" R_map="RW"> <VTP> <DESC>Compressor level 2 frequency</DESC>
+</VTP> <VALUE> <USR>80</USR> </VALUE> </ITEM>
+<ITEM key="kyPE30_Time_Level1" R_map="RW"> <VTP> <DESC>Compressor level 1 time</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPE31_Time_Level2" R_map="RW"> <VTP> <DESC>Compressor level 2 time</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPE32_MaxTime_UnderLevel1" R_map="RW"> <VTP> <DESC>Compressor maximum time below level 1</DESC>
+</VTP> <VALUE> <USR>255</USR> </VALUE> </ITEM>
+<ITEM key="kyPE33_EnableRPScontrol" R_map="RW"> <VTP> <DESC>Enable compressor RPS control</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPb01_DelayOff_WaterValve" R_map="RW"> <VTP> <DESC>Water valve off delay</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPb02_ActiveTime_SniffingValve" R_map="RW"> <VTP> <DESC>Sniffing cycle temperature alarm active time</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPb03_WaitTime_SniffingValve" R_map="RW"> <VTP> <DESC>Sniffing cycle temperature alarm wait time</DESC>
+</VTP> <VALUE> <USR>3</USR> </VALUE> </ITEM>
+<ITEM key="kyPb04_Setpoint_Preheating" R_map="RW"> <VTP> <DESC>Preheating setpoint</DESC>
+</VTP> <VALUE> <USR>10.0</USR> <VALBLOB>100</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPb05_Diff_Preheating" R_map="RW"> <VTP> <DESC>Preheating differential</DESC>
+</VTP> <VALUE> <USR>10.0</USR> <VALBLOB>100</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPb06_MaxTime_Preheating" R_map="RW"> <VTP> <DESC>Preheating maximum time</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPb07_ActiveTime_SniffingWaterValve" R_map="RW"> <VTP> <DESC>Sniffing cycle active time</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPb08_WaitTime_SniffingWaterValve" R_map="RW"> <VTP> <DESC>Sniffing cycle wait time</DESC>
+</VTP> <VALUE> <USR>99</USR> </VALUE> </ITEM>
+<ITEM key="kyPU02_EnableWinterDehum" R_map="RW"> <VTP> <DESC>Enable winter dehumidification</DESC>
+</VTP> <VALUE> <USR>No</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPU03_EnableDehumHighTemp" R_map="RW"> <VTP> <DESC>Enable dehumidify with high temperature alarm</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPU04_EnableDehumNotFlow" R_map="RW"> <VTP> <DESC>Enable dehumidify with water flow alarm</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPU05_ForceDehumInCooling" R_map="RW"> <VTP> <DESC>Force duhumidify with cooling request</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPU07_Dehumidity_Diff" R_map="RW"> <VTP> <DESC>Dehumidify differential</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPU08_SetpointOnlyWaterDehum" R_map="RW"> <VTP> <DESC>Only cold water dehumidify setpoint</DESC>
+</VTP> <VALUE> <USR>10.0</USR> <VALBLOB>100</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPU09_EnableCmpSecondStep" R_map="RW"> <VTP> <DESC>Enable compressor as dehumidify second step</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPU10_DehumOutBandTime" R_map="RW"> <VTP> <DESC>Dehumidify out band time</DESC>
+</VTP> <VALUE> <USR>120</USR> </VALUE> </ITEM>
+<ITEM key="kyPU11_Evaporation_Setpoint" R_map="RW"> <VTP> <DESC>Evaporation setpoint</DESC>
+</VTP> <VALUE> <USR>6.0</USR> <VALBLOB>60</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPU12_Evaporation_DeadZone" R_map="RW"> <VTP> <DESC>Evaporation dead zone</DESC>
+</VTP> <VALUE> <USR>1.0</USR> <VALBLOB>10</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPU13_DisableDehum_MinTempSetpoint" R_map="RW"> <VTP> <DESC>Minimum temperature setpoint to disable dehumidification</DESC>
+</VTP> <VALUE> <USR>22.0</USR> <VALBLOB>220</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPU14_DisableDehum_MinTempDiff" R_map="RW"> <VTP> <DESC>Minimum temperature differential to enable dehumidification</DESC>
+</VTP> <VALUE> <USR>0.5</USR> <VALBLOB>5</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPS01_PreStartTime_RecircDamper" R_map="RW"> <VTP> <DESC>Recirculation damper pre-start time</DESC>
+</VTP> <VALUE> <USR>20</USR> </VALUE> </ITEM>
+<ITEM key="kyPS02_PreStartTime_ExtDamper" R_map="RW"> <VTP> <DESC>External damper pre-start time</DESC>
+</VTP> <VALUE> <USR>20</USR> </VALUE> </ITEM>
+<ITEM key="kyPS03_DelayOff_ExtDamper" R_map="RW"> <VTP> <DESC>External damper delay off</DESC>
+</VTP> <VALUE> <USR>15</USR> </VALUE> </ITEM>
+<ITEM key="kyPS04_MinExtDamperMod" R_map="RW"> <VTP> <DESC>Modulating external damper minimum opening</DESC>
+</VTP> <VALUE> <USR>20.00</USR> <VALBLOB>2000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPS05_MaxExtDamperMod" R_map="RW"> <VTP> <DESC>Modulating external damper maximum opening</DESC>
+</VTP> <VALUE> <USR>100.00</USR> <VALBLOB>10000</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPS06_SetpointFreeCoolingHeating" R_map="RW"> <VTP> <DESC>Free-Cooling/Heating setpoint</DESC>
+</VTP> <VALUE> <USR>4.0</USR> <VALBLOB>40</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPS07_DiffFreeCoolingHeating" R_map="RW"> <VTP> <DESC>Free-Cooling/Heating differential</DESC>
+</VTP> <VALUE> <USR>2.0</USR> <VALBLOB>20</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPS08_Perc_ExtDamperHighHum" R_map="RW"> <VTP> <DESC>External damper inc/dec perc in high humidity</DESC>
+</VTP> <VALUE> <USR>5.00</USR> <VALBLOB>500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPS09_Time_ExtDamperHighHumidity" R_map="RW"> <VTP> <DESC>External damper inc/dec time in high humidity</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPr01_SetpointDiff_Recover" R_map="RW"> <VTP> <DESC>Heat exchanger differential setpoint</DESC>
+</VTP> <VALUE> <USR>5.0</USR> <VALBLOB>50</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr02_Diff_Recover" R_map="RW"> <VTP> <DESC>Heat exchanger differential</DESC>
+</VTP> <VALUE> <USR>3.0</USR> <VALBLOB>30</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr03_SetPoint_RecoverDefrost" R_map="RW"> <VTP> <DESC>Heat exchanger defrost setpoint</DESC>
+</VTP> <VALUE> <USR>4.0</USR> <VALBLOB>40</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr04_DeadZone_DefrostRecover" R_map="RW"> <VTP> <DESC>Heat exchanger defrost dead zone</DESC>
+</VTP> <VALUE> <USR>2.0</USR> <VALBLOB>20</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr05_TimeByPass_Recover" R_map="RW"> <VTP> <DESC>Heat exchanger by-pass waiting time</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPr06_Setpoint_RecoverStop" R_map="RW"> <VTP> <DESC>Setpoint heat exchanger stop for defrost</DESC>
+</VTP> <VALUE> <USR>2.0</USR> <VALBLOB>20</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr07_Diff_RecoverStop" R_map="RW"> <VTP> <DESC>Differential heat exchanger stop for defrost</DESC>
+</VTP> <VALUE> <USR>3.0</USR> <VALBLOB>30</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr08_SpeedDefrost_RotaryHE" R_map="RW"> <VTP> <DESC>Heat wheel defrost inc/dec percentage</DESC>
+</VTP> <VALUE> <USR>5.00</USR> <VALBLOB>500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPr09_TimeDefrost_RotaryHE" R_map="RW"> <VTP> <DESC>Heat wheel defrost inc/dec time</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPr10_PwmDefrost_RotaryHE" R_map="RW"> <VTP> <DESC>Heat wheel defrost PWM period</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPA01_Enable_SupplyFanHoursAlarm" R_map="RW"> <VTP> <DESC>Enable supply fan working hours alarm</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPA02_Enable_CmpHoursAlarm" R_map="RW"> <VTP> <DESC>Enable compressor working hours alarm</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPA03_HoursAlarm_SignalType" R_map="RW"> <VTP> <DESC>Working hours alarm signal type</DESC>
+</VTP> <VALUE> <USR>Light</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA04_Delay_ProbeAlarm" R_map="RW"> <VTP> <DESC>Probe alarm delay</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPA05_ProbeAlarm_SignalType" R_map="RW"> <VTP> <DESC>Probe alarm signal type</DESC>
+</VTP> <VALUE> <USR>Light</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA06_StartupDelay_AirFlowAlarm" R_map="RW"> <VTP> <DESC>Air flow switch alarm delay from reset</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA07_Delay_AirFlowAlarm" R_map="RW"> <VTP> <DESC>Air flow switch alarm delay</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA08_AirFlowAlarm_SignalType" R_map="RW"> <VTP> <DESC>Air flow switch alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA09_StartupDelay_WaterFlowAlarm" R_map="RW"> <VTP> <DESC>Water flow switch alarm delay from reset</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA10_Delay_WaterFlowAlarm" R_map="RW"> <VTP> <DESC>Water flow switch alarm delay</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA11_NumberEvents_WaterFlow" R_map="RW"> <VTP> <DESC>Number water flow switch alarm/hour for manual reset</DESC>
+</VTP> <VALUE> <USR>3</USR> </VALUE> </ITEM>
+<ITEM key="kyPA12_WaterFlowAlarm_SignalType" R_map="RW"> <VTP> <DESC>Water flow switch alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA13_Delay_AirFilterAlarm" R_map="RW"> <VTP> <DESC>Air filter pressure switch alarm delay</DESC>
+</VTP> <VALUE> <USR>2</USR> </VALUE> </ITEM>
+<ITEM key="kyPA14_ResetType_AirFilterAlarm" R_map="RW"> <VTP> <DESC>Air filter pressure switch alarm reset type</DESC>
+</VTP> <VALUE> <USR>MANU</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA15_AirFilterAlarm_SignalType" R_map="RW"> <VTP> <DESC>Air filter pressure switch alarm signal type</DESC>
+</VTP> <VALUE> <USR>Light</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA16_Delay_TemperatureAlarm" R_map="RW"> <VTP> <DESC>High/Low temperature alarm delay</DESC>
+</VTP> <VALUE> <USR>600</USR> </VALUE> </ITEM>
+<ITEM key="kyPA17_Diff_TemperatureAlarm" R_map="RW"> <VTP> <DESC>High/Low temperature alarm differential</DESC>
+</VTP> <VALUE> <USR>2.0</USR> <VALBLOB>20</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA18_TempAlarm_SignalType" R_map="RW"> <VTP> <DESC>High/Low temperature alarm signal type</DESC>
+</VTP> <VALUE> <USR>Light</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA19_Setpoint_HighHumWarning" R_map="RW"> <VTP> <DESC>High humidity warning setpoint</DESC>
+</VTP> <VALUE> <USR>70</USR> </VALUE> </ITEM>
+<ITEM key="kyPA20_Diff_HighHumWarning" R_map="RW"> <VTP> <DESC>High humidity warning differential</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA21_OutbandTime_HighHumAlarm" R_map="RW"> <VTP> <DESC>High humidity warning outband time</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPA23_StartupDelay_TachoFan" R_map="RW"> <VTP> <DESC>Fan tacho alarm delay from reset</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA24_Delay_TachoFan" R_map="RW"> <VTP> <DESC>Fan tacho alarm delay</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA25_MaxRPM_TachoFan" R_map="RW"> <VTP> <DESC>Fan tacho alarm maximum RPM</DESC>
+</VTP> <VALUE> <USR>1400</USR> </VALUE> </ITEM>
+<ITEM key="kyPA26_FansAlarm_SignalType" R_map="RW"> <VTP> <DESC>Fans alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA27_Delay_ThermalCmpAlarm" R_map="RW"> <VTP> <DESC>Compressor thermal alarm delay</DESC>
+</VTP> <VALUE> <USR>2</USR> </VALUE> </ITEM>
+<ITEM key="kyPA28_ResetType_ThermalCmpAlarm" R_map="RW"> <VTP> <DESC>Compressor thermal alarm reset type</DESC>
+</VTP> <VALUE> <USR>MANU</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA29_ThermalCmpAlarm_SignalType" R_map="RW"> <VTP> <DESC>Compressor thermal alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA30_BypassTime_LowPressure" R_map="RW"> <VTP> <DESC>Low pressure alarm bypass time</DESC>
+</VTP> <VALUE> <USR>120</USR> </VALUE> </ITEM>
+<ITEM key="kyPA31_Delay_LowPressureAlarm" R_map="RW"> <VTP> <DESC>Low pressure alarm delay</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA32_NumberEvents_LPalarm" R_map="RW"> <VTP> <DESC>Number low pressure alarm/hour for manual reset</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA33_Setpoint_HPalarm" R_map="RW"> <VTP> <DESC>High pressure alarm setpoint</DESC>
+</VTP> <VALUE> <USR>42.0</USR> <VALBLOB>420</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA34_Diff_HPalarm" R_map="RW"> <VTP> <DESC>High pressure alarm differential</DESC>
+</VTP> <VALUE> <USR>7.0</USR> <VALBLOB>70</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA35_NumberEvents_HPalarm" R_map="RW"> <VTP> <DESC>Number high pressure alarm/hour for manual reset</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA36_PressureAlarm_SignalType" R_map="RW"> <VTP> <DESC>High/Low pressure alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA37_Delay_DischargeHighTemp" R_map="RW"> <VTP> <DESC>Discharge high temperature alarm delay</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA38_Setpoint_DischargeHighTemp" R_map="RW"> <VTP> <DESC>Discharge high temperature alarm setpoint</DESC>
+</VTP> <VALUE> <USR>90.0</USR> <VALBLOB>900</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA39_Diff_DischargeHighTemp" R_map="RW"> <VTP> <DESC>Discharge high temperature alarm differential</DESC>
+</VTP> <VALUE> <USR>20.0</USR> <VALBLOB>200</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA40_NumberEvents_DischargeHighTemp" R_map="RW"> <VTP> <DESC>Number discharge high temp alarm/hour for manual reset</DESC>
+</VTP> <VALUE> <USR>3</USR> </VALUE> </ITEM>
+<ITEM key="kyPA41_DischHighTemp_SignalType" R_map="RW"> <VTP> <DESC>Discharge high temperature alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA42_Delay_AntifreezeAlarm" R_map="RW"> <VTP> <DESC>Antifreeze alarm delay</DESC>
+</VTP> <VALUE> <USR>5</USR> </VALUE> </ITEM>
+<ITEM key="kyPA43_Setpoint_AntiFreezeAlarm" R_map="RW"> <VTP> <DESC>Antifreeze alarm setpoint</DESC>
+</VTP> <VALUE> <USR>3.0</USR> <VALBLOB>30</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA44_Diff_AntifFreeze" R_map="RW"> <VTP> <DESC>Antifreeze alarm differential</DESC>
+</VTP> <VALUE> <USR>2.0</USR> <VALBLOB>20</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPA45_AntiFreezeAlarm_SignalType" R_map="RW"> <VTP> <DESC>Antifreeze alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA46_Type_FireAlarm" R_map="RW"> <VTP> <DESC>Fire/Smoke alarm type</DESC>
+</VTP> <VALUE> <USR>Smoke evacuation</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA47_FireSmokeAlarm_SignalType" R_map="RW"> <VTP> <DESC>Fire/Smoke alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA48_Delay_GenericWarning" R_map="RW"> <VTP> <DESC>Generic warning delay</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA49_ResetType_GenericWarning" R_map="RW"> <VTP> <DESC>Generic warning reset type</DESC>
+</VTP> <VALUE> <USR>AUTO</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA50_Delay_GenericAlarm" R_map="RW"> <VTP> <DESC>Generic alarm delay</DESC>
+</VTP> <VALUE> <USR>30</USR> </VALUE> </ITEM>
+<ITEM key="kyPA51_ResetType_GenericAlarm" R_map="RW"> <VTP> <DESC>Generic alarm reset type</DESC>
+</VTP> <VALUE> <USR>MANU</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA52_Enable_RTCalarm" R_map="RW"> <VTP> <DESC>Enable RTC alarm</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPA53_ResetType_RTCalarm" R_map="RW"> <VTP> <DESC>RTC alarm reset type</DESC>
+</VTP> <VALUE> <USR>AUTO</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA54_RTCalarm_SignalType" R_map="RW"> <VTP> <DESC>RTC alarm signal type</DESC>
+</VTP> <VALUE> <USR>Light</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA55_PhasesSequence_SignalType" R_map="RW"> <VTP> <DESC>Phases sequence alarm signal type</DESC>
+</VTP> <VALUE> <USR>Serious</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA56_ExpansionAlarm_SignalType" R_map="RW"> <VTP> <DESC>Expansion alarm signal type</DESC>
+</VTP> <VALUE> <USR>Light</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA57_Type_HighHumidityAlarm" R_map="RW"> <VTP> <DESC>High humidity alarm type</DESC>
+</VTP> <VALUE> <USR>Only display</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA58_MaxTime_DehumByDI" R_map="RW"> <VTP> <DESC>Dehumidify by DI maximum time for warning</DESC>
+</VTP> <VALUE> <USR>999</USR> </VALUE> </ITEM>
+<ITEM key="kyPA59_SignalMode_AlarmRelay" R_map="RW"> <VTP> <DESC>Alarm relay signaling mode</DESC>
+</VTP> <VALUE> <USR>Always</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPA60_ResetDelay_HighHumAlarm" R_map="RW"> <VTP> <DESC>Automatic reset delay for high humidity block alarm</DESC>
+</VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
+<ITEM key="kyPA61_DiffLimitation_ExtDamper" R_map="RW"> <VTP> <DESC>External damper limitation differential</DESC>
+</VTP> <VALUE> <USR>15</USR> </VALUE> </ITEM>
+<ITEM key="kyPA62_MaxTimeLimitation_ExtDamper" R_map="RW"> <VTP> <DESC>Dehumidification by DI/BMS max time for external damper limitation</DESC>
+</VTP> <VALUE> <USR>90</USR> </VALUE> </ITEM>
+<ITEM key="kyPH01_Enable_OnOffByKey" R_map="RW"> <VTP> <DESC>Enable on/off by key</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH02_Enable_OnOffByBMS" R_map="RW"> <VTP> <DESC>Enable on/off by BMS</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH03_Enable_Scheduler" R_map="RW"> <VTP> <DESC>Enable scheduler</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH04_HolidayType" R_map="RW"> <VTP> <DESC>Holiday unit status</DESC>
+</VTP> <VALUE> <USR>Unit ON</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH05_TemperatureUM" R_map="RW"> <VTP> <DESC>Temperature measurement unit</DESC>
+</VTP> <VALUE> <USR>°C</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH06_PressureUM" R_map="RW"> <VTP> <DESC>Pressure measurement unit</DESC>
+</VTP> <VALUE> <USR>Bar</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH07_MinValue_SetpointCold" R_map="RW"> <VTP> <DESC>Cooling setpoint minimum value</DESC>
+</VTP> <VALUE> <USR>14.0</USR> <VALBLOB>140</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH08_MaxValue_SetpointCold" R_map="RW"> <VTP> <DESC>Cooling setpoint maximum value</DESC>
+</VTP> <VALUE> <USR>28.0</USR> <VALBLOB>280</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH09_MinValue_SetpointHot" R_map="RW"> <VTP> <DESC>Heating setpoint minimum value</DESC>
+</VTP> <VALUE> <USR>14.0</USR> <VALBLOB>140</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH10_MaxValue_SetpointHot" R_map="RW"> <VTP> <DESC>Heating setpoint maximum value</DESC>
+</VTP> <VALUE> <USR>14.0</USR> <VALBLOB>140</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH11_Modbus_Address" R_map="RW"> <VTP> <DESC>Modbus address</DESC> </VTP>
+<VALUE> <USR>1</USR> </VALUE> </ITEM>
+<ITEM key="kyPH12_Modbus_Baud" R_map="RW"> <VTP> <DESC>Modbus baud rate</DESC> </VTP>
+<VALUE> <USR>9600</USR> <INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH13_Modbus_Parity" R_map="RW"> <VTP> <DESC>Modbus parity</DESC> </VTP>
+<VALUE> <USR>None</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH14_Modbus_StopBit" R_map="RW"> <VTP> <DESC>Modbus stopBit</DESC> </VTP>
+<VALUE> <USR>1 stop bit</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH15_RestoreDefault" R_map="RW"> <VTP> <DESC>Restore default</DESC> </VTP>
+<VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH16_CAN_1st_BaudRate" R_map="RW"> <VTP> <DESC>CAN baud rate</DESC> </VTP>
+<VALUE> <USR>125 KBaud</USR> <INTERNAL>3</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH17_CAN_1st_MyNode" R_map="RW"> <VTP> <DESC>CAN node</DESC> </VTP> <VALUE>
+<USR>1</USR> </VALUE> </ITEM>
+<ITEM key="kyPH18_HistoryReset" R_map="RW"> <VTP> <DESC>History reset</DESC> </VTP>
+<VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH19_MinPPM_AirQuality" R_map="RW"> <VTP> <DESC>Air quality probe minimum value</DESC>
+</VTP> <VALUE> <USR>16</USR> </VALUE> </ITEM>
+<ITEM key="kyPH20_MaxPPM_AirQuality" R_map="RW"> <VTP> <DESC>Air quality probe maximum value</DESC>
+</VTP> <VALUE> <USR>2000</USR> </VALUE> </ITEM>
+<ITEM key="kyPH21_MinValHighPressure" R_map="RW"> <VTP> <DESC>High pressure probe minimum value</DESC>
+</VTP> <VALUE> <USR>5.0</USR> <VALBLOB>50</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH22_MaxValHighPressure" R_map="RW"> <VTP> <DESC>High pressure probe maximum value</DESC>
+</VTP> <VALUE> <USR>50.0</USR> <VALBLOB>500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH23_Enable_EvcoLed" R_map="RW"> <VTP> <DESC>Enable Evco led</DESC> </VTP>
+<VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH24_MinValEvapPressure" R_map="RW"> <VTP> <DESC>Evaporation pressure probe minimum value</DESC>
+</VTP> <VALUE> <USR>5.0</USR> <VALBLOB>50</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH25_MaxValEvapPressure" R_map="RW"> <VTP> <DESC>Evaporation pressure probe maximum value</DESC>
+</VTP> <VALUE> <USR>50.0</USR> <VALBLOB>500</VALBLOB> </VALUE> </ITEM>
+<ITEM key="kyPH26_RefrigerationType" R_map="RW"> <VTP> <DESC>Refrigeration gas</DESC>
+</VTP> <VALUE> <USR>R-410A</USR> <INTERNAL>6</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH27_Enable_IntegByBMS" R_map="RW"> <VTP> <DESC>Enable integration request by BMS</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH28_Enable_DehumByBMS" R_map="RW"> <VTP> <DESC>Enable dehumidify request by BMS</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH29_MinValue_SetpointHumidity" R_map="RW"> <VTP> <DESC>Humidity setpoint minimum value</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPH30_MaxValue_SetpointHumidity" R_map="RW"> <VTP> <DESC>Humidity setpoint maximum value</DESC>
+</VTP> <VALUE> <USR>100</USR> </VALUE> </ITEM>
+<ITEM key="kyPH31_LCDBacklightMode" R_map="RW"> <VTP> <DESC>Epj Graph backlight mode</DESC>
+</VTP> <VALUE> <USR>Timed</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPH32_LCDBacklightTimeout" R_map="RW"> <VTP> <DESC>Epj Graph backlight timeout</DESC>
+</VTP> <VALUE> <USR>180</USR> </VALUE> </ITEM>
+<ITEM key="kyPH33_Enable_OnOffLed" R_map="RW"> <VTP> <DESC>Enable Epj Graph On/Off led</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH34_Enable_AlarmLed" R_map="RW"> <VTP> <DESC>Enable Epj Graph alarm led</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPH35_IconType_OperatingMode" R_map="RW"> <VTP> <DESC>Summer/Winter icon type</DESC>
+</VTP> <VALUE> <USR>Sun = summer</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPT01_Enable_TestMode" R_map="RW"> <VTP> <DESC>Enable test mode</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT02_SpeedSupplyFan_TEST" R_map="RW"> <VTP> <DESC>Supply fan speed in test mode</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPT03_SpeedReturnFan_TEST" R_map="RW"> <VTP> <DESC>Return fan speed in test mode</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPT04_PercExtDamper_TEST" R_map="RW"> <VTP> <DESC>External damper percentage in test mode</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPT05_DOrecircDamper_TEST" R_map="RW"> <VTP> <DESC>Recirculation damper relay status in test mode</DESC>
+</VTP> <VALUE> <USR>Off</USR> <UNTRANSLATED>LIDOff</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT06_DOseriousAlarm_TEST" R_map="RW"> <VTP> <DESC>Serious alarm relay status in test mode</DESC>
+</VTP> <VALUE> <USR>Off</USR> <UNTRANSLATED>LIDOff</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT07_DObypassFC_TEST" R_map="RW"> <VTP> <DESC>Free-Coooling/Free-Heating bypass relay status in test mode</DESC>
+</VTP> <VALUE> <USR>Off</USR> <UNTRANSLATED>LIDOff</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT08_DOwaterCond_TEST" R_map="RW"> <VTP> <DESC>Water condensation valve relay status in test mode</DESC>
+</VTP> <VALUE> <USR>Off</USR> <UNTRANSLATED>LIDOff</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT09_DOwaterFlow_TEST" R_map="RW"> <VTP> <DESC>Water flow valve relay status in test mode</DESC>
+</VTP> <VALUE> <USR>Off</USR> <UNTRANSLATED>LIDOff</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT10_DOcmp_TEST" R_map="RW"> <VTP> <DESC>Compressor relay status in test mode</DESC>
+</VTP> <VALUE> <USR>Off</USR> <UNTRANSLATED>LIDOff</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPT11_PercCmp_TEST" R_map="RW"> <VTP> <DESC>Compressor percentage in test mode</DESC>
+</VTP> <VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPG01_MachineType" R_map="RW"> <VTP> <DESC>Machine type</DESC> </VTP>
+<VALUE> <USR>Only dehumidifier</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPG02_EnableIntegration" R_map="RW"> <VTP> <DESC>Enable integration</DESC>
+</VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPG03_EnableFreeCoolingHeating" R_map="RW"> <VTP> <DESC>Enable Free-Cooling/Heating</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyPG04_HeatExchangerType" R_map="RW"> <VTP> <DESC>Heat exchanger type</DESC>
+</VTP> <VALUE> <USR>Disable</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPG05_EnableExpansion" R_map="RW"> <VTP> <DESC>Enable expansion</DESC>
+</VTP> <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
+</VALUE> </ITEM>
+<ITEM key="kyHA00" R_map="RW"> <VTP> <DESC>Remote display probes</DESC> </VTP> <VALUE>
+<USR>None</USR> <UNTRANSLATED>LIDNone</UNTRANSLATED> <INTERNAL>0</INTERNAL> </VALUE>
+</ITEM>
+<ITEM key="kyHA01" R_map="RW"> <VTP> <DESC>AI1 configuration</DESC> </VTP> <VALUE>
+<USR>Remote fans 0-10V</USR> <INTERNAL>58</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA02" R_map="RW"> <VTP> <DESC>AI2 configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA03" R_map="RW"> <VTP> <DESC>AI3 configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA04" R_map="RW"> <VTP> <DESC>AI4 configuration</DESC> </VTP> <VALUE>
+<USR>T.evaporation</USR> <INTERNAL>52</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA05" R_map="RW"> <VTP> <DESC>AI5 configuration</DESC> </VTP> <VALUE>
+<USR>T.water</USR> <INTERNAL>47</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA06" R_map="RW"> <VTP> <DESC>AI6 configuration</DESC> </VTP> <VALUE>
+<USR>DI Dehum request NO</USR> <INTERNAL>6</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA07" R_map="RW"> <VTP> <DESC>AI7 configuration</DESC> </VTP> <VALUE>
+<USR>DI Thermo request NO</USR> <INTERNAL>8</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA08" R_map="RW"> <VTP> <DESC>AI1 Epj configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA09" R_map="RW"> <VTP> <DESC>AI2 Epj configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA10" R_map="RW"> <VTP> <DESC>AI1 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA11" R_map="RW"> <VTP> <DESC>AI2 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA12" R_map="RW"> <VTP> <DESC>AI3 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA13" R_map="RW"> <VTP> <DESC>AI4 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA14" R_map="RW"> <VTP> <DESC>AI5 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA15" R_map="RW"> <VTP> <DESC>AI6 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA16" R_map="RW"> <VTP> <DESC>AI7 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA17" R_map="RW"> <VTP> <DESC>AI1 Evj configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHA18" R_map="RW"> <VTP> <DESC>AI2 Evj configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB01" R_map="RW"> <VTP> <DESC>DI1 configuration</DESC> </VTP> <VALUE>
+<USR>High pressure NC</USR> <INTERNAL>27</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB02" R_map="RW"> <VTP> <DESC>DI2 configuration</DESC> </VTP> <VALUE>
+<USR>Low pressure NO</USR> <INTERNAL>26</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB03" R_map="RW"> <VTP> <DESC>DI3 configuration</DESC> </VTP> <VALUE>
+<USR>On/Off remote NO</USR> <INTERNAL>2</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB04" R_map="RW"> <VTP> <DESC>DI4 configuration</DESC> </VTP> <VALUE>
+<USR>Summer/Winter NO</USR> <INTERNAL>4</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB05" R_map="RW"> <VTP> <DESC>DI1 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB06" R_map="RW"> <VTP> <DESC>DI2 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHB07" R_map="RW"> <VTP> <DESC>DI3 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHC01" R_map="RW"> <VTP> <DESC>AO1 configuration</DESC> </VTP> <VALUE>
+<USR>Compressor 0-10V</USR> <INTERNAL>5</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHC02" R_map="RW"> <VTP> <DESC>AO2 configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHC03" R_map="RW"> <VTP> <DESC>AO3 configuration</DESC> </VTP> <VALUE>
+<USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHC04" R_map="RW"> <VTP> <DESC>AO4 configuration</DESC> </VTP> <VALUE>
+<USR>Supply fan 0-10V</USR> <INTERNAL>1</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHC05" R_map="RW"> <VTP> <DESC>AO1 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHC06" R_map="RW"> <VTP> <DESC>AO2 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHCF1" R_map="RW"> <VTP> <DESC>Supply fan PWM frequency</DESC> </VTP>
+<VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyHCF2" R_map="RW"> <VTP> <DESC>Return fan PWM frequency</DESC> </VTP>
+<VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyHCF3" R_map="RW"> <VTP> <DESC>Compressor PWM frequency</DESC> </VTP>
+<VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyHD01" R_map="RW"> <VTP> <DESC>DO1 configuration</DESC> </VTP> <VALUE>
+<USR>Recirculation damper NO</USR> <INTERNAL>10</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD02" R_map="RW"> <VTP> <DESC>DO2 configuration</DESC> </VTP> <VALUE>
+<USR>Serious alarm NO</USR> <INTERNAL>26</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD03" R_map="RW"> <VTP> <DESC>DO3 configuration</DESC> </VTP> <VALUE>
+<USR>Recirculation damper NO</USR> <INTERNAL>10</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD04" R_map="RW"> <VTP> <DESC>DO4 configuration</DESC> </VTP> <VALUE>
+<USR>Water condensation NC</USR> <INTERNAL>13</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD05" R_map="RW"> <VTP> <DESC>DO5 configuration</DESC> </VTP> <VALUE>
+<USR>Water valve NO</USR> <INTERNAL>12</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD06" R_map="RW"> <VTP> <DESC>DO6 configuration</DESC> </VTP> <VALUE>
+<USR>Compressor NO</USR> <INTERNAL>6</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD07" R_map="RW"> <VTP> <DESC>DO1 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD08" R_map="RW"> <VTP> <DESC>DO2 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD09" R_map="RW"> <VTP> <DESC>DO3 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD10" R_map="RW"> <VTP> <DESC>DO4 expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyHD11" R_map="RW"> <VTP> <DESC>OC expansion configuration</DESC> </VTP>
+<VALUE> <USR>---</USR> <INTERNAL>0</INTERNAL> </VALUE> </ITEM>
+<ITEM key="kyPSd1_UserPassword" R_map="RW"> <VTP> <DESC>User password</DESC> </VTP>
+<VALUE> <USR>0</USR> </VALUE> </ITEM>
+<ITEM key="kyPSd2_MaintainPassword" R_map="RW"> <VTP> <DESC>Maintenance password</DESC>
+</VTP> <VALUE> <USR>1</USR> </VALUE> </ITEM>
+<ITEM key="kyPSd3_InstallerPassword" R_map="RW"> <VTP> <DESC>Installer password</DESC>
+</VTP> <VALUE> <USR>2</USR> </VALUE> </ITEM>
+<ITEM key="kyPSd4_CostructorPassword" R_map="RW"> <VTP> <DESC>Manufacturer password</DESC>
+</VTP> <VALUE> <USR>10</USR> </VALUE> </ITEM>
+<ITEM key="kyPSdM_ImportExportPassword" R_map="RW"> <VTP> <DESC>Import/Export parameters password</DESC>
+</VTP> <VALUE> <USR>-10</USR> <VALBLOB>$FFFFFFF6</VALBLOB> </VALUE> </ITEM>
+</ITEMS>
+</MAP>

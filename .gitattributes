@@ -1,0 +1,2 @@
+# hej.luft parameter files: keep bytes (ISO-8859-1, CRLF) as delivered
+*.map -text

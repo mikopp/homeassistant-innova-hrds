@@ -1,87 +1,76 @@
 # hej.luft parameter values: HRDS+
 
-The parameter values hej.luft gave for the HRDS+ in November 2026: the
-intended default of every parameter on firmware 9.2, and the final value for
-firmware 9.3 and 9.4, for the HRDS+ 30 and the HRDS+ 50. They come from
-hej.luft, not from the handbooks; where a handbook default differs,
-[`UNIT_BEHAVIOUR.md` §15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value) says so. What a register is (address, scale, range)
-is in [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md); what the unit does with a parameter is in
-[`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md). Cited there as `[FW]` (provided by hej.luft) and `[VC]`
-(confirmed by the vendor).
+hej.luft's value for every HRDS+ parameter, per firmware and size, the
+parameter files that hold them, and how to load them. Registers (address,
+scale, range) are in [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md), what the unit does with them in
+[`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md), and where a handbook default differs in
+[§15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value) there. Cited as `[FW]` (provided by hej.luft) and `[VC]` (confirmed by
+the vendor).
 
-## Sources
+## Parameter files
 
-Provided by hej.luft, November 2026 [FW]: the parameter file with the values for
-firmware 9.2 and 9.3 / 9.4; firmware 9.3 with its parameter files for the
-HRDS+ 30 and the HRDS+ 50, each with and without a CNU2 display; the
-parameter definitions of the EVCO Parameters Manager (the service software
-that loads those files over USB); and an update guide (German, Aug. 2026).
-They are not public; hej.luft provides them on request. The firmware 9.3
-image carries the product code `EPB9ORSINDEU`.
+| Firmware | HRDS+ 30 | HRDS+ 50 |
+|----------|----------|----------|
+| 9.3 / 9.4 | [with display](parameter-files/fw9.3/HRDS+30_CNU2_May2026.map), [without](parameter-files/fw9.3/HRDS+30_noDisplay_May2026.map) | [with display](parameter-files/fw9.3/HRDS+50_CNU2_May2026.map), [without](parameter-files/fw9.3/HRDS+50_noDisplay_May2026.map) |
+| 9.2 | [with display](parameter-files/fw9.2/HRDS+30_CNU2_FW9.2.map), [without](parameter-files/fw9.2/HRDS+30_noDisplay_FW9.2.map) | [with display](parameter-files/fw9.2/HRDS+50_CNU2_FW9.2.map), [without](parameter-files/fw9.2/HRDS+50_noDisplay_FW9.2.map) |
+
+* The 9.3 files are hej.luft's (May 2026) [FW]. The 9.2 files are made here from
+  them by setting [Pb01](MODBUS_REGISTERS.md#pb01) to 30 s, hej.luft's 9.2 value; nothing else differs between
+  the two firmware versions. Both use the same parameter definitions, so the
+  9.2 files should load on 9.2 [INFERRED].
+* "Without display" sets [PH01](MODBUS_REGISTERS.md#ph01) to Disabled and [HA00](MODBUS_REGISTERS.md#ha00) to None; otherwise the
+  files with and without display are the same.
+* Two values in hej.luft's 9.3 files differ from the table below: [Pb01](MODBUS_REGISTERS.md#pb01) is
+  255 s (table: 250 s), and [PH19](MODBUS_REGISTERS.md#ph19) is 16 in the HRDS+ 50 files (table: 18).
+* The files are for the EVCO Parameters Manager, which also needs hej.luft's
+  parameter definitions (`Drv970AA09`). Both, and the firmware, come from
+  hej.luft on request.
+
+## Loading the values
+
+1. **New firmware** (only for an update): copy `work.ucjb` and
+   `work.ucje` to an empty FAT32 USB stick and plug it into the controller's USB
+   port with the unit in OFF (under the top cover, or behind the terminal plate).
+   The update starts by itself; without a display, the three red LEDs on the back
+   blink five times at the start and L1 blinks when it is done [FW].
+2. **Parameters**, either:
+   * with the EVCO Parameters Manager over USB: connect with "USBAdapter", open
+     the file for the size and display, Device → Program [FW]; or
+   * over Modbus: every parameter is a holding register at the address in the
+     table, so the values can be written one by one [VC]. Write the Modbus
+     address and baud rate last, if at all: changing them cuts the connection.
+     Written values are kept across a power cycle
+     ([`UNIT_BEHAVIOUR.md` §3.6](UNIT_BEHAVIOUR.md#36-persistence-across-a-power-cycle)).
+
+A firmware update resets every parameter to the controller's generic defaults,
+which do not suit the HRDS+, so step 2 always follows step 1 [FW]. If the
+display then loops on "checking 20k, 50k, 125k, 500k …", loading a parameter
+file fixes it [FW].
 
 ## Sizes
 
-* The HRDS+ 30 and the HRDS+ 50 (type plate names; part numbers in
-  [`README.md`](README.md#who-makes-and-sells-the-unit)) differ only in [PE07](MODBUS_REGISTERS.md#pe07) and [PE22](MODBUS_REGISTERS.md#pe22), the maximum
-  compressor output (55.00 % and 68.00 %), and in [PH19](MODBUS_REGISTERS.md#ph19). [PH19](MODBUS_REGISTERS.md#ph19) is the air-quality
-  probe minimum, which the HRDS+ does not use; hej.luft uses it as a size
-  code: 16 = HRDS+ 30, 18 = HRDS+ 50 [FW, VC].
-* ¹ Older units carry the parameter sets of two earlier sizes: [PE07](MODBUS_REGISTERS.md#pe07) and
-  [PE22](MODBUS_REGISTERS.md#pe22) 50.00 % or 62.00 %, size code 15 or 17. Their hardware is that of the HRDS+ 30
-  and the HRDS+ 50; current units should carry the HRDS+ 30 or 50 set (confirmed by the vendor) [VC].
-* hej.luft has no parameter values for the HRDS with an on/off compressor [VC].
+* The HRDS+ 30 and 50 differ only in [PE07](MODBUS_REGISTERS.md#pe07) / [PE22](MODBUS_REGISTERS.md#pe22), the maximum compressor
+  output (55 % and 68 %), and in [PH19](MODBUS_REGISTERS.md#ph19), which hej.luft uses as size code
+  (16 = HRDS+ 30, 18 = HRDS+ 50; the HRDS+ has no air-quality probe) [FW, VC].
+* ¹ Older units can carry the set of an earlier size: [PE07](MODBUS_REGISTERS.md#pe07) / [PE22](MODBUS_REGISTERS.md#pe22) 50 % or
+  62 %, size code 15 or 17. Same hardware; current units should carry the
+  HRDS+ 30 or 50 set [VC].
+* There are no values for the HRDS with an on/off compressor [VC].
 
 ## Firmware 9.2 and 9.3 / 9.4
 
-The values for firmware 9.2 and for 9.3 / 9.4 are the same except [Pb01](MODBUS_REGISTERS.md#pb01), the
-water valve off delay: 30 s on 9.2, 250 s on 9.3 / 9.4 [FW, VC]. hej.luft's
-parameter files for 9.3 hold 255 s.
-
-* On 9.2, 30 s is a deliberate compromise by Innova. The recirculation damper
-  then closes too early only rarely and briefly, which can cause a slight
-  hissing or whistling; the compressor can run briefly without water flow,
-  which Innova considers too short to matter. A longer delay on 9.2 makes the
-  early damper closing more frequent and longer [VC].
-* On 9.3, 250 s keeps the water flowing until the compressor has ramped down,
-  even from full speed [VC]. How the damper behaves on each firmware:
+* The values differ only in [Pb01](MODBUS_REGISTERS.md#pb01), the valve off delay: 30 s on 9.2, 250 s on
+  9.3 / 9.4 [FW, VC]. Why, and a workaround for 9.2:
   [`UNIT_BEHAVIOUR.md` §1.2](UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants).
-* According to Innova, a unit updated to 9.2 already carries the 9.2 values
-  [VC]. The reference unit does not ([`UNIT_BEHAVIOUR.md` §15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value)).
-* [PH02](MODBUS_REGISTERS.md#ph02) is Disabled and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) are Enabled in every set: after loading
-  a parameter file, on/off over Modbus is off.
-* hej.luft's parameter files for units without a CNU2 display set [PH01](MODBUS_REGISTERS.md#ph01) to
-  Disabled and [HA00](MODBUS_REGISTERS.md#ha00) to None; those for units with one, Enabled and
-  EPJ Graph TH. Otherwise the two are the same.
-* Innova's earlier minimum fan speed [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28) was 30.00 %. hej.luft considers
-  50.00 % high and has set 30.00 % at commissioning without problems [VC].
-
-## Updating the firmware
-
-From hej.luft's update guide, in short [FW]:
-
-1. **Firmware.** Copy `work.ucjb` and `work.ucje` to the root of an empty
-   FAT32 USB stick. With the unit powered and in mode OFF, plug the stick into
-   the controller's USB port (under the top cover, or behind the terminal
-   plate after removing the side service cover). The update starts by itself.
-   The display shows progress; without a display, all three red LEDs on the back
-   of the controller light and blink five times, the ALARM and CAN LEDs blink
-   during the upload, and the L1 LED also blinks when it is done.
-2. **Parameters.** Install the EVCO Parameters Manager (language English) with
-   hej.luft's parameter definitions, connect the controller by a USB-A cable
-   (unit in mode OFF; 230 V is optional), connect with "USBAdapter", open the
-   parameter file for the size and display, and use Device → Program.
-
-* After the firmware update all parameters are reset to the defaults of the
-  freely programmable controller, which do not suit the HRDS+ (alarms,
-  functions not working). Step 2 is therefore required.
-* The display may restart in a loop showing "checking 20k, 50k, 125k, 500k,
-  20k …". Loading a parameter file resets the display and fixes it.
+* In every file [PH02](MODBUS_REGISTERS.md#ph02) is Disabled and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) are Enabled: after loading
+  one, on/off over Modbus is off.
+* [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28), the minimum fan speed, are 50 %; 30 % has been used at
+  commissioning without problems [VC].
 
 ## Parameter definitions by revision
 
-hej.luft's parameter definitions come in seven revisions, `Drv970AA01` to `AA04`,
-`AA07`, `AA08` and `AA09`; the 9.3 parameter files use `AA09`. Which firmware
-uses which revision is not stated. Compared revision by revision [FW]:
+The parameter definitions come in seven revisions; the parameter files use
+`AA09`. Which firmware uses which revision is not stated [FW].
 
 | Revision | Internal date | What it adds or removes |
 |----------|---------------|-------------------------|
@@ -93,22 +82,18 @@ uses which revision is not stated. Compared revision by revision [FW]:
 | `AA08` | 26 Feb 2025 | New: [PA61](MODBUS_REGISTERS.md#pa61), [PA62](MODBUS_REGISTERS.md#pa62), [PH35](MODBUS_REGISTERS.md#ph35), [PT10](MODBUS_REGISTERS.md#pt10), [PT11](MODBUS_REGISTERS.md#pt11) |
 | `AA09` | 10 Jul 2025 | [HA00](MODBUS_REGISTERS.md#ha00) takes the values 5 and 6 (EPJ Graph T / TH) besides 0 to 4 |
 
-* No parameter has more than one Modbus address across the seven revisions.
-  The parameters of [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) that a revision contains are at the documented
-  address in it (checked for `AA09`: 392 parameters, and `AA01`: 315).
-* The only documented parameters `AA09` lacks are [PE23](MODBUS_REGISTERS.md#pe23) and [PA22](MODBUS_REGISTERS.md#pa22).
-* [PE24](MODBUS_REGISTERS.md#pe24), [PE25](MODBUS_REGISTERS.md#pe25), [PE26](MODBUS_REGISTERS.md#pe26) are defined as 0 to 200 "rps" without a decimal in every revision.
+No parameter changes its Modbus address between revisions; every parameter
+in [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) is at its documented address in each revision that has it. [PE24](MODBUS_REGISTERS.md#pe24) to [PE26](MODBUS_REGISTERS.md#pe26) are defined as 0 to 200 "rps" without a decimal.
 
 ## Every parameter
 
-Values as the EVCO Parameters Manager shows them; scale and range of each
-register are at the linked address. "(30)" and "(50)" mark values that differ
-between the HRDS+ 30 and the HRDS+ 50. Run-time values (working hours, manual
-requests) are what hej.luft lists for a new unit.
+Values as the Parameters Manager shows them. "(30)" / "(50)": HRDS+ 30 /
+HRDS+ 50. Run-time values (working hours, manual requests) are those of a new
+unit.
 
 | Address | Parameter | FW 9.2 | FW 9.3 / 9.4 | Note |
 |---------|-----------|--------|--------------|------|
-| [1107](MODBUS_REGISTERS.md#reg-1107) | Holiday start command | --- | --- | Run-time value, not in the parameter files |
+| [1107](MODBUS_REGISTERS.md#reg-1107) | Holiday start command | --- | --- | Run-time value, not in the files |
 | [1497](MODBUS_REGISTERS.md#reg-1497) | Holiday period days | 7 | 7 |  |
 | [1498](MODBUS_REGISTERS.md#reg-1498) | Holiday period hours | 0 | 0 |  |
 | [1499](MODBUS_REGISTERS.md#reg-1499) | F1 mode | Comfort | Comfort |  |
@@ -187,13 +172,13 @@ requests) are what hej.luft lists for a new unit.
 | [1600](MODBUS_REGISTERS.md#reg-1600) | `BKT` Evj/Epj LCD backlight timeout | 30 s | 30 s |  |
 | [1601](MODBUS_REGISTERS.md#reg-1601) | `PSd1` User password | 0 | 0 |  |
 | [1602](MODBUS_REGISTERS.md#reg-1602) | [PM00](MODBUS_REGISTERS.md#pm00) Supply fan working hours limit | 20000 h | 20000 h |  |
-| [1604](MODBUS_REGISTERS.md#reg-1604) | [PM01](MODBUS_REGISTERS.md#pm01) Supply fan working hours | 0 h | 0 h | Run-time value, not in the parameter files |
-| [1606](MODBUS_REGISTERS.md#reg-1606) | [PM02](MODBUS_REGISTERS.md#pm02) Return fan working hours | 0 h | 0 h | Run-time value, not in the parameter files |
+| [1604](MODBUS_REGISTERS.md#reg-1604) | [PM01](MODBUS_REGISTERS.md#pm01) Supply fan working hours | 0 h | 0 h | Run-time value, not in the files |
+| [1606](MODBUS_REGISTERS.md#reg-1606) | [PM02](MODBUS_REGISTERS.md#pm02) Return fan working hours | 0 h | 0 h | Run-time value, not in the files |
 | [1608](MODBUS_REGISTERS.md#reg-1608) | [PM03](MODBUS_REGISTERS.md#pm03) Compressor working hours limit | 20000 h | 20000 h |  |
-| [1610](MODBUS_REGISTERS.md#reg-1610) | [PM04](MODBUS_REGISTERS.md#pm04) Compressor working hours | 0 h | 0 h | Run-time value, not in the parameter files |
-| [1612](MODBUS_REGISTERS.md#reg-1612) | [PM90](MODBUS_REGISTERS.md#pm90) Last maintenance | not set | not set | Run-time value, not in the parameter files |
-| [1614](MODBUS_REGISTERS.md#reg-1614) | [PM20](MODBUS_REGISTERS.md#pm20) Supply fan manual setpoint | 30.00 % | 30.00 % | Run-time value, not in the parameter files |
-| [1615](MODBUS_REGISTERS.md#reg-1615) | [PM21](MODBUS_REGISTERS.md#pm21) Forcing compressor | Disabled | Disabled | Run-time value, not in the parameter files |
+| [1610](MODBUS_REGISTERS.md#reg-1610) | [PM04](MODBUS_REGISTERS.md#pm04) Compressor working hours | 0 h | 0 h | Run-time value, not in the files |
+| [1612](MODBUS_REGISTERS.md#reg-1612) | [PM90](MODBUS_REGISTERS.md#pm90) Last maintenance | not set | not set | Run-time value, not in the files |
+| [1614](MODBUS_REGISTERS.md#reg-1614) | [PM20](MODBUS_REGISTERS.md#pm20) Supply fan manual setpoint | 30.00 % | 30.00 % | Run-time value, not in the files |
+| [1615](MODBUS_REGISTERS.md#reg-1615) | [PM21](MODBUS_REGISTERS.md#pm21) Forcing compressor | Disabled | Disabled | Run-time value, not in the files |
 | [1616](MODBUS_REGISTERS.md#reg-1616) | [PM80](MODBUS_REGISTERS.md#pm80) Return/Room T. probe calibration | 0.0 °C | 0.0 °C |  |
 | [1617](MODBUS_REGISTERS.md#reg-1617) | [PM81](MODBUS_REGISTERS.md#pm81) Outdoor T. probe calibration | 0.0 °C | 0.0 °C |  |
 | [1618](MODBUS_REGISTERS.md#reg-1618) | [PM82](MODBUS_REGISTERS.md#pm82) Water T. probe calibration | 0.0 °C | 0.0 °C |  |
@@ -257,7 +242,7 @@ requests) are what hej.luft lists for a new unit.
 | [1680](MODBUS_REGISTERS.md#reg-1680) | [PE18](MODBUS_REGISTERS.md#pe18) High pressure prealarm differential | 5.0 bar | 5.0 bar |  |
 | [1681](MODBUS_REGISTERS.md#reg-1681) | [PE19](MODBUS_REGISTERS.md#pe19) High pressure prealarm inc/dec percentage | 5.00 % | 5.00 % |  |
 | [1682](MODBUS_REGISTERS.md#reg-1682) | [PE20](MODBUS_REGISTERS.md#pe20) High pressure prealarm inc/dec time | 10 s | 10 s |  |
-| [1683](MODBUS_REGISTERS.md#reg-1683) | [Pb01](MODBUS_REGISTERS.md#pb01) Water valve off delay | 30 s | 250 s | 9.3 parameter files: 255 s. See [Firmware 9.2 and 9.3 / 9.4](#firmware-92-and-93--94) |
+| [1683](MODBUS_REGISTERS.md#reg-1683) | [Pb01](MODBUS_REGISTERS.md#pb01) Water valve off delay | 30 s | 250 s | 9.3 files: 255 s. Why: [`UNIT_BEHAVIOUR.md` §1.2](UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants) |
 | [1684](MODBUS_REGISTERS.md#reg-1684) | [Pb02](MODBUS_REGISTERS.md#pb02) Sniffing cycle temperature alarm active time | 60 s | 60 s |  |
 | [1685](MODBUS_REGISTERS.md#reg-1685) | [Pb03](MODBUS_REGISTERS.md#pb03) Sniffing cycle temperature alarm wait time | 3 min | 3 min |  |
 | [1686](MODBUS_REGISTERS.md#reg-1686) | [Pb04](MODBUS_REGISTERS.md#pb04) Preheating setpoint | 10.0 °C | 10.0 °C |  |
@@ -363,7 +348,7 @@ requests) are what hej.luft lists for a new unit.
 | [1788](MODBUS_REGISTERS.md#reg-1788) | [PH16](MODBUS_REGISTERS.md#ph16) CAN baud rate | 125 KBaud | 125 KBaud |  |
 | [1789](MODBUS_REGISTERS.md#reg-1789) | [PH17](MODBUS_REGISTERS.md#ph17) CAN node | 1 | 1 |  |
 | [1790](MODBUS_REGISTERS.md#reg-1790) | [PH18](MODBUS_REGISTERS.md#ph18) History reset | Disabled | Disabled |  |
-| [1791](MODBUS_REGISTERS.md#reg-1791) | [PH19](MODBUS_REGISTERS.md#ph19) Air quality probe minimum value | 16 (30) / 18 (50) ¹ | 16 (30) / 18 (50) ¹ | Size code (no air-quality probe on the HRDS+). 9.3 parameter files for the HRDS+ 50: 16 |
+| [1791](MODBUS_REGISTERS.md#reg-1791) | [PH19](MODBUS_REGISTERS.md#ph19) Air quality probe minimum value | 16 (30) / 18 (50) ¹ | 16 (30) / 18 (50) ¹ | Size code. 9.3 files for the HRDS+ 50: 16 |
 | [1792](MODBUS_REGISTERS.md#reg-1792) | [PH20](MODBUS_REGISTERS.md#ph20) Air quality probe maximum value | 2000 ppm | 2000 ppm |  |
 | [1793](MODBUS_REGISTERS.md#reg-1793) | [PH21](MODBUS_REGISTERS.md#ph21) High pressure probe minimum value | 5.0 bar | 5.0 bar |  |
 | [1794](MODBUS_REGISTERS.md#reg-1794) | [PH22](MODBUS_REGISTERS.md#ph22) High pressure probe maximum value | 50.0 bar | 50.0 bar |  |
@@ -424,13 +409,13 @@ requests) are what hej.luft lists for a new unit.
 | [1849](MODBUS_REGISTERS.md#reg-1849) | [Pb07](MODBUS_REGISTERS.md#pb07) Sniffing cycle active time | 60 s | 60 s |  |
 | [1850](MODBUS_REGISTERS.md#reg-1850) | [Pb08](MODBUS_REGISTERS.md#pb08) Sniffing cycle wait time | 99 min | 99 min | Changed with FW 9.2 |
 | [1851](MODBUS_REGISTERS.md#reg-1851) | [PE21](MODBUS_REGISTERS.md#pe21) Modulating compressor minimum percentage in integration | 20.00 % | 20.00 % |  |
-| [1852](MODBUS_REGISTERS.md#reg-1852) | [PF27](MODBUS_REGISTERS.md#pf27) Supply fan minimum speed in integration mode | 50.00 % | 50.00 % | Changed with FW 9.2. 30.00 % is also safe (hej.luft) |
-| [1853](MODBUS_REGISTERS.md#reg-1853) | [PF28](MODBUS_REGISTERS.md#pf28) Supply fan minimum speed in dehumidify | 50.00 % | 50.00 % | Changed with FW 9.2. 30.00 % is also safe (hej.luft) |
+| [1852](MODBUS_REGISTERS.md#reg-1852) | [PF27](MODBUS_REGISTERS.md#pf27) Supply fan minimum speed in integration mode | 50.00 % | 50.00 % | Changed with FW 9.2. 30 % also works |
+| [1853](MODBUS_REGISTERS.md#reg-1853) | [PF28](MODBUS_REGISTERS.md#pf28) Supply fan minimum speed in dehumidify | 50.00 % | 50.00 % | Changed with FW 9.2. 30 % also works |
 | [1854](MODBUS_REGISTERS.md#reg-1854) | [PF29](MODBUS_REGISTERS.md#pf29) Return fan minimum speed | 20.00 % | 20.00 % |  |
 | [1855](MODBUS_REGISTERS.md#reg-1855) | [PF30](MODBUS_REGISTERS.md#pf30) Return fan maximum speed | 75.00 % | 75.00 % |  |
 | [1856](MODBUS_REGISTERS.md#reg-1856) | [PF31](MODBUS_REGISTERS.md#pf31) Integration type | Higher manual and remote | Higher manual and remote |  |
 | [1857](MODBUS_REGISTERS.md#reg-1857) | [PF32](MODBUS_REGISTERS.md#pf32) Return fan speed forced by DI | 70.00 % | 70.00 % |  |
-| [1858](MODBUS_REGISTERS.md#reg-1858) | [PM22](MODBUS_REGISTERS.md#pm22) Return fan manual setpoint | 20.00 % | 20.00 % | Run-time value, not in the parameter files |
+| [1858](MODBUS_REGISTERS.md#reg-1858) | [PM22](MODBUS_REGISTERS.md#pm22) Return fan manual setpoint | 20.00 % | 20.00 % | Run-time value, not in the files |
 | [1859](MODBUS_REGISTERS.md#reg-1859) | `FRC` Comfort band return fan setpoint | 60.00 % | 60.00 % |  |
 | [1860](MODBUS_REGISTERS.md#reg-1860) | `FRE` Economy band return fan setpoint | 50.00 % | 50.00 % |  |
 | [1861](MODBUS_REGISTERS.md#reg-1861) | `FRN` Night band return fan setpoint | 40.00 % | 40.00 % |  |
