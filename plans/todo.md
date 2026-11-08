@@ -296,10 +296,10 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 - [ ] **Evaporator setpoint per request.** Set [PU11](../doc/references/MODBUS_REGISTERS.md#pu11) to 6.0 °C for a DEU
       request and 11 °C for an INT cooling request, as the vendor suggests
-      (`UNIT_BEHAVIOUR.md` §2.1), with both values as options and 12 °C as the
-      limit. Needs an ADR first: it is a write the integration makes on its own
-      (ADR-0010) to a value kept in non-volatile memory, so only when it
-      changes (ADR-0023).
+      (`UNIT_BEHAVIOUR.md` §2.1), never above 12 °C. Needs an ADR first: it is
+      a write the integration makes on its own (ADR-0010), to a value kept in
+      non-volatile memory, so only when it changes (ADR-0023); and the two
+      setpoints must not become options that shadow PU11 (ADR-0034).
 
 - [ ] **[*Season*](../doc/entity-reference.md#season) jumps back after a write.** It shows the old season
       until the next read cycle (T31), because `season` is not in
