@@ -75,12 +75,11 @@ files here are for revision `AA09` [FW].
 ## Every parameter
 
 Values as the Parameters Manager shows them. "(30)" / "(50)": HRDS+ 30 /
-HRDS+ 50. Run-time values (working hours, manual requests) are those of a new
-unit.
+HRDS+ 50. Run-time values (working hours, last maintenance, manual requests)
+are not parameters and not part of the files, so they are not listed.
 
 | Address | Parameter | FW 9.2 | FW 9.3 / 9.4 | Note |
 |---------|-----------|--------|--------------|------|
-| [1107](MODBUS_REGISTERS.md#reg-1107) | Holiday start command | --- | --- | Run-time value, not in the files |
 | [1497](MODBUS_REGISTERS.md#reg-1497) | Holiday period days | 7 | 7 |  |
 | [1498](MODBUS_REGISTERS.md#reg-1498) | Holiday period hours | 0 | 0 |  |
 | [1499](MODBUS_REGISTERS.md#reg-1499) | F1 mode | Comfort | Comfort |  |
@@ -159,13 +158,7 @@ unit.
 | [1600](MODBUS_REGISTERS.md#reg-1600) | `BKT` Evj/Epj LCD backlight timeout | 30 s | 30 s |  |
 | [1601](MODBUS_REGISTERS.md#reg-1601) | `PSd1` User password | 0 | 0 |  |
 | [1602](MODBUS_REGISTERS.md#reg-1602) | [PM00](MODBUS_REGISTERS.md#pm00) Supply fan working hours limit | 20000 h | 20000 h |  |
-| [1604](MODBUS_REGISTERS.md#reg-1604) | [PM01](MODBUS_REGISTERS.md#pm01) Supply fan working hours | 0 h | 0 h | Run-time value, not in the files |
-| [1606](MODBUS_REGISTERS.md#reg-1606) | [PM02](MODBUS_REGISTERS.md#pm02) Return fan working hours | 0 h | 0 h | Run-time value, not in the files |
 | [1608](MODBUS_REGISTERS.md#reg-1608) | [PM03](MODBUS_REGISTERS.md#pm03) Compressor working hours limit | 20000 h | 20000 h |  |
-| [1610](MODBUS_REGISTERS.md#reg-1610) | [PM04](MODBUS_REGISTERS.md#pm04) Compressor working hours | 0 h | 0 h | Run-time value, not in the files |
-| [1612](MODBUS_REGISTERS.md#reg-1612) | [PM90](MODBUS_REGISTERS.md#pm90) Last maintenance | not set | not set | Run-time value, not in the files |
-| [1614](MODBUS_REGISTERS.md#reg-1614) | [PM20](MODBUS_REGISTERS.md#pm20) Supply fan manual setpoint | 30.00 % | 30.00 % | Run-time value, not in the files |
-| [1615](MODBUS_REGISTERS.md#reg-1615) | [PM21](MODBUS_REGISTERS.md#pm21) Forcing compressor | Disabled | Disabled | Run-time value, not in the files |
 | [1616](MODBUS_REGISTERS.md#reg-1616) | [PM80](MODBUS_REGISTERS.md#pm80) Return/Room T. probe calibration | 0.0 °C | 0.0 °C |  |
 | [1617](MODBUS_REGISTERS.md#reg-1617) | [PM81](MODBUS_REGISTERS.md#pm81) Outdoor T. probe calibration | 0.0 °C | 0.0 °C |  |
 | [1618](MODBUS_REGISTERS.md#reg-1618) | [PM82](MODBUS_REGISTERS.md#pm82) Water T. probe calibration | 0.0 °C | 0.0 °C |  |
@@ -402,7 +395,6 @@ unit.
 | [1855](MODBUS_REGISTERS.md#reg-1855) | [PF30](MODBUS_REGISTERS.md#pf30) Return fan maximum speed | 75.00 % | 75.00 % |  |
 | [1856](MODBUS_REGISTERS.md#reg-1856) | [PF31](MODBUS_REGISTERS.md#pf31) Integration type | Higher manual and remote | Higher manual and remote |  |
 | [1857](MODBUS_REGISTERS.md#reg-1857) | [PF32](MODBUS_REGISTERS.md#pf32) Return fan speed forced by DI | 70.00 % | 70.00 % |  |
-| [1858](MODBUS_REGISTERS.md#reg-1858) | [PM22](MODBUS_REGISTERS.md#pm22) Return fan manual setpoint | 20.00 % | 20.00 % | Run-time value, not in the files |
 | [1859](MODBUS_REGISTERS.md#reg-1859) | `FRC` Comfort band return fan setpoint | 60.00 % | 60.00 % |  |
 | [1860](MODBUS_REGISTERS.md#reg-1860) | `FRE` Economy band return fan setpoint | 50.00 % | 50.00 % |  |
 | [1861](MODBUS_REGISTERS.md#reg-1861) | `FRN` Night band return fan setpoint | 40.00 % | 40.00 % |  |
