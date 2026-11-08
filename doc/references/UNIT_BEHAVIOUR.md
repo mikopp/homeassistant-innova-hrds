@@ -162,10 +162,13 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
 2. Directly behind it sits the **water register** ("Nachheizregister"), a water
    coil [HB 2.6, 2.6.3].
 3. The compressor modulates to hold the evaporator at its setpoint [PU11](MODBUS_REGISTERS.md#pu11),
-   independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12]. A
-   higher setpoint dehumidifies less and leaves warmer supply air, which
-   lowers the risk of condensation on uninsulated ducts during INT cooling;
-   the vendor's advice is never to set it above 12 °C [VC].
+   independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12].
+   * The one setpoint serves both requests. The vendor suggests a low one for
+     DEU, 6.0 °C (the default), for the most dehumidification, and a higher one
+     for INT cooling, 11 °C: less dehumidification but warmer supply air, so
+     less risk of condensation on uninsulated ducts [VC].
+   * A home automation can do this today by writing [PU11](MODBUS_REGISTERS.md#pu11) when the request
+     changes; never above 12 °C [VC].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
 
 ### 2.2 Water path
