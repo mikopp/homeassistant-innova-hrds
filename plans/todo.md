@@ -233,9 +233,10 @@ No INT request has been run yet. One summer INT run answers most of these.
       their manuals show the same type code, terminals, alarm numbers, menus
       and compressor states
       ([tested setups](../doc/tested-setups.md#the-same-unit-under-other-names)).
+      The vendor confirms the Italian sellers (also Cappellotto, Geatherm)
+      but knows no details; their units may run older firmware.
       Open: do they report an `EPB9…` product code, and is the register map
-      the HRDS+ one? Needs the vendor's answer or a diagnostic dump from an
-      owner.
+      the HRDS+ one? Needs a diagnostic dump from an owner.
 - [ ] **Non-`R` unit read-back.** Does `outDO_RecircDamper` ([1134](../doc/references/MODBUS_REGISTERS.md#reg-1134)) read
       `2 = Disable` without recirculation, and what do the fan registers read?
 - [ ] **As-delivered settings.** The reference unit shipped with values that

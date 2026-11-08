@@ -42,6 +42,16 @@ The vendor's and other users' statements from the energiesparhaus.at HRDS+
 forum thread are quoted with their post numbers in
 [`UNIT_BEHAVIOUR.md` §13](UNIT_BEHAVIOUR.md#13-evidence-log-what-was-seen-on-real-hardware).
 
+## Who makes and sells the unit
+
+The unit is built by Sinergia S.r.l., a subsidiary of INNOVA S.r.l.; Innova
+sells it and signs the declaration of conformity. hej.luft is the first to
+sell it under the Innova name. In Italy it has been sold as HRDS by
+Cappellotto, Geatherm, VMC Group, Vortice and others, partly with their own
+displays or small differences; those units may run older firmware (confirmed
+by the vendor). The brands and their models, all not tested:
+[the same unit under other names](../tested-setups.md#the-same-unit-under-other-names).
+
 ## Technical data (airflow, capacity, power)
 
 From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /

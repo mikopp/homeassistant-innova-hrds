@@ -35,20 +35,22 @@ The firmware column is the revision the unit reports, shown as
 
 ## The same unit under other names
 
-INNOVA S.r.l. builds the HRDS+ (inverter compressor) and the plain HRDS
-(on/off compressor), see its declaration of conformity in
-[`references/`](references/README.md). The HRDS is sold in Italy under other
-names:
+Before hej.luft, the HRDS was sold in Italy only by other companies, partly
+with their own displays or small differences; who builds and sells the unit:
+[`references/README.md`](references/README.md#who-makes-and-sells-the-unit).
+The sellers named by the vendor:
 
 | Brand | Models | Status |
 |-------|--------|--------|
 | [Vortice](https://www.vortice.it/it/vmc_recupero_calore/moduli-aggiuntivi-da-condotto/per-deumidificazione) | HRDS 30 DC, HRDS 30 R DC, HRDS 50 DC, HRDS 50 R DC | Not tested |
 | [VMC Group](https://www.vmcgroup.it/prodotti-deumidificatori/mdr-k) | MDR K (supply air only) and MDR K R (with recirculation), sizes 15-30 and 25-50, versions D and DC | Not tested |
+| Cappellotto S.r.l. | Not known (no product page found) | Not tested |
+| Geatherm | Not known (no product page found) | Not tested |
 
-Their manuals ([`references/`](references/README.md)) show the same unit: the
-same type code (size, `H`, `R`, `K` electronics, `D`/`DC`), terminal strip,
-alarm numbers, menu levels and compressor states as the HRDS+. How they
-differ from the hej.luft HRDS+:
+The Vortice and VMC Group manuals ([`references/`](references/README.md))
+show the same unit: the same type code (size, `H`, `R`, `K` electronics,
+`D`/`DC`), terminal strip, alarm numbers, menu levels and compressor states
+as the HRDS+. How they differ from the hej.luft HRDS+:
 
 * **On/off compressor instead of an inverter.** It runs at one speed and
   switches on and off to hold the humidity instead of modulating, so the
@@ -57,10 +59,11 @@ differ from the hej.luft HRDS+:
 * Refrigerant R134a instead of R410A.
 * The older CNU display panel instead of the CNU2.
 
-Support needs a report from a real unit. The integration connects only when
-the controller reports an EVCO `EPB9…` product code, and whether the registers
-match the HRDS+ register map is unconfirmed. If you have one of these units,
-see [Add your setup](#add-your-setup).
+**None of these units has been tried with the integration.** It connects only
+when the controller reports an EVCO `EPB9…` product code, and whether the
+registers match the HRDS+ register map is unconfirmed. If you have one of
+them and try it, please report what you see, working or not: open an issue
+with the diagnostic output, see [Add your setup](#add-your-setup).
 
 ## Installation scenarios
 
