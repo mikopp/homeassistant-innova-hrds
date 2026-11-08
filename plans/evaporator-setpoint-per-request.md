@@ -2,34 +2,46 @@
 
 The unit has one evaporator setpoint, [PU11](../doc/references/MODBUS_REGISTERS.md#pu11), for both requests. The vendor
 suggests a low setpoint for a dehumidify (DEU) request and a higher one for
-integration (INT) cooling, never above 12 °C
+integration (INT), never above 12 °C, and INT not below 8 °C
 ([`UNIT_BEHAVIOUR.md` §2.1](../doc/references/UNIT_BEHAVIOUR.md#21-air-path)). The integration should set PU11 to match the
-request, as an option the user turns on.
+request, as an option the user turns on, and refuse INT while PU11 is below
+8 °C.
 
 ## Behaviour
 
 * **Off by default.** A switch on the setup device turns the feature on. It is
   kept across restarts, like [*Allow operational requests*](../doc/entity-reference.md#allow-operational-requests).
 * **Two settings**, two numbers on the setup device, kept across restarts:
-  the setpoint for dehumidifying (default 6.0 °C) and for cooling
-  (default 11.0 °C), each 0–12 °C. They are the integration's own policy, not
-  a copy of a register; PU11 itself keeps showing the unit's read-back.
+  the setpoint for dehumidifying (default 6.0 °C, 0–12 °C) and for
+  integration (default 11.0 °C, 8–12 °C). They are the integration's own
+  policy, not a copy of a register; PU11 itself keeps showing the unit's
+  read-back.
 * **When it writes.** Only when Home Assistant raises a request, in the same
   service call, before the request itself:
 
   | Request raised from Home Assistant | PU11 is set to |
   |------------------------------------|----------------|
-  | DEU (climate *Dry*, [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request) on) | the dehumidify setting |
-  | INT in summer (climate *Cool*, the [integration request](../doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) on) | the cooling setting |
-  | INT in winter (heating, no compressor) | nothing |
+  | DEU (climate *Dry*, [*Dehumidify request*](../doc/entity-reference.md#dehumidify-request) on), INT off | the dehumidify setting |
+  | INT, summer or winter (climate *Cool* or *Heat*, the [integration request](../doc/entity-reference.md#integration-request-cool-in-summer-heat-in-winter) on) | the integration setting |
+  | DEU while INT is on | nothing: INT's setting stays |
   | Request switched off, or raised by the display or the terminals | nothing |
 
+  INT's setting wins whenever INT is on: it is the higher one, INT implies
+  dehumidifying in summer, and in winter the unit heats, where a low setpoint
+  never helps.
 * **Only when it differs.** `_write_registers` already reads the register
   first and skips a value the unit holds (ADR-0023), so PU11 is written only
   when the request type changes. A user does not switch between DEU and INT
   back and forth, so this is a few writes a season.
-* **Failure.** If the PU11 write fails, log a warning and still send the
-  request: the request is what the user asked for.
+* **INT guard (always, with or without the feature).** An INT request from
+  Home Assistant is refused while PU11 reads below 8 °C, or is unknown. With
+  the feature on, the guard checks PU11 after its write, so:
+  * PU11 write succeeds: INT is sent.
+  * PU11 write fails and PU11 still reads 8 °C or more: warning, INT is sent.
+  * PU11 write fails and PU11 reads below 8 °C: INT is refused, with the
+    reason.
+* **DEU failure.** If the PU11 write for DEU fails, log a warning and still
+  send DEU: the request is what the user asked for.
 
 ## Why the ADRs allow it
 
@@ -42,32 +54,43 @@ request, as an option the user turns on.
 * **ADR-0034 (no option shadows a register):** the two settings say what to
   write, not what PU11 holds; PU11 stays the unit's read-back.
 * **ADR-0012, ADR-0013, ADR-0014:** the PU11 write happens only after the
-  request has passed `check_write_allowed`.
+  request has passed `check_write_allowed`. The 8 °C rule is a new guard in
+  `check_write_allowed` for INT, next to the enables, season and brine guard.
 
-Record this as a new ADR (`/adr new`) before coding, so `/adr check` knows the
-write is intended.
+Record this as a new ADR (`/adr new`) before coding: the PU11 write with a
+request, and the 8 °C INT guard. Then `/adr check` knows both are intended.
 
 ## Steps
 
-1. ADR: setpoint per request, as above.
+1. ADR: setpoint per request and the INT guard, as above.
 2. `const.py`: the switch and the two numbers (integration-held, restored,
-   setup device, in `SETUP_KEYS`), with en/de translations.
-3. `__init__.py`: in the request path (`write_entity_value` for the DEU and
-   INT requests and the climate modes), after `check_write_allowed`, write
-   PU11 through `_write_registers` when the switch is on.
-4. `doc/entity-reference.md`: the three entities under the setup device.
-   README: a short section under "Using the integration". CHANGELOG entry.
+   setup device, in `SETUP_KEYS`), with en/de translations; the 8 °C limit as
+   a constant.
+3. `__init__.py`:
+   * `check_write_allowed`: refuse INT on while PU11 is below 8 °C or
+     unknown.
+   * Request path (`write_entity_value` for DEU, INT and the climate modes):
+     after the other guards, when the switch is on, write PU11 through
+     `_write_registers`, then apply the INT guard to the read-back.
+4. `doc/entity-reference.md`: the three entities under the setup device, and
+   the INT guard in the INT row. README: a short section under "Using the
+   integration", and the guard where INT is described. CHANGELOG entry.
 5. Tests (`tests/ha`, simulator):
-   * DEU on with the feature on: PU11 becomes the dehumidify setting, then the
-     request is written.
-   * Same request again: no second PU11 write.
-   * INT in summer: the cooling setting. INT in winter: no PU11 write.
-   * Feature off: PU11 is never written.
-   * PU11 write fails: warning, and the request is still written.
-   * A request refused by `check_write_allowed`: no PU11 write.
+   * DEU on, feature on: PU11 becomes the dehumidify setting, then DEU is
+     written. Same request again: no second PU11 write.
+   * INT on (summer and winter): PU11 becomes the integration setting, then
+     INT.
+   * DEU on while INT is on: PU11 is not lowered.
+   * Feature off: PU11 is never written; INT is refused while PU11 < 8 °C.
+   * PU11 write fails: DEU still sent; INT sent if PU11 ≥ 8 °C, refused if
+     below.
+   * A request refused by another guard: no PU11 write.
 
 ## Open
 
-* When both requests are on (for example INT with [PU05](../doc/references/MODBUS_REGISTERS.md#pu05) = 1 also raises DEU),
-  which setting wins? Proposal: INT in summer wins, because the cooling
-  setpoint protects the ducts.
+* INT switched off from Home Assistant while DEU stays on: write the
+  dehumidify setting then, or leave PU11 until the next DEU request?
+* Lowering PU11 below 8 °C (installer device) while INT is on: refuse that
+  write too?
+* INT raised by the display or the terminals while PU11 is below 8 °C cannot
+  be refused; a repair issue could point it out.

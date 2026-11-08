@@ -167,6 +167,8 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
      DEU, 6.0 °C (the default), for the most dehumidification, and a higher one
      for INT cooling, 11 °C: less dehumidification but warmer supply air, so
      less risk of condensation on uninsulated ducts [VC].
+   * INT should not run with the setpoint below 8 °C: the supply air gets
+     cold enough to condense on the ducts [VC].
    * A home automation can do this today by writing [PU11](MODBUS_REGISTERS.md#pu11) when the request
      changes; never above 12 °C [VC].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
