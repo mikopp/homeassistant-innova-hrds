@@ -1,11 +1,19 @@
 # hej.luft parameter values: HRDS+
 
-hej.luft's value for every HRDS+ parameter, per firmware and size, the
-parameter files that hold them, and how to load them. Registers (address,
+hej.luft's intended value for every HRDS+ parameter, per firmware and size,
+the parameter files that hold them, and how to load them. Registers (address,
 scale, range) are in [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md), what the unit does with them in
 [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md), and where a handbook default differs in
 [§15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value) there. Cited as `[FW]` (provided by hej.luft) and `[VC]` (confirmed by
 the vendor).
+
+## Intended and actual values
+
+The values here are the ones hej.luft intends for each firmware and size
+[FW, VC]. A unit can come with other values [VC]: the reference unit
+(firmware 9.2) differs in several parameters, listed in the *Shipped* column of
+[`UNIT_BEHAVIOUR.md` §15](UNIT_BEHAVIOUR.md#15-parameters-source-default-and-shipped-value).
+Read the unit before relying on a value here.
 
 ## Parameter files
 
@@ -55,8 +63,8 @@ loading a parameter file fixes it [FW].
 
 ## Firmware 9.2 and 9.3 / 9.4
 
-* The values differ only in [Pb01](MODBUS_REGISTERS.md#pb01), the valve off delay: 30 s on 9.2, 250 s on
-  9.3 / 9.4 [FW, VC]. Why, and a workaround for 9.2:
+* The intended 9.2 set is the 9.3 / 9.4 set with [Pb01](MODBUS_REGISTERS.md#pb01), the valve off delay, at
+  30 s instead of 250 s [FW, VC]. Why, and a workaround for 9.2:
   [`UNIT_BEHAVIOUR.md` §1.2](UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants).
 * In every file [PH02](MODBUS_REGISTERS.md#ph02) is Disabled and [PH27](MODBUS_REGISTERS.md#ph27) / [PH28](MODBUS_REGISTERS.md#ph28) are Enabled: after loading
   one, on/off over Modbus is off.
@@ -70,11 +78,11 @@ files here are for revision `AA09` [FW].
 
 ## Every parameter
 
-Values as the Parameters Manager shows them. "(30)" / "(50)": HRDS+ 30 /
+Intended values as the Parameters Manager shows them. "(30)" / "(50)": HRDS+ 30 /
 HRDS+ 50. Run-time values (working hours, last maintenance, manual requests)
 are not parameters and not part of the files, so they are not listed.
 
-| Address | Parameter | FW 9.2 | FW 9.3 / 9.4 | Note |
+| Address | Parameter | FW 9.2 intended | FW 9.3 / 9.4 intended | Note |
 |---------|-----------|--------|--------------|------|
 | [1497](MODBUS_REGISTERS.md#reg-1497) | Holiday period days | 7 | 7 |  |
 | [1498](MODBUS_REGISTERS.md#reg-1498) | Holiday period hours | 0 | 0 |  |
