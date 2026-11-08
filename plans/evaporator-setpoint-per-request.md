@@ -16,7 +16,7 @@ request, as an option the user turns on, and refuse INT while PU11 is below
   integration (default 11.0 °C, 8–12 °C). They are the integration's own
   policy, not a copy of a register; PU11 itself keeps showing the unit's
   read-back.
-* **When it writes.** Only when Home Assistant raises a request, in the same
+* **When it writes.** Only when Home Assistant raises a request (see Scope), in the same
   service call, before the request itself:
 
   | Request raised from Home Assistant | PU11 is set to |
@@ -86,11 +86,14 @@ request, and the 8 °C INT guard. Then `/adr check` knows both are intended.
      below.
    * A request refused by another guard: no PU11 write.
 
-## Open
+## Scope
 
-* INT switched off from Home Assistant while DEU stays on: write the
-  dehumidify setting then, or leave PU11 until the next DEU request?
-* Lowering PU11 below 8 °C (installer device) while INT is on: refuse that
-  write too?
-* INT raised by the display or the terminals while PU11 is below 8 °C cannot
-  be refused; a repair issue could point it out.
+PU11 is checked and set only when Home Assistant raises a DEU or INT request.
+Nothing else reads it as a trigger or writes it:
+
+* Switching a request off is not a request: PU11 stays as it is, also when
+  INT goes off and DEU stays on.
+* A change to PU11 by anyone else (display, BMS, installer device) is not
+  reacted to; the next request from Home Assistant checks it.
+* Requests raised on the display or the terminals are the unit's own
+  business; the integration does not step in.
