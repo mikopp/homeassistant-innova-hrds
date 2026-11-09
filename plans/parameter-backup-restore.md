@@ -147,5 +147,4 @@ hold it.
    * Out-of-range value, unknown key, wrong driver: refused before any write.
    * Run-time registers are never read into a backup nor written.
 5. Docs: usage in `tests/CLAUDE.md`; the parameter loading in
-   `VENDOR_PARAMETERS.md` "Firmware updates" and the README "After a
-   firmware update" point to it. CHANGELOG entry.
+   `VENDOR_PARAMETERS.md` "Firmware updates" points to it. CHANGELOG entry.

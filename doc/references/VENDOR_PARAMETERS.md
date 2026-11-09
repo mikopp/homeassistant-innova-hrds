@@ -49,6 +49,16 @@ either:
 If the display loops on "checking 20k, 50k, 125k, 500k …" after the update,
 loading a parameter file fixes it [FW].
 
+With the integration, after the update:
+
+1. Reload the integration, so [*Firmware*](../entity-reference.md#firmware) shows the new revision.
+2. Check the [*Setup check*](../entity-reference.md#setup-check). The parameter files turn off
+   [*Enable on/off via Modbus (PH02)*](../entity-reference.md#enable-on-off-via-modbus-ph02); turn it on again if Home Assistant should
+   switch the unit on and off ([README, step 4](../../README.md#4-choose-what-home-assistant-may-control)). The integration never sets it by
+   itself.
+3. Settings changed on the unit, for example target humidity limits or
+   installer parameters, are back at the vendor's values; set them again.
+
 ## Sizes
 
 * The HRDS+ 30 and 50 differ only in [PE07](MODBUS_REGISTERS.md#pe07) / [PE22](MODBUS_REGISTERS.md#pe22), the maximum compressor

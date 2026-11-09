@@ -338,28 +338,6 @@ target:
    and at the Home Assistant log. See [Reporting issues](#reporting-issues) if
    you need help.
 
-### After a firmware update
-
-A firmware update does not change the unit's Modbus registers, but it resets
-**every parameter** to the controller's generic defaults, which do not suit the
-HRDS+. Restore them with hej.luft's parameter file for your size and display,
-or by writing the values over Modbus. Files, values and steps:
-[`VENDOR_PARAMETERS.md`](doc/references/VENDOR_PARAMETERS.md).
-
-After the update:
-
-1. Reload the integration, so [*Firmware*](doc/entity-reference.md#firmware) shows the new revision.
-2. Check the [*Setup check*](doc/entity-reference.md#setup-check). The vendor's parameter files turn off
-   [*Enable on/off via Modbus (PH02)*](doc/entity-reference.md#enable-on-off-via-modbus-ph02); turn it on again (step 4) if Home
-   Assistant should switch the unit on and off. The integration never sets
-   it by itself.
-3. Settings you changed on the unit, for example target humidity limits or
-   installer parameters, are back at the vendor's values; set them again.
-
-Firmware 9.3 is the last version for units built before November 2026.
-Firmware 9.4 is only for the newer controller board; whether its registers
-differ is not known yet ([`UNIT_BEHAVIOUR.md` §1.2](doc/references/UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants)).
-
 ## How the unit works
 
 A short summary for using the integration. The full description, with handbook
