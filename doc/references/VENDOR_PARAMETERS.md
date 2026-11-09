@@ -33,14 +33,13 @@ Read the unit before relying on a value here.
   parameter definitions (`Drv970AA09`). Both, and the firmware, come from
   hej.luft.
 
-## Loading the values
+## Firmware updates
 
 A firmware update resets every parameter to the controller's generic defaults,
 which do not suit the HRDS+, so the parameters must be loaded afterwards [FW],
 either:
 
-* with the EVCO Parameters Manager over USB: connect with "USBAdapter", open
-  the file for the size and display, Device → Program [FW]; or
+* with the EVCO Parameters Manager over USB.
 * over Modbus: every parameter is a holding register at the address in the
   table, so the values can be written one by one [VC]. Write the Modbus
   address and baud rate last, if at all: changing them cuts the connection.
