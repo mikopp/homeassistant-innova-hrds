@@ -2,20 +2,29 @@
 
 The unit has one evaporator setpoint, [PU11](../doc/references/MODBUS_REGISTERS.md#pu11), for both requests. The vendor
 suggests a low setpoint for a dehumidify (DEU) request and a higher one for
-integration (INT), never above 12 °C, and INT not below 8 °C
-([`UNIT_BEHAVIOUR.md` §2.1](../doc/references/UNIT_BEHAVIOUR.md#21-air-path)). The integration should set PU11 to match the
-request, as an option the user turns on, and refuse INT while PU11 is below
-8 °C.
+integration (INT), and INT not below 8 °C
+([`UNIT_BEHAVIOUR.md` §2.1](../doc/references/UNIT_BEHAVIOUR.md#21-air-path)). Agreed with the vendor: PU11 is
+never set outside 5 to 12 °C, so the compressor is not brought into
+unpleasant operating conditions. The integration sets PU11 to match the
+request and refuses INT while PU11 is below 8 °C. All of it is an option the
+user turns on: a newer HRDS that no longer needs it runs without it.
 
 ## Behaviour
 
-* **Off by default.** A switch on the setup device turns the feature on. It is
-  kept across restarts, like [*Allow operational requests*](../doc/entity-reference.md#allow-operational-requests).
+* **Optional, off by default.** A switch on the setup device turns the whole
+  feature on: the PU11 writes and the INT guard. With it off the integration
+  never touches PU11 and adds no guard, so a unit that does not need it (a
+  newer HRDS) is not affected. It is kept across restarts, like
+  [*Allow operational requests*](../doc/entity-reference.md#allow-operational-requests).
 * **Two settings**, two numbers on the setup device, kept across restarts:
-  the setpoint for dehumidifying (default 6.0 °C, 0–12 °C) and for
-  integration (default 11.0 °C, 8–12 °C). They are the integration's own
+  the setpoint when only DEU runs (default 6.0 °C, range 5–12 °C) and when
+  INT runs (default 11.0 °C, range 8–12 °C). They are the integration's own
   policy, not a copy of a register; PU11 itself keeps showing the unit's
   read-back.
+* **The ranges are checked.** The number entities enforce the range. The
+  value is checked again before every PU11 write, so a stored value outside
+  its range (for example from an older version) is never written: the
+  default is used and a warning is logged.
 * **When it writes.** Only when Home Assistant raises a request (see Scope), in the same
   service call, before the request itself:
 
@@ -33,9 +42,9 @@ request, as an option the user turns on, and refuse INT while PU11 is below
   first and skips a value the unit holds (ADR-0023), so PU11 is written only
   when the request type changes. A user does not switch between DEU and INT
   back and forth, so this is a few writes a season.
-* **INT guard (always, with or without the feature).** An INT request from
-  Home Assistant is refused while PU11 reads below 8 °C, or is unknown. With
-  the feature on, the guard checks PU11 after its write, so:
+* **INT guard (with the feature on).** An INT request from Home Assistant is
+  refused while PU11 reads below 8 °C, or is unknown. The guard checks PU11
+  after the write above, so:
   * PU11 write succeeds: INT is sent.
   * PU11 write fails and PU11 still reads 8 °C or more: warning, INT is sent.
   * PU11 write fails and PU11 reads below 8 °C: INT is refused, with the
@@ -47,7 +56,7 @@ request, as an option the user turns on, and refuse INT while PU11 is below
 
 * **ADR-0010 (only PH01/HA00 written unasked):** PU11 is written only as part
   of a request the user raises, with the feature switched on, so it is not
-  written unasked.
+  written unasked. The ranges mean the written value is always 5 to 12 °C.
 * **ADR-0023 (write only what changes):** the write is skipped when PU11
   already holds the value, and it happens only when the request type changes.
   It is not a periodic write.
@@ -55,7 +64,8 @@ request, as an option the user turns on, and refuse INT while PU11 is below
   write, not what PU11 holds; PU11 stays the unit's read-back.
 * **ADR-0012, ADR-0013, ADR-0014:** the PU11 write happens only after the
   request has passed `check_write_allowed`. The 8 °C rule is a new guard in
-  `check_write_allowed` for INT, next to the enables, season and brine guard.
+  `check_write_allowed` for INT, next to the enables, season and brine guard;
+  it applies only when the feature is on.
 
 Record this as a new ADR (`/adr new`) before coding: the PU11 write with a
 request, and the 8 °C INT guard. Then `/adr check` knows both are intended.
@@ -67,13 +77,16 @@ request, and the 8 °C INT guard. Then `/adr check` knows both are intended.
    setup device, in `SETUP_KEYS`), with en/de translations; the 8 °C limit as
    a constant.
 3. `__init__.py`:
-   * `check_write_allowed`: refuse INT on while PU11 is below 8 °C or
-     unknown.
+   * `check_write_allowed`: with the switch on, refuse INT on while PU11 is
+     below 8 °C or unknown.
    * Request path (`write_entity_value` for DEU, INT and the climate modes):
-     after the other guards, when the switch is on, write PU11 through
-     `_write_registers`, then apply the INT guard to the read-back.
-4. `doc/entity-reference.md`: the three entities under the setup device, and
-   the INT guard in the INT row. README: a short section under "Using the
+     after the other guards, when the switch is on, check the setting's range,
+     write PU11 through `_write_registers`, then apply the INT guard to the
+     read-back.
+4. `installer_params.py`: the PU11 installer number allows 5–12 °C (now
+   0–12), the same limits as the two settings. `doc/entity-reference.md`: the
+   three entities under the setup device, the INT guard in the INT row, and
+   the PU11 range. README: a short section under "Using the
    integration", and the guard where INT is described. CHANGELOG entry.
 5. Tests (`tests/ha`, simulator):
    * DEU on, feature on: PU11 becomes the dehumidify setting, then DEU is
@@ -81,7 +94,9 @@ request, and the 8 °C INT guard. Then `/adr check` knows both are intended.
    * INT on (summer and winter): PU11 becomes the integration setting, then
      INT.
    * DEU on while INT is on: PU11 is not lowered.
-   * Feature off: PU11 is never written; INT is refused while PU11 < 8 °C.
+   * Feature off: PU11 is never written and INT is not refused for PU11.
+   * Ranges: a setting outside its range is rejected by the entity; a stored
+     value outside it is not written (default used, warning logged).
    * PU11 write fails: DEU still sent; INT sent if PU11 ≥ 8 °C, refused if
      below.
    * A request refused by another guard: no PU11 write.
