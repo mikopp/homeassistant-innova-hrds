@@ -1,7 +1,7 @@
 # Parameter backup and restore over Modbus: implementation plan
 
 A firmware update resets every parameter
-([`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md#loading-the-values)). Today the only way back is
+([`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md#firmware-updates)). Today the only way back is
 hej.luft's Parameters Manager. A small program next to
 [`tests/diagnose_hrds.py`](../tests/diagnose_hrds.py) should do it over a Modbus TCP gateway:
 
@@ -147,5 +147,5 @@ hold it.
    * Out-of-range value, unknown key, wrong driver: refused before any write.
    * Run-time registers are never read into a backup nor written.
 5. Docs: usage in `tests/CLAUDE.md`; the parameter loading in
-   `VENDOR_PARAMETERS.md` "Loading the values" and the README "After a
+   `VENDOR_PARAMETERS.md` "Firmware updates" and the README "After a
    firmware update" point to it. CHANGELOG entry.
