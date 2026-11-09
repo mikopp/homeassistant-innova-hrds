@@ -17,7 +17,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ### 🛠️ Fixes and other changes
 
-- **The installer number *PU11 Evaporator temperature setpoint* goes up to 12 °C.** That is the vendor's safe limit; the controller itself accepts up to 68 °C.
+- **The installer number *PU11 Evaporator temperature setpoint* is limited to 5 to 12 °C.** That is the vendor's safe range, so the compressor is not brought into unpleasant operating conditions; the controller itself accepts 0 to 68 °C.
 - **The integration is named *hej.luft HRDS+ Dehumidifier*.** The device shows manufacturer *hej.luft (Innova)* and model *HRDS+*. Entity IDs and the configuration do not change.
 
 ### 📚 Documentation

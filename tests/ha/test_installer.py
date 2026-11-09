@@ -110,12 +110,14 @@ async def test_write_reads_back_only_that_register(hass, sim, clock):
     assert holding_addresses_read(s) == {PA03}
 
 
-async def test_pu11_is_capped_at_the_vendor_limit(hass, sim, clock):
-    """The vendor's advice: never set the evaporator setpoint above 12 °C."""
+async def test_pu11_is_limited_to_the_vendor_range(hass, sim, clock):
+    """The vendor's advice: keep the evaporator setpoint between 5 and 12 °C."""
     s = await add_entry(hass, sim, installer_device=True)
+    assert s.state("number", "inst_pu11").attributes["min"] == 5
     assert s.state("number", "inst_pu11").attributes["max"] == 12
-    with pytest.raises(ServiceValidationError):
-        await s.service("number", "set_value", "inst_pu11", value=13)
+    for value in (4, 13):
+        with pytest.raises(ServiceValidationError):
+            await s.service("number", "set_value", "inst_pu11", value=value)
     await s.service("number", "set_value", "inst_pu11", value=11)
     assert s.device.holding[1873] == 110
 

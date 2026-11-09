@@ -778,7 +778,7 @@ humidity setpoint [PU01](#pu01) is in [§5.2](#52-setpoints).
 | `0x069F` | 1695 | <a id="pu08"></a><a id="reg-1695"></a>`PU08_SetpointOnlyWaterDehum` | R/W | ×0.1 | 0…30 °C | Cold-water-only dehumidify below water temperature |
 | `0x06A0` | 1696 | <a id="pu09"></a><a id="reg-1696"></a>`PU09_EnableCmpSecondStep` | R/W | ×1 | 0…1 | Compressor as second step |
 | `0x06A1` | 1697 | <a id="pu10"></a><a id="reg-1697"></a>`PU10_DehumOutBandTime` | R/W | ×1 | 0…240 min | Delay before compressor second step |
-| `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>`PU11_Evaporation_Setpoint` | R/W | ×0.1 | 0…68 °C | Evaporator temperature setpoint (vendor advice: at most 12 °C) |
+| `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>`PU11_Evaporation_Setpoint` | R/W | ×0.1 | 0…68 °C | Evaporator temperature setpoint (vendor advice: 5 to 12 °C) |
 | `0x0752` | 1874 | <a id="pu12"></a><a id="reg-1874"></a>`PU12_Evaporation_DeadZone` | R/W | ×0.1 | 0.1…18 °C | Evaporator dead band |
 | `0x0761` | 1889 | <a id="reg-1889"></a><a id="pu13"></a>`PU13_MinTRoom_disableDEU` | R/W | — | 0-30.0 °C (×0.1) | Room temperature below which dehumidification (and the compressor) is disabled. |
 | `0x0762` | 1890 | <a id="reg-1890"></a><a id="pu14"></a>`PU14_TRoomDIFF_enableDEU` | R/W | — | 0.1-20.0 °C (×0.1) | Differential above [PU13](#pu13) at which dehumidification is re-enabled. |

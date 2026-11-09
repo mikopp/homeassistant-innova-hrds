@@ -169,7 +169,8 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
    * INT should not run with the setpoint below 8 °C: the supply air gets
      cold enough to condense on the ducts [VC].
    * A home automation can do this today by writing [PU11](MODBUS_REGISTERS.md#pu11) when the request
-     changes; never above 12 °C [VC].
+     changes. Keep it between 5 °C and 12 °C, so the compressor is not
+     brought into unpleasant operating conditions [VC].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
 
 ### 2.2 Water path
