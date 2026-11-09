@@ -13,6 +13,7 @@ it.
 |-------|------|
 | **How the unit behaves**: variants, states, start/stop sequences, summer/winter, display/probe configurations, fan, compressor, water circuit, alarm effects, display and Modbus actions, what was tested on real hardware | [`UNIT_BEHAVIOUR.md`](UNIT_BEHAVIOUR.md) |
 | **Which registers exist**: addresses, names, encodings, ranges, value meanings, write recipes | [`MODBUS_REGISTERS.md`](MODBUS_REGISTERS.md) |
+| **hej.luft's intended parameter values**: every parameter per firmware and size (a unit can carry others), loading them after a firmware update | [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md) |
 | Technical data (airflow, capacity, power) and the fan-speed → airflow estimate | this file, below |
 | What the Home Assistant integration does on top of the unit, and why | [`../adr/`](../adr/README.md) (decisions), [`../../README.md`](../../README.md) (users) |
 | Open hardware questions and test plans | [`../../plans/todo.md`](../../plans/todo.md) |
@@ -26,6 +27,7 @@ it.
 | [HRDS+_Modbus_RTU_RS485_DE.pdf](HRDS+_Modbus_RTU_RS485_DE.pdf) | Modbus RTU/RS-485 connection and register manual (German, Stand Mai 2026). Source of every register address. | `[MB p.n]` |
 | [HRDS+_Benutzerhandbuch_DE.pdf](HRDS+_Benutzerhandbuch_DE.pdf) | End-user handbook (German, 12 pp, Stand August 2026); a subset of the technical handbook. | `[HB n]` |
 | [HRDS+_Hydraulikplaene_DE.pdf](HRDS+_Hydraulikplaene_DE.pdf) | Hydraulic plans (German, 13 pp, Stand Aug. 2026): decision tree and the integration variants 1–9 (heating/cooling circuit, brine circuit, special cases); the same variants as HB §3.8. | `[HB 3.8]` |
+| [parameter-files/](parameter-files/) | hej.luft's parameter files for the HRDS+ 30 and 50, with and without display: firmware 9.3 / 9.4 and 9.2. See [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). | `[FW]` |
 | [HRDS_CE_Konformitaetserklaerung_Innova.pdf](HRDS_CE_Konformitaetserklaerung_Innova.pdf) | EU declaration of conformity by INNOVA S.r.l. (Storo, 20 Jan 2024) for the dehumidification units HRDS (codes DHAD…) and HRDS+ (codes DHAI…). | — |
 | [Vortice_HRDS_Libretto_IT-EN_2024.pdf](Vortice_HRDS_Libretto_IT-EN_2024.pdf), [Vortice_CNU_21607_Libretto_IT-EN_2019.pdf](Vortice_CNU_21607_Libretto_IT-EN_2019.pdf) | Vortice HRDS 30 / 50 (R) DC instruction booklet (Italian/English, 23 Feb 2024) and the manual of its CNU wall panel, code 21607 (2019). The same unit with an on/off compressor, see [the same unit under other names](../tested-setups.md#the-same-unit-under-other-names). Background only. | — |
 | [VMCGroup_MDR_K_Manuale_IT_2020.pdf](VMCGroup_MDR_K_Manuale_IT_2020.pdf) | VMC Group MDR K / MDR K R manual (Italian, 2020): type code, terminals, CNU menus and alarm list of the same on/off unit. Background only. | — |
@@ -52,6 +54,20 @@ displays or small differences; those units may run older firmware (confirmed
 by the vendor). The brands and their models, all not tested:
 [the same unit under other names](../tested-setups.md#the-same-unit-under-other-names).
 
+Part numbers on the order and the type plate (same source):
+
+| Part number | Unit |
+|-------------|------|
+| `DHAD30HC3II` / `DHAD50HC3II` | HRDS 30 / 50 H R K D, on/off compressor (2025) |
+| `DHAI30HCKII` / `DHAI50HCKII` | HRDS+ 30 / 50 H R K DC, inverter, with recirculation (2025) |
+| `DHTI30HCKII` / `DHTI50HCKII` | HRDS+ 30 / 50 H K DC, inverter, supply only (2025) |
+| `V08000002D` / `V08000002C` | HRDS+ 30 / 50 with recirculation (2026) |
+| `V07000002D` / `V07000002C` | HRDS+ 30 / 50 supply only (2026) |
+
+hej.luft's parameter files are in [`parameter-files/`](parameter-files/), described with
+their values in [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). The firmware, the service software
+and the update guide are not stored here.
+
 ## Technical data (airflow, capacity, power)
 
 From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /
@@ -66,13 +82,20 @@ From the technical handbook §10, p.80 ("Leistungsdaten Luftaufbereitung" /
 | Usable dehumidification capacity ¹ | 56 L/24h | 89 L/24h |
 | Total cooling capacity ¹ | 2.59 kW | 3.95 kW |
 | Compressor frequency range | 23–63 Hz | 23–78 Hz |
+| Max. current for sizing the supply | 6.0 A ² | 7.5 A |
 | **Max. electrical power (operating)** | **800 W** | **1110 W** |
 | — compressor max. | 690 W | 950 W |
 | — **recirc fan max.** | **90 W** | **150 W** |
 | Sound pressure @ 3 m | 39.5 dB(A) | 40.8 dB(A) |
 | Weight (with recirc / without) | 46 / 43 kg | 57 / 54 kg |
+| Refrigerant | R410A, 440 g | R410A, 450 g |
 
 ¹ At nominal airflow and the reference conditions footnoted in the handbook.
+
+² The type plate of the reference unit (`V08000002D`) gives 6.78 A; size the
+supply for the plate value. The plate also gives 230 V / 50 Hz, 300 m³/h,
+R410A 0.44 kg, maximum water pressure 10 bar and maximum refrigerant pressure
+42 bar.
 
 The handbook table prints the pressure drop as kPa; its curve (§10.3.1, p.83)
 shows about 31 Pa at 300 m³/h and 38 Pa at 500 m³/h, so the unit is Pa.

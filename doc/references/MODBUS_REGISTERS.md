@@ -108,11 +108,15 @@ Factory serial defaults:
     real unit's raw read-back, except for 22 rows that take the scale of their
     neighbours: [PF22](#pf22), [PS03](#ps03), [PA20](#pa20), [PA54](#pa54), [PH15](#ph15), [PH18](#ph18),
     [PE23](#pe23), [PE29](#pe29), [PT05](#pt05)–[PT11](#pt11), [PH31](#ph31)–[PH35](#ph35), [PA61](#pa61), [PA62](#pa62).
-  * **[PE24](#pe24)–[PE26](#pe26) scale is open.** The Modbus manual gives raw
-    0…200 for the handbook's 0…20 rps range, which fits ×0.1 (the reference
-    unit's raw 2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps). The technical handbook
-    (Sept. 2026) lists the defaults as 2 / 12 / 8 rps, which fits ×1. The
-    rows below use ×0.1 until the vendor confirms (`plans/todo.md`).
+  * **[PE24](#pe24)–[PE26](#pe26) scale.** The Modbus manual gives raw 0…200 for the
+    handbook's 0…20 rps range, which fits ×0.1 (the reference unit's raw
+    2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps). The technical handbook (Sept. 2026)
+    and the EVCO parameter driver show the raw values as rps without a
+    decimal. The vendor gives the real ramps of [PE24](#pe24) and [PE26](#pe26) as 0.2 and
+    0.8 per second, which fits ×0.1; for [PE25](#pe25) he is not sure (1.2 or 12).
+    The rows below use ×0.1 (`plans/todo.md`).
+  * [PE23](#pe23) and [PA22](#pa22) are not in hej.luft's parameter definitions `AA09`
+    ([`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md#parameter-definitions)).
   * The parameters named "differential" here (for example [PE18](#pe18),
     [Pb05](#pb05), [PS07](#ps07), [PA17](#pa17), [PA34](#pa34), [PA44](#pa44)) are called
     "Hysterese" in the German handbook.
@@ -774,7 +778,7 @@ humidity setpoint [PU01](#pu01) is in [§5.2](#52-setpoints).
 | `0x069F` | 1695 | <a id="pu08"></a><a id="reg-1695"></a>`PU08_SetpointOnlyWaterDehum` | R/W | ×0.1 | 0…30 °C | Cold-water-only dehumidify below water temperature |
 | `0x06A0` | 1696 | <a id="pu09"></a><a id="reg-1696"></a>`PU09_EnableCmpSecondStep` | R/W | ×1 | 0…1 | Compressor as second step |
 | `0x06A1` | 1697 | <a id="pu10"></a><a id="reg-1697"></a>`PU10_DehumOutBandTime` | R/W | ×1 | 0…240 min | Delay before compressor second step |
-| `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>`PU11_Evaporation_Setpoint` | R/W | ×0.1 | 0…68 °C | Evaporator temperature setpoint |
+| `0x0751` | 1873 | <a id="pu11"></a><a id="reg-1873"></a>`PU11_Evaporation_Setpoint` | R/W | ×0.1 | 0…68 °C | Evaporator temperature setpoint (vendor advice: 5 to 12 °C) |
 | `0x0752` | 1874 | <a id="pu12"></a><a id="reg-1874"></a>`PU12_Evaporation_DeadZone` | R/W | ×0.1 | 0.1…18 °C | Evaporator dead band |
 | `0x0761` | 1889 | <a id="reg-1889"></a><a id="pu13"></a>`PU13_MinTRoom_disableDEU` | R/W | — | 0-30.0 °C (×0.1) | Room temperature below which dehumidification (and the compressor) is disabled. |
 | `0x0762` | 1890 | <a id="reg-1890"></a><a id="pu14"></a>`PU14_TRoomDIFF_enableDEU` | R/W | — | 0.1-20.0 °C (×0.1) | Differential above [PU13](#pu13) at which dehumidification is re-enabled. |
@@ -900,7 +904,7 @@ The Modbus link ([PH11](#ph11)–[PH14](#ph14)) can only be changed at the displ
 | `0x06FC` | 1788 | <a id="reg-1788"></a><a id="ph16"></a>`PH16_CAN_1st_BaudRate` | R/W | ×1 | 1…4 | CAN baud rate code |
 | `0x06FD` | 1789 | <a id="ph17"></a><a id="reg-1789"></a>`PH17_CAN_1st_MyNode` | R/W | ×1 | 1…127 | CAN node |
 | `0x06FE` | 1790 | <a id="reg-1790"></a><a id="ph18"></a>`PH18_HistoryReset` | R/W | ×1 | 0…1 | History reset (clears the alarm history) |
-| `0x06FF` | 1791 | <a id="reg-1791"></a><a id="ph19"></a>`PH19_MinPPM_AirQuality` | R/W | ×1 | 0…9999 | Air quality probe min |
+| `0x06FF` | 1791 | <a id="reg-1791"></a><a id="ph19"></a>`PH19_MinPPM_AirQuality` | R/W | ×1 | 0…9999 | Air quality probe min. The HRDS+ has no air-quality probe; hej.luft uses the value as a size code (16 = HRDS+ 30, 18 = HRDS+ 50) |
 | `0x0700` | 1792 | <a id="reg-1792"></a><a id="ph20"></a>`PH20_MaxPPM_AirQuality` | R/W | ×1 | 0…9999 | Air quality probe max |
 | `0x0701` | 1793 | <a id="reg-1793"></a><a id="ph21"></a>`PH21_MinValHighPressure` | R/W | ×0.1 | 0…87 bar | Pressure probe min |
 | `0x0702` | 1794 | <a id="reg-1794"></a><a id="ph22"></a>`PH22_MaxValHighPressure` | R/W | ×0.1 | 0…87 bar | Pressure probe max |

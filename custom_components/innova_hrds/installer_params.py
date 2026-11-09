@@ -4,7 +4,8 @@ Addresses are the parameter table of the Modbus RTU manual (0x0640-0x077A);
 names, defaults and ranges are the technical handbook's parameter list (§5.3).
 Scaling was checked against a real unit's raw read-back: temperatures,
 pressures and rps are x0.1, fan/compressor/damper percentages x0.01, times and
-codes x1.
+codes x1. Where the vendor gives a tighter safe limit than the controller,
+the row uses it: PU11 from 5 to 12 °C (the controller accepts 0 to 68).
 
 Parameters that already have an entity of their own (setup or configuration)
 are not repeated here. Registers above 1900 (PT05-PT11 test relays, display
@@ -135,7 +136,7 @@ INSTALLER_PARAMS: list[tuple] = [
     ("PU08", 1695, "n", T, 0, 30, "°C", "PU08 Cold-water-only dehumidify below water temperature", "PU08 Entfeuchtung nur mit Kaltwasser unter Wassertemperatur", True),
     ("PU09", 1696, "s", 1, 0, 1, None, "PU09 Compressor as second step", "PU09 Kompressor als zweite Stufe", True),
     ("PU10", 1697, "n", 1, 0, 240, "min", "PU10 Delay before compressor second step", "PU10 Zeit bis Kompressor als zweite Stufe", True),
-    ("PU11", 1873, "n", T, 0, 68, "°C", "PU11 Evaporator temperature setpoint", "PU11 Sollwert Verdampfertemperatur", True),
+    ("PU11", 1873, "n", T, 5, 12, "°C", "PU11 Evaporator temperature setpoint", "PU11 Sollwert Verdampfertemperatur", True),
     ("PU12", 1874, "n", T, 0.1, 18, "°C", "PU12 Evaporator dead band", "PU12 Totband Verdampfertemperatur", True),
     # --- PS: dampers and free cooling ----------------------------------------
     ("PS02", 1699, "n", 1, 0, 9999, "s", "PS02 Outdoor damper pre-start time", "PS02 Vorstartzeit Außenluftklappe", False),

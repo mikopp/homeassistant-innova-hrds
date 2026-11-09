@@ -30,6 +30,8 @@ Scope rules:
 | `[HB 6.3]` | Technical handbook `HRDS+_Technisches_Handbuch_DE.pdf` (text: `.txt`), section number. The end-user handbook (`HRDS+_Benutzerhandbuch_DE.pdf`) is a word-for-word subset of HB §2.4, §5.2, §7 and §9, so it is cited as HB. |
 | `[MB p.7]` | Modbus manual `HRDS+_Modbus_RTU_RS485_DE.pdf`, page. |
 | `[V#76]` | Statement by the vendor side (user Murphy08) in the energiesparhaus.at HRDS+ forum thread, post number. |
+| `[VC]` | Confirmed by the vendor (hej.luft), November 2026. |
+| `[FW]` | Parameter files and update guide provided by hej.luft. The parameter files and what they contain: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md). |
 | `[F#79]` | Field report by another user in the same thread (not verified here). |
 | `[T7]` | **Tested**: seen on the reference unit by the repository owner. Each `T` number is an entry in the [evidence log](#13-evidence-log-what-was-seen-on-real-hardware) with date and source. |
 | `[INFERRED]` | **Not backed by a source or a test.** Our reading or extrapolation. Open checks are in [`../../plans/todo.md`](../../plans/todo.md). |
@@ -102,16 +104,43 @@ How to tell them apart from the controller: no register states size or `R`
 * **30 vs 50:** not readable [INFERRED]. Type plate only [HB 2.3].
 * **Controller:** FC 43 device identification returns vendor `EVCO`, product
   code `EPB9ORSINDEU`, firmware `V01.00.09.02` on the reference unit [T1].
-  Whether other sizes/variants report the same product code is open
-  [INFERRED; `plans/todo.md`].
-* **Firmware:** at least three firmware states are in the field: without
-  CNU2 display support; from early 2026 with CNU2 support; from March 2026
-  with a reworked menu and a fix for the recirculation damper closing before
-  the fan has finished running on [V#68]. Units shipped from 2026 carry the
-  newer firmware with revised defaults [V#47, V#91]. Firmware and parameter
-  updates are backward compatible [V#50]; the current firmware is available
-  from the vendor on request [V#76]. Which FC 43 revision string belongs to
-  which state is open [`plans/todo.md`].
+  The vendor does not know whether the code differs between variants [VC]. Whether
+  other sizes and variants report it is open [INFERRED; `plans/todo.md`].
+* **Firmware versions** [VC]:
+
+  | Version | Units | Notes |
+  |---------|-------|-------|
+  | 4.7 and lower | 2025 models | No CNU2 display support; the recirculation damper sometimes closes too early |
+  | 9.2 | 2026 models | CNU2 support, new parameter sets; the same damper fault |
+  | 9.3 | none (not in production) | No known faults; available from the vendor on request |
+  | 9.4 | built from November 2026 | Same functions as 9.3, for a new controller board with plug-in connectors; does not run on the older board |
+
+  9.3 is the last version for boards built before November 2026 [VC]. The
+  reference unit's revision `V01.00.09.02` [T1] is read as firmware 9.2
+  [INFERRED]. Whether 9.4 changes registers is open [`plans/todo.md`].
+* **Registers across firmware:** no parameter changes its Modbus address
+  between revisions of hej.luft's parameter definitions; the 9.3 parameter
+  files (revision `AA09`) use the addresses of [MODBUS_REGISTERS.md](MODBUS_REGISTERS.md) [FW].
+* **Firmware update:** it resets every parameter to the controller's generic
+  defaults, which do not suit the HRDS+; the parameter file for the size must
+  be loaded afterwards, or the values written over Modbus [FW, VC]. The files
+  leave [PH02](MODBUS_REGISTERS.md#ph02) at 0, so on/off over Modbus is off afterwards [FW]. Files and
+  steps: [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md).
+* **Firmware 9.3, the main difference:** when a request ends, 9.2 and lower
+  close the recirculation damper at once, while the valve / pump output stays
+  on for [Pb01](MODBUS_REGISTERS.md#pb01) and the fan runs on with it (whatever [PF03](MODBUS_REGISTERS.md#pf03) says): the fan can
+  blow against the closed damper, a slight hiss. 9.3 closes the damper only once
+  all requests are satisfied, the compressor is off and the valve is closed
+  [FW, VC].
+  * On 9.2, [Pb01](MODBUS_REGISTERS.md#pb01) = 30 s keeps this rare and short, at the cost of the compressor
+    running a moment without water flow, which Innova considers harmless. On
+    9.3, 250 s keeps the water flowing until the compressor has ramped down [VC].
+  * Workaround on 9.2: [Pb01](MODBUS_REGISTERS.md#pb01) = 0. The output, the fan and the damper then stop
+    as soon as the request ends; the compressor runs on until it is down to
+    20 Hz, so the water or brine must keep flowing until then [VC]. Use it only
+    where the flow is controlled outside the unit. If the pump or valve is
+    driven by the unit's valve / pump output (`PM`, `V3V`), [Pb01](MODBUS_REGISTERS.md#pb01) = 0 stops the
+    flow while the compressor still runs [INFERRED from VC].
 
 ### 1.3 Variants seen so far
 
@@ -133,6 +162,15 @@ integration has been used in are in [`doc/tested-setups.md`](../tested-setups.md
    coil [HB 2.6, 2.6.3].
 3. The compressor modulates to hold the evaporator at its setpoint [PU11](MODBUS_REGISTERS.md#pu11),
    independent of the airflow [HB 2.6, 6.3]; seen settling on it [T12].
+   * The one setpoint serves both requests. The vendor suggests a low one for
+     DEU, 6.0 °C (the default), for the most dehumidification, and a higher one
+     for INT cooling, 11 °C: less dehumidification but warmer supply air, so
+     less risk of condensation on uninsulated ducts [VC].
+   * INT should not run with the setpoint below 8 °C: the supply air gets
+     cold enough to condense on the ducts [VC].
+   * A home automation can do this today by writing [PU11](MODBUS_REGISTERS.md#pu11) when the request
+     changes. Keep it between 5 °C and 12 °C, so the compressor is not
+     brought into unpleasant operating conditions [VC].
 4. Refrigerant: R410A, hermetically sealed [HB 2.6.3].
 
 ### 2.2 Water path
@@ -160,7 +198,7 @@ Hydraulic installations [HB 3.8.6–3.8.8]:
 | Variant | Water | Notes |
 |---------|-------|-------|
 | 1–3: heating/cooling circuit of a heat pump | 16–20 °C in cooling mode [INFERRED typical] | The heat pump must be in cooling mode for summer DEU/INT; the `VMC` contact can request it [HB 3.8.6]. With domestic hot water priority, open the `OFF` input during DHW [HB 3.8.6]. |
-| 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. |
+| 4–6: brine circuit of a ground-source heat pump (4: in series on the brine inlet side, 5: in series on the outlet side, 6: in a branch parallel to the heat pump) | brine | Independent of the heat pump's mode. **No winter heating possible; active winter dehumidification forbidden (coil freezing); anti-stagnation pulses can blow cold air → switch the unit OFF in winter or drive the brine pump separately** [HB 3.8.7]. In variant 6 the spring-loaded check valve 15 keeps brine from flowing through the module while its pump is off (cold supply air in winter), and the non-return flap 12 prevents wrong circulation when only the module's pump runs [VC]. |
 | 6b: brine circuit, in parallel, for heat pumps with an external 230 V on/off brine pump | brine | No extra pump: a relay lets the `PM` output or the heat pump switch the brine pump; the pump flow must keep the heat pump's minimum flow with the module's branch open. Same three winter notes [HB 3.8.7]. |
 | separate ground loop | brine | Fully independent; same three winter notes [HB 3.8.8]. |
 | several (see the variant) | — | Where the module relies on the heat pump's own circulation or brine pump, that pump must run at a constant speed; ΔT or other automatic pump control does not suit it [HB 3.8.6, 3.8.7]. |
@@ -554,6 +592,7 @@ Observations and consequences:
 ### 9.1 Bands and sources
 
 * Active band: DEU [PF28](MODBUS_REGISTERS.md#pf28)..[PF10](MODBUS_REGISTERS.md#pf10), INT [PF27](MODBUS_REGISTERS.md#pf27)..[PF09](MODBUS_REGISTERS.md#pf09); defaults and shipped values in §15 [HB 6.2; MB p.7].
+  hej.luft has set the minimum [PF27](MODBUS_REGISTERS.md#pf27) / [PF28](MODBUS_REGISTERS.md#pf28) to 30 % at commissioning without problems [VC].
   The band is set at commissioning; the display's fan setting then runs
   0–100 % within it [HB 5.2].
 * Sources during DEU and INT: the display's manual request (fan screen, steps
@@ -1007,6 +1046,14 @@ default on a real unit; read it. Where behaviour could be checked (§13) it
 followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), [Pb07](MODBUS_REGISTERS.md#pb07)/[Pb08](MODBUS_REGISTERS.md#pb08), [PF28](MODBUS_REGISTERS.md#pf28),
 [PU11](MODBUS_REGISTERS.md#pu11)); the compressor start delay is not yet explained (§4.3).
 
+hej.luft's intended values for each parameter, per firmware and size, are in
+[`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md); the vendor confirms that units can come with other
+values [VC]. In every row below that has a handbook default, they equal it,
+except [Pb01](MODBUS_REGISTERS.md#pb01) (30 s on firmware 9.2, 250 s on 9.3 / 9.4), and [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) on units without a display [FW].
+The reference unit carries the set of an older size for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and the size
+code [PH19](MODBUS_REGISTERS.md#ph19) (50 %, 50 %, 15), not that of the HRDS+ 30 (55 %, 55 %, 16) [T2, VC].
+hej.luft has asked Innova why [VC].
+
 | Setting | Defined in | Handbook default | Shipped | Effect of the difference |
 |---------|------------|------------------|---------|--------------------------|
 | [HA00](MODBUS_REGISTERS.md#ha00) | HB 5.3, MB p.5 | 6 (CNU2 T+H) | 2 (old CNU T+H) | Expects a display that is not there |
@@ -1035,6 +1082,7 @@ followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), 
 | [PS01](MODBUS_REGISTERS.md#ps01) | HB 5.3, 6.2 | 20 s | 90 s | Fan starts 90 s after the damper opens |
 | [PE01](MODBUS_REGISTERS.md#pe01) / [PE02](MODBUS_REGISTERS.md#pe02) / [PE03](MODBUS_REGISTERS.md#pe03) | HB 5.3, 6.3 | 300 / 20 / 420 s | same | — |
 | [PE04](MODBUS_REGISTERS.md#pe04) | HB 5.3, 6.3 | 120 s | 180 s | Longer fan to compressor delay (not what held the first start, T11) |
+| [PE07](MODBUS_REGISTERS.md#pe07) / [PE22](MODBUS_REGISTERS.md#pe22) | HB 5.3, 6.3 | 55 % (HRDS+ 30), 68 % (HRDS+ 50) | 50 % / 50 % | Compressor capped at 50 % instead of 55 % |
 | [PE28](MODBUS_REGISTERS.md#pe28) / [PE30](MODBUS_REGISTERS.md#pe30) | HB 5.3, 6.3 | 52 rps / 60 s | same | — |
 | [PF01](MODBUS_REGISTERS.md#pf01) / [PF03](MODBUS_REGISTERS.md#pf03) | HB 5.3, 6.2 | 10 / 0 s | 60 / 30 s | Longer fan minimum run and a run-on |
 | [PF26](MODBUS_REGISTERS.md#pf26) | HB 5.3, 6.2 | 40 % | 40 % | — |
@@ -1042,4 +1090,5 @@ followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), 
 | [Pb01](MODBUS_REGISTERS.md#pb01) | HB 5.3, 6.4 | 255 s | 30 s | Shorter valve run-on |
 | [Pb02](MODBUS_REGISTERS.md#pb02) / [Pb03](MODBUS_REGISTERS.md#pb03) | HB 5.3, 6.4 | 60 s / 3 min | 360 s / 3 min | Longer valve opening in each sniffing step |
 | [Pb07](MODBUS_REGISTERS.md#pb07) / [Pb08](MODBUS_REGISTERS.md#pb08) | HB 5.3, 6.4 | 60 s / 99 min | 60 s / 60 min | Pulse every 61 min instead of every 100 min ([Pb08](MODBUS_REGISTERS.md#pb08) is minutes in the handbook's parameter table) |
+| [PH19](MODBUS_REGISTERS.md#ph19) | HB 5.3 | 16 (HRDS+ 30), 18 (HRDS+ 50) | 15 | Size code of an older size; no effect on operation (no air-quality probe) |
 | [HD05](MODBUS_REGISTERS.md#hd05) | HB 5.3 | not checked | water valve | Water valve allocated to its output |

@@ -160,7 +160,9 @@ No INT request has been run yet. One summer INT run answers most of these.
       AL12, then AL03 ended the request (T38). Fix the hydraulics (for example
       a stronger pump or a check valve; not chosen yet), then repeat a run with
       the heat pump compressor on. Until then avoid long requests while it
-      runs.
+      runs. First check that the hydraulic plan's spring-loaded check valve 15
+      and non-return flap 12 are fitted and work: hej.luft names both as
+      required for variant 6 (`UNIT_BEHAVIOUR.md` §2.2).
 - [ ] **Passive path (water below [PU08](../doc/references/MODBUS_REGISTERS.md#pu08)).** With water ([501](../doc/references/MODBUS_REGISTERS.md#reg-501)) below [PU08](../doc/references/MODBUS_REGISTERS.md#pu08) ([1695](../doc/references/MODBUS_REGISTERS.md#reg-1695),
       10 °C) and a DEU or INT request in summer: `compressor_status` ([1122](../doc/references/MODBUS_REGISTERS.md#reg-1122))
       stays off, `water_valve_pump` ([1126](../doc/references/MODBUS_REGISTERS.md#reg-1126)) is On, supply air colder and drier.
@@ -212,21 +214,25 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 8. Needs another unit, a display, a probe or extra wiring
 
-- [ ] **Other variants' identity** (asked the vendor 2026-11). Does an
-      HRDS+ 50, a non-`R` or a non-`DC` unit, or another firmware, report an
-      `EPB9…` product code (FC 43)? Loosen `EXPECTED_PRODUCT_PREFIX` if not.
-      Also: what does a gateway that does not forward FC 43 return?
-- [ ] **Firmware revisions** (asked the vendor 2026-11). Which FC 43 revision
-      string belongs to which of the three firmware states
-      ([UNIT_BEHAVIOUR §1.2](../doc/references/UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants)), and which is current? The
-      reference unit reports `V01.00.09.02`.
-- [ ] **Defaults per firmware** (asked the vendor 2026-11). The vendor offered
-      the parameter-default file; compare it with the reference unit's
-      shipped values (`UNIT_BEHAVIOUR.md` §15).
-- [ ] **PE24–PE26 scale** (asked the vendor 2026-11). ×0.1 (Modbus manual
-      range raw 0…200 for 0…20 rps; raw 2 / 12 / 8 = 0.2 / 1.2 / 0.8 rps as in
-      the Mai 2026 handbook) or ×1 (Sept. 2026 handbook defaults 2 / 12 / 8
-      rps)? The installer rows use ×0.1 until answered.
+- [ ] **Other variants' identity.** The vendor does not know whether
+      variants report a different product code.
+      Does an HRDS+ 50, a supply-only unit, a 2025 unit (firmware 4.7) or a
+      9.4 unit report an `EPB9…` product code (FC 43)? Loosen
+      `EXPECTED_PRODUCT_PREFIX` if not. Also: what does a gateway that does
+      not forward FC 43 return?
+      The revision string of a 9.3 or 4.7 unit would confirm that
+      `V01.00.09.02` is firmware 9.2.
+- [ ] **PE25 scale.** The vendor confirms 0.2 / 0.8 per second for
+      [PE24](../doc/references/MODBUS_REGISTERS.md#pe24) / [PE26](../doc/references/MODBUS_REGISTERS.md#pe26) (×0.1); for [PE25](../doc/references/MODBUS_REGISTERS.md#pe25) (raw 12) he is not sure whether it
+      is 1.2 or 12 and will check. The row uses ×0.1 until then.
+- [ ] **Firmware 9.4 registers.** 9.4 runs only on the board built from
+      November 2026. Does its register map match? A diagnostic dump from a
+      9.4 unit answers it.
+- [ ] **Firmware 4.7 and lower over Modbus.** Does a 2025 unit accept DEU
+      and INT requests over Modbus (PH27/PH28)?
+- [ ] **PA22 on firmware 9.x.** [PA22](../doc/references/MODBUS_REGISTERS.md#pa22) ([1738](../doc/references/MODBUS_REGISTERS.md#reg-1738)) and PE23 are not in the
+      parameter definitions `AA09`. Check what 1738 returns on the reference unit; drop
+      the installer row if it is unused.
 - [ ] **HRDS (on/off)** (asked the vendor 2026-11). Innova's
       declaration of conformity lists HRDS (DHAD…) and HRDS+ (DHAI…). Vortice
       HRDS 30/50 (R) DC and VMC Group MDR K / MDR K R are the on/off HRDS:
@@ -242,6 +248,18 @@ No INT request has been run yet. One summer INT run answers most of these.
 - [ ] **As-delivered settings.** The reference unit shipped with values that
       differ from the handbook (`UNIT_BEHAVIOUR.md` §15). A second unit's dump
       shows whether these are the distributor's presets.
+- [ ] **Reference unit parameter set.** The reference unit carries an older
+      size's set for PE07/PE22 (50 %) and PH19 (15); hej.luft recommends the
+      current values and has asked Innova why the unit came with it. Set the
+      HRDS+ 30 values for firmware 9.2 (PE07/PE22 55 %, PH19 16, and PE04,
+      PE32, PU12, PF01, PF03, PS01, Pb02, Pb08, PA16, PA11), keep Pb01 at 30 s
+      on 9.2, then log it as a T entry. Values:
+      [`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md).
+- [ ] **Extra brine pump speed (high summer).** Following handbook §8.2
+      ("Verdampfertemperatur prüfen"), run a dehumidify request once with only
+      the unit's pump and once with both pumps running; the evaporator
+      temperature should settle in the target range in both cases. If not,
+      reduce the brine flow and/or [PF09](../doc/references/MODBUS_REGISTERS.md#pf09) / [PF10](../doc/references/MODBUS_REGISTERS.md#pf10) (hej.luft).
 - [ ] **Supply-air temperature.** The unit's supply probe ([503](../doc/references/MODBUS_REGISTERS.md#reg-503)) is not fitted,
       so "DEU gives dry air at about room temperature" (HB 2.6.1) is
       unverified. Log an external sensor downstream of the HRDS through a run;
@@ -276,6 +294,8 @@ No INT request has been run yet. One summer INT run answers most of these.
 
 ## 9. Integration decisions (no hardware needed)
 
+- [ ] **Evaporator setpoint per request.** Plan:
+      [`evaporator-setpoint-per-request.md`](evaporator-setpoint-per-request.md).
 - [ ] **[*Season*](../doc/entity-reference.md#season) jumps back after a write.** It shows the old season
       until the next read cycle (T31), because `season` is not in
       `PENDING_KEYS`. Add it, so it shows the command until confirmed like the
