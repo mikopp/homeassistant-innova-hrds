@@ -22,7 +22,7 @@ Read the unit before relying on a value here.
 | 9.3 / 9.4 | [with display](parameter-files/fw9.3/HRDS+30_CNU2_May2026.map), [without](parameter-files/fw9.3/HRDS+30_noDisplay_May2026.map) | [with display](parameter-files/fw9.3/HRDS+50_CNU2_May2026.map), [without](parameter-files/fw9.3/HRDS+50_noDisplay_May2026.map) |
 | 9.2 | [with display](parameter-files/fw9.2/HRDS+30_CNU2_FW9.2.map), [without](parameter-files/fw9.2/HRDS+30_noDisplay_FW9.2.map) | [with display](parameter-files/fw9.2/HRDS+50_CNU2_FW9.2.map), [without](parameter-files/fw9.2/HRDS+50_noDisplay_FW9.2.map) |
 
-* The 9.3 files are hej.luft's (May 2026) [FW], with [Pb01](MODBUS_REGISTERS.md#pb01) and, in the
+* The 9.3 files are hej.luft's (November 2026) [FW], with [Pb01](MODBUS_REGISTERS.md#pb01) and, in the
   HRDS+ 50 files, [PH19](MODBUS_REGISTERS.md#ph19) set to the values in the table below. The 9.2 files are made here from
   them by setting [Pb01](MODBUS_REGISTERS.md#pb01) to 30 s, hej.luft's 9.2 value; nothing else differs between
   the two firmware versions. Both use the same parameter definitions, so the
