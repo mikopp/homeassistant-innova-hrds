@@ -1048,7 +1048,7 @@ followed the handbook with the shipped value ([PS01](MODBUS_REGISTERS.md#ps01), 
 hej.luft's intended values for each parameter, per firmware and size, are in
 [`VENDOR_PARAMETERS.md`](VENDOR_PARAMETERS.md); the vendor confirms that units can come with other
 values [VC]. In every row below that has a handbook default, they equal it,
-except [Pb01](MODBUS_REGISTERS.md#pb01) on firmware 9.2 (30 s), and [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) on units without a display [FW].
+except [Pb01](MODBUS_REGISTERS.md#pb01) (30 s on firmware 9.2, 250 s on 9.3 / 9.4), and [PH01](MODBUS_REGISTERS.md#ph01) and [HA00](MODBUS_REGISTERS.md#ha00) on units without a display [FW].
 The reference unit carries the set of an older size for [PE07](MODBUS_REGISTERS.md#pe07), [PE22](MODBUS_REGISTERS.md#pe22) and the size
 code [PH19](MODBUS_REGISTERS.md#ph19) (50 %, 50 %, 15), not that of the HRDS+ 30 (55 %, 55 %, 16) [T2, VC].
 hej.luft has asked Innova why [VC].

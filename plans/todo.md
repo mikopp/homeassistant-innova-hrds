@@ -255,9 +255,6 @@ No INT request has been run yet. One summer INT run answers most of these.
       PE32, PU12, PF01, PF03, PS01, Pb02, Pb08, PA16, PA11), keep Pb01 at 30 s
       on 9.2, then log it as a T entry. Values:
       [`VENDOR_PARAMETERS.md`](../doc/references/VENDOR_PARAMETERS.md).
-- [ ] **PH19 in the HRDS+ 50 parameter files.** hej.luft's size code for the
-      HRDS+ 50 is 18, but its firmware 9.3 files for the HRDS+ 50 hold 16. Ask
-      hej.luft which is right.
 - [ ] **Extra brine pump speed (high summer).** Following handbook §8.2
       ("Verdampfertemperatur prüfen"), run a dehumidify request once with only
       the unit's pump and once with both pumps running; the evaporator

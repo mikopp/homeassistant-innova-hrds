@@ -608,7 +608,7 @@ CPRO\VENDOR1\drv970AA09
 <VALUE> <USR>Disabled</USR> <UNTRANSLATED>LIDDisabled</UNTRANSLATED> <INTERNAL>0</INTERNAL>
 </VALUE> </ITEM>
 <ITEM key="kyPH19_MinPPM_AirQuality" R_map="RW"> <VTP> <DESC>Air quality probe minimum value</DESC>
-</VTP> <VALUE> <USR>16</USR> </VALUE> </ITEM>
+</VTP> <VALUE> <USR>18</USR> </VALUE> </ITEM>
 <ITEM key="kyPH20_MaxPPM_AirQuality" R_map="RW"> <VTP> <DESC>Air quality probe maximum value</DESC>
 </VTP> <VALUE> <USR>2000</USR> </VALUE> </ITEM>
 <ITEM key="kyPH21_MinValHighPressure" R_map="RW"> <VTP> <DESC>High pressure probe minimum value</DESC>

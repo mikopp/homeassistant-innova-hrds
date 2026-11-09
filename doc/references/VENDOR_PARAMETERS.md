@@ -22,14 +22,13 @@ Read the unit before relying on a value here.
 | 9.3 / 9.4 | [with display](parameter-files/fw9.3/HRDS+30_CNU2_May2026.map), [without](parameter-files/fw9.3/HRDS+30_noDisplay_May2026.map) | [with display](parameter-files/fw9.3/HRDS+50_CNU2_May2026.map), [without](parameter-files/fw9.3/HRDS+50_noDisplay_May2026.map) |
 | 9.2 | [with display](parameter-files/fw9.2/HRDS+30_CNU2_FW9.2.map), [without](parameter-files/fw9.2/HRDS+30_noDisplay_FW9.2.map) | [with display](parameter-files/fw9.2/HRDS+50_CNU2_FW9.2.map), [without](parameter-files/fw9.2/HRDS+50_noDisplay_FW9.2.map) |
 
-* The 9.3 files are hej.luft's (May 2026) [FW]. The 9.2 files are made here from
+* The 9.3 files are hej.luft's (May 2026) [FW], with [Pb01](MODBUS_REGISTERS.md#pb01) and, in the
+  HRDS+ 50 files, [PH19](MODBUS_REGISTERS.md#ph19) set to the values in the table below. The 9.2 files are made here from
   them by setting [Pb01](MODBUS_REGISTERS.md#pb01) to 30 s, hej.luft's 9.2 value; nothing else differs between
   the two firmware versions. Both use the same parameter definitions, so the
   9.2 files should load on 9.2 [INFERRED].
 * "Without display" sets [PH01](MODBUS_REGISTERS.md#ph01) to Disabled and [HA00](MODBUS_REGISTERS.md#ha00) to None; otherwise the
   files with and without display are the same.
-* Two values in hej.luft's 9.3 files differ from the table below: [Pb01](MODBUS_REGISTERS.md#pb01) is
-  255 s (table: 250 s), and [PH19](MODBUS_REGISTERS.md#ph19) is 16 in the HRDS+ 50 files (table: 18).
 * The files are for the EVCO Parameters Manager, which also needs hej.luft's
   parameter definitions (`Drv970AA09`). Both, and the firmware, come from
   hej.luft.
@@ -226,7 +225,7 @@ are not parameters and not part of the files, so they are not listed.
 | [1680](MODBUS_REGISTERS.md#reg-1680) | [PE18](MODBUS_REGISTERS.md#pe18) High pressure prealarm differential | 5.0 bar | 5.0 bar |  |
 | [1681](MODBUS_REGISTERS.md#reg-1681) | [PE19](MODBUS_REGISTERS.md#pe19) High pressure prealarm inc/dec percentage | 5.00 % | 5.00 % |  |
 | [1682](MODBUS_REGISTERS.md#reg-1682) | [PE20](MODBUS_REGISTERS.md#pe20) High pressure prealarm inc/dec time | 10 s | 10 s |  |
-| [1683](MODBUS_REGISTERS.md#reg-1683) | [Pb01](MODBUS_REGISTERS.md#pb01) Water valve off delay | 30 s | 250 s | 9.3 files: 255 s. Why: [`UNIT_BEHAVIOUR.md` §1.2](UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants) |
+| [1683](MODBUS_REGISTERS.md#reg-1683) | [Pb01](MODBUS_REGISTERS.md#pb01) Water valve off delay | 30 s | 250 s | Why: [`UNIT_BEHAVIOUR.md` §1.2](UNIT_BEHAVIOUR.md#12-what-differs-between-the-variants) |
 | [1684](MODBUS_REGISTERS.md#reg-1684) | [Pb02](MODBUS_REGISTERS.md#pb02) Sniffing cycle temperature alarm active time | 60 s | 60 s |  |
 | [1685](MODBUS_REGISTERS.md#reg-1685) | [Pb03](MODBUS_REGISTERS.md#pb03) Sniffing cycle temperature alarm wait time | 3 min | 3 min |  |
 | [1686](MODBUS_REGISTERS.md#reg-1686) | [Pb04](MODBUS_REGISTERS.md#pb04) Preheating setpoint | 10.0 °C | 10.0 °C |  |
@@ -332,7 +331,7 @@ are not parameters and not part of the files, so they are not listed.
 | [1788](MODBUS_REGISTERS.md#reg-1788) | [PH16](MODBUS_REGISTERS.md#ph16) CAN baud rate | 125 KBaud | 125 KBaud |  |
 | [1789](MODBUS_REGISTERS.md#reg-1789) | [PH17](MODBUS_REGISTERS.md#ph17) CAN node | 1 | 1 |  |
 | [1790](MODBUS_REGISTERS.md#reg-1790) | [PH18](MODBUS_REGISTERS.md#ph18) History reset | Disabled | Disabled |  |
-| [1791](MODBUS_REGISTERS.md#reg-1791) | [PH19](MODBUS_REGISTERS.md#ph19) Air quality probe minimum value | 16 (30) / 18 (50) ¹ | 16 (30) / 18 (50) ¹ | Size code. 9.3 files for the HRDS+ 50: 16 |
+| [1791](MODBUS_REGISTERS.md#reg-1791) | [PH19](MODBUS_REGISTERS.md#ph19) Air quality probe minimum value | 16 (30) / 18 (50) ¹ | 16 (30) / 18 (50) ¹ | Size code |
 | [1792](MODBUS_REGISTERS.md#reg-1792) | [PH20](MODBUS_REGISTERS.md#ph20) Air quality probe maximum value | 2000 ppm | 2000 ppm |  |
 | [1793](MODBUS_REGISTERS.md#reg-1793) | [PH21](MODBUS_REGISTERS.md#ph21) High pressure probe minimum value | 5.0 bar | 5.0 bar |  |
 | [1794](MODBUS_REGISTERS.md#reg-1794) | [PH22](MODBUS_REGISTERS.md#ph22) High pressure probe maximum value | 50.0 bar | 50.0 bar |  |

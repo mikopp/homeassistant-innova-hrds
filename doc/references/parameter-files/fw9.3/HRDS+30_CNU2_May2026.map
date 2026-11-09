@@ -360,7 +360,7 @@ CPRO\VENDOR1\drv970AA09
 </VTP> <VALUE> <USR>Enabled</USR> <UNTRANSLATED>LIDEnabled</UNTRANSLATED> <INTERNAL>1</INTERNAL>
 </VALUE> </ITEM>
 <ITEM key="kyPb01_DelayOff_WaterValve" R_map="RW"> <VTP> <DESC>Water valve off delay</DESC>
-</VTP> <VALUE> <USR>255</USR> </VALUE> </ITEM>
+</VTP> <VALUE> <USR>250</USR> </VALUE> </ITEM>
 <ITEM key="kyPb02_ActiveTime_SniffingValve" R_map="RW"> <VTP> <DESC>Sniffing cycle temperature alarm active time</DESC>
 </VTP> <VALUE> <USR>60</USR> </VALUE> </ITEM>
 <ITEM key="kyPb03_WaitTime_SniffingValve" R_map="RW"> <VTP> <DESC>Sniffing cycle temperature alarm wait time</DESC>
