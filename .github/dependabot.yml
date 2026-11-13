@@ -2,9 +2,14 @@ version: 2
 # One PR bumps the Home Assistant image (e2e layer) and pytest-homeassistant
 # (in-process layer) together: pytest-homeassistant's version number is the
 # Home Assistant release it installs, and tests/ha/test_versions.py fails when
-# the two drift apart (ADR-0004). A multi-ecosystem group is what lets one PR
-# span the docker and pip ecosystems. If Dependabot opens separate PRs anyway,
-# bump the other pin by hand in the same PR.
+# the two drift apart (ADR-0004). Only a multi-ecosystem group can span the
+# docker and pip ecosystems (a plain `groups:` cannot). Syntax per GitHub docs
+# "Configuring multi-ecosystem updates for Dependabot": the group has the
+# schedule, each entry names it in `multi-ecosystem-group` and MUST have
+# `patterns`; `["*"]` takes every dependency of that entry, so nothing in an
+# entry (pytest-timeout, pytest-cov) is left without updates. Not verified
+# against a live Dependabot run: if it opens separate PRs, bump the other
+# pin by hand in the same PR.
 multi-ecosystem-groups:
   home-assistant:
     schedule:
@@ -19,13 +24,11 @@ updates:
   - package-ecosystem: "docker"
     directory: "/.github/ha-versions"
     multi-ecosystem-group: "home-assistant"
-    patterns:
-      - "ghcr.io/home-assistant/home-assistant"
+    patterns: ["*"]  # the Dockerfile has the one Home Assistant image
   - package-ecosystem: "pip"
     directory: "/"
     multi-ecosystem-group: "home-assistant"
-    patterns:
-      - "pytest-homeassistant"
+    patterns: ["*"]  # pytest-homeassistant, pytest-timeout, pytest-cov
     ignore:
       - dependency-name: "pymodbus"  # follows the pinned Home Assistant
   - package-ecosystem: "pip"

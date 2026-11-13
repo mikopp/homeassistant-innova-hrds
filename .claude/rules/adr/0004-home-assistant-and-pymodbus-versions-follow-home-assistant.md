@@ -1,6 +1,6 @@
 ---
 status: accepted
-date: 2026-10-20
+date: 2026-11-13
 decision-makers: mikopp
 topics: [dependencies]
 paths:
@@ -23,9 +23,10 @@ paths:
   minimum release ships; MUST NOT pin `==` (hassfest rejects an exact pin on
   a package Home Assistant depends on).
 - The test layers MUST run one Home Assistant release:
-  `pytest-homeassistant` in `requirements_test.txt` and the
-  image in `.github/ha-versions/Dockerfile` are bumped together, and the
-  tests pin exactly the pymodbus that release ships.
+  `pytest-homeassistant` in `requirements_test.txt` (its version number is
+  the Home Assistant release it installs) and the image in
+  `.github/ha-versions/Dockerfile` are bumped together, patch included, and
+  the tests pin exactly the pymodbus that release ships.
 - pymodbus MUST NOT be bumped on its own (Dependabot ignores it).
 - A deprecation Home Assistant reports for this integration is a test
   failure, in both layers.
@@ -47,6 +48,8 @@ made it fail (PR #23).
 
 ## Confirmation
 
+- `tests/ha/test_versions.py::test_pytest_homeassistant_is_the_installed_ha_release`
+- `tests/ha/test_versions.py::test_requirements_pin_is_the_installed_release`
 - `tests/ha/test_versions.py::test_in_process_ha_matches_docker_image`
 - `tests/ha/test_versions.py::test_pymodbus_matches_home_assistant`
 - `tests/e2e/test_zz_log_hygiene.py::test_no_errors_or_deprecations_from_the_integration`
@@ -59,4 +62,6 @@ grep -q '"pymodbus>=' custom_components/innova_hrds/manifest.json
 ## More information
 
 `77f2aec` (HA 2026.9 baseline), PR #17 (hassfest `>=`), PR #22 (version
-alignment), PR #23 (deprecation guard).
+alignment), PR #23 (deprecation guard), #74 (test stack moved from
+`pytest-homeassistant-custom-component` to `pytest-homeassistant`; a package
+rename and a stricter patch-level match, not a new decision).

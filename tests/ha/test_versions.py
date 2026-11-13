@@ -19,6 +19,7 @@ import homeassistant
 from homeassistant.const import MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION
 
 DOCKERFILE = Path(__file__).parents[2] / ".github" / "ha-versions" / "Dockerfile"
+REQUIREMENTS = Path(__file__).parents[2] / "requirements_test.txt"
 
 
 def test_pytest_homeassistant_is_the_installed_ha_release():
@@ -28,6 +29,18 @@ def test_pytest_homeassistant_is_the_installed_ha_release():
         f"pytest-homeassistant {version('pytest-homeassistant')} runs Home "
         f"Assistant {version('homeassistant')}: pin the matching release in "
         "requirements_test.txt"
+    )
+
+
+def test_requirements_pin_is_the_installed_release():
+    # The file CI installs from must name the release the tests really ran on
+    # (a stale venv or a hand-edited pin would otherwise pass unnoticed).
+    pins = re.findall(
+        r"^pytest-homeassistant==(\S+)\s*$", REQUIREMENTS.read_text(), re.M
+    )
+    assert pins == [version("pytest-homeassistant")], (
+        f"requirements_test.txt pins pytest-homeassistant {pins}, installed "
+        f"{version('pytest-homeassistant')}"
     )
 
 
