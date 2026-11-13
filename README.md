@@ -646,7 +646,7 @@ The inputs, probe types and [HA00](doc/references/MODBUS_REGISTERS.md#ha00) valu
 ## Requirements
 
 * **Home Assistant 2026.11 or newer.**
-* `pymodbus` 3.13.1 or newer (declared in the manifest; Home Assistant 2026.10
+* `pymodbus` 3.13.1 or newer (declared in the manifest; Home Assistant 2026.11
   ships 3.13.1).
 
 ### Availability

@@ -20,7 +20,7 @@ The script NEVER writes to the unit: it only uses FC 03, FC 04 and FC 43.
 It reuses ``custom_components/innova_hrds/const.py`` for the register map, so it
 always checks exactly what the integration would poll.
 
-Requirements:  pip install 'pymodbus>=3.13.1'   (the version HA 2026.10 ships)
+Requirements:  pip install 'pymodbus>=3.13.1'   (the version HA 2026.11 ships)
 
 Examples:
     python3 tests/diagnose_hrds.py 192.168.1.50
