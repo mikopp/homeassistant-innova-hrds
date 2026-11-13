@@ -221,7 +221,7 @@ No INT request has been run yet. One summer INT run answers most of these.
       `EXPECTED_PRODUCT_PREFIX` if not. Also: what does a gateway that does
       not forward FC 43 return?
       The revision string of a 9.3 or 4.7 unit would confirm that
-      `V01.00.09.02` is firmware 9.2.
+      `V01.00.09.02` is firmware 9.2; the diagnostic sensor [*Firmware*](../doc/entity-reference.md#firmware) shows it.
 - [ ] **PE25 scale.** The vendor confirms 0.2 / 0.8 per second for
       [PE24](../doc/references/MODBUS_REGISTERS.md#pe24) / [PE26](../doc/references/MODBUS_REGISTERS.md#pe26) (×0.1); for [PE25](../doc/references/MODBUS_REGISTERS.md#pe25) (raw 12) he is not sure whether it
       is 1.2 or 12 and will check. The row uses ×0.1 until then.

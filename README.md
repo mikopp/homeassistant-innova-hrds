@@ -37,7 +37,7 @@ please report it:
 > *Have an HRDS+ that behaves differently, or another unit that reports an
 > EVCO `EPB9` controller? Open an issue, see [Reporting issues](#reporting-issues).*
 
-## Release 0.9.6
+## Release 0.9.7
 
 The integration is released and usable.
 

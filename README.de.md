@@ -43,7 +43,7 @@ ausprobiert, meldet es bitte:
 > *Verhält sich Ihr HRDS+ anders, oder meldet ein anderes Gerät eine
 > EVCO-`EPB9`-Steuerung? Eröffnen Sie ein Issue.*
 
-## Release 0.9.6
+## Release 0.9.7
 
 Die Integration ist veröffentlicht und nutzbar.
 
@@ -63,7 +63,7 @@ Die Integration ist veröffentlicht und nutzbar.
 Berichte von anderen Geräten sind sehr willkommen, siehe
 [Reporting issues](README.md#reporting-issues) (EN). Der Weg zu 1.0:
 [Road to 1.0](README.md#road-to-10) (EN). Details: der
-[englische Abschnitt](README.md#release-096).
+[englische Abschnitt](README.md#release-097).
 
 ## Schnellstart
 
