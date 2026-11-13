@@ -1,8 +1,14 @@
 # In-process test layer (tests/sim, tests/ha, tests/test_wiring.py).
-# pytest-homeassistant-custom-component pins one exact Home Assistant release;
-# keep it on the latest one (Dependabot bumps it together with
-# .github/ha-versions/Dockerfile). 0.13.373 = Home Assistant 2026.10.2.
-pytest-homeassistant-custom-component==0.13.375
+# pytest-homeassistant (home-assistant/core, packages/pytest-homeassistant)
+# depends on the exact homeassistant release of the same version number, so
+# this one pin is the Home Assistant the tests run. Keep it on the latest
+# release (Dependabot bumps it together with .github/ha-versions/Dockerfile).
+# Never install pytest-homeassistant-custom-component next to it.
+pytest-homeassistant==2026.11.1
+# Not pulled in by pytest-homeassistant (the custom-component package did):
+# tests.yaml passes --timeout and --cov, pyproject.toml sets timeout_func_only.
+pytest-timeout==2.4.0
+pytest-cov==7.1.0
 # Exactly what Home Assistant ships (the manifest requires >=3.13.1). Not
 # installed by the line above; tests/ha/test_versions.py fails if it drifts.
 # Dependabot ignores it: it moves only together with Home Assistant.

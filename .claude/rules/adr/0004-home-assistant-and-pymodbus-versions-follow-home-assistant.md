@@ -23,7 +23,7 @@ paths:
   minimum release ships; MUST NOT pin `==` (hassfest rejects an exact pin on
   a package Home Assistant depends on).
 - The test layers MUST run one Home Assistant release:
-  `pytest-homeassistant-custom-component` in `requirements_test.txt` and the
+  `pytest-homeassistant` in `requirements_test.txt` and the
   image in `.github/ha-versions/Dockerfile` are bumped together, and the
   tests pin exactly the pymodbus that release ships.
 - pymodbus MUST NOT be bumped on its own (Dependabot ignores it).

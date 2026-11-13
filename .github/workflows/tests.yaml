@@ -1,7 +1,7 @@
 # In-process tests: real Home Assistant core + simulated HRDS+.
 #
-# pytest-homeassistant-custom-component runs the actual Home Assistant release
-# pinned in requirements_test.txt (always the latest; Dependabot bumps it).
+# pytest-homeassistant runs the actual Home Assistant release it is pinned to
+# in requirements_test.txt (always the latest; Dependabot bumps it).
 # The integration's real pymodbus client talks over TCP to the simulator in
 # tests/sim, so config flow, polling, decoding, guards and writes run for
 # real. Fast (about a minute) and the only layer that measures coverage. On a
