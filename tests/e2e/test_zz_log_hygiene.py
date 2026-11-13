@@ -14,8 +14,10 @@ import pytest
 
 pytestmark = pytest.mark.needs_real_ha("runtime-logs")
 
+# Home Assistant 2026.11 appends the UTC offset to the timestamp
+# ("17:38:16.002+01:00"); older releases print none. Accept both.
 LINE = re.compile(
-    r"^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+ (?P<level>DEBUG|INFO|WARNING|ERROR|CRITICAL) "
+    r"^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d+(?:[+-]\d\d:\d\d|Z)? (?P<level>DEBUG|INFO|WARNING|ERROR|CRITICAL) "
     r"\((?P<thread>[^)]*)\) \[(?P<logger>[^\]]*)\] (?P<message>.*)$"
 )
 
