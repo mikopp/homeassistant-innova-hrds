@@ -13,7 +13,7 @@ client, and the simulated unit on a real TCP socket (`127.0.0.1`). Read
 * `clock`: moves HA's timers without freezing real time (the sync Modbus client
   needs the real clock). `clock.poll()` is one scan interval, `clock.settle()`
   the debounced refresh after a write, `clock.advance(s)` anything else.
-* `snapshot`: defined here on purpose. pytest-homeassistant-custom-component
+* `snapshot`: defined here on purpose. pytest-homeassistant
   and syrupy both provide it and whichever loads last wins, which differs
   between machines (on GitHub's runner syrupy's plain version looked in
   `__snapshots__`). A conftest fixture beats both.

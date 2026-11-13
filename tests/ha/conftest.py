@@ -1,5 +1,5 @@
 """Fixtures for the in-process layer: real Home Assistant core (via
-pytest-homeassistant-custom-component) + the integration's real pymodbus
+pytest-homeassistant) + the integration's real pymodbus
 client + the simulated HRDS+ over a real TCP socket on 127.0.0.1.
 
 Time is not frozen: the sync Modbus client measures its own timeouts with the
@@ -20,11 +20,11 @@ from homeassistant.const import CONF_HOST, CONF_NAME, CONF_PORT, CONF_SCAN_INTER
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.util import dt as dt_util
-from pytest_homeassistant_custom_component.common import (
+from pytest_homeassistant.common import (
     MockConfigEntry,
     async_fire_time_changed,
 )
-from pytest_homeassistant_custom_component.syrupy import (
+from pytest_homeassistant.syrupy import (
     HomeAssistantSnapshotExtension,
 )
 from syrupy.assertion import SnapshotAssertion
@@ -43,18 +43,12 @@ from tests.sim import HrdsDevice, HrdsSimServer
 def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
     """Snapshots in ``snapshots/`` next to the test (Home Assistant's layout).
 
-    phcc and syrupy both define ``snapshot``; which one wins depends on the
+    pytest-homeassistant and syrupy both define ``snapshot``; which one wins depends on the
     order pytest loads the plugins, and that differs between machines (on
     GitHub's runner syrupy's plain fixture won and looked in ``__snapshots__``).
     A conftest fixture beats both, so the extension is applied explicitly.
     """
     return snapshot.use_extension(HomeAssistantSnapshotExtension)
-
-
-@pytest.fixture(autouse=True)
-def auto_enable_custom_integrations(enable_custom_integrations):
-    """Load custom_components/innova_hrds in every test."""
-    return
 
 
 @pytest.fixture(autouse=True)

@@ -11,6 +11,11 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ## Unreleased
 
+### ⚠️ Breaking changes
+
+- **Home Assistant 2026.11 or newer is now required.** The climate entity uses the native temperature attributes that Home Assistant introduced in 2026.11; the old ones are deprecated and will be removed in 2027.11 (#74).
+  - Update Home Assistant to 2026.11 before updating the integration.
+
 ### ✨ Highlights
 
 - **New diagnostic sensor [*Firmware*](doc/entity-reference.md#firmware).** It shows the firmware revision the unit's controller reports (for example `V01.00.09.02`), so reports can name the firmware: several firmware versions of the HRDS+ are in use. After a firmware update, reload the integration.
@@ -30,6 +35,7 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ### 🧪 Tests and CI
 
+- **The in-process tests run on Home Assistant 2026.11.1.** They moved from `pytest-homeassistant-custom-component` (no release for 2026.11) to Home Assistant's own `pytest-homeassistant`, whose version number is the Home Assistant release; `pytest-timeout` and `pytest-cov` are now listed explicitly, and the e2e image is 2026.11.1 (#74).
 - **The release workflow's HACS check no longer ignores `brands`.** The integration ships its own `brand/icon.png`, so the check passes without the exception, as `hacs.yaml` already does.
 
 ---

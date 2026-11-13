@@ -6,7 +6,7 @@ decoding, guards and writes all run for real; only the device is fake.
 
 | Layer | Where | What it is | Cost |
 |---|---|---|---|
-| **In-process** (default) | `ha/` | The real Home Assistant core inside pytest (`pytest-homeassistant-custom-component`) | about 1 min, measures coverage |
+| **In-process** (default) | `ha/` | The real Home Assistant core inside pytest (`pytest-homeassistant`) | about 1 min, measures coverage |
 | **Real HA** | `e2e/` | The official Home Assistant container, driven over REST/websocket | about 2.5 min, needs Docker |
 | Device model | `sim/test_device.py` | The simulator on its own | seconds |
 | Consistency | `wiring_check.py` | Register map, translations, platforms; no HA installed | seconds |

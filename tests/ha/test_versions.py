@@ -1,10 +1,11 @@
 """Keep the test layers on the Home Assistant release (and pymodbus) they claim.
 
-The in-process layer gets Home Assistant from the exact pin inside
-pytest-homeassistant-custom-component, the Docker layer from the image tag in
-.github/ha-versions/Dockerfile. Dependabot bumps them in separate PRs, so
-these tests fail when they drift apart. Only the release (year.month) has to
-match; patch releases may differ.
+The in-process layer gets Home Assistant from pytest-homeassistant, whose own
+version number is the Home Assistant release it depends on (exactly), the
+Docker layer from the image tag in .github/ha-versions/Dockerfile. They are
+bumped together (one Dependabot group, see .github/dependabot.yml), and these
+tests fail when they drift apart. The package, the installed Home Assistant and
+the image tag must all be the same release, patch included.
 """
 
 from __future__ import annotations
@@ -15,21 +16,46 @@ from importlib.metadata import version
 from pathlib import Path
 
 import homeassistant
-from homeassistant.const import MAJOR_VERSION, MINOR_VERSION
+from homeassistant.const import MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION
 
 DOCKERFILE = Path(__file__).parents[2] / ".github" / "ha-versions" / "Dockerfile"
+REQUIREMENTS = Path(__file__).parents[2] / "requirements_test.txt"
+
+
+def test_pytest_homeassistant_is_the_installed_ha_release():
+    # pytest-homeassistant's version is "<Home Assistant release>", pinned
+    # exactly to the homeassistant package it installs.
+    assert version("pytest-homeassistant") == version("homeassistant"), (
+        f"pytest-homeassistant {version('pytest-homeassistant')} runs Home "
+        f"Assistant {version('homeassistant')}: pin the matching release in "
+        "requirements_test.txt"
+    )
+
+
+def test_requirements_pin_is_the_installed_release():
+    # The file CI installs from must name the release the tests really ran on
+    # (a stale venv or a hand-edited pin would otherwise pass unnoticed).
+    pins = re.findall(
+        r"^pytest-homeassistant==(\S+)\s*$", REQUIREMENTS.read_text(), re.M
+    )
+    assert pins == [version("pytest-homeassistant")], (
+        f"requirements_test.txt pins pytest-homeassistant {pins}, installed "
+        f"{version('pytest-homeassistant')}"
+    )
 
 
 def test_in_process_ha_matches_docker_image():
     match = re.search(
-        r"^FROM\s+\S+:(\d+)\.(\d+)\.\d+\s*$", DOCKERFILE.read_text(), re.M
+        r"^FROM\s+\S+:(\d+)\.(\d+)\.(\d+)\s*$", DOCKERFILE.read_text(), re.M
     )
     assert match, f"{DOCKERFILE} must pin a release tag (YYYY.M.P), not latest/beta"
-    image = (int(match[1]), int(match[2]))
-    assert image == (MAJOR_VERSION, MINOR_VERSION), (
-        f"Docker e2e image is Home Assistant {image[0]}.{image[1]}, but "
-        f"pytest-homeassistant-custom-component runs {MAJOR_VERSION}.{MINOR_VERSION}: "
-        "bump both together (requirements_test.txt and .github/ha-versions/Dockerfile)"
+    image = tuple(int(g) for g in match.groups())
+    running = (MAJOR_VERSION, MINOR_VERSION, int(PATCH_VERSION))
+    assert image == running, (
+        "Docker e2e image is Home Assistant "
+        f"{'.'.join(map(str, image))}, but pytest-homeassistant runs "
+        f"{'.'.join(map(str, running))}: bump both together "
+        "(requirements_test.txt and .github/ha-versions/Dockerfile)"
     )
 
 
