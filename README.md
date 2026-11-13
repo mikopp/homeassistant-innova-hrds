@@ -105,7 +105,7 @@ registers: [`doc/references/MODBUS_REGISTERS.md`](doc/references/MODBUS_REGISTER
   Modbus-RTU-to-TCP gateway reachable on your network. You need the gateway's
   IP address or hostname, its port (usually [502](doc/references/MODBUS_REGISTERS.md#reg-502)) and the unit's Modbus slave ID
   (factory: 1).
-* Home Assistant 2026.10 or newer (see [Requirements](#requirements)).
+* Home Assistant 2026.11 or newer (see [Requirements](#requirements)).
 * [HACS](https://www.hacs.xyz/) installed in Home Assistant.
 * Room temperature and humidity readings need the wired CNU2 display or external
   probes (see [Probe requirements](#probe-requirements)). Without either, the
@@ -645,7 +645,7 @@ The inputs, probe types and [HA00](doc/references/MODBUS_REGISTERS.md#ha00) valu
 
 ## Requirements
 
-* **Home Assistant 2026.10 or newer.**
+* **Home Assistant 2026.11 or newer.**
 * `pymodbus` 3.13.1 or newer (declared in the manifest; Home Assistant 2026.10
   ships 3.13.1).
 

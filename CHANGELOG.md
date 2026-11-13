@@ -11,6 +11,11 @@ in this order, empty ones left out: `### ⚠️ Breaking changes`,
 
 ## Unreleased
 
+### ⚠️ Breaking changes
+
+- **Home Assistant 2026.11 or newer is now required.** The climate entity uses the native temperature attributes that Home Assistant introduced in 2026.11; the old ones are deprecated and will be removed in 2027.11 (#74).
+  - Update Home Assistant to 2026.11 before updating the integration.
+
 ### ✨ Highlights
 
 - **New diagnostic sensor [*Firmware*](doc/entity-reference.md#firmware).** It shows the firmware revision the unit's controller reports (for example `V01.00.09.02`), so reports can name the firmware: several firmware versions of the HRDS+ are in use. After a firmware update, reload the integration.

@@ -97,7 +97,8 @@ class HrdsClimate(HubBackedEntity, ClimateEntity):
 
     def __init__(self, platform_name, hub, device_info, description):
         super().__init__(platform_name, hub, device_info, description)
-        self._attr_temperature_unit = description.temperature_unit
+        # Native unit/values (HA 2026.11+): the legacy attrs are deprecated, removal 2027.11 (#74).
+        self._attr_native_temperature_unit = description.temperature_unit
         features = description.supported_features
         # Without a room probe the unit ignores its setpoints: do not offer them.
         if not hub.show_temperature_target:
@@ -156,9 +157,9 @@ class HrdsClimate(HubBackedEntity, ClimateEntity):
         # treated as healthy.
         temp = data.get(CLIMATE_CURRENT_TEMP)
         if data.get(C_TEMP_PROBE_OK) == "off" or temp is None:
-            self._attr_current_temperature = None
+            self._attr_native_current_temperature = None
         else:
-            self._attr_current_temperature = float(temp)
+            self._attr_native_current_temperature = float(temp)
 
         hum = data.get(CLIMATE_CURRENT_HUMIDITY)
         if data.get(C_HUMIDITY_PROBE_OK) == "off" or hum is None:
@@ -196,7 +197,7 @@ class HrdsClimate(HubBackedEntity, ClimateEntity):
             else CLIMATE_TARGET_TEMP
         )
         if target_temp is not None:
-            self._attr_target_temperature = float(target_temp)
+            self._attr_native_target_temperature = float(target_temp)
 
         self._attr_hvac_mode = self._derive_mode(data)
         self._attr_hvac_modes = self._modes_for(self._attr_hvac_mode)
